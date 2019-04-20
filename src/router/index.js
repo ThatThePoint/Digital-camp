@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-Vue.use(Router);
 
+Vue.use(Router);
+import DocumentManagement from '../components/page/DailyOffice/DocumentManagement.vue'
 export default new Router({
     routes: [
         {
@@ -80,6 +81,12 @@ export default new Router({
                     path: '/permission',
                     component: resolve => require(['../components/page/Permission.vue'], resolve),
                     meta: { title: '权限测试', permission: true }
+                },
+                {
+                    // 公文管理
+                    path: '/documentmanagement',
+                    component: resolve => require(['../components/page/DailyOffice/DocumentManagement.vue'], resolve),
+                    meta: { title: '公文管理', permission: true }
                 },
                 {
                     path: '/404',

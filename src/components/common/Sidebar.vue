@@ -46,80 +46,12 @@
                     {
                         icon: 'el-icon-lx-cascades',
                         index: 'table',
-                        title: '日常办公',
-                        subs: [
-                            {
-                                index: 'form',
-                                title: '公文管理'
-                            },
-                            {
-                                index: '3-2',
-                                title: '值班执勤',
-                            },
-                            {
-                                index: 'upload',
-                                title: '人员动态'
-                            },
-                             {
-                                index: 'form',
-                                title: '*电子日志管理'
-                            },
-                            {
-                                index: '3-2',
-                                title: '*同步点名',
-                            },
-                            {
-                                index: 'upload',
-                                title: '*查铺查哨'
-                            },
-                               {
-                                index: 'upload',
-                                title: '*电子公告'
-                            },
-                             {
-                                index: 'form',
-                                title: '警报传递'
-                            },
-                            {
-                                index: '3-2',
-                                title: '规章制度',
-                            },
-                        ]
+                        title: '基础表格'
                     },
                     {
                         icon: 'el-icon-lx-copy',
                         index: 'tabs',
-                        title: '车辆管理',
-                                                subs: [
-                            {
-                                index: 'form',
-                                title: '车辆信息管理'
-                            },
-                            {
-                                index: '3-2',
-                                title: '车库管理',
-                            },
-                            {
-                                index: 'upload',
-                                title: '司机管理'
-                            },
-                             {
-                                index: 'form',
-                                title: '车辆派遣'
-                            },
-                            {
-                                index: '3-2',
-                                title: '车辆维修保养',
-                            },
-                            {
-                                index: 'upload',
-                                title: '车辆进出记录'
-                            },
-                               {
-                                index: 'upload',
-                                title: '统计报表'
-                            }
-                        ]
+                        title: 'tab选项卡'
                     },
                     {
                         icon: 'el-icon-lx-calendar',
@@ -191,10 +123,84 @@
                         ]
                     },
                     {
-                        icon: 'el-icon-lx-emoji',
-                        index: 'icon',
-                        title: '请销假管理'
+                        icon: 'el-icon-lx-cascades',
+                        index: 'documentmanagement',
+                        title: '日常办公',
+                        subs: [
+                            {
+                                index: 'documentManagement',
+                                title: '公文管理'
+                            },
+                            {
+                                index: '11',
+                                title: '值班执勤',
+                            },
+                            {
+                                index: '22',
+                                title: '人员动态'
+                            },
+                             {
+                                index: '33',
+                                title: '*电子日志管理'
+                            },
+                            {
+                                index: '44',
+                                title: '*同步点名',
+                            },
+                            {
+                                index: '55',
+                                title: '*查铺查哨'
+                            },
+                               {
+                                index: '66',
+                                title: '*电子公告'
+                            },
+                             {
+                                index: '77',
+                                title: '警报传递'
+                            },
+                            {
+                                index: '88',
+                                title: '规章制度',
+                            },
+                        ]
                     },
+                    {
+                        icon: 'el-icon-lx-copy',
+                        index: 'cars',
+                        title: '车辆管理',
+                                                subs: [
+                            {
+                                index: '99',
+                                title: '车辆信息管理'
+                            },
+                            {
+                                index: '1231',
+                                title: '车库管理',
+                            },
+                            {
+                                index: 'aaaa',
+                                title: '司机管理'
+                            },
+                             {
+                                index: '46',
+                                title: '车辆派遣'
+                            },
+                            {
+                                index: '47',
+                                title: '车辆维修保养',
+                            },
+                            {
+                                index: '57',
+                                title: '车辆进出记录'
+                            },
+                               {
+                                index: '45',
+                                title: '统计报表'
+                            }
+                        ]
+                    },
+                    
                 ]
             }
         },
