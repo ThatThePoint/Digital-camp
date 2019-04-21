@@ -132,11 +132,11 @@
                                 title: '公文管理'
                             },
                             {
-                                index: '11',
+                                index: 'onduty',
                                 title: '值班执勤',
                             },
                             {
-                                index: '22',
+                                index: 'mansdynamics',
                                 title: '人员动态'
                             },
                              {
@@ -156,7 +156,7 @@
                                 title: '*电子公告'
                             },
                              {
-                                index: '77',
+                                index: 'alert',
                                 title: '警报传递'
                             },
                             {
@@ -169,17 +169,17 @@
                         icon: 'el-icon-lx-copy',
                         index: 'cars',
                         title: '车辆管理',
-                                                subs: [
+                        subs: [
                             {
-                                index: '99',
+                                index: 'cardetail',
                                 title: '车辆信息管理'
                             },
                             {
-                                index: '1231',
+                                index: 'garage',
                                 title: '车库管理',
                             },
                             {
-                                index: 'aaaa',
+                                index: 'drivermanager',
                                 title: '司机管理'
                             },
                              {
@@ -187,11 +187,11 @@
                                 title: '车辆派遣'
                             },
                             {
-                                index: '47',
+                                index: 'carcare',
                                 title: '车辆维修保养',
                             },
                             {
-                                index: '57',
+                                index: 'carinout',
                                 title: '车辆进出记录'
                             },
                                {

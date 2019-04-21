@@ -171,3 +171,28 @@ a {
 .v-note-wrapper .v-note-panel {
     min-height: 500px;
 }
+
+
+.danger {
+    background: #f56c6c;
+}
+.use{
+    background: #f56c6c;
+}
+.nouse{
+    background: #e6a23c;
+}
+.private{
+    background: #67c23a;
+}
+.warning {
+    background: #e6a23c;
+}
+
+.success {
+    background: #67c23a;
+}
+
+li{
+    list-style: none;
+}

@@ -2,22 +2,20 @@
   <div>
     <div class="crumbs">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item>
-          <i class="el-icon-lx-favor"></i> 公文信息
-        </el-breadcrumb-item>
+        <el-breadcrumb-item>值班执勤</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
       <div class="messages">
-        <span>公文标题</span>
+        <span>单位</span>
         <el-input
           class="input-width"
           placeholder="请输入内容"
           prefix-icon="el-icon-search"
           v-model="input2"
         ></el-input>
-        <span>公文等级</span>
-        <el-select class="input-width" v-model="value" placeholder="请选择">
+        <span>值班人员</span>
+        <el-select v-model="value" filterable placeholder="请选择">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -36,14 +34,11 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="date" label="公文号" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="name" label="公文标题" sortable width="180"></el-table-column>
-          <el-table-column prop="address" label="公文等级" :formatter="formatter"></el-table-column>
-          <el-table-column prop="address" label="发送部门" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="发送人" :formatter="formatter"></el-table-column>
-          <el-table-column prop="address" label="发送时间" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="状态" ></el-table-column>
-          <el-table-column prop="edit" label="全部已阅" ></el-table-column>
+          <el-table-column prop="date" label="单位" sortable width="180">{{}}</el-table-column>
+          <el-table-column prop="name" label="值班人员" sortable width="180"></el-table-column>
+          <el-table-column prop="address" label="值班岗位" :formatter="formatter"></el-table-column>
+          <el-table-column prop="startTime" label="值班开始时间" ></el-table-column>
+          <el-table-column prop="endTime" label="值班结束时间" ></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -120,25 +115,29 @@ export default {
           date: "2016-05-02",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1518 弄",
-          edit: "1"
+          startTime: "1",
+          endTime: "1",
         },
         {
           date: "2016-05-04",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1517 弄",
-          edit: "1"
+          startTime: "1",
+          endTime: "1",
         },
         {
           date: "2016-05-01",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1519 弄",
-          edit: "1"
+          startTime: "1",
+          endTime: "1",
         },
         {
           date: "2016-05-03",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1516 弄",
-          edit: "1"
+          startTime: "1",
+          endTime: "1",
         }
       ]
     };

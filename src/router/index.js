@@ -89,6 +89,64 @@ export default new Router({
                     meta: { title: '公文管理', permission: true }
                 },
                 {
+                    // 值班执勤
+                    path: '/onduty',
+                    component: resolve => require(['../components/page/OnDuty/OnDuty.vue'], resolve),
+                    meta: { title: '值班执勤', permission: true }
+                },
+                {
+                    // 人员动态
+                    path: '/mansdynamics',
+                    component: resolve => require(['../components/page/MansDynamics/MansDynamics.vue'], resolve),
+                    meta: { title: '人员动态', permission: true }
+                },
+                
+                {
+                    // 警报传递
+                    path: '/alert',
+                    component: resolve => require(['../components/page/Alert/Alert.vue'], resolve),
+                    meta: { title: '警报传递', permission: true }
+                },
+                
+                {
+                    // 车辆信息
+                    path: '/cardetail',
+                    component: resolve => require(['../components/page/CarManager/CarDetail.vue'], resolve),
+                    meta: { title: '车辆信息', permission: true }
+                },
+                
+                {
+                    // 车库管理
+                    path: '/garage',
+                    component: resolve => require(['../components/page/CarManager/Garage.vue'], resolve),
+                    meta: { title: '车库管理', permission: true }
+                },
+                {
+                    // 司机管理
+                    path: '/drivermanager',
+                    component: resolve => require(['../components/page/CarManager/DriverManager.vue'], resolve),
+                    meta: { title: '司机管理', permission: true }
+                },
+                {
+                    // 车辆保养
+                    path: '/carcare',
+                    component: resolve => require(['../components/page/CarManager/CarCare.vue'], resolve),
+                    meta: { title: '车辆保养', permission: true }
+                },
+                {
+                    // 车辆进出
+                    path: '/carinout',
+                    component: resolve => require(['../components/page/CarManager/CarInout.vue'], resolve),
+                    meta: { title: '车辆进出', permission: true }
+                },
+                {
+                    // 增加车辆
+                    path: '/addcar',
+                    component: resolve => require(['../components/page/CarManager/AddCar.vue'], resolve),
+                    meta: { title: '增加车辆', permission: true }
+                },
+                
+                {
                     path: '/404',
                     component: resolve => require(['../components/page/404.vue'], resolve),
                     meta: { title: '404' }
