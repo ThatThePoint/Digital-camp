@@ -147,6 +147,12 @@ export default new Router({
                 },
                 
                 {
+                    // 新增保养
+                    path: '/addcare',
+                    component: resolve => require(['../components/page/CarManager/AddCare.vue'], resolve),
+                    meta: { title: '新增保养', permission: true }
+                },
+                {
                     path: '/404',
                     component: resolve => require(['../components/page/404.vue'], resolve),
                     meta: { title: '404' }

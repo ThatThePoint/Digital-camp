@@ -14,9 +14,7 @@
           <div class="license">
             奔驰2号
             <span>状态</span>
-          </div>
-          <div>
-            字段名称
+            所属单位
             <el-select class="input-width" v-model="inputOptions" placeholder="请选择">
               <el-option
                 v-for="item in inoutOptions"
@@ -26,12 +24,7 @@
               ></el-option>
             </el-select>
           </div>
-        </div>
-      </div>
-      <div class="footer">
-        <div>
-          <h3>车辆基本信息：</h3>
-          <div class="itemDet">
+          <div class>
             车辆品牌：
             <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
               <el-option
@@ -58,9 +51,8 @@
               ></el-option>
             </el-select>行驶证号：
             <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
-            <el-button size="small" type="success" >照片上传</el-button>
           </div>
-          <div class="itemDet">
+          <div class>
             车辆座位：
             <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
               <el-option
@@ -82,10 +74,12 @@
             <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
           </div>
         </div>
+      </div>
+      <div class="footer">
         <div>
-          <h3>内部车辆附加：</h3>
+          <h3>维修保养信息：</h3>
           <div class="itemDet">
-            所属单位：
+            保养类型：
             <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
               <el-option
                 v-for="item in propertyOptions"
@@ -93,85 +87,21 @@
                 :label="item.label"
                 :value="item.value"
               ></el-option>
-            </el-select>车辆类别1：
-            <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
-              <el-option
-                v-for="item in propertyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>车辆类别2：
-            <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
-              <el-option
-                v-for="item in propertyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
+            </el-select>费用：
+            <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
+            <el-button size="small" type="success">照片上传</el-button>
           </div>
           <div class="itemDet">
-            车辆权限：
-            <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
-              <el-option
-                v-for="item in propertyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>登记日期
-            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>授权有效期
-            <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
+            维修日期：
+            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
+            保养明细：
+            <el-input type="textarea" class="wenben"></el-input>
           </div>
         </div>
       </div>
-      <div>
-        <h3>外部车辆附加：</h3>
-        <div class="itemDet">
-          车主姓名：
-          <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>电话：
-          <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>部队联系人：
-          <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>联系人部门：
-          <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
-            <el-option
-              v-for="item in propertyOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </div>
-        <div class="itemDet">
-          车辆权限：
-          <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
-            <el-option
-              v-for="item in propertyOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>权限有效期
-          <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
-        </div>
-        <div class="itemDet">
-          身份证：
-          <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
-          <el-button size="small" type="success" >身份证正面上传</el-button>
-          <el-button size="small" type="success" >身份证背面上传</el-button>
-        </div>
-        <div class="itemDet">
-          驾驶证：
-          <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
-          <el-button size="small" type="success" >驾驶证正面上传</el-button>
-          <el-button size="small" type="success" >驾驶证背面上传</el-button>
-        </div>
-        <div class="itemDet">
-          身份证：
-          <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
-          <el-button size="small" type="success" >身份证正面上传</el-button>
-          <el-button size="small" type="success" >身份证背面上传</el-button>
-        </div>
+      <div class="submit">
+        <el-button type="danger">取消</el-button>
+        <el-button type="success">保存</el-button>
       </div>
     </div>
   </div>
@@ -307,6 +237,10 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
+    },
+    addCar() {
+      this.$router.push({ path: "/addcare" });
+      // router.push({ path: '/addcar' })
     }
   }
 };
@@ -338,5 +272,16 @@ export default {
 }
 .upload {
   display: inline-block;
+}
+.wenben{
+  width : 400px;
+  vertical-align: top;
+}
+.submit{
+  margin: 40px auto;
+  text-align: center;
+}
+.submit button{
+  margin: 0 100px;
 }
 </style>

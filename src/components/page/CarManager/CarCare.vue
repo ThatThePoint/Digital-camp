@@ -51,7 +51,7 @@
           v-model="input2"
         ></el-input>
         <el-button>搜索</el-button>
-        <el-button type="success">新增</el-button>
+        <el-button type="success"  @click="addCare()">新增</el-button>
       </div>
       <div class="body">
         <el-table
@@ -212,6 +212,10 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
+    },
+          addCare(){
+      this.$router.push({path: '/addcare'})
+      // router.push({ path: '/addcar' })
     }
   }
 };
