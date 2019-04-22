@@ -7,26 +7,64 @@
     </div>
     <div class="container">
       <div class="messages">
-        <span>单位</span>
-        <el-input
-          class="input-width"
-          placeholder="请输入内容"
-          prefix-icon="el-icon-search"
-          v-model="input2"
-        ></el-input>
-        <span>值班人员</span>
-        <el-select v-model="value" filterable placeholder="请选择">
+        <span>所属部门</span>
+        <el-select class="input-width" v-model="value" filterable placeholder="请选择">
           <el-option
             v-for="item in options"
             :key="item.value"
             :label="item.label"
             :value="item.value"
           ></el-option>
-        </el-select>发送时间
-        <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
-        <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
+        </el-select>
         <el-button type="primary">查询</el-button>
-        <el-button type="success">新增</el-button>
+        <el-button type="success" @click="dialogFormVisible = true">新增</el-button>
+        <el-dialog title="值班安排" :visible.sync="dialogFormVisible">
+          <el-form :model="form">
+            <div class="flex">
+              <el-form-item label="活动名称" :label-width="formLabelWidth">
+                <el-select
+                  label="活动名称"
+                  class="input-width"
+                  v-model="value"
+                  filterable
+                  placeholder="所属部门"
+                >
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="岗位" :label-width="formLabelWidth">
+                <el-select class="input-width" v-model="value" filterable placeholder="岗位">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+            <el-form-item label="值班时间" :label-width="formLabelWidth">
+              <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
+              <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="值班人" :label-width="formLabelWidth">
+              <el-input
+                class="input-width"
+                placeholder="请输入"
+                v-model="input2"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
       <div class="body">
         <el-table
@@ -34,15 +72,14 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="date" label="单位" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="name" label="值班人员" sortable width="180"></el-table-column>
-          <el-table-column prop="address" label="值班岗位" :formatter="formatter"></el-table-column>
-          <el-table-column prop="startTime" label="值班开始时间" ></el-table-column>
-          <el-table-column prop="endTime" label="值班结束时间" ></el-table-column>
+          <el-table-column prop="date" label="岗位名称" sortable width="180">{{}}</el-table-column>
+          <el-table-column prop="name" label="单位" sortable width="180"></el-table-column>
+          <el-table-column prop="address" label="当前值班人" :formatter="formatter"></el-table-column>
+          <el-table-column prop="startTime" label="当日值班安排"></el-table-column>
+          <el-table-column prop="endTime" label="值班记录"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-              <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -116,30 +153,65 @@ export default {
           name: "王小虎",
           address: "上海市普陀区金沙江路 1518 弄",
           startTime: "1",
-          endTime: "1",
+          endTime: "1"
         },
         {
           date: "2016-05-04",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1517 弄",
           startTime: "1",
-          endTime: "1",
+          endTime: "1"
         },
         {
           date: "2016-05-01",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1519 弄",
           startTime: "1",
-          endTime: "1",
+          endTime: "1"
         },
         {
           date: "2016-05-03",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1516 弄",
           startTime: "1",
-          endTime: "1",
+          endTime: "1"
         }
-      ]
+      ],
+      gridData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        }
+      ],
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
+      },
+      formLabelWidth: "120px"
     };
   },
   methods: {
@@ -161,5 +233,8 @@ export default {
   margin: 0 10px;
 }
 .messages {
+}
+.flex {
+  display: flex;
 }
 </style>

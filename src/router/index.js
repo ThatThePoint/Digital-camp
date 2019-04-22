@@ -82,11 +82,18 @@ export default new Router({
                     component: resolve => require(['../components/page/Permission.vue'], resolve),
                     meta: { title: '权限测试', permission: true }
                 },
+                
                 {
                     // 公文管理
                     path: '/documentmanagement',
                     component: resolve => require(['../components/page/DailyOffice/DocumentManagement.vue'], resolve),
                     meta: { title: '公文管理', permission: true }
+                },
+                {
+                    // 公文管理
+                    path: '/adddocument',
+                    component: resolve => require(['../components/page/DailyOffice/AddDocument.vue'], resolve),
+                    meta: { title: '增加公文', permission: true }
                 },
                 {
                     // 值班执勤
@@ -96,8 +103,8 @@ export default new Router({
                 },
                 {
                     // 人员动态
-                    path: '/mansdynamics',
-                    component: resolve => require(['../components/page/MansDynamics/MansDynamics.vue'], resolve),
+                    path: '/staffdynamics',
+                    component: resolve => require(['../components/page/StaffDynamics/StaffDynamics.vue'], resolve),
                     meta: { title: '人员动态', permission: true }
                 },
                 

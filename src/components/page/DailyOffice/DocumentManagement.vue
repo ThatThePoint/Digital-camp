@@ -28,7 +28,7 @@
         <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
         <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
         <el-button type="primary">查询</el-button>
-        <el-button type="success">新增</el-button>
+        <el-button type="success"  @click="addDocument()">新增</el-button>
       </div>
       <div class="body">
         <el-table
@@ -42,8 +42,8 @@
           <el-table-column prop="address" label="发送部门" :formatter="formatter"></el-table-column>
           <el-table-column prop="edit" label="发送人" :formatter="formatter"></el-table-column>
           <el-table-column prop="address" label="发送时间" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="状态" ></el-table-column>
-          <el-table-column prop="edit" label="全部已阅" ></el-table-column>
+          <el-table-column prop="edit" label="状态"></el-table-column>
+          <el-table-column prop="edit" label="全部已阅"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -152,6 +152,10 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
+    },
+    addDocument() {
+      this.$router.push({ path: "/adddocument" });
+      // router.push({ path: '/addcar' })
     }
   }
 };
@@ -160,7 +164,5 @@ export default {
 .input-width {
   width: 180px;
   margin: 0 10px;
-}
-.messages {
 }
 </style>

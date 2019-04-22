@@ -123,16 +123,16 @@ a {
 }
 
 .el-upload--text {
-    background-color: #fff;
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
+    /* background-color: #fff;
+    /* border: 1px dashed #d9d9d9; */
+    /* border-radius: 6px;
     box-sizing: border-box;
     width: 360px;
     height: 180px;
     text-align: center;
     cursor: pointer;
     position: relative;
-    overflow: hidden;
+    overflow: hidden; */ 
 }
 
 .el-upload--text .el-icon-upload {
