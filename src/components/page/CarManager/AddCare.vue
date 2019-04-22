@@ -150,7 +150,7 @@ export default {
         },
         {
           value: "2",
-          label: "连队2"
+          label: "连队2" 
         },
         {
           value: "3",
