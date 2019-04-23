@@ -43,84 +43,16 @@
                         index: 'dashboard',
                         title: '系统首页'
                     },
-                    {
-                        icon: 'el-icon-lx-cascades',
-                        index: 'table',
-                        title: '日常办公',
-                        subs: [
-                            {
-                                index: 'form',
-                                title: '公文管理'
-                            },
-                            {
-                                index: '3-2',
-                                title: '值班执勤',
-                            },
-                            {
-                                index: 'upload',
-                                title: '人员动态'
-                            },
-                             {
-                                index: 'form',
-                                title: '*电子日志管理'
-                            },
-                            {
-                                index: '3-2',
-                                title: '*同步点名',
-                            },
-                            {
-                                index: 'upload',
-                                title: '*查铺查哨'
-                            },
-                               {
-                                index: 'upload',
-                                title: '*电子公告'
-                            },
-                             {
-                                index: 'form',
-                                title: '警报传递'
-                            },
-                            {
-                                index: '3-2',
-                                title: '规章制度',
-                            },
-                        ]
-                    },
-                    {
-                        icon: 'el-icon-lx-copy',
-                        index: 'tabs',
-                        title: '车辆管理',
-                                                subs: [
-                            {
-                                index: 'form',
-                                title: '车辆信息管理'
-                            },
-                            {
-                                index: '3-2',
-                                title: '车库管理',
-                            },
-                            {
-                                index: 'upload',
-                                title: '司机管理'
-                            },
-                             {
-                                index: 'form',
-                                title: '车辆派遣'
-                            },
-                            {
-                                index: '3-2',
-                                title: '车辆维修保养',
-                            },
-                            {
-                                index: 'upload',
-                                title: '车辆进出记录'
-                            },
-                               {
-                                index: 'upload',
-                                title: '统计报表'
-                            }
-                        ]
-                    },
+                    // {
+                    //     icon: 'el-icon-lx-cascades',
+                    //     index: 'table',
+                    //     title: '基础表格'
+                    // },
+                    // {
+                    //     icon: 'el-icon-lx-copy',
+                    //     index: 'tabs',
+                    //     title: 'tab选项卡'
+                    // },
                     {
                         icon: 'el-icon-lx-calendar',
                         index: '3',
@@ -150,51 +82,125 @@
                             }
                         ]
                     },
+                    // {
+                    //     icon: 'el-icon-lx-emoji',
+                    //     index: 'icon',
+                    //     title: '自定义图标'
+                    // },
+                    // {
+                    //     icon: 'el-icon-lx-favor',
+                    //     index: 'charts',
+                    //     title: 'schart图表'
+                    // },
+                    // {
+                    //     icon: 'el-icon-rank',
+                    //     index: '6',
+                    //     title: '拖拽组件',
+                    //     subs: [
+                    //         {
+                    //             index: 'drag',
+                    //             title: '拖拽列表',
+                    //         },
+                    //         {
+                    //             index: 'dialog',
+                    //             title: '拖拽弹框',
+                    //         }
+                    //     ]
+                    // },
+                    // {
+                    //     icon: 'el-icon-lx-warn',
+                    //     index: '7',
+                    //     title: '错误处理',
+                    //     subs: [
+                    //         {
+                    //             index: 'permission',
+                    //             title: '权限测试'
+                    //         },
+                    //         {
+                    //             index: '404',
+                    //             title: '404页面'
+                    //         }
+                    //     ]
+                    // },
                     {
-                        icon: 'el-icon-lx-emoji',
-                        index: 'icon',
-                        title: '自定义图标'
-                    },
-                    {
-                        icon: 'el-icon-lx-favor',
-                        index: 'charts',
-                        title: 'schart图表'
-                    },
-                    {
-                        icon: 'el-icon-rank',
-                        index: '6',
-                        title: '拖拽组件',
+                        icon: 'el-icon-lx-cascades',
+                        index: 'documentmanagement',
+                        title: '日常办公',
                         subs: [
                             {
-                                index: 'drag',
-                                title: '拖拽列表',
+                                index: 'documentManagement',
+                                title: '公文管理'
                             },
                             {
-                                index: 'dialog',
-                                title: '拖拽弹框',
-                            }
+                                index: 'onduty',
+                                title: '值班执勤',
+                            },
+                            {
+                                index: 'StaffDynamics',
+                                title: '人员动态'
+                            },
+                             {
+                                index: '33',
+                                title: '*电子日志管理'
+                            },
+                            {
+                                index: '44',
+                                title: '*同步点名',
+                            },
+                            {
+                                index: '55',
+                                title: '*查铺查哨'
+                            },
+                               {
+                                index: '66',
+                                title: '*电子公告'
+                            },
+                             {
+                                index: 'alert',
+                                title: '警报传递'
+                            },
+                            {
+                                index: '88',
+                                title: '规章制度',
+                            },
                         ]
                     },
                     {
-                        icon: 'el-icon-lx-warn',
-                        index: '7',
-                        title: '错误处理',
+                        icon: 'el-icon-lx-copy',
+                        index: 'cars',
+                        title: '车辆管理',
                         subs: [
                             {
-                                index: 'permission',
-                                title: '权限测试'
+                                index: 'cardetail',
+                                title: '车辆信息管理'
                             },
                             {
-                                index: '404',
-                                title: '404页面'
+                                index: 'garage',
+                                title: '车库管理',
+                            },
+                            {
+                                index: 'drivermanager',
+                                title: '司机管理'
+                            },
+                             {
+                                index: '46',
+                                title: '车辆派遣'
+                            },
+                            {
+                                index: 'carcare',
+                                title: '车辆维修保养',
+                            },
+                            {
+                                index: 'carinout',
+                                title: '车辆进出记录'
+                            },
+                               {
+                                index: '45',
+                                title: '统计报表'
                             }
                         ]
                     },
-                    {
-                        icon: 'el-icon-lx-emoji',
-                        index: 'icon',
-                        title: '请销假管理'
-                    },
+                    
                 ]
             }
         },

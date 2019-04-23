@@ -28,7 +28,7 @@
         <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
         <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
         <el-button type="primary">查询</el-button>
-        <el-button type="success"  @click="addDocument()">新增</el-button>
+        <el-button type="success">新增</el-button>
       </div>
       <div class="body">
         <el-table
@@ -36,14 +36,14 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="number" label="公文号" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="title" label="公文标题" sortable width="180"></el-table-column>
-          <el-table-column prop="docLever" label="公文等级" ></el-table-column>
-          <el-table-column prop="sendDept" label="发送部门" ></el-table-column>
-          <el-table-column prop="sendPerson" label="发送人" ></el-table-column>
-          <el-table-column prop="date" label="发送时间" ></el-table-column>
-          <el-table-column prop="status" label="状态" ></el-table-column>
-          <el-table-column prop="allReceive" label="全部已阅" :formatter="formatter"></el-table-column>
+          <el-table-column prop="date" label="公文号" sortable width="180">{{}}</el-table-column>
+          <el-table-column prop="name" label="公文标题" sortable width="180"></el-table-column>
+          <el-table-column prop="address" label="公文等级" :formatter="formatter"></el-table-column>
+          <el-table-column prop="address" label="发送部门" :formatter="formatter"></el-table-column>
+          <el-table-column prop="edit" label="发送人" :formatter="formatter"></el-table-column>
+          <el-table-column prop="address" label="发送时间" :formatter="formatter"></el-table-column>
+          <el-table-column prop="edit" label="状态" ></el-table-column>
+          <el-table-column prop="edit" label="全部已阅" ></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -115,78 +115,43 @@ export default {
         }
       ],
       value: "",
-            tableData: [
+      tableData: [
         {
-          number: "121",
-          title:"老哥来访",
-          docLever:2,
-          sendDept:"独立团",
-          sendPerson:"张三丰",
           date: "2016-05-02",
-          status: 1,
-          allReceive:1,
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+          edit: "1"
         },
         {
-          number: "121",
-          title:"老哥来访",
-          docLever:2,
-          sendDept:"独立团",
-          sendPerson:"张三丰",
-          date: "2016-05-02",
-          status: 1,
-          allReceive:1,
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 弄",
+          edit: "1"
         },
         {
-          number: "121",
-          title:"老哥来访",
-          docLever:2,
-          sendDept:"独立团",
-          sendPerson:"张三丰",
-          date: "2016-05-02",
-          status: 1,
-          allReceive:1,
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄",
+          edit: "1"
         },
         {
-          number: "121",
-          title:"老哥来访",
-          docLever:2,
-          sendDept:"独立团",
-          sendPerson:"张三丰",
-          date: "2016-05-02",
-          status: 1,
-          allReceive:1,
-        },
-        {
-          number: "121",
-          title:"老哥来访",
-          docLever:2,
-          sendDept:"独立团",
-          sendPerson:"",
-          date: "2016-05-02",
-          status: 1,
-          allReceive:1,
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄",
+          edit: "1"
         }
       ]
     };
   },
   methods: {
     formatter(row, column) {
-      row.status==1?"发布":"草稿";
-      
-     row.docLevel==1?"普通":row.docLever==2?"提醒":row.docLever==3?"严重":row.docLever==4?"警告":"紧急";
-     return row.allReceive==1?"已收录":"待收录";
-      // row.status==1?"发布":"草稿";
-      // return row.address;
+      return row.address;
     },
     handleEdit(index, row) {
       console.log(index, row);
     },
     handleDelete(index, row) {
       console.log(index, row);
-    },
-    addDocument() {
-      this.$router.push({ path: "/adddocument" });
-      // router.push({ path: '/addcar' })
     }
   }
 };
@@ -195,5 +160,7 @@ export default {
 .input-width {
   width: 180px;
   margin: 0 10px;
+}
+.messages {
 }
 </style>

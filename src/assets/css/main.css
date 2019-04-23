@@ -123,16 +123,16 @@ a {
 }
 
 .el-upload--text {
-    background-color: #fff;
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
+    /* background-color: #fff;
+    /* border: 1px dashed #d9d9d9; */
+    /* border-radius: 6px;
     box-sizing: border-box;
     width: 360px;
     height: 180px;
     text-align: center;
     cursor: pointer;
     position: relative;
-    overflow: hidden;
+    overflow: hidden; */ 
 }
 
 .el-upload--text .el-icon-upload {
@@ -170,4 +170,29 @@ a {
 
 .v-note-wrapper .v-note-panel {
     min-height: 500px;
+}
+
+
+.danger {
+    background: #f56c6c;
+}
+.use{
+    background: #f56c6c;
+}
+.nouse{
+    background: #e6a23c;
+}
+.private{
+    background: #67c23a;
+}
+.warning {
+    background: #e6a23c;
+}
+
+.success {
+    background: #67c23a;
+}
+
+li{
+    list-style: none;
 }
