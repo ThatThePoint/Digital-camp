@@ -25,7 +25,7 @@
             :value="item.value"
           ></el-option>
         </el-select>
-        <el-select class="input-width" v-model="statuValue" placeholder="状态">
+        <el-select class="input-width" v-model="statuValue" placeholder="进出库">
           <el-option
             v-for="item in statuOptions"
             :key="item.value"
@@ -49,25 +49,19 @@
           style="width: 100%"
           :default-sort="{prop: 'license', order: 'descending'}"
         >
-          <el-table-column prop="license" label="车牌号" sortable width="180">
-            <template slot-scope="scope">
-              <div class="carImg"></div>
-              {{ scope.row.license }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="property" label="车牌号" sortable width="180"></el-table-column>
-          <el-table-column prop="cartype" label="车辆编号" sortable></el-table-column>
-          <el-table-column prop="carUser" label="车辆类型" sortable></el-table-column>
-          <el-table-column prop="tel" label="所属部门" sortable></el-table-column>
-          <el-table-column prop="inout" label="记录类型" sortable></el-table-column>
-          <el-table-column prop="inout" label="时间" sortable></el-table-column>
+          <el-table-column prop="license" label="车牌号" sortable></el-table-column>
+          <el-table-column prop="carNo" label="车辆编号" sortable width="180"></el-table-column>
+          <el-table-column prop="cartype" label="车辆类型" sortable></el-table-column>
+          <el-table-column prop="ofDept" label="所属部门" sortable></el-table-column>
+          <el-table-column prop="inOrOut" label="记录类型" sortable></el-table-column>
+          <el-table-column prop="date" label="时间" sortable></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-              <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination background layout="prev, pager, next" :total="70"></el-pagination>
       </div>
     </div>
   </div>
@@ -144,20 +138,15 @@ export default {
       statuOptions: [
         {
           value: "1",
-          label: "在用"
+          label: "进库"
         },
         {
           value: "2",
-          label: "停用"
+          label: "出库"
         }
       ],
       statuValue: "",
-      careOptions: [
-        {
-          value: "1",
-          label: "常规保养"
-        }
-      ],
+      
       careValue: "",
       inoutOptions: [
         {
@@ -178,36 +167,36 @@ export default {
       inoutValue: "",
       tableData: [
         {
-          license: "冀A1231312",
-          property: "内部车辆",
-          cartype: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
+          license: "冀A12312",
+          carNo: "3929",
+          cartype: "内部车辆",
+          ofDept: "保卫科",
+          inOrOut: "入库",
+          date: "2019-04-23 12：35"
         },
         {
-          license: "冀A1231312",
-          property: "内部车辆",
-          cartype: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
+          license: "冀A12312",
+          carNo: "3929",
+          cartype: "内部车辆",
+          ofDept: "保卫科",
+          inOrOut: "入库",
+          date: "2019-04-23 12：35"
         },
         {
-          license: "冀A1231312",
-          property: "内部车辆",
-          cartype: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
+          license: "冀A12312",
+          carNo: "3929",
+          cartype: "内部车辆",
+          ofDept: "保卫科",
+          inOrOut: "入库",
+          date: "2019-04-23 12：35"
         },
         {
-          license: "冀A1231312",
-          property: "内部车辆",
-          cartype: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
+          license: "冀A12312",
+          carNo: "3929",
+          cartype: "内部车辆",
+          ofDept: "保卫科",
+          inOrOut: "入库",
+          date: "2019-04-23 12：35"
         }
       ]
     };

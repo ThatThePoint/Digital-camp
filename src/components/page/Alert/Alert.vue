@@ -10,23 +10,27 @@
     <div class="container">
       <div class="messages">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="发布单位">
-            <el-input v-model="formInline.user" placeholder="请选择"></el-input>
+            <el-form-item label="发布单位">
+            <el-select v-model="formInline.user" placeholder="请选择">
+              <el-option label="警卫处" value="xx"></el-option>
+              <el-option label="消防处" value="ss"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="警报等级">
             <el-select v-model="formInline.region" placeholder="请选择">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+              <el-option label="一级" value="shanghai"></el-option>
+              <el-option label="二级" value="beijing"></el-option>
+              <el-option label="三级" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="警报状态">
-            <el-select v-model="formInline.region" placeholder="请选择">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+            <el-select v-model="formInline.name" placeholder="请选择">
+              <el-option label="生效" value="shanghai"></el-option>
+              <el-option label="失效" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="警报内容">
-            <el-input v-model="formInline.user" placeholder="请输入"></el-input>
+            <el-input v-model="formInline.name" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -42,11 +46,11 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="date" label="警报内容" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="name" label="发布单位" sortable width="180"></el-table-column>
-          <el-table-column prop="address" label="警报类型" :formatter="formatter"></el-table-column>
-          <el-table-column prop="address" label="警报状态" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="发布时间" :formatter="formatter"></el-table-column>
+          <el-table-column prop="content" label="警报内容" sortable width="180">{{}}</el-table-column>
+          <el-table-column prop="dept" label="发布单位" sortable width="180"></el-table-column>
+          <el-table-column prop="level" label="警报类型" ></el-table-column>
+          <el-table-column prop="status" label="警报状态" ></el-table-column>
+          <el-table-column prop="date" label="发布时间" ></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">警报解除</el-button>
@@ -138,28 +142,32 @@ export default {
       value: "",
       tableData: [
         {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-          edit: "1"
+          content: "狼来了",
+          dept: "保卫科",
+          level: "一级",
+          status: "生效",
+          date:"2019-04-23 23:56"
         },
         {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-          edit: "1"
+          content: "狼来了",
+          dept: "保卫科",
+          level: "一级",
+          status: "生效",
+          date:"2019-04-23 23:56"
         },
         {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-          edit: "1"
+          content: "狼来了",
+          dept: "保卫科",
+          level: "一级",
+          status: "生效",
+          date:"2019-04-23 23:56"
         },
         {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-          edit: "1"
+          content: "狼来了",
+          dept: "保卫科",
+          level: "一级",
+          status: "生效",
+          date:"2019-04-23 23:56"
         }
       ],
       formInline: {
