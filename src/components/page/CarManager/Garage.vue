@@ -37,62 +37,62 @@ export default {
       departmentOptions: [
         {
           value: "1-2",
-          label: "连队1",
+          label: "A1",
           statu: "use"
         },
         {
           value: "2-2",
-          label: "连队1",
+          label: "A2",
           statu: "nouse"
         },
         {
           value: "3-2",
-          label: "连队1",
+          label: "A3",
           statu: "private"
         },
         {
           value: "4-2",
-          label: "连队1",
+          label: "A4",
           statu: "use"
         },
         {
           value: "1-2",
-          label: "连队1",
+          label: "A5",
           statu: "use"
         },
         {
           value: "2-2",
-          label: "连队1",
+          label: "A6",
           statu: "nouse"
         },
         {
           value: "3-2",
-          label: "连队1",
+          label: "C1",
           statu: "private"
         },
         {
           value: "4-2",
-          label: "连队1",
+          label: "C2",
           statu: "use"
         },
         {
           value: "1-2",
-          label: "连队1",
+          label: "C4",
           statu: "use"
         },
         {
           value: "2-2",
-          label: "连队1",
+          label: "C6",
           statu: "nouse"
         },
         {
           value: "3-2",
-          label: "连队1",
+          label: "D5",
           statu: "private"
         },
         {
           value: "4-2",
-          label: "连队1",
+          label: "E5",
           statu: "use"
         }
       ]

@@ -33,9 +33,9 @@
             :value="item.value"
           ></el-option>
         </el-select>
-        <el-select class="input-width" v-model="inoutValue" placeholder="保养类型">
+        <el-select class="input-width" v-model="careTypeValue" placeholder="保养类型">
           <el-option
-            v-for="item in inoutOptions"
+            v-for="item in careType"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -67,9 +67,9 @@
           </el-table-column>
           <el-table-column prop="property" label="车辆编号" sortable width="180"></el-table-column>
           <el-table-column prop="department" label="所属部门" sortable></el-table-column>
-          <el-table-column prop="carUser" label="保养时间" sortable></el-table-column>
-          <el-table-column prop="tel" label="保养类型" sortable></el-table-column>
-          <el-table-column prop="inout" label="费用" sortable></el-table-column>
+          <el-table-column prop="carUser" label="保养类型" sortable></el-table-column>
+          <el-table-column prop="tel" label="费用" sortable></el-table-column>
+          <el-table-column prop="inout" label="保养时间" sortable></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -150,18 +150,19 @@ export default {
           label: "临时车辆"
         }
       ],
-      inoutOptions: [
+      careTypeValue:"",//保养类型
+      careType: [
         {
           value: "1",
-          label: "内部车辆"
+          label: "常规保养"
         },
         {
           value: "2",
-          label: "外部车辆"
+          label: "维修"
         },
         {
           value: "3",
-          label: "临时车辆"
+          label: "损坏"
         }
       ],
       propertyValue: "",
@@ -170,36 +171,36 @@ export default {
       tableData: [
         {
           license: "冀A1231312",
-          property: "内部车辆",
+          property: "2211",
           department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
+          carUser: "常规保养",
+          tel: "￥885",
+          inout: "2019-04-21"
         },
         {
           license: "冀A1231312",
-          property: "内部车辆",
+          property: "2211",
           department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
+          carUser: "常规保养",
+          tel: "￥885",
+          inout: "2019-04-21"
         },
         {
           license: "冀A1231312",
-          property: "内部车辆",
+          property: "2211",
           department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
+          carUser: "常规保养",
+          tel: "￥885",
+          inout: "2019-04-21"
         },
         {
           license: "冀A1231312",
-          property: "内部车辆",
+          property: "2211",
           department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
-        }
+          carUser: "常规保养",
+          tel: "￥885",
+          inout: "2019-04-21"
+        },
       ]
     };
   },

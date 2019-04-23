@@ -143,15 +143,11 @@ export default {
       inoutOptions: [
         {
           value: "1",
-          label: "内部车辆"
+          label: "在库"
         },
         {
           value: "2",
-          label: "外部车辆"
-        },
-        {
-          value: "3",
-          label: "临时车辆"
+          label: "出库"
         }
       ],
       propertyValue: "",
