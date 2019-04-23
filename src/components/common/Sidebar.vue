@@ -160,7 +160,7 @@
                                 title: '警报传递'
                             },
                             {
-                                index: '88',
+                                index: 'rule',
                                 title: '规章制度',
                             },
                         ]
