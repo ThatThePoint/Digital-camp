@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-favor"></i> 公文信息
+          <i class="el-icon-lx-favor"></i> 车辆派遣
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -34,23 +34,23 @@
         </el-form>
       </div>
       <div class="body">
-        <el-table
+         <el-table
           :data="tableData"
           style="width: 100%"
-          :default-sort="{prop: 'date', order: 'descending'}"
+          :default-sort="{prop: 'license', order: 'descending'}"
         >
-          <el-table-column prop="date" label="制度名称" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="name" label="制度简介" sortable width="180"></el-table-column>
-          <el-table-column prop="address" label="制度版本" :formatter="formatter"></el-table-column>
-          <el-table-column prop="address" label="是否生效" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="上传人" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="发布时间" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="阅读次数" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="下载次数" :formatter="formatter"></el-table-column>
+          <el-table-column prop="license" label="车牌号" sortable width="180">
+          </el-table-column>
+          <el-table-column prop="carNo" label="车辆编号" sortable width="180"></el-table-column>
+          <el-table-column prop="ofDept" label="所属部门" sortable></el-table-column>
+          <el-table-column prop="applyPerson" label="申请人" sortable></el-table-column>
+          <el-table-column prop="type" label="申请类型" sortable></el-table-column>
+          <el-table-column prop="disc" label="申请描述" sortable></el-table-column>
+           <el-table-column prop="date" label="申请时间" sortable></el-table-column>
+          <el-table-column prop="status" label="申请状态" sortable></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">预览</el-button>
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">下载</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -66,6 +66,10 @@
                 <el-option label="外出" value="shanghai"></el-option>
                 <el-option label="因私" value="beijing"></el-option>
               </el-select>
+            </el-form-item>
+            <el-form-item label="日期筛选" :label-width="formLabelWidth">
+              <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
+              <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="申请描述" :label-width="formLabelWidth">
               <el-input class="input-width" placeholder v-model="input2" type="textarea"></el-input>
@@ -142,28 +146,44 @@ export default {
       value: "",
       tableData: [
         {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-          edit: "1"
+          license: "冀A1231312",
+          carNo:"2323",
+          ofDept: "连队1",
+          applyPerson: "小张",
+          type: "内部车辆",
+          disc: "接送亲戚",
+          date: "2019-04-23",
+          status: "待审批"
         },
         {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-          edit: "1"
+          license: "冀A1231312",
+          carNo:"2323",
+          ofDept: "连队1",
+          applyPerson: "小张",
+          type: "内部车辆",
+          disc: "接送亲戚",
+          date: "2019-04-23",
+          status: "通过"
         },
         {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-          edit: "1"
+          license: "冀A1231312",
+          carNo:"2323",
+          ofDept: "连队1",
+          applyPerson: "小张",
+          type: "内部车辆",
+          disc: "接送亲戚",
+          date: "2019-04-23",
+          status: "待审批"
         },
         {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-          edit: "1"
+          license: "冀A1231312",
+          carNo:"2323",
+          ofDept: "连队1",
+          applyPerson: "小张",
+          type: "内部车辆",
+          disc: "接送亲戚",
+          date: "2019-04-23",
+          status: "待审批"
         }
       ],
       formInline: {

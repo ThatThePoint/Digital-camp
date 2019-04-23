@@ -3,26 +3,20 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-favor"></i> 公文信息
+          <i class="el-icon-lx-favor"></i> 规章制度
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
       <div class="messages">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label>
-            <el-select v-model="formInline.region" placeholder="生效状态">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+        <el-form :inline="true" :model="status" class="demo-form-inline">
+          <el-form-item label="生效状态">
+            <el-select v-model="formInline.region" placeholder="请选择">
+              <el-option label="有效" value="shanghai"></el-option>
+              <el-option label="失效" value="beijing"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label>
-            <el-select v-model="formInline.region" placeholder="制度名称">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label>
+          <el-form-item label="规章名称">
             <el-input v-model="formInline.user" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item>
@@ -39,14 +33,14 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="date" label="制度名称" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="name" label="制度简介" sortable width="180"></el-table-column>
-          <el-table-column prop="address" label="制度版本" :formatter="formatter"></el-table-column>
-          <el-table-column prop="address" label="是否生效" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="上传人" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="发布时间" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="阅读次数" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="下载次数" :formatter="formatter"></el-table-column>
+          <el-table-column prop="name" label="制度名称" sortable width="180">{{}}</el-table-column>
+          <el-table-column prop="introduce" label="制度简介" sortable width="180"></el-table-column>
+          <el-table-column prop="version" label="版本" ></el-table-column>
+          <el-table-column prop="status" label="生效状态" ></el-table-column>
+          <el-table-column prop="releaser" label="发布人" ></el-table-column>
+          <el-table-column prop="date" label="发布时间" ></el-table-column>
+          <el-table-column prop="viewCount" label="阅读次数" ></el-table-column>
+          <el-table-column prop="downCount" label="下载次数" ></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">预览</el-button>
@@ -54,31 +48,18 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-dialog title="制度信息" :visible.sync="dialogFormVisible">
+        <el-dialog title="新增规章制度" :visible.sync="dialogFormVisible">
           <el-form :model="form">
-            <div class="flex"></div>
-            <el-form-item label="制度名称" :label-width="formLabelWidth">
-              <el-input class="input-width" placeholder v-model="input2"></el-input>
+            <div class="flex">
+            </div>
+            <el-form-item label="警报内容" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder="警报内容" v-model="input2"></el-input>
             </el-form-item>
-            <el-form-item label="制度简介" :label-width="formLabelWidth">
-              <el-input class="input-width" placeholder v-model="input2"></el-input>
-            </el-form-item>
-            <el-form-item label="制度版本" :label-width="formLabelWidth">
-              <el-input class="input-width" placeholder v-model="input2"></el-input>
-            </el-form-item>
-            <el-form-item label="制度版本" :label-width="formLabelWidth">
-              <el-upload
-                class="upload"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :before-remove="beforeRemove"
-                multiple
-                :limit="3"
-                :on-exceed="handleExceed"
-                :file-list="fileList"
-              >
-                <el-button size="small" type="primary">点击上传</el-button>
-              </el-upload>
+            <el-form-item label="警报等级" :label-width="formLabelWidth">
+              <el-select v-model="formInline.region" placeholder="请选择">
+                <el-option label="区域一" value="shanghai"></el-option>
+                <el-option label="区域二" value="beijing"></el-option>
+              </el-select>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -127,6 +108,7 @@ export default {
       value1: "",
       value2: "",
       input2: "",
+      status:"",//生效状态
       options: [
         {
           value: "1",
@@ -152,28 +134,44 @@ export default {
       value: "",
       tableData: [
         {
+          name:"宿舍管理条例",
+          introduce:"宿舍管理",
+          version:"1.0",
+          status:"生效",
+          releaser:"老张",
           date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-          edit: "1"
+          viewCount:"23",
+          downCount:"22"
         },
         {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-          edit: "1"
+          name:"宿舍管理条例",
+          introduce:"宿舍管理",
+          version:"1.0",
+          status:"生效",
+          releaser:"老张",
+          date: "2016-05-02",
+          viewCount:"23",
+          downCount:"22"
         },
         {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-          edit: "1"
+          name:"宿舍管理条例",
+          introduce:"宿舍管理",
+          version:"1.0",
+          status:"生效",
+          releaser:"老张",
+          date: "2016-05-02",
+          viewCount:"23",
+          downCount:"22"
         },
         {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-          edit: "1"
+          name:"宿舍管理条例",
+          introduce:"宿舍管理",
+          version:"1.0",
+          status:"生效",
+          releaser:"老张",
+          date: "2016-05-02",
+          viewCount:"23",
+          downCount:"22"
         }
       ],
       formInline: {
@@ -207,22 +205,6 @@ export default {
     },
     onSubmit() {
       console.log("submit!");
-    },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
-    },
-    handleExceed(files, fileList) {
-      this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${
-          files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
-      );
-    },
-    beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`);
     }
   }
 };

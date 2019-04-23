@@ -167,7 +167,7 @@ export default new Router({
                     // 用车统计
                     path: '/usecar',
                     component: resolve => require(['../components/page/CarManager/UseCar.vue'], resolve),
-                    meta: { title: '车辆派遣', permission: true }
+                    meta: { title: '用车统计', permission: true }
                 },
                 {
                     // 增加车辆
