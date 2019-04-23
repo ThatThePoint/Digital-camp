@@ -10,7 +10,7 @@
         <span>所属部门</span>
         <el-select class="input-width" v-model="value" filterable placeholder="请选择">
           <el-option
-            v-for="item in options"
+            v-for="item in depts"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -21,16 +21,16 @@
         <el-dialog title="值班安排" :visible.sync="dialogFormVisible">
           <el-form :model="form">
             <div class="flex">
-              <el-form-item label="活动名称" :label-width="formLabelWidth">
+              <el-form-item label="岗位部门" :label-width="formLabelWidth">
                 <el-select
-                  label="活动名称"
+                  label="部门"
                   class="input-width"
                   v-model="value"
                   filterable
                   placeholder="所属部门"
                 >
                   <el-option
-                    v-for="item in options"
+                    v-for="item in depts"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
@@ -40,7 +40,7 @@
               <el-form-item label="岗位" :label-width="formLabelWidth">
                 <el-select class="input-width" v-model="value" filterable placeholder="岗位">
                   <el-option
-                    v-for="item in options"
+                    v-for="item in jobs"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
@@ -52,13 +52,16 @@
               <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
               <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
             </el-form-item>
-            <el-form-item label="值班人" :label-width="formLabelWidth">
-              <el-input
-                class="input-width"
-                placeholder="请输入"
-                v-model="input2"
-              ></el-input>
-            </el-form-item>
+             <el-form-item label="值班人" :label-width="formLabelWidth">
+                <el-select class="input-width" v-model="value" filterable placeholder="值班人">
+                  <el-option
+                    v-for="item in person"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -70,13 +73,13 @@
         <el-table
           :data="tableData"
           style="width: 100%"
-          :default-sort="{prop: 'date', order: 'descending'}"
+          :default-sort="{prop: 'job', order: 'descending'}"
         >
-          <el-table-column prop="date" label="岗位名称" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="name" label="单位" sortable width="180"></el-table-column>
-          <el-table-column prop="address" label="当前值班人" :formatter="formatter"></el-table-column>
-          <el-table-column prop="startTime" label="当日值班安排"></el-table-column>
-          <el-table-column prop="endTime" label="值班记录"></el-table-column>
+          <el-table-column prop="job" label="岗位名称" sortable width="180">{{}}</el-table-column>
+          <el-table-column prop="dept" label="单位" sortable width="180"></el-table-column>
+          <el-table-column prop="dutyNow" label="当前值班人"></el-table-column>
+          <el-table-column prop="dutyToday" label="当日值班安排"></el-table-column>
+          <el-table-column prop="remark" label="值班记录"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -124,79 +127,88 @@ export default {
       value1: "",
       value2: "",
       input2: "",
-      options: [
+      depts: [
         {
           value: "1",
-          label: "普通"
+          label: "信息科"
         },
         {
           value: "2",
-          label: "提醒"
+          label: "保卫处"
         },
         {
           value: "3",
-          label: "严重"
+          label: "后勤处"
         },
         {
           value: "4",
           label: "警告"
+        }
+      ],
+      jobs: [
+        {
+          value: "1",
+          label: "班长"
         },
         {
-          value: "5",
-          label: "紧急"
+          value: "2",
+          label: "后勤员"
+        },
+        {
+          value: "3",
+          label: "科长"
+        }
+      ],
+      person: [
+        {
+          value: "1",
+          label: "张大锤"
+        },
+        {
+          value: "2",
+          label: "刘力"
+        },
+        {
+          value: "3",
+          label: "哈哈"
         }
       ],
       value: "",
       tableData: [
         {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-          startTime: "1",
-          endTime: "1"
+          job: "门卫",
+          dept: "保卫处",
+          dutyNow: "王小虎",
+          dutyToday: "8:00-20:00 王小虎<br>20:00-24:00 王小虎",
+          remark: "值班正常"
         },
         {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-          startTime: "1",
-          endTime: "1"
+          job: "门卫",
+          dept: "保卫处",
+          dutyNow: "王小虎",
+          dutyToday: "8:00-20:00王小虎</br>20:00-24:00 王小虎",
+          remark: "值班正常"
         },
         {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-          startTime: "1",
-          endTime: "1"
+          job: "门卫",
+          dept: "保卫处",
+          dutyNow: "王小虎",
+          dutyToday: "8:00-20:00王小虎</br>20:00-24:00 王小虎",
+          remark: "值班正常"
         },
         {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-          startTime: "1",
-          endTime: "1"
-        }
-      ],
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
+          job: "门卫",
+          dept: "保卫处",
+          dutyNow: "王小虎",
+          dutyToday: "8:00-20:00王小虎</br>20:00-24:00 王小虎",
+          remark: "值班正常"
         },
         {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
+          job: "门卫",
+          dept: "保卫处",
+          dutyNow: "王小虎",
+          dutyToday: "8:00-20:00王小虎</br>20:00-24:00 王小虎",
+          remark: "值班正常"
         }
       ],
       dialogTableVisible: false,

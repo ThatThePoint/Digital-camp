@@ -38,12 +38,12 @@
         >
           <el-table-column prop="number" label="公文号" sortable width="180">{{}}</el-table-column>
           <el-table-column prop="title" label="公文标题" sortable width="180"></el-table-column>
-          <el-table-column prop="docLever" label="公文等级" ></el-table-column>
+          <el-table-column prop="docLever" label="公文等级" :formatter="formatterLever"></el-table-column>
           <el-table-column prop="sendDept" label="发送部门" ></el-table-column>
           <el-table-column prop="sendPerson" label="发送人" ></el-table-column>
           <el-table-column prop="date" label="发送时间" ></el-table-column>
-          <el-table-column prop="status" label="状态" ></el-table-column>
-          <el-table-column prop="allReceive" label="全部已阅" :formatter="formatter"></el-table-column>
+          <el-table-column prop="status" label="状态" :formatter="formatterStaus"></el-table-column>
+          <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -170,13 +170,14 @@ export default {
     };
   },
   methods: {
-    formatter(row, column) {
-      row.status==1?"发布":"草稿";
-      
-     row.docLevel==1?"普通":row.docLever==2?"提醒":row.docLever==3?"严重":row.docLever==4?"警告":"紧急";
+    formatterStaus(row, column) {
+      return row.status==1?"发布":"草稿";
+    },
+    formatterLever(row, column) {
+      return row.docLevel==1?"普通":row.docLever==2?"提醒":row.docLever==3?"严重":row.docLever==4?"警告":"紧急";
+    },
+    formatterReceive(row, column) {
      return row.allReceive==1?"已收录":"待收录";
-      // row.status==1?"发布":"草稿";
-      // return row.address;
     },
     handleEdit(index, row) {
       console.log(index, row);
