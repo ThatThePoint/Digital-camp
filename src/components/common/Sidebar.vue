@@ -160,7 +160,7 @@
                                 title: '警报传递'
                             },
                             {
-                                index: '88',
+                                index: 'rules',
                                 title: '规章制度',
                             },
                         ]
@@ -183,7 +183,7 @@
                                 title: '司机管理'
                             },
                              {
-                                index: '46',
+                                index: 'cardispatch',
                                 title: '车辆派遣'
                             },
                             {
@@ -195,8 +195,8 @@
                                 title: '车辆进出记录'
                             },
                                {
-                                index: '45',
-                                title: '统计报表'
+                                index: 'usecar',
+                                title: '用车统计'
                             }
                         ]
                     },

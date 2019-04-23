@@ -114,7 +114,12 @@ export default new Router({
                     component: resolve => require(['../components/page/Alert/Alert.vue'], resolve),
                     meta: { title: '警报传递', permission: true }
                 },
-                
+                {
+                    // 规章制度
+                    path: '/rules',
+                    component: resolve => require(['../components/page/Rules/Rules.vue'], resolve),
+                    meta: { title: '规章制度', permission: true }
+                },
                 {
                     // 车辆信息
                     path: '/cardetail',
@@ -145,6 +150,24 @@ export default new Router({
                     path: '/carinout',
                     component: resolve => require(['../components/page/CarManager/CarInout.vue'], resolve),
                     meta: { title: '车辆进出', permission: true }
+                },
+                {
+                    // 车辆进出
+                    path: '/carinout',
+                    component: resolve => require(['../components/page/CarManager/CarInout.vue'], resolve),
+                    meta: { title: '车辆进出', permission: true }
+                },
+                {
+                    // 车辆派遣
+                    path: '/cardispatch',
+                    component: resolve => require(['../components/page/CarManager/CarDispatch.vue'], resolve),
+                    meta: { title: '车辆派遣', permission: true }
+                },
+                {
+                    // 用车统计
+                    path: '/usecar',
+                    component: resolve => require(['../components/page/CarManager/UseCar.vue'], resolve),
+                    meta: { title: '车辆派遣', permission: true }
                 },
                 {
                     // 增加车辆

@@ -10,22 +10,19 @@
     <div class="container">
       <div class="messages">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="发布单位">
-            <el-input v-model="formInline.user" placeholder="请选择"></el-input>
-          </el-form-item>
-          <el-form-item label="警报等级">
-            <el-select v-model="formInline.region" placeholder="请选择">
+          <el-form-item label>
+            <el-select v-model="formInline.region" placeholder="生效状态">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="警报状态">
-            <el-select v-model="formInline.region" placeholder="请选择">
+          <el-form-item label>
+            <el-select v-model="formInline.region" placeholder="制度名称">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="警报内容">
+          <el-form-item label>
             <el-input v-model="formInline.user" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item>
@@ -42,29 +39,46 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="date" label="警报内容" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="name" label="发布单位" sortable width="180"></el-table-column>
-          <el-table-column prop="address" label="警报类型" :formatter="formatter"></el-table-column>
-          <el-table-column prop="address" label="警报状态" :formatter="formatter"></el-table-column>
+          <el-table-column prop="date" label="制度名称" sortable width="180">{{}}</el-table-column>
+          <el-table-column prop="name" label="制度简介" sortable width="180"></el-table-column>
+          <el-table-column prop="address" label="制度版本" :formatter="formatter"></el-table-column>
+          <el-table-column prop="address" label="是否生效" :formatter="formatter"></el-table-column>
+          <el-table-column prop="edit" label="上传人" :formatter="formatter"></el-table-column>
           <el-table-column prop="edit" label="发布时间" :formatter="formatter"></el-table-column>
+          <el-table-column prop="edit" label="阅读次数" :formatter="formatter"></el-table-column>
+          <el-table-column prop="edit" label="下载次数" :formatter="formatter"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">警报解除</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">预览</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">下载</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <el-dialog title="增加警报" :visible.sync="dialogFormVisible">
+        <el-dialog title="制度信息" :visible.sync="dialogFormVisible">
           <el-form :model="form">
-            <div class="flex">
-            </div>
-            <el-form-item label="警报内容" :label-width="formLabelWidth">
-              <el-input class="input-width" placeholder="警报内容" v-model="input2"></el-input>
+            <div class="flex"></div>
+            <el-form-item label="制度名称" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder v-model="input2"></el-input>
             </el-form-item>
-            <el-form-item label="警报等级" :label-width="formLabelWidth">
-              <el-select v-model="formInline.region" placeholder="请选择">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
+            <el-form-item label="制度简介" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder v-model="input2"></el-input>
+            </el-form-item>
+            <el-form-item label="制度版本" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder v-model="input2"></el-input>
+            </el-form-item>
+            <el-form-item label="制度版本" :label-width="formLabelWidth">
+              <el-upload
+                class="upload"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :before-remove="beforeRemove"
+                multiple
+                :limit="3"
+                :on-exceed="handleExceed"
+                :file-list="fileList"
+              >
+                <el-button size="small" type="primary">点击上传</el-button>
+              </el-upload>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -193,6 +207,22 @@ export default {
     },
     onSubmit() {
       console.log("submit!");
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(
+        `当前限制选择 3 个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
     }
   }
 };

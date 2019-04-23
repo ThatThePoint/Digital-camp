@@ -15,63 +15,58 @@
             奔驰2号
             <span>状态</span>
             所属单位
-            <el-select class="input-width" v-model="inputOptions" placeholder="请选择">
-              <el-option
-                v-for="item in inoutOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
+            <el-input
+              class="input-width"
+              placeholder="车牌号"
+              value="警卫连"
+              disabled
+            ></el-input>
           </div>
           <div class>
             车辆品牌：
-            <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
-              <el-option
-                v-for="item in propertyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>车辆型号：
-            <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
-              <el-option
-                v-for="item in propertyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>颜色：
-            <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
-              <el-option
-                v-for="item in propertyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>行驶证号：
-            <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
+             <el-input
+              class="input-width"
+              value="大众"
+              disabled
+            ></el-input>车辆型号：
+            <el-input
+              class="input-width"
+              value="大众"
+              disabled
+            ></el-input>颜 色：
+             <el-input
+              class="input-width"
+              value="红色"
+              disabled
+            ></el-input>行驶证号：
+             <el-input
+              class="input-width"
+              value="DSK88339"
+              disabled
+            ></el-input>
           </div>
           <div class>
             车辆座位：
-            <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
-              <el-option
-                v-for="item in propertyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>车辆载重：
-            <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
-              <el-option
-                v-for="item in propertyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>车架号：
-            <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>发动机号：
-            <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
+             <el-input
+              class="input-width"
+              value="4座"
+              disabled
+            ></el-input>车辆载重：
+             <el-input
+              class="input-width"
+              value="2吨"
+              disabled
+            ></el-input>车架号：
+             <el-input
+              class="input-width"
+              value="123"
+              disabled
+            ></el-input>发动机号：
+             <el-input
+              class="input-width"
+              value="123"
+              disabled
+            ></el-input>
           </div>
         </div>
       </div>
@@ -93,8 +88,7 @@
           </div>
           <div class="itemDet">
             维修日期：
-            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
-            保养明细：
+            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>保养明细：
             <el-input type="textarea" class="wenben"></el-input>
           </div>
         </div>
@@ -150,7 +144,7 @@ export default {
         },
         {
           value: "2",
-          label: "连队2" 
+          label: "连队2"
         },
         {
           value: "3",
@@ -273,15 +267,15 @@ export default {
 .upload {
   display: inline-block;
 }
-.wenben{
-  width : 400px;
+.wenben {
+  width: 400px;
   vertical-align: top;
 }
-.submit{
+.submit {
   margin: 40px auto;
   text-align: center;
 }
-.submit button{
+.submit button {
   margin: 0 100px;
 }
 </style>

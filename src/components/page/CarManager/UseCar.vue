@@ -59,12 +59,10 @@
           <el-table-column prop="cartype" label="车辆编号" sortable></el-table-column>
           <el-table-column prop="carUser" label="车辆类型" sortable></el-table-column>
           <el-table-column prop="tel" label="所属部门" sortable></el-table-column>
-          <el-table-column prop="inout" label="记录类型" sortable></el-table-column>
-          <el-table-column prop="inout" label="时间" sortable></el-table-column>
+          <el-table-column prop="inout" label="使用次数" sortable></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-              <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>
