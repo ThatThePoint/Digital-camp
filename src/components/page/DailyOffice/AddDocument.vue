@@ -13,7 +13,6 @@
       <div class="container-header">
         收件人：
         <el-select
-
           v-model="value"
           multiple
           filterable
@@ -50,8 +49,8 @@
         </el-upload>
       </div>
       <quill-editor ref="myTextEditor" v-model="content" :options="editorOption"></quill-editor>
-      <el-button class="editor-btn" type="danger" >取消</el-button>
-      <el-button class="editor-btn" type="warn" >保存</el-button>
+      <el-button class="editor-btn" type="danger">取消</el-button>
+      <el-button class="editor-btn" type="warn">保存</el-button>
       <el-button class="editor-btn" type="success" @click="submit">提交</el-button>
     </div>
   </div>
@@ -155,7 +154,7 @@ export default {
         "West Virginia",
         "Wisconsin",
         "Wyoming"
-      ]
+      ],
     };
   },
 
@@ -203,7 +202,8 @@ export default {
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
-    }
+    },
+   
   }
 };
 </script>
@@ -211,8 +211,8 @@ export default {
 .editor-btn {
   margin-top: 20px;
 }
-.upload{
-    width: 200px;
+.upload {
+  width: 200px;
 }
 .input-width {
   width: 150px;
