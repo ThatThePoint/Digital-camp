@@ -189,6 +189,30 @@ export default new Router({
                     meta: { title: '部门管理', permission: true }
                 },
                 {
+                    // 人员管理
+                    path: '/UserManage',
+                    component: resolve => require(['../components/page/DataCenter/UserManage.vue'], resolve),
+                    meta: { title: '人员管理', permission: true }
+                },
+                {
+                    // 设备管理
+                    path: '/EquipManage',
+                    component: resolve => require(['../components/page/DataCenter/EquipManage.vue'], resolve),
+                    meta: { title: '设备管理', permission: true }
+                },
+                {
+                    // 字典管理
+                    path: '/DicManage',
+                    component: resolve => require(['../components/page/SysConfig/DicManage.vue'], resolve),
+                    meta: { title: '字典管理', permission: true }
+                },
+                {
+                    // 用户权限
+                    path: '/UserRight',
+                    component: resolve => require(['../components/page/SysConfig/UserRight.vue'], resolve),
+                    meta: { title: '用户权限', permission: true }
+                },
+                {
                     path: '/404',
                     component: resolve => require(['../components/page/404.vue'], resolve),
                     meta: { title: '404' }
