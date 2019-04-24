@@ -63,7 +63,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-dialog title="新增规章制度" :visible.sync="dialogFormVisible">
+        <el-dialog title="外出申请" :visible.sync="dialogFormVisible">
           <el-form :model="form">
             <div class="flex">
               <el-form-item label="姓名：" :label-width="formLabelWidth">李云龙</el-form-item>
@@ -101,7 +101,7 @@
           </div>
         </el-dialog>
 
-        <el-dialog title="新增规章制度" :visible.sync="confirmFormVisible">
+        <el-dialog title="外出申请" :visible.sync="confirmFormVisible">
           <el-form :model="form">
             <div class="flex">
               <el-form-item label="姓名：" :label-width="formLabelWidth">{{confirmLeave.name}}</el-form-item>
@@ -141,8 +141,8 @@
             </el-timeline>
           </div>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">申 请</el-button>
+            <el-button @click="confirmFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="confirmFormVisible = false">申 请</el-button>
           </div>
         </el-dialog>
       </div>
