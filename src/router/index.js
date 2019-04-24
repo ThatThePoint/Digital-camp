@@ -189,6 +189,12 @@ export default new Router({
                     meta: { title: '部门管理', permission: true }
                 },
                 {
+                    // 请假申请管理
+                    path: '/leavemanage',
+                    component: resolve => require(['../components/page/LeaveManage/LeaveManage.vue'], resolve),
+                    meta: { title: '请假申请管理', permission: true }
+                },
+                {
                     // 人员管理
                     path: '/UserManage',
                     component: resolve => require(['../components/page/DataCenter/UserManage.vue'], resolve),
