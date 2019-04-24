@@ -37,7 +37,6 @@
             </template>
           </el-table-column>
         </el-table>
-        </el-table>
       </div>
     </div>
   </div>
