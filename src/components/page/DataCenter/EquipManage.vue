@@ -18,8 +18,7 @@
               <el-option label="理事部" value="guangz"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label>
-            设备名称
+          <el-form-item label="设备名称">
             <el-input v-model="formInline.user" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item>

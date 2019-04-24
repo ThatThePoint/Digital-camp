@@ -10,7 +10,7 @@
     <div class="container">
       <div class="messages">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label>部门名称
+          <el-form-item label="部门名称">
             <el-input v-model="formInline.user" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item>
@@ -128,31 +128,31 @@ export default {
       value: "",
       tableData: [
         {
-          name: "冀A1231312",
+          name: "政治部",
           parentNode:"2323",
-          dutyPerson: "连队1",
-          deptType: "内部车辆",
+          dutyPerson: "老李",
+          deptType: "部队",
           date: "2019-04-23"
         },
         {
-          name: "冀A1231312",
+          name: "政治部",
           parentNode:"2323",
-          dutyPerson: "连队1",
-          deptType: "内部车辆",
+          dutyPerson: "老李",
+          deptType: "部队",
           date: "2019-04-23"
         },
         {
-          name: "冀A1231312",
+          name: "政治部",
           parentNode:"2323",
-          dutyPerson: "连队1",
-          deptType: "内部车辆",
+          dutyPerson: "老李",
+          deptType: "部队",
           date: "2019-04-23"
         },
         {
-          name: "冀A1231312",
+          name: "政治部",
           parentNode:"2323",
-          dutyPerson: "连队1",
-          deptType: "内部车辆",
+          dutyPerson: "老李",
+          deptType: "部队",
           date: "2019-04-23"
         }
       ],

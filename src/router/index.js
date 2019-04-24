@@ -90,7 +90,7 @@ export default new Router({
                     meta: { title: '公文管理', permission: true }
                 },
                 {
-                    // 公文管理
+                    // 增加公文
                     path: '/adddocument',
                     component: resolve => require(['../components/page/DailyOffice/AddDocument.vue'], resolve),
                     meta: { title: '增加公文', permission: true }

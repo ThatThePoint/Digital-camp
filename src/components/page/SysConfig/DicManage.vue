@@ -10,7 +10,7 @@
     <div class="container">
       <div class="messages">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label>字典名称
+          <el-form-item label="字典名称">
             <el-input v-model="formInline.user" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item>

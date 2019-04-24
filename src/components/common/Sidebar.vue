@@ -200,7 +200,40 @@
                             }
                         ]
                     },
-                    
+                    {
+                        icon: 'el-icon-lx-copy',
+                        index: 'data',
+                        title: '数据中心',
+                        subs: [
+                            {
+                                index: 'DeptManage',
+                                title: '部门管理'
+                            },
+                            {
+                                index: 'UserManage',
+                                title: '用户管理',
+                            },
+                            {
+                                index: 'EquipManage',
+                                title: '设备管理'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'el-icon-lx-copy',
+                        index: 'system',
+                        title: '系统设置',
+                        subs: [
+                            {
+                                index: 'UserRight',
+                                title: '用户权限',
+                            },
+                            {
+                                index: 'DicManage',
+                                title: '字典管理'
+                            }
+                        ]
+                    }
                 ]
             }
         },
