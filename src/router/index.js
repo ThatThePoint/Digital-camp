@@ -183,6 +183,12 @@ export default new Router({
                     meta: { title: '新增保养', permission: true }
                 },
                 {
+                    // 部门管理
+                    path: '/DeptManage',
+                    component: resolve => require(['../components/page/DataCenter/DeptManage.vue'], resolve),
+                    meta: { title: '部门管理', permission: true }
+                },
+                {
                     path: '/404',
                     component: resolve => require(['../components/page/404.vue'], resolve),
                     meta: { title: '404' }
