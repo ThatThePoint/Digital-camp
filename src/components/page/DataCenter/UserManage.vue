@@ -17,7 +17,7 @@
           ></el-option>
         </el-select>
         <el-button type="primary">查询</el-button>
-        <el-button type="success" @click="dialogFormVisible = true">新增</el-button>
+        <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
         <el-dialog title="添加人员" :visible.sync="dialogFormVisible">
           <el-form :model="form">
             <el-form-item label="人员信息：" :label-width="formLabelWidth"></el-form-item>

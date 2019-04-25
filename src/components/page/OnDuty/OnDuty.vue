@@ -17,7 +17,7 @@
           ></el-option>
         </el-select>
         <el-button type="primary">查询</el-button>
-        <el-button type="success" @click="dialogFormVisible = true">新增</el-button>
+        <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
         <el-dialog title="值班安排" :visible.sync="dialogFormVisible">
           <el-form :model="form">
             <div class="flex">
