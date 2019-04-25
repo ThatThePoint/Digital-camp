@@ -12,18 +12,53 @@
                     </div>
                     <div class="user-info-list">上次登录时间：<span>2019-01-01</span></div>
                     <div class="user-info-list">上次登录地点：<span>广州</span></div>
-                </el-card>
+                </el-card>  
             </el-col>
             <el-col :span="16">
-                <el-card shadow="hover" style="height:353px;">
+                <el-row :gutter="20" class="mgb20">
+                    <el-col :span="8">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-1">
+                                <i class="el-icon-lx-people grid-con-icon"></i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">100%</div>
+                                    <div>人员在位率</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-2">
+                                <i class="el-icon-lx-notice grid-con-icon"></i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">0</div>
+                                    <div>告警信息</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-3">
+                                <i class="el-icon-lx-goods grid-con-icon"></i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">228</div>
+                                    <div>车库空余位置</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+                                <el-card shadow="hover" style="height:232px; overflow:auto;">
                     <div slot="header" class="clearfix">
-                        <span>消息通知</span>
-                        <el-button style="float: right; padding: 3px 0" type="text"></el-button>
+                        <span>待办事项</span>
+                        <el-button style="float: right; padding: 3px 0" type="text">添加</el-button>
                     </div>
                     <el-table :data="todoList" :show-header="false" height="304" style="width: 100%;font-size:14px;">
                         <el-table-column width="40">
                             <template slot-scope="scope">
-                                <el-checkbox v-show="false" v-model="scope.row.status"></el-checkbox>
+                                <el-checkbox v-model="scope.row.status"></el-checkbox>
                             </template>
                         </el-table-column>
                         <el-table-column>
@@ -32,10 +67,10 @@
                             </template>
                         </el-table-column>
                         <el-table-column width="60">
-                            <!-- <template slot-scope="scope">
+                            <template>
                                 <i class="el-icon-edit"></i>
                                 <i class="el-icon-delete"></i>
-                            </template> -->
+                            </template>
                         </el-table-column>
                     </el-table>
                 </el-card>
@@ -59,12 +94,6 @@
                                 <div class="todo-item" :class="{'todo-item-del': scope.row.status}">{{scope.row.title}}</div>
                             </template>
                         </el-table-column>
-                        <el-table-column width="60">
-                            <!-- <template slot-scope="scope">
-                                <i class="el-icon-edit"></i>
-                                <i class="el-icon-delete"></i>
-                            </template> -->
-                        </el-table-column>
                     </el-table>
                 </el-card>
             </el-col>
@@ -74,7 +103,7 @@
                         <span>车库情况</span>
                         <el-button style="float: right; padding: 3px 0" type="text"></el-button>
                     </div>
-                    <el-table :data="garageInfo" :show-header="false" height="304" style="width: 100%;font-size:18px;">
+                    <el-table :data="garageInfo" :show-header="false" height="304" style="width: 100%;font-size:18px;background-color=#f0f9eb">
                         <el-table-column width="20">
                             <template slot-scope="scope">
                                 <el-checkbox v-show="false" v-model="scope.row.status"></el-checkbox>
@@ -82,7 +111,7 @@
                         </el-table-column>
                         <el-table-column>
                             <template slot-scope="scope">
-                                <div class="todo-item" :class="{'todo-item-del': scope.row.status}">{{scope.row.title}}</div>
+                                <div class="todo-item" :class="{'todo-item-del': scope.row.status}" >{{scope.row.title}}</div>
                             </template>
                         </el-table-column>
                         <el-table-column width="60">
@@ -299,11 +328,11 @@
         color: #999;
     }
     .warning-row {
-    background: oldlace;
+    background-color: oldlace;
     }
 
     .success-row {
-    background: #f0f9eb;
+    background-color: #f0f9eb;
     }
     .grid-num {
         font-size: 30px;

@@ -28,7 +28,7 @@
         <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
         <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
         <el-button type="primary">查询</el-button>
-        <el-button type="success">新增</el-button>
+        <el-button type="success" class="right">新增</el-button>
       </div>
       <div class="body">
         <el-table

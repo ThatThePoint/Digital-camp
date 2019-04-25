@@ -16,9 +16,7 @@
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
-          <el-form-item>
-            <el-button type="success" @click="outerVisible = true">新增</el-button>
-          </el-form-item>
+            <el-button type="success" @click="outerVisible = true" class="right">新增</el-button>
           <el-dialog title="添加字典" :visible.sync="outerVisible">
             <el-dialog width="30%" title="添加明细" :visible.sync="innerVisible" append-to-body>
               <el-form :model="form">

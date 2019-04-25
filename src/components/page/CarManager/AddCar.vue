@@ -9,7 +9,7 @@
     </div>
     <div class="container">
       <div class="header-container">
-        <div class="carImg"></div>
+        <div class="carImg">车辆照片</div>
         <div class="carDet">
           <div class="license">
             奔驰2号

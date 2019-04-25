@@ -35,9 +35,7 @@
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
-          <el-form-item>
-            <el-button type="success" @click="dialogFormVisible = true">新增</el-button>
-          </el-form-item>
+            <el-button type="success" @click="dialogFormVisible = true"  class="right">新增</el-button>
         </el-form>
       </div>
       <div class="body">
@@ -66,8 +64,9 @@
             </el-form-item>
             <el-form-item label="警报等级" :label-width="formLabelWidth">
               <el-select v-model="formInline.region" placeholder="请选择">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
+                <el-option label="一级" value="shanghai"></el-option>
+              <el-option label="二级" value="beijing"></el-option>
+              <el-option label="三级" value="beijing"></el-option>
               </el-select>
             </el-form-item>
           </el-form>

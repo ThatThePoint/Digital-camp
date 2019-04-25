@@ -40,7 +40,7 @@
           v-model="input2"
         ></el-input>
         <el-button>搜索</el-button>
-        <el-button type="success"  @click="addCar()">新增</el-button>
+        <el-button type="success"  @click="addCar()" class="right">新增</el-button>
       </div>
       <div class="body">
         <el-table
