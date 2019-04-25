@@ -23,31 +23,33 @@
             <el-form-item label="人员信息：" :label-width="formLabelWidth"></el-form-item>
             <div class="flex">
               <el-form-item label="人员类型" :label-width="formLabelWidth">
-                <el-select v-model="formInline.region">
-                  <el-option label="现役人员" value="shanghai"></el-option>
-                  <el-option label="退役人员" value="beijing"></el-option>
-                  <el-option label="驻训人员" value="beijing"></el-option>
-                  <el-option label="职工" value="beijing"></el-option>
-                  <el-option label="家属" value="beijing"></el-option>
-                  <el-option label="临时人员" value="beijing"></el-option>
+                <el-select v-model="formInline.status">
+                  <el-option label="现役人员" value="1"></el-option>
+                  <el-option label="退役人员" value="2"></el-option>
+                  <el-option label="驻训人员" value="3"></el-option>
+                  <el-option label="职工" value="4"></el-option>
+                  <el-option label="家属" value="5"></el-option>
+                  <el-option label="临时人员" value="6"></el-option>
                 </el-select>
               </el-form-item>
 
-              <el-form-item label="所属部门" :label-width="formLabelWidth">
-                <el-select v-model="formInline.region">
+              <el-form-item label="所属部门" :label-width="formLabelWidth" :visible.sync="deptVisible">
+                <el-select v-model="formInline.dept" @selection-change="InOutUser">
                   <el-option label="战斗班" value="shanghai"></el-option>
+                  <el-option label="独立团" value="sss"></el-option>
                 </el-select>
               </el-form-item>
             </div>
-              <div class="flex">
+              <div class="flex" :visible.sync="outManVisible">
               <el-form-item label="内部联系人" :label-width="formLabelWidth">
-                <el-select v-model="formInline.region">
-                  <el-option label="战斗班" value="shanghai"></el-option>
+                <el-select v-model="formInline.relaterDept">
+                  <el-option label="战斗班" value="we"></el-option>
                   <el-option label="退役人员" value="beijing"></el-option>
                   <el-option label="驻训人员" value="beijing"></el-option>
                 </el-select>
-                <el-select v-model="formInline.region"  style="margin-left:20px;">
+                <el-select v-model="formInline.relater"  style="margin-left:20px;">
                   <el-option label="老王" value="shanghai"></el-option>
+                  <el-option label="老李" value="shanghai"></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -112,12 +114,14 @@
   </div>
 </template>
 <script>
+
 export default {
   name: "documentManagement",
   data() {
     return {
       radio: 1,
       dialogFormVisible: false,
+      deptVisible:true,
       value1: "",
       value2: "",
       input2: "",
@@ -174,28 +178,7 @@ export default {
           type: "现役"
         }
       ],
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
+      outManVisible:true,
       dialogTableVisible: false,
       dialogFormVisible: false,
       form: {
@@ -211,7 +194,11 @@ export default {
       formLabelWidth: "120px",
       formInline: {
         user: "",
-        region: ""
+        region: "",
+        dept:"",
+        status:"",
+        relaterDept:"",
+        relater:""
       }
     };
   },
@@ -224,6 +211,17 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
+    },
+    InOutUser(ss){
+      debugger
+      if(this.formInline.status==1){
+        this.deptVisible=true;
+        this.outManVisible=false;
+      }else{
+        this.deptVisible=false;
+        this.outManVisible=true;
+      }
+      
     }
   }
 };
