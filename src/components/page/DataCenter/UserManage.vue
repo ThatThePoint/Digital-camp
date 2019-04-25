@@ -23,7 +23,7 @@
             <el-form-item label="人员信息：" :label-width="formLabelWidth"></el-form-item>
             <div class="flex">
               <el-form-item label="人员类型" :label-width="formLabelWidth">
-                <el-select v-model="formInline.status">
+                <el-select v-model="formInline.status" @change="InOutUser">
                   <el-option label="现役人员" value="1"></el-option>
                   <el-option label="退役人员" value="2"></el-option>
                   <el-option label="驻训人员" value="3"></el-option>
@@ -33,23 +33,10 @@
                 </el-select>
               </el-form-item>
 
-              <el-form-item label="所属部门" :label-width="formLabelWidth" :visible.sync="deptVisible">
-                <el-select v-model="formInline.dept" @selection-change="InOutUser">
+              <el-form-item label="所属部门" :label-width="formLabelWidth" v-show="deptVisible">
+                <el-select v-model="formInline.dept" >
                   <el-option label="战斗班" value="shanghai"></el-option>
                   <el-option label="独立团" value="sss"></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-              <div class="flex" :visible.sync="outManVisible">
-              <el-form-item label="内部联系人" :label-width="formLabelWidth">
-                <el-select v-model="formInline.relaterDept">
-                  <el-option label="战斗班" value="we"></el-option>
-                  <el-option label="退役人员" value="beijing"></el-option>
-                  <el-option label="驻训人员" value="beijing"></el-option>
-                </el-select>
-                <el-select v-model="formInline.relater"  style="margin-left:20px;">
-                  <el-option label="老王" value="shanghai"></el-option>
-                  <el-option label="老李" value="shanghai"></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -72,17 +59,19 @@
             <el-form-item label="联系电话：" :label-width="formLabelWidth">
               <el-input v-model="formInline.user" style="width:200px" placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="内部联系人" :label-width="formLabelWidth">
-              <el-select v-model="formInline.region">
-                <el-option label="一团" value="shanghai"></el-option>
-                <el-option label="二团" value="beijing"></el-option>
-                <el-option label="三团" value="beijing"></el-option>
-              </el-select>
-              <el-select v-model="formInline.region" placeholder="请选择" style="margin-left:20px;">
-                <el-option label="张三" value="shanghai"></el-option>
-                <el-option label="李四" value="beijing" ></el-option>
-              </el-select>
-            </el-form-item>
+            <div class="flex" v-show="outManVisible">
+              <el-form-item label="内部联系人" :label-width="formLabelWidth">
+                <el-select v-model="formInline.relaterDept">
+                  <el-option label="战斗班" value="we"></el-option>
+                  <el-option label="退役人员" value="beijing"></el-option>
+                  <el-option label="驻训人员" value="beijing"></el-option>
+                </el-select>
+                <el-select v-model="formInline.relater"  style="margin-left:20px;">
+                  <el-option label="老王" value="shanghai"></el-option>
+                  <el-option label="老李" value="shanghai"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -213,8 +202,9 @@ export default {
       console.log(index, row);
     },
     InOutUser(ss){
-      debugger
-      if(this.formInline.status==1){
+      console.log(ss);
+      console.log("status"+this.formInline.status);
+      if(this.formInline.status<=3){
         this.deptVisible=true;
         this.outManVisible=false;
       }else{

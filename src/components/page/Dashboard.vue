@@ -2,7 +2,7 @@
     <div>
         <el-row :gutter="20">
             <el-col :span="8">
-                <el-card shadow="hover" class="mgb20" style="height:252px;">
+                <el-card shadow="hover" class="mgb20" style="height:353px;">
                     <div class="user-info">
                         <img src="../../assets/img/img.jpg" class="user-avator" alt="">
                         <div class="user-info-cont">
@@ -10,68 +10,20 @@
                             <div>{{role}}</div>
                         </div>
                     </div>
-                    <div class="user-info-list">上次登录时间：<span>2018-01-01</span></div>
-                    <div class="user-info-list">上次登录地点：<span>东莞</span></div>
-                </el-card>
-                <el-card shadow="hover" style="height:252px;">
-                    <div slot="header" class="clearfix">
-                        <span>语言详情</span>
-                    </div>
-                    Vue
-                    <el-progress :percentage="71.3" color="#42b983"></el-progress>
-                    JavaScript
-                    <el-progress :percentage="24.1" color="#f1e05a"></el-progress>
-                    CSS
-                    <el-progress :percentage="3.7"></el-progress>
-                    HTML
-                    <el-progress :percentage="0.9" color="#f56c6c"></el-progress>
+                    <div class="user-info-list">上次登录时间：<span>2019-01-01</span></div>
+                    <div class="user-info-list">上次登录地点：<span>广州</span></div>
                 </el-card>
             </el-col>
             <el-col :span="16">
-                <el-row :gutter="20" class="mgb20">
-                    <el-col :span="8">
-                        <el-card shadow="hover" :body-style="{padding: '0px'}">
-                            <div class="grid-content grid-con-1">
-                                <i class="el-icon-lx-people grid-con-icon"></i>
-                                <div class="grid-cont-right">
-                                    <div class="grid-num">1234</div>
-                                    <div>用户访问量</div>
-                                </div>
-                            </div>
-                        </el-card>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-card shadow="hover" :body-style="{padding: '0px'}">
-                            <div class="grid-content grid-con-2">
-                                <i class="el-icon-lx-notice grid-con-icon"></i>
-                                <div class="grid-cont-right">
-                                    <div class="grid-num">321</div>
-                                    <div>系统消息</div>
-                                </div>
-                            </div>
-                        </el-card>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-card shadow="hover" :body-style="{padding: '0px'}">
-                            <div class="grid-content grid-con-3">
-                                <i class="el-icon-lx-goods grid-con-icon"></i>
-                                <div class="grid-cont-right">
-                                    <div class="grid-num">5000</div>
-                                    <div>数量</div>
-                                </div>
-                            </div>
-                        </el-card>
-                    </el-col>
-                </el-row>
-                <el-card shadow="hover" style="height:403px;">
+                <el-card shadow="hover" style="height:353px;">
                     <div slot="header" class="clearfix">
-                        <span>待办事项</span>
-                        <el-button style="float: right; padding: 3px 0" type="text">添加</el-button>
+                        <span>消息通知</span>
+                        <el-button style="float: right; padding: 3px 0" type="text"></el-button>
                     </div>
                     <el-table :data="todoList" :show-header="false" height="304" style="width: 100%;font-size:14px;">
                         <el-table-column width="40">
                             <template slot-scope="scope">
-                                <el-checkbox v-model="scope.row.status"></el-checkbox>
+                                <el-checkbox v-show="false" v-model="scope.row.status"></el-checkbox>
                             </template>
                         </el-table-column>
                         <el-table-column>
@@ -80,10 +32,10 @@
                             </template>
                         </el-table-column>
                         <el-table-column width="60">
-                            <template slot-scope="scope">
+                            <!-- <template slot-scope="scope">
                                 <i class="el-icon-edit"></i>
                                 <i class="el-icon-delete"></i>
-                            </template>
+                            </template> -->
                         </el-table-column>
                     </el-table>
                 </el-card>
@@ -91,13 +43,55 @@
         </el-row>
         <el-row :gutter="20">
             <el-col :span="12">
-                <el-card shadow="hover">
-                    <schart ref="bar" class="schart" canvasId="bar" :data="data" type="bar" :options="options"></schart>
+                <el-card shadow="hover" style="height:353px;">
+                    <div slot="header" class="clearfix">
+                        <span>公文信息</span>
+                        <el-button style="float: right; padding: 3px 0" type="text"></el-button>
+                    </div>
+                    <el-table :data="docList" :show-header="false" class="primary" height="304" :row-class-name="docListRowClassName" style="width: 100%;font-size:18px;">
+                        <el-table-column width="20">
+                            <template slot-scope="scope">
+                                <el-checkbox v-show="false" v-model="scope.row.status"></el-checkbox>
+                            </template>
+                        </el-table-column>
+                        <el-table-column>
+                            <template slot-scope="scope">
+                                <div class="todo-item" :class="{'todo-item-del': scope.row.status}">{{scope.row.title}}</div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column width="60">
+                            <!-- <template slot-scope="scope">
+                                <i class="el-icon-edit"></i>
+                                <i class="el-icon-delete"></i>
+                            </template> -->
+                        </el-table-column>
+                    </el-table>
                 </el-card>
             </el-col>
-            <el-col :span="12">
-                <el-card shadow="hover">
-                    <schart ref="line" class="schart" canvasId="line" :data="data" type="line" :options="options2"></schart>
+             <el-col :span="12">
+                <el-card shadow="hover" style="height:353px;">
+                    <div slot="header" class="clearfix">
+                        <span>车库情况</span>
+                        <el-button style="float: right; padding: 3px 0" type="text"></el-button>
+                    </div>
+                    <el-table :data="garageInfo" :show-header="false" height="304" style="width: 100%;font-size:18px;">
+                        <el-table-column width="20">
+                            <template slot-scope="scope">
+                                <el-checkbox v-show="false" v-model="scope.row.status"></el-checkbox>
+                            </template>
+                        </el-table-column>
+                        <el-table-column>
+                            <template slot-scope="scope">
+                                <div class="todo-item" :class="{'todo-item-del': scope.row.status}">{{scope.row.title}}</div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column width="60">
+                            <!-- <template slot-scope="scope">
+                                <i class="el-icon-edit"></i>
+                                <i class="el-icon-delete"></i>
+                            </template> -->
+                        </el-table-column>
+                    </el-table>
                 </el-card>
             </el-col>
         </el-row>
@@ -113,27 +107,75 @@
             return {
                 name: localStorage.getItem('ms_username'),
                 todoList: [{
-                        title: '今天要修复100个bug',
-                        status: false,
+                        title: '小王请假待审批',
+                        status: false
                     },
                     {
-                        title: '今天要修复100个bug',
-                        status: false,
+                        title: '车库剩余29个停车位',
+                        status: false
                     },
                     {
-                        title: '今天要写100行代码加几个bug吧',
-                        status: false,
+                        title: '我的请假申请已审批',
+                        status: false
                     }, {
-                        title: '今天要修复100个bug',
-                        status: false,
+                        title: '汤司令明天来访',
+                        status: false
                     },
                     {
-                        title: '今天要修复100个bug',
-                        status: true,
+                        title: '今天天气晴朗',
+                        status: false
                     },
                     {
-                        title: '今天要写100行代码加几个bug吧',
-                        status: true,
+                        title: '粤A79888已出库',
+                        status: false
+                    }
+                ],
+                garageInfo: [{
+                        title: '临时车粤V67777出库，车库总车位100个，可用车位34个',
+                        status: false
+                    },
+                    {
+                        title: '临时车粤V67777出库，车库总车位100个，可用车位32个',
+                        status: false
+                    },
+                    {
+                        title: '临时车粤V67777入库，车库总车位100个，可用车位35个',
+                        status: false
+                    }, {
+                        title: '临时车粤V67777出库，车库总车位100个，可用车位34个',
+                        status: false
+                    },
+                    {
+                        title: '临时车粤V67777入库，车库总车位100个，可用车位34个',
+                        status: false
+                    },
+                    {
+                        title: '临时车粤V67777出库，车库总车位100个，可用车位38个',
+                        status: false
+                    }
+                ],
+                docList: [{
+                        title: '例行检查通知',
+                        status: false
+                    },
+                    {
+                        title: '喜迎五一通知',
+                        status: false
+                    },
+                    {
+                        title: '欢度国庆节哈 有奖竞猜活动',
+                        status: false
+                    }, {
+                        title: 'good morning hello ',
+                        status: false
+                    },
+                    {
+                        title: '今天天气非常好',
+                        status: false
+                    },
+                    {
+                        title: '喜迎五一通知',
+                        status: false
                     }
                 ],
                 data: [{
@@ -188,7 +230,8 @@
         },
         computed: {
             role() {
-                return this.name === 'admin' ? '超级管理员' : '普通用户';
+                // return this.name === 'admin' ? '李云龙' : '普通用户';
+                this.name ='李云龙';
             }
         },
         created(){
@@ -199,8 +242,8 @@
             this.handleListener();
         },
         deactivated(){
-            window.removeEventListener('resize', this.renderChart);
-            bus.$off('collapse', this.handleBus);
+            // window.removeEventListener('resize', this.renderChart);
+            // bus.$off('collapse', this.handleBus);
         },
         methods: {
             changeDate(){
@@ -213,17 +256,25 @@
             handleListener(){
                 bus.$on('collapse', this.handleBus);
                 // 调用renderChart方法对图表进行重新渲染
-                window.addEventListener('resize', this.renderChart)
+                //window.addEventListener('resize', this.renderChart)
             },
             handleBus(msg){
                 setTimeout(() => {
-                    this.renderChart()
+                    //this.renderChart()
                 }, 300);
             },
-            renderChart(){
-                this.$refs.bar.renderChart();
-                this.$refs.line.renderChart();
-            }
+            // renderChart(){
+            //     this.$refs.bar.renderChart();
+            //     this.$refs.line.renderChart();
+            // },
+            docListRowClassName({row, rowIndex}) {
+        if (rowIndex%3==1) {
+          return 'warning-row';
+        } else if (rowIndex === 2) {
+          return 'success-row';
+        }
+        return '';
+      }
         }
     }
 
@@ -247,7 +298,13 @@
         font-size: 14px;
         color: #999;
     }
+    .warning-row {
+    background: oldlace;
+    }
 
+    .success-row {
+    background: #f0f9eb;
+    }
     .grid-num {
         font-size: 30px;
         font-weight: bold;
