@@ -41,6 +41,7 @@
           <el-table-column prop="docLever" label="公文等级" :formatter="formatterLever"></el-table-column>
           <el-table-column prop="sendDept" label="发送部门" ></el-table-column>
           <el-table-column prop="sendPerson" label="发送人" ></el-table-column>
+          <el-table-column prop="receiver" label="收件人" ></el-table-column>
           <el-table-column prop="date" label="发送时间" ></el-table-column>
           <el-table-column prop="status" label="状态" :formatter="formatterStaus"></el-table-column>
           <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
@@ -122,9 +123,10 @@ export default {
           docLever:2,
           sendDept:"独立团",
           sendPerson:"张三丰",
+          receiver:"老刘，老李，张三",
           date: "2016-05-02",
           status: 1,
-          allReceive:1,
+          allReceive:2,
         },
         {
           number: "121",
@@ -132,9 +134,32 @@ export default {
           docLever:2,
           sendDept:"独立团",
           sendPerson:"张三丰",
+          receiver:"老刘，老李，张三",
+          date: "2016-05-02",
+          status: 2,
+          allReceive:2,
+        },
+        {
+          number: "121",
+          title:"老哥来访",
+          docLever:5,
+          sendDept:"独立团",
+          sendPerson:"张三丰",
+          receiver:"老刘，老李，张三",
           date: "2016-05-02",
           status: 1,
-          allReceive:1,
+          allReceive:2,
+        },
+        {
+          number: "121",
+          title:"老哥来访",
+          docLever:4,
+          sendDept:"独立团",
+          sendPerson:"张三丰",
+          receiver:"老刘，老李，张三",
+          date: "2016-05-02",
+          status: 1,
+          allReceive:2,
         },
         {
           number: "121",
@@ -142,29 +167,10 @@ export default {
           docLever:2,
           sendDept:"独立团",
           sendPerson:"张三丰",
+          receiver:"老刘，老李，张三",
           date: "2016-05-02",
-          status: 1,
-          allReceive:1,
-        },
-        {
-          number: "121",
-          title:"老哥来访",
-          docLever:2,
-          sendDept:"独立团",
-          sendPerson:"张三丰",
-          date: "2016-05-02",
-          status: 1,
-          allReceive:1,
-        },
-        {
-          number: "121",
-          title:"老哥来访",
-          docLever:2,
-          sendDept:"独立团",
-          sendPerson:"",
-          date: "2016-05-02",
-          status: 1,
-          allReceive:1,
+          status: 2,
+          allReceive:2,
         }
       ]
     };
