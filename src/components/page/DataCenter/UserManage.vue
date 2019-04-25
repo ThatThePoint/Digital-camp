@@ -39,6 +39,18 @@
                 </el-select>
               </el-form-item>
             </div>
+              <div class="flex">
+              <el-form-item label="内部联系人" :label-width="formLabelWidth">
+                <el-select v-model="formInline.region">
+                  <el-option label="战斗班" value="shanghai"></el-option>
+                  <el-option label="退役人员" value="beijing"></el-option>
+                  <el-option label="驻训人员" value="beijing"></el-option>
+                </el-select>
+                <el-select v-model="formInline.region"  style="margin-left:20px;">
+                  <el-option label="老王" value="shanghai"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
             <el-form-item label="基础信息：" :label-width="formLabelWidth"></el-form-item>
             <div class="flex">
               <el-form-item label="姓名：" :label-width="formLabelWidth">
