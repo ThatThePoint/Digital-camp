@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-favor"></i> 车辆维修保养
+          <i class="el-icon-lx-favor"></i> 用车统计
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -50,16 +50,10 @@
           :default-sort="{prop: 'license', order: 'descending'}"
         >
           <el-table-column prop="license" label="车牌号" sortable width="180">
-            <template slot-scope="scope">
-              <div class="carImg"></div>
-              {{ scope.row.license }}
-            </template>
           </el-table-column>
-          <el-table-column prop="property" label="车牌号" sortable width="180"></el-table-column>
-          <el-table-column prop="cartype" label="车辆编号" sortable></el-table-column>
-          <el-table-column prop="carUser" label="车辆类型" sortable></el-table-column>
-          <el-table-column prop="tel" label="所属部门" sortable></el-table-column>
-          <el-table-column prop="inout" label="使用次数" sortable></el-table-column>
+          <el-table-column prop="carNo" label="车辆编号" sortable width="180"></el-table-column>
+          <el-table-column prop="ofDept" label="所属部门" sortable></el-table-column>
+          <el-table-column prop="userTimes" label="使用次数" sortable></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
@@ -177,35 +171,27 @@ export default {
       tableData: [
         {
           license: "冀A1231312",
-          property: "内部车辆",
-          cartype: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
+          carNo:"2323",
+          ofDept: "连队1",
+          userTimes: "25"
         },
         {
           license: "冀A1231312",
-          property: "内部车辆",
-          cartype: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
+          carNo:"2323",
+          ofDept: "连队1",
+          userTimes: "12"
         },
         {
           license: "冀A1231312",
-          property: "内部车辆",
-          cartype: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
+          carNo:"2323",
+          ofDept: "连队1",
+          userTimes: "25"
         },
         {
           license: "冀A1231312",
-          property: "内部车辆",
-          cartype: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
+          carNo:"2323",
+          ofDept: "连队1",
+          userTimes: "26"
         }
       ]
     };

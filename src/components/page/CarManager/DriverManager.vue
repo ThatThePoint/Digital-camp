@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-favor"></i> 车辆信息管理
+          <i class="el-icon-lx-favor"></i> 司机管理
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -93,6 +93,7 @@ export default {
       value1: "",
       value2: "",
       input2: "",
+      departmentValue:"",//所属部门
       departmentOptions: [
         {
           value: "1",

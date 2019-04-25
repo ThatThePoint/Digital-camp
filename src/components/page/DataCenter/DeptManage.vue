@@ -3,20 +3,14 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-favor"></i> 规章制度
+          <i class="el-icon-lx-favor"></i> 部门管理
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
       <div class="messages">
-        <el-form :inline="true" :model="status" class="demo-form-inline">
-          <el-form-item label="生效状态">
-            <el-select v-model="formInline.region" placeholder="请选择">
-              <el-option label="有效" value="shanghai"></el-option>
-              <el-option label="失效" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="规章名称">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form-item label="部门名称">
             <el-input v-model="formInline.user" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item>
@@ -28,38 +22,39 @@
         </el-form>
       </div>
       <div class="body">
-        <el-table
+         <el-table
           :data="tableData"
           style="width: 100%"
-          :default-sort="{prop: 'date', order: 'descending'}"
+          :default-sort="{prop: 'parentNode', order: 'descending'}"
         >
-          <el-table-column prop="name" label="制度名称" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="introduce" label="制度简介" sortable width="180"></el-table-column>
-          <el-table-column prop="version" label="版本" ></el-table-column>
-          <el-table-column prop="status" label="生效状态" ></el-table-column>
-          <el-table-column prop="releaser" label="发布人" ></el-table-column>
-          <el-table-column prop="date" label="发布时间" ></el-table-column>
-          <el-table-column prop="viewCount" label="阅读次数" ></el-table-column>
-          <el-table-column prop="downCount" label="下载次数" ></el-table-column>
+          <el-table-column prop="name" label="部门名称" sortable width="180">
+          </el-table-column>
+          <el-table-column prop="parentNode" label="上级部门" sortable width="180"></el-table-column>
+          <el-table-column prop="dutyPerson" label="部门负责人" sortable></el-table-column>
+          <el-table-column prop="deptType" label="部门类型" sortable></el-table-column>
+          <el-table-column prop="date" label="修改时间" sortable></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">预览</el-button>
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">下载</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <el-dialog title="新增规章制度" :visible.sync="dialogFormVisible">
+        <el-dialog title="部门信息" :visible.sync="dialogFormVisible">
           <el-form :model="form">
-            <div class="flex">
-            </div>
-            <el-form-item label="警报内容" :label-width="formLabelWidth">
-              <el-input class="input-width" placeholder="警报内容" v-model="input2"></el-input>
-            </el-form-item>
-            <el-form-item label="警报等级" :label-width="formLabelWidth">
+            <div class="flex"></div>
+            <el-form-item label="上级部门" :label-width="formLabelWidth">
               <el-select v-model="formInline.region" placeholder="请选择">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
+                <el-option label="团支部" value="shanghai"></el-option>
+                <el-option label="政治部" value="beijing"></el-option>
+                <el-option label="组织部" value="hangz"></el-option>
+                <el-option label="理事部" value="guangz"></el-option>
               </el-select>
+            </el-form-item>
+            <el-form-item label="部门名称" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder="请输入" v-model="input2" type="textarea"></el-input>
+            </el-form-item>
+            <el-form-item label="部门备注" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder="请输入" v-model="input2" type="textarea"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -108,7 +103,6 @@ export default {
       value1: "",
       value2: "",
       input2: "",
-      status:"",//生效状态
       options: [
         {
           value: "1",
@@ -134,44 +128,32 @@ export default {
       value: "",
       tableData: [
         {
-          name:"宿舍管理条例",
-          introduce:"宿舍管理",
-          version:"1.0",
-          status:"生效",
-          releaser:"老张",
-          date: "2016-05-02",
-          viewCount:"23",
-          downCount:"22"
+          name: "政治部",
+          parentNode:"2323",
+          dutyPerson: "老李",
+          deptType: "部队",
+          date: "2019-04-23"
         },
         {
-          name:"宿舍管理条例",
-          introduce:"宿舍管理",
-          version:"1.0",
-          status:"生效",
-          releaser:"老张",
-          date: "2016-05-02",
-          viewCount:"23",
-          downCount:"22"
+          name: "政治部",
+          parentNode:"2323",
+          dutyPerson: "老李",
+          deptType: "部队",
+          date: "2019-04-23"
         },
         {
-          name:"宿舍管理条例",
-          introduce:"宿舍管理",
-          version:"1.0",
-          status:"生效",
-          releaser:"老张",
-          date: "2016-05-02",
-          viewCount:"23",
-          downCount:"22"
+          name: "政治部",
+          parentNode:"2323",
+          dutyPerson: "老李",
+          deptType: "部队",
+          date: "2019-04-23"
         },
         {
-          name:"宿舍管理条例",
-          introduce:"宿舍管理",
-          version:"1.0",
-          status:"生效",
-          releaser:"老张",
-          date: "2016-05-02",
-          viewCount:"23",
-          downCount:"22"
+          name: "政治部",
+          parentNode:"2323",
+          dutyPerson: "老李",
+          deptType: "部队",
+          date: "2019-04-23"
         }
       ],
       formInline: {
@@ -205,6 +187,22 @@ export default {
     },
     onSubmit() {
       console.log("submit!");
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(
+        `当前限制选择 3 个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
     }
   }
 };

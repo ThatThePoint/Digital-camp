@@ -3,27 +3,23 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-favor"></i> 车辆派遣
+          <i class="el-icon-lx-favor"></i> 设备管理
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
       <div class="messages">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label>
-            <el-select v-model="formInline.region" placeholder="申请类型">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+          <el-form-item label="归属部门" :label-width="formLabelWidth">
+            <el-select v-model="formInline.region" placeholder="请选择">
+              <el-option label="团支部" value="shanghai"></el-option>
+              <el-option label="政治部" value="beijing"></el-option>
+              <el-option label="组织部" value="hangz"></el-option>
+              <el-option label="理事部" value="guangz"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label>
-            <el-select v-model="formInline.region" placeholder="申请状态">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label>
-            <el-input v-model="formInline.user" placeholder="申请人"></el-input>
+          <el-form-item label="设备名称">
+            <el-input v-model="formInline.user" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -34,45 +30,50 @@
         </el-form>
       </div>
       <div class="body">
-         <el-table
+        <el-table
           :data="tableData"
           style="width: 100%"
-          :default-sort="{prop: 'license', order: 'descending'}"
+          :default-sort="{prop: 'ofDept', order: 'descending'}"
         >
-          <el-table-column prop="license" label="车牌号" sortable width="180">
-          </el-table-column>
-          <el-table-column prop="carNo" label="车辆编号" sortable width="180"></el-table-column>
+          <el-table-column prop="name" label="设备名称" sortable width="180"></el-table-column>
+          <el-table-column prop="equipNo" label="设备编号" sortable width="180"></el-table-column>
           <el-table-column prop="ofDept" label="所属部门" sortable></el-table-column>
-          <el-table-column prop="applyPerson" label="申请人" sortable></el-table-column>
-          <el-table-column prop="type" label="申请类型" sortable></el-table-column>
-          <el-table-column prop="disc" label="申请描述" sortable></el-table-column>
-           <el-table-column prop="date" label="申请时间" sortable></el-table-column>
-          <el-table-column prop="status" label="申请状态" sortable></el-table-column>
+          <el-table-column prop="type" label="设备类型" sortable></el-table-column>
+          <el-table-column prop="status" label="状态" sortable></el-table-column>
+          <el-table-column prop="date" label="修改时间" sortable></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <el-dialog title="用车信息" :visible.sync="dialogFormVisible">
+        <el-dialog title="设备信息" :visible.sync="dialogFormVisible">
           <el-form :model="form">
             <div class="flex"></div>
-            <el-form-item label="申请车辆" :label-width="formLabelWidth">
-              <el-select v-model="formInline.region" placeholder="申请类型">
-                <el-option label="冀JHSKDLL" value="shanghai"></el-option>
-                <el-option label="冀JHSKDLL" value="beijing"></el-option>
-              </el-select>
-              <el-select v-model="formInline.region" placeholder="申请类型" style="margin-left:10px;">
-                <el-option label="外出" value="shanghai"></el-option>
-                <el-option label="因私" value="beijing"></el-option>
+            <el-form-item label="设备名称" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder="请输入" v-model="input2" type="input"></el-input>
+            </el-form-item>
+             <el-form-item label="设备编号" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder="请输入" v-model="input3" type="input"></el-input>
+            </el-form-item>
+            <el-form-item label="设备类型" :label-width="formLabelWidth">
+              <el-select v-model="formInline.region" placeholder="请选择">
+                <el-option label="后勤设备" value="shanghai"></el-option>
+                <el-option label="日常设备" value="beijing"></el-option>
+                <el-option label="办公设备" value="hangz"></el-option>
+                <el-option label="库存设备" value="guangz"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="日期筛选" :label-width="formLabelWidth">
-              <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
-              <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
+            <el-form-item label="所属部门" :label-width="formLabelWidth">
+              <el-select v-model="formInline.region" placeholder="请选择">
+                <el-option label="后勤部" value="shanghai"></el-option>
+                <el-option label="政治部" value="beijing"></el-option>
+                <el-option label="组织部" value="hangz"></el-option>
+                <el-option label="真理部" value="guangz"></el-option>
+              </el-select>
             </el-form-item>
-            <el-form-item label="申请描述" :label-width="formLabelWidth">
-              <el-input class="input-width" placeholder v-model="input2" type="textarea"></el-input>
+            <el-form-item label="设备备注" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder="请输入" v-model="input2" type="textarea"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -121,6 +122,7 @@ export default {
       value1: "",
       value2: "",
       input2: "",
+      input3:"",
       options: [
         {
           value: "1",
@@ -146,44 +148,36 @@ export default {
       value: "",
       tableData: [
         {
-          license: "冀A1231312",
-          carNo:"2323",
+          name: "取暖机",
+          equipNo: "2323",
           ofDept: "连队1",
-          applyPerson: "小张",
-          type: "内部车辆",
-          disc: "接送亲戚",
-          date: "2019-04-23",
-          status: "待审批"
+          type: "日用设备",
+          status: "在用",
+          date: "2019-04-23"
         },
         {
-          license: "冀A1231312",
-          carNo:"2323",
+          name: "取暖机",
+          equipNo: "2323",
           ofDept: "连队1",
-          applyPerson: "小张",
-          type: "内部车辆",
-          disc: "接送亲戚",
-          date: "2019-04-23",
-          status: "通过"
+          type: "日用设备",
+          status: "在用",
+          date: "2019-04-23"
         },
         {
-          license: "冀A1231312",
-          carNo:"2323",
+          name: "取暖机",
+          equipNo: "2323",
           ofDept: "连队1",
-          applyPerson: "小张",
-          type: "内部车辆",
-          disc: "接送亲戚",
-          date: "2019-04-23",
-          status: "待审批"
+          type: "日用设备",
+          status: "在用",
+          date: "2019-04-23"
         },
         {
-          license: "冀A1231312",
-          carNo:"2323",
+          name: "取暖机",
+          equipNo: "2323",
           ofDept: "连队1",
-          applyPerson: "小张",
-          type: "内部车辆",
-          disc: "接送亲戚",
-          date: "2019-04-23",
-          status: "待审批"
+          type: "日用设备",
+          status: "在用",
+          date: "2019-04-23"
         }
       ],
       formInline: {

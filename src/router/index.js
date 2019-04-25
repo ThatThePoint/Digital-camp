@@ -90,7 +90,7 @@ export default new Router({
                     meta: { title: '公文管理', permission: true }
                 },
                 {
-                    // 公文管理
+                    // 增加公文
                     path: '/adddocument',
                     component: resolve => require(['../components/page/DailyOffice/AddDocument.vue'], resolve),
                     meta: { title: '增加公文', permission: true }
@@ -167,7 +167,7 @@ export default new Router({
                     // 用车统计
                     path: '/usecar',
                     component: resolve => require(['../components/page/CarManager/UseCar.vue'], resolve),
-                    meta: { title: '车辆派遣', permission: true }
+                    meta: { title: '用车统计', permission: true }
                 },
                 {
                     // 增加车辆
@@ -181,6 +181,42 @@ export default new Router({
                     path: '/addcare',
                     component: resolve => require(['../components/page/CarManager/AddCare.vue'], resolve),
                     meta: { title: '新增保养', permission: true }
+                },
+                {
+                    // 部门管理
+                    path: '/DeptManage',
+                    component: resolve => require(['../components/page/DataCenter/DeptManage.vue'], resolve),
+                    meta: { title: '部门管理', permission: true }
+                },
+                {
+                    // 请假申请管理
+                    path: '/leavemanage',
+                    component: resolve => require(['../components/page/LeaveManage/LeaveManage.vue'], resolve),
+                    meta: { title: '请假申请管理', permission: true }
+                },
+                {
+                    // 人员管理
+                    path: '/UserManage',
+                    component: resolve => require(['../components/page/DataCenter/UserManage.vue'], resolve),
+                    meta: { title: '人员管理', permission: true }
+                },
+                {
+                    // 设备管理
+                    path: '/EquipManage',
+                    component: resolve => require(['../components/page/DataCenter/EquipManage.vue'], resolve),
+                    meta: { title: '设备管理', permission: true }
+                },
+                {
+                    // 字典管理
+                    path: '/DicManage',
+                    component: resolve => require(['../components/page/SysConfig/DicManage.vue'], resolve),
+                    meta: { title: '字典管理', permission: true }
+                },
+                {
+                    // 用户权限
+                    path: '/UserRight',
+                    component: resolve => require(['../components/page/SysConfig/UserRight.vue'], resolve),
+                    meta: { title: '用户权限', permission: true }
                 },
                 {
                     path: '/404',
