@@ -9,9 +9,8 @@
       </el-breadcrumb>
     </div>
     <div class="container">
-      <h3 class="container-top">公文信息</h3>
       <div class="container-header">
-        收件人：
+        <input type="button" class="button" value="收件人："/>
         <el-select
           v-model="value"
           multiple
@@ -45,7 +44,6 @@
           :file-list="fileList"
         >
           <el-button size="small" type="primary">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
       </div>
       <quill-editor ref="myTextEditor" v-model="content" :options="editorOption"></quill-editor>
@@ -191,7 +189,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .editor-btn {
   margin-top: 20px;
 }
@@ -200,5 +198,26 @@ export default {
 }
 .input-width {
   width: 150px;
+}
+.container{
+  .container-header{
+    .el-select.el-select--small{
+      margin-left: 15px;
+      width: 700px;
+      margin-bottom: 5px;
+    }
+    .el-input-width.el-input.el-input--small{
+      width: 700px !important;
+    }
+    .button{
+      height: 28px;
+      width: 69px;
+      background: white;
+      border: 1px solid gray;
+    }
+    .input-width{
+      width: 700px !important;
+    }
+  }
 }
 </style>
