@@ -9,11 +9,11 @@
     </div>
     <div class="container">
       <div class="header-container">
-        <div class="carImg"></div>
+        <div class="carImg">车辆照片</div>
         <div class="carDet">
           <div class="license">
             奔驰2号
-            <span class="used">在用</span>
+            <span class=" used">在用</span>
             所属单位
             <el-input
               class="input-width"
@@ -72,7 +72,7 @@
       </div>
       <div class="footer">
         <div>
-          <h3>维修保养信息：</h3>
+          <div>维修保养信息：</div>
           <div class="itemDet">
             保养类型：
             <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
@@ -93,9 +93,9 @@
           </div>
         </div>
       </div>
-      <div class="submit">
+      <div class="flex-center submit ">
         <el-button type="danger">取消</el-button>
-        <el-button type="success">保存</el-button>
+        <el-button type="success" style="margin-left:40px;">保存</el-button>
       </div>
     </div>
   </div>
@@ -248,10 +248,13 @@ export default {
   display: flex;
 }
 .carImg {
+  margin-top: 20px;
   width: 100px;
   height: 120px;
-  background: red;
   vertical-align: middle;
+  border: 1px solid;
+  text-align: center;
+  line-height: 120px;
 }
 .carDet {
   vertical-align: middle;
@@ -275,11 +278,14 @@ export default {
   margin: 40px auto;
   text-align: center;
 }
-.submit button {
-  margin: 0 100px;
-}
+
 .used{
-  background: blue;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  text-align: center;
+  border-radius: 2px;
+  color: red;
 }
 .cars{
   margin-bottom: 10px;

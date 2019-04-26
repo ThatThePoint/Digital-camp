@@ -13,7 +13,7 @@
         <div class="carDet">
           <div class="license">
             奔驰2号
-            <span>状态</span>
+            <span class=" used" >在用</span>
           </div>
           <div>
             车辆类型
@@ -66,6 +66,7 @@
               <el-option
                 v-for="item in seatOptions"
                 :key="item.value"
+                :label="item.value"
                 :value="item.value"
               ></el-option>
             </el-select>车辆载重：
@@ -84,23 +85,23 @@
           <p>内部车辆附加：</p>
           <div class="itemDet">
             所属单位：
-            <el-select class="input-width" v-model="value1" placeholder="请选择">
+            <el-select class="input-width" v-model="carOfDept" placeholder="请选择">
               <el-option
-                v-for="item in propertyOptions"
+                v-for="item in departmentOptions"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               ></el-option>
             </el-select>车辆类别1：
-            <el-select class="input-width" v-model="value1" placeholder="请选择">
+            <el-select class="input-width" v-model="carType1" placeholder="请选择">
               <el-option
                 v-for="item in propertyOptions"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               ></el-option>
-            </el-select><span class="carstwo">车辆类别2：</span>
-            <el-select class="input-width" v-model="value1" placeholder="请选择">
+            </el-select><span class="carstwo">类别2：</span>
+            <el-select class="input-width" v-model="carType2" placeholder="请选择">
               <el-option
                 v-for="item in propertyOptions"
                 :key="item.value"
@@ -109,31 +110,31 @@
               ></el-option>
             </el-select>
           </div>
-          <div class="itemDet">
+          <div class="itemDet" >
             车辆权限：
-            <el-select class="input-width" v-model="value1" placeholder="请选择">
+            <el-select class="input-width" v-model="carRight" placeholder="请选择">
               <el-option
-                v-for="item in propertyOptions"
+                v-for="item in rightOptions"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               ></el-option>
-            </el-select><span class="datas">登记日期：</span>
+            </el-select><span class="datas">登记日：</span>
             <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>授权有效期：
             <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
           </div>
         </div>
       </div>
-      <div>
+      <div class="one">
         <p>外部车辆附加：</p>
         <div class="itemDet">
           车主姓名：
-          <el-input class="input-width" placeholder="请输入" v-model="input2"></el-input>电话：
-          <el-input class="input-width" placeholder="请输入" v-model="input2"></el-input>部队联系人：
-          <el-input class="input-width" placeholder="请输入" v-model="input2"></el-input>联系人部门：
-          <el-select class="input-width" v-model="value1" placeholder="请输入">
+          <el-input class="input-width" placeholder="请输入" v-model="hah1"></el-input>电话：
+          <el-input class="input-width" placeholder="请输入" v-model="hahhsd"></el-input>部队联系人：
+          <el-input class="input-width" placeholder="请输入" v-model="jhh"></el-input>联系人部门：
+          <el-select class="input-width" v-model="bumen" placeholder="请输入">
             <el-option
-              v-for="item in propertyOptions"
+              v-for="item in departmentOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -144,7 +145,7 @@
           车辆权限：
           <el-select class="input-width" v-model="carRight" placeholder="请选择">
             <el-option
-              v-for="item in propertyOptions"
+              v-for="item in rightOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -164,6 +165,10 @@
           <el-button size="small" type="success" >驾驶证正面上传</el-button>
           <el-button size="small" type="success" >驾驶证背面上传</el-button>
         </div>
+      </div>
+      <div class="flex-center itemDet" style="margin-top:20px;"> 
+        <el-button class="editor-btn" type="danger" @click="handleBack" >取消</el-button>
+        <el-button class="editor-btn" type="success" style="margin-left:40px;">确定</el-button> 
       </div>
     </div>
   </div>
@@ -253,6 +258,9 @@ export default {
       ],
       propertyValue: "",//车辆属性1-内部 2-外部 3-临时
       departmentValue: "",//单位
+      carOfDept:"",//车辆单位
+      carType1:"",//type1
+      carType2:"",//
       inoutValue: "",//出入库状态
       brandValue:"",//品牌
       brandOptions:[
@@ -302,14 +310,17 @@ export default {
       VehicleNo:"",//行驶证号
       driverNo:"",//驾驶证号
       carSeat:5,//座位数
-      SeatOptions:[
+      seatOptions:[
         {
+          label:"1",
           value: "1"
         },
         {
+          label:"2",
           value: "2"
         },
         {
+          label:"3",
           value: "3"
         }
       ],
@@ -319,6 +330,12 @@ export default {
       carType1:"",//
       carType2:"",//
       carRight:"",//
+      date1:"",
+      date2:"",
+      bumen:"",
+      hah1:"",
+      jhh:"",
+      hahhsd:"",
       rightOptions:[
         {
           value: "1",
@@ -378,24 +395,30 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
+    },
+      handleBack(){
+      history.go(-1);
     }
   }
 };
 </script>
 <style scoped>
 .input-width {
-  width: 100px;
+  /* width: 100px; */
+  width:150px;
   margin: 0 10px;
 }
 .header-container {
-  background:#d0d0d0;
+  /* background:#d8d5d5; */
   display: flex;
 }
 .carImg {
   width: 100px;
   height: 120px;
-  background: red;
   vertical-align: middle;
+  border: 1px solid ;
+  text-align: center;
+  line-height: 120px;
 }
 .carDet {
   vertical-align: middle;
@@ -430,5 +453,13 @@ export default {
 .carstwo{
   display: inline-block;
   width: 100px;
+}
+.used{
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  text-align: center;
+  border-radius: 2px;
+  color: red;
 }
 </style>

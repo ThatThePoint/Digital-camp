@@ -10,7 +10,7 @@
     </div>
     <div class="container">
       <div class="container-header">
-        <input type="button" class="button" value="收件人："/>
+         收件人：
         <el-select
           v-model="value"
           multiple
@@ -47,9 +47,12 @@
         </el-upload>
       </div>
       <quill-editor ref="myTextEditor" v-model="content" :options="editorOption"></quill-editor>
-      <el-button class="editor-btn" type="danger">取消</el-button>
-      <el-button class="editor-btn" type="warn">保存</el-button>
-      <el-button class="editor-btn" type="success" @click="submit">提交</el-button>
+      <div class="flex-center"> 
+        <el-button class="editor-btn" type="danger" @click="handleBack" >取消</el-button>
+        <el-button class="editor-btn" type="warn " style="margin-left:40px;">保存</el-button>
+        <el-button class="editor-btn" type="success" @click="submit" style="margin-left:40px;">提交</el-button> 
+      </div>
+     
     </div>
   </div>
 </template>
@@ -65,7 +68,7 @@ export default {
     return {
       content: "",
       editorOption: {
-        placeholder: "Hello World"
+        placeholder: ""
       },
       fileList: [
         {
@@ -185,6 +188,9 @@ export default {
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
     },
+    handleBack(){
+      history.go(-1);
+    }
    
   }
 };
@@ -213,7 +219,6 @@ export default {
       height: 28px;
       width: 69px;
       background: white;
-      border: 1px solid gray;
     }
     .input-width{
       width: 700px !important;
