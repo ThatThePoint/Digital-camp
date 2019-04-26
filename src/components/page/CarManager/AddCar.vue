@@ -395,6 +395,7 @@ export default {
   margin: 0 10px;
 }
 .header-container {
+  background:#d0d0d0;
   display: flex;
 }
 .carImg {
