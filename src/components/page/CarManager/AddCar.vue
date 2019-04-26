@@ -16,7 +16,7 @@
             <span>状态</span>
           </div>
           <div>
-            字段名称
+            车辆类型
             <el-select class="input-width" v-model="inoutValue" placeholder="请选择">
               <el-option
                 v-for="item in inoutOptions"
@@ -29,8 +29,8 @@
         </div>
       </div>
       <div class="footer">
-        <div>
-          <h3>车辆基本信息：</h3>
+        <div class="one">
+          <p>车辆基本信息：</p>
           <div class="itemDet">
             车辆品牌：
             <el-select class="input-width" v-model="brandValue" placeholder="请选择">
@@ -48,7 +48,7 @@
                 :label="item.label"
                 :value="item.value"
               ></el-option>
-            </el-select>颜色：
+            </el-select><span class="color">颜色：</span>
             <el-select class="input-width" v-model="colorValue" placeholder="请选择">
               <el-option
                 v-for="item in colorOptions"
@@ -80,8 +80,8 @@
             <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
           </div>
         </div>
-        <div>
-          <h3>内部车辆附加：</h3>
+        <div class="two">
+          <p>内部车辆附加：</p>
           <div class="itemDet">
             所属单位：
             <el-select class="input-width" v-model="value1" placeholder="请选择">
@@ -99,7 +99,7 @@
                 :label="item.label"
                 :value="item.value"
               ></el-option>
-            </el-select>车辆类别2：
+            </el-select><span class="carstwo">车辆类别2：</span>
             <el-select class="input-width" v-model="value1" placeholder="请选择">
               <el-option
                 v-for="item in propertyOptions"
@@ -118,14 +118,14 @@
                 :label="item.label"
                 :value="item.value"
               ></el-option>
-            </el-select>登记日期
-            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>授权有效期
+            </el-select><span class="datas">登记日期：</span>
+            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>授权有效期：
             <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
           </div>
         </div>
       </div>
       <div>
-        <h3>外部车辆附加：</h3>
+        <p>外部车辆附加：</p>
         <div class="itemDet">
           车主姓名：
           <el-input class="input-width" placeholder="请输入" v-model="input2"></el-input>电话：
@@ -388,6 +388,7 @@ export default {
   margin: 0 10px;
 }
 .header-container {
+  background:#d0d0d0;
   display: flex;
 }
 .carImg {
@@ -409,5 +410,25 @@ export default {
 }
 .upload {
   display: inline-block;
+}
+.one,.two{
+    padding: 10px 20px;
+    border: 1px solid #d0d0d0;
+    margin-top: 5px;
+}
+.itemDet[data-v-b889b1ce] {
+    padding: 7px 0 7px 80px;
+}
+.color{
+    display: inline-block;
+    width: 68px;
+}
+.datas{
+  display: inline-block;
+  width: 93px;
+}
+.carstwo{
+  display: inline-block;
+  width: 100px;
 }
 </style>
