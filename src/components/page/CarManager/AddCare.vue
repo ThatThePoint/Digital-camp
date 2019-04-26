@@ -13,7 +13,7 @@
         <div class="carDet">
           <div class="license">
             奔驰2号
-            <span>状态</span>
+            <span class="used">在用</span>
             所属单位
             <el-input
               class="input-width"
@@ -22,7 +22,7 @@
               disabled
             ></el-input>
           </div>
-          <div class>
+          <div class="cars">
             车辆品牌：
              <el-input
               class="input-width"
@@ -33,7 +33,7 @@
               class="input-width"
               value="大众"
               disabled
-            ></el-input>颜 色：
+            ></el-input><span class="colors">颜色：</span>
              <el-input
               class="input-width"
               value="红色"
@@ -82,7 +82,7 @@
                 :label="item.label"
                 :value="item.value"
               ></el-option>
-            </el-select>费用：
+            </el-select><span class="fires">费用：</span>
             <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
             <el-button size="small" type="success">照片上传</el-button>
           </div>
@@ -278,4 +278,28 @@ export default {
 .submit button {
   margin: 0 100px;
 }
+.used{
+  background: blue;
+}
+.cars{
+  margin-bottom: 10px;
+}
+.colors{
+  width: 68px;
+  display: inline-block;
+}
+.fires{
+  width: 75px;
+  display: inline-block;
+}
+.itemDet[data-v-52dfd7c8] {
+    padding: 20px 0 0 120px !important;
+}
+.wenben[data-v-52dfd7c8] {
+    width: 504px;
+    vertical-align: top;
+}
+/* .input-width[data-v-52dfd7c8]{
+  margin: 0 20px 0 0 !important;
+} */
 </style>
