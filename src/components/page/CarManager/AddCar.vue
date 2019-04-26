@@ -109,7 +109,7 @@
               ></el-option>
             </el-select>
           </div>
-          <div class="itemDet">
+          <div class="itemDet" >
             车辆权限：
             <el-select class="input-width" v-model="value1" placeholder="请选择">
               <el-option
@@ -124,7 +124,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div class="one">
         <p>外部车辆附加：</p>
         <div class="itemDet">
           车主姓名：
@@ -164,6 +164,10 @@
           <el-button size="small" type="success" >驾驶证正面上传</el-button>
           <el-button size="small" type="success" >驾驶证背面上传</el-button>
         </div>
+      </div>
+      <div class="flex-center itemDet" style="margin-top:20px;"> 
+        <el-button class="editor-btn" type="danger" @click="handleBack" >取消</el-button>
+        <el-button class="editor-btn" type="success" @click="submit" style="margin-left:40px;">确定</el-button> 
       </div>
     </div>
   </div>
@@ -378,6 +382,9 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
+    },
+      handleBack(){
+      history.go(-1);
     }
   }
 };
@@ -394,8 +401,10 @@ export default {
 .carImg {
   width: 100px;
   height: 120px;
-  background: red;
   vertical-align: middle;
+  border: 1px solid ;
+  text-align: center;
+  line-height: 120px;
 }
 .carDet {
   vertical-align: middle;
