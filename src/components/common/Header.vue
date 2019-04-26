@@ -4,7 +4,7 @@
         <div class="collapse-btn" @click="collapseChage">
             <i class="el-icon-menu"></i>
         </div>
-        <div class="logo">部队指挥部</div>
+        <div class="logo">数字化营区综合管理平台</div>
         <div class="header-right">
             <div class="header-user-con">
                 <!-- 全屏显示 -->
