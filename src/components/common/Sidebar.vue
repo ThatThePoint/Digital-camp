@@ -213,7 +213,91 @@ export default {
         {
           icon: "el-icon-rank",
           index: "leavemanage",
-          title: "请假审批管理"
+          title: "请假审批管理",
+          subs: [
+            {
+              index: "outingApply",
+              title: "请假申请"
+            },
+            {
+              index: "outingApprove",
+              title: "请假审批"
+            },
+            {
+              index: "outingForApprove",
+              title: "待审批请假"
+            },
+            {
+              index: "outingApproved", //区别于请假审批
+              title: "已审批请假"
+            },
+            {
+              index: "cancelRecord",
+              title: "销假记录"
+            }
+          ]
+        },
+        
+        {
+          icon: "el-icon-lx-copy",
+          index: "electCorrect",
+          title: "电子纠察",
+          subs: [
+            {
+              index: "personOutRule",
+              title: "人员违纪"
+            },
+            {
+              index: "carOutRule",
+              title: "车辆违纪"
+            }
+          ]
+        },
+        {
+          icon: "el-icon-lx-copy",
+          index: "visitManage",
+          title: "访客管理",
+          subs: [
+            {
+              index: "curVisitor",
+              title: "当前访客"//新增访客
+            },
+            {
+              index: "visitApprove",
+              title: "访客审批"
+            },
+            {
+              index: "visitorInfo",
+              title: "访客信息"
+            },
+            {
+              index: "blackList",
+              title: "黑名单"
+            }
+          ]
+        },
+        {
+          icon: "el-icon-lx-copy",
+          index: "dataStat",
+          title: "数据统计分析",
+          subs: [
+            {
+              index: "usecar",
+              title: "用车统计"
+            },
+            {
+              index: "holidayStat",
+              title: "请销假统计"
+            },
+            {
+              index: "breakrRuleStat",
+              title: "违纪统计"
+            },
+            {
+              index: "visitStat",
+              title: "访客统计"
+            }
+          ]
         },
         {
           icon: "el-icon-lx-copy",
@@ -242,6 +326,18 @@ export default {
             {
               index: "UserRight",
               title: "用户权限"
+            },
+            {
+              index: "approveRules",
+              title: "审批权限"
+            },
+            {
+              index: "doorRules",
+              title: "门禁权限"
+            },
+            {
+              index: "electSeal",
+              title: "电子印章"
             },
             {
               index: "DicManage",
