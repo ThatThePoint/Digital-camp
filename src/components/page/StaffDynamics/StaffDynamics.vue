@@ -17,6 +17,7 @@
           ></el-option>
         </el-select>
         <el-button type="primary">查询</el-button>
+        <el-button type="success" @click="dialogFormVisible = true">新增</el-button>
         <span class="staffStatu" style="float:right">总人数：100人  在岗：98人  休假：1人</span>
       </div>
       <div class="body">
