@@ -82,7 +82,7 @@
                 :label="item.label"
                 :value="item.value"
               ></el-option>
-            </el-select><span class="fires">费用：</span>
+            </el-select>
             <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
             <el-button size="small" type="success">照片上传</el-button>
           </div>

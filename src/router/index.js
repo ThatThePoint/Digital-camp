@@ -14,7 +14,7 @@ export default new Router({
             path: '/',
             component: resolve => require(['../components/common/Home.vue'], resolve),
             meta: { title: '自述文件' },
-            children:[
+            children: [
                 {
                     path: '/dashboard',
                     component: resolve => require(['../components/page/Dashboard.vue'], resolve),
@@ -50,13 +50,13 @@ export default new Router({
                     // markdown组件
                     path: '/markdown',
                     component: resolve => require(['../components/page/Markdown.vue'], resolve),
-                    meta: { title: 'markdown编辑器' }    
+                    meta: { title: 'markdown编辑器' }
                 },
                 {
                     // 图片上传组件
                     path: '/upload',
                     component: resolve => require(['../components/page/Upload.vue'], resolve),
-                    meta: { title: '文件上传' }   
+                    meta: { title: '文件上传' }
                 },
                 {
                     // vue-schart组件
@@ -82,7 +82,7 @@ export default new Router({
                     component: resolve => require(['../components/page/Permission.vue'], resolve),
                     meta: { title: '权限测试', permission: true }
                 },
-                
+
                 {
                     // 公文管理
                     path: '/documentmanagement',
@@ -99,7 +99,7 @@ export default new Router({
                     // 值班执勤
                     path: '/onduty',
                     component: resolve => require(['../components/page/OnDuty/OnDuty.vue'], resolve),
-                    meta: { title: '值班执勤', permission: true }
+                    meta: { title: '值班执勤', permission: true },
                 },
                 {
                     // 人员动态
@@ -107,7 +107,6 @@ export default new Router({
                     component: resolve => require(['../components/page/StaffDynamics/StaffDynamics.vue'], resolve),
                     meta: { title: '人员动态', permission: true }
                 },
-                
                 {
                     // 警报传递
                     path: '/alert',
@@ -126,7 +125,6 @@ export default new Router({
                     component: resolve => require(['../components/page/CarManager/CarDetail.vue'], resolve),
                     meta: { title: '车辆信息', permission: true }
                 },
-                
                 {
                     // 车库管理
                     path: '/garage',
@@ -175,7 +173,7 @@ export default new Router({
                     component: resolve => require(['../components/page/CarManager/AddCar.vue'], resolve),
                     meta: { title: '增加车辆', permission: true }
                 },
-                
+
                 {
                     // 新增保养
                     path: '/addcare',
@@ -217,6 +215,18 @@ export default new Router({
                     path: '/UserRight',
                     component: resolve => require(['../components/page/SysConfig/UserRight.vue'], resolve),
                     meta: { title: '用户权限', permission: true }
+                },
+                {
+                    // 审批权限
+                    path: '/approveRules',
+                    component: resolve => require(['../components/page/SysConfig/approveRules.vue'], resolve),
+                    meta: { title: '审批权限', permission: true }
+                },
+                {
+                    // 门禁权限
+                    path: '/carApproveSetting',
+                    component: resolve => require(['../components/page/SysConfig/carApproveSetting.vue'], resolve),
+                    meta: { title: '门禁权限', permission: true }
                 },
                 {
                     path: '/404',

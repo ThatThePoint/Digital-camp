@@ -4,8 +4,8 @@
       class="sidebar-el-menu"
       :default-active="onRoutes"
       :collapse="collapse"
-      background-color="#324157"
-      text-color="#bfcbd9"
+      background-color="rgb(238, 239, 241)"
+      text-color="#666"
       active-text-color="#20a0ff"
       unique-opened
       router
@@ -143,7 +143,7 @@ export default {
             },
             {
               index: "onduty",
-              title: "值班执勤"
+              title: "值班执勤",
             },
             {
               index: "StaffDynamics",
@@ -237,7 +237,7 @@ export default {
             }
           ]
         },
-        
+
         {
           icon: "el-icon-lx-copy",
           index: "electCorrect",
@@ -260,7 +260,7 @@ export default {
           subs: [
             {
               index: "curVisitor",
-              title: "当前访客"//新增访客
+              title: "当前访客" //新增访客
             },
             {
               index: "visitApprove",
@@ -310,7 +310,7 @@ export default {
             },
             {
               index: "UserManage",
-              title: "用户管理"
+              title: "人员信息"
             },
             {
               index: "EquipManage",
@@ -332,7 +332,7 @@ export default {
               title: "审批权限"
             },
             {
-              index: "doorRules",
+              index: "carApproveSetting",
               title: "门禁权限"
             },
             {
@@ -367,7 +367,7 @@ export default {
   display: block;
   position: absolute;
   left: 0;
-  top: 70px;
+  top: 40px;
   bottom: 0;
   overflow-y: scroll;
 }

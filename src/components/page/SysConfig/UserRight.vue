@@ -53,14 +53,14 @@
             <el-form-item label="功能权限" :label-width="formLabelWidth">
               <el-row :gutter="20" style="height:200px;overflow:auto;">
                 <el-col :span="6">
-                 <el-tree 
+                  <el-tree
                     :data="data"
                     show-checkbox
                     node-key="id"
                     :default-expanded-keys="[2, 3]"
                     :default-checked-keys="[5]"
-                    :props="defaultProps">
-                  </el-tree>
+                    :props="defaultProps"
+                  ></el-tree>
                 </el-col>
               </el-row>
             </el-form-item>
@@ -85,7 +85,6 @@
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑权限</el-button>
-              
             </template>
           </el-table-column>
         </el-table>
@@ -207,45 +206,60 @@ export default {
         desc: ""
       },
       formLabelWidth: "120px",
-data: [{
+      data: [
+        {
           id: 1,
-          label: '一级 1',
-          children: [{
-            id: 4,
-            label: '二级 1-1',
-            children: [{
-              id: 9,
-              label: '三级 1-1-1'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        }, {
+          label: "一级 1",
+          children: [
+            {
+              id: 4,
+              label: "二级 1-1",
+              children: [
+                {
+                  id: 9,
+                  label: "三级 1-1-1"
+                },
+                {
+                  id: 10,
+                  label: "三级 1-1-2"
+                }
+              ]
+            }
+          ]
+        },
+        {
           id: 2,
-          label: '一级 2',
-          children: [{
-            id: 5,
-            label: '二级 2-1'
-          }, {
-            id: 6,
-            label: '二级 2-2'
-          }]
-        }, {
+          label: "一级 2",
+          children: [
+            {
+              id: 5,
+              label: "二级 2-1"
+            },
+            {
+              id: 6,
+              label: "二级 2-2"
+            }
+          ]
+        },
+        {
           id: 3,
-          label: '一级 3',
-          children: [{
-            id: 7,
-            label: '二级 3-1'
-          }, {
-            id: 8,
-            label: '二级 3-2'
-          }]
-        }],
-        defaultProps: {
-          children: 'children',
-          label: 'label'
+          label: "一级 3",
+          children: [
+            {
+              id: 7,
+              label: "二级 3-1"
+            },
+            {
+              id: 8,
+              label: "二级 3-2"
+            }
+          ]
         }
+      ],
+      defaultProps: {
+        children: "children",
+        label: "label"
+      }
     };
   },
   methods: {

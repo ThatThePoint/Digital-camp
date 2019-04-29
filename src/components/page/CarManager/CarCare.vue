@@ -61,14 +61,13 @@
         >
           <el-table-column prop="license" label="车牌号" sortable width="180">
             <template slot-scope="scope">
-              <div class="carImg"></div>
+              
               {{ scope.row.license }}
             </template>
           </el-table-column>
           <el-table-column prop="property" label="车辆编号" sortable width="180"></el-table-column>
           <el-table-column prop="department" label="所属部门" sortable></el-table-column>
           <el-table-column prop="carUser" label="保养类型" sortable></el-table-column>
-          <el-table-column prop="tel" label="费用" sortable></el-table-column>
           <el-table-column prop="inout" label="保养时间" sortable></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">

@@ -30,17 +30,20 @@ a {
     text-decoration: none
 }
 
+input{
+    height: 26px !important;
+}
 
 .content-box {
     position: absolute;
     left: 250px;
     right: 0;
-    top: 70px;
+    top: 40px;
     bottom: 0;
     padding-bottom: 30px;
     -webkit-transition: left .3s ease-in-out;
     transition: left .3s ease-in-out;
-    background: #f0f0f0;
+    background: rgb(247 ,247, 247);
 }
 
 .content {

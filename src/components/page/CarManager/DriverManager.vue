@@ -32,6 +32,7 @@
           v-model="input2"
         ></el-input>
         <el-button>搜索</el-button>
+        <el-button type="success"  @click="addCare()" class="right">新增</el-button>
       </div>
       <div class="body">
         <el-table

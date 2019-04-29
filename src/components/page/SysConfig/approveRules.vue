@@ -7,7 +7,7 @@
     </div>
     <div class="container">
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="人员权限" name="first">
+        <el-tab-pane label="请假审批" name="first">
           <div class="messages">
             <span>人员类型</span>
             <el-select class="input-width" v-model="typeValue" filterable placeholder="请选择">
@@ -92,7 +92,7 @@
             </el-table>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="车辆权限" name="second">车辆权限</el-tab-pane>
+        <el-tab-pane label="车辆审批" name="second">车辆审批</el-tab-pane>
       </el-tabs>
     </div>
   </div>
