@@ -313,6 +313,10 @@ export default {
               title: "人员信息"
             },
             {
+              index:"addSoldier",
+              title:"新增现役人员"
+            },
+            {
               index: "EquipManage",
               title: "设备管理"
             }

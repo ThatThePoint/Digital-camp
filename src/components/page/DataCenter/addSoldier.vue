@@ -3,13 +3,13 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-favor"></i> 新增现役人员
+          <i class="el-icon-lx-favor"></i> 增加车辆
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
       <div class="header-container">
-        <div class="carImg">人员照片</div>
+        <div class="carImg">车辆照片</div>
         <div class="carDet">
           <div class="license">
             奔驰2号
