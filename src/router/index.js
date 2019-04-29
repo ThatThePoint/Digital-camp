@@ -201,6 +201,12 @@ export default new Router({
                     meta: { title: '人员管理', permission: true }
                 },
                 {
+                    // 新增现役人员
+                    path: '/addSoldier',
+                    component: resolve => require(['../components/page/DataCenter/addSoldier.vue'], resolve),
+                    meta: { title: '新增现役人员', permission: true }
+                },
+                {
                     // 设备管理
                     path: '/EquipManage',
                     component: resolve => require(['../components/page/DataCenter/EquipManage.vue'], resolve),
