@@ -88,6 +88,8 @@
                 :value="item.value"
               ></el-option>
             </el-select>
+            <span>值班日期</span>
+              <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
             <el-button type="primary">查询</el-button>
           </div>
           <div class="body">

@@ -5,86 +5,24 @@
         <el-breadcrumb-item>人员权限</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="container">
-      <div class="messages">
-        <span>人员类型</span>
-        <el-select class="input-width" v-model="typeValue" filterable placeholder="请选择">
-          <el-option
-            v-for="item in typeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-        <span>所属部门</span>
-        <el-select class="input-width" v-model="deptValue" filterable placeholder="请选择">
-          <el-option
-            v-for="item in deptOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-        <el-input class="input-width" v-model="input2" placeholder="姓名"></el-input>
-        <el-button type="primary">查询</el-button>
-        <el-dialog title="编辑权限" :visible.sync="outerVisible">
-          <el-form :model="form">
-            <el-form-item :label-width="formLabelWidth">
-              <el-row :gutter="20">
-                <el-col :span="6">姓名：张三</el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">性别：男</div>
-                </el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">年龄：35</div>
-                </el-col>
-              </el-row>
-            </el-form-item>
-            <el-form-item :label-width="formLabelWidth">
-              <el-row :gutter="20">
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">部门：野战旅</div>
-                </el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">职位：野战旅长</div>
-                </el-col>
-              </el-row>
-            </el-form-item>
-            <el-form-item label="功能权限" :label-width="formLabelWidth">
-              <el-row :gutter="20" style="height:200px;overflow:auto;">
-                <el-col :span="6">
-                  <el-tree
-                    :data="data"
-                    show-checkbox
-                    node-key="id"
-                    :default-expanded-keys="[2, 3]"
-                    :default-checked-keys="[5]"
-                    :props="defaultProps"
-                  ></el-tree>
-                </el-col>
-              </el-row>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="outerVisible = false">取 消</el-button>
-            <el-button type="primary" @click="outerVisible = false">确 定</el-button>
+     <div class="messages">
+            <el-button type="success" @click="addPeople" class="right">新增角色</el-button>
           </div>
-        </el-dialog>
-      </div>
+    <div class="container">
       <div class="body">
         <el-table
           :data="tableData"
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="name" label="姓名">{{}}</el-table-column>
-          <el-table-column prop="gender" label="性别"></el-table-column>
-          <el-table-column prop="dept" label="单位"></el-table-column>
-          <el-table-column prop="job" label="职务"></el-table-column>
+          <el-table-column prop="code" label="角色编码">{{}}</el-table-column>
+          <el-table-column prop="name" label="角色名称"></el-table-column>
           <el-table-column prop="status" label="状态"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑权限</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">角色人员</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -102,21 +40,6 @@ export default {
       value2: "",
       input2: "",
       typeValue: "",
-      typeOptions: [
-        {
-          value: "1",
-          label: "现役"
-        },
-        {
-          value: "2",
-          label: "职工"
-        },
-        {
-          value: "3",
-          label: "家属"
-        }
-      ],
-
       deptValue: "",
       deptOptions: [
         {
@@ -139,56 +62,22 @@ export default {
       value: "",
       tableData: [
         {
-          name: "李云龙",
-          gender: "男",
-          dept: "保卫科",
-          job: "保卫员",
-          status: "在岗"
+          code: "admin",
+          name: "管理员",
+          status: "启用"
         },
         {
-          name: "李云龙",
-          gender: "男",
-          dept: "保卫科",
-          job: "保卫员",
-          status: "在岗"
+          code: "generalUser",
+          name: "普通用户",
+          status: "启用"
         },
         {
-          name: "李云龙",
-          gender: "男",
-          dept: "保卫科",
-          job: "保卫员",
-          status: "在岗"
-        },
-        {
-          name: "李云龙",
-          gender: "男",
-          dept: "保卫科",
-          job: "保卫员",
-          status: "在岗"
+         code: "seniorUser",
+          name: "高级用户",
+          status: "启用"
         }
       ],
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
+      
       formInline: {
         user: "",
         region: ""

@@ -2,14 +2,14 @@
   <div>
     <div class="crumbs">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item>审批规则</el-breadcrumb-item>
+        <el-breadcrumb-item>人员权限</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="请假审批" name="first">
-           <div class="messages">
-            <el-button type="success" @click="addPeople" class="right">新增规则</el-button>
+        <el-tab-pane label="人员权限" name="first">
+            <div class="messages">
+            <el-button type="success" @click="addPeople" class="right">新增</el-button>
           </div>
           <div class="body">
             <el-table
@@ -17,21 +17,21 @@
               style="width: 100%"
               :default-sort="{prop: 'date', order: 'descending'}"
             >
-              <el-table-column prop="name" label="名称"></el-table-column>
-              <el-table-column prop="remark" label="描述"></el-table-column>
-              <el-table-column prop="status" label="状态"></el-table-column>
+              <el-table-column prop="code" label="权限编码"></el-table-column>
+              <el-table-column prop="name" label="权限名称"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">删除</el-button>
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑权限</el-button>
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">权限人员</el-button>
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">删除权限</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="车辆审批" name="second">
-          <div class="messages">
-            <el-button type="success" @click="addPeople" class="right">新增规则</el-button>
+        <el-tab-pane label="车辆权限" name="second">
+           <div class="messages">
+            <el-button type="success" @click="addPeople" class="right">新增</el-button>
           </div>
           <div class="body">
             <el-table
@@ -39,13 +39,13 @@
               style="width: 100%"
               :default-sort="{prop: 'date', order: 'descending'}"
             >
-              <el-table-column prop="name" label="名称"></el-table-column>
-              <el-table-column prop="remark" label="描述"></el-table-column>
-              <el-table-column prop="status" label="状态"></el-table-column>
+              <el-table-column prop="code" label="权限编码"></el-table-column>
+              <el-table-column prop="name" label="权限名称"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">删除</el-button>
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑权限</el-button>
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">权限车辆</el-button>
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">删除权限</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -66,56 +66,24 @@ export default {
       value2: "",
       input2: "",
       typeValue: "",
-      typeOptions: [
-        {
-          value: "1",
-          label: "现役"
-        },
-        {
-          value: "2",
-          label: "职工"
-        },
-        {
-          value: "3",
-          label: "家属"
-        }
-      ],
-
       deptValue: "",
-      deptOptions: [
-        {
-          value: "1",
-          label: "连队1"
-        },
-        {
-          value: "2",
-          label: "连队2"
-        },
-        {
-          value: "3",
-          label: "连队3"
-        },
-        {
-          value: "4",
-          label: "连队4"
-        }
-      ],
       value: "",
       tableData: [
         {
-          name: "一级审批",
-          remark: "一级审批",
-          status: "启用"
+          name: "初级权限",
+          code: "primaryRight"
         },
         {
-           name: "二级级审批",
-          remark: "二级审批",
-          status: "禁用"
+           name: "中级权限",
+          code: "primaryRight"
         },
         {
-           name: "三级审批",
-          remark: "三级审批",
-          status: "禁用"
+           name: "高级权限",
+          code: "primaryRight"
+        },
+        {
+           name: "管理员",
+          code: "primaryRight"
         }
       ],
       formInline: {

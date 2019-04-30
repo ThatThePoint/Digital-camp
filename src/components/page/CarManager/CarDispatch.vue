@@ -10,6 +10,54 @@
     <div class="container">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="车辆申请" name="first">
+          <div class="body">
+            <el-form :model="form">
+              <div class="flex"></div>
+              <el-form-item label="司机" :label-width="formLabelWidth">
+                <el-select v-model="formInline.region" placeholder="请选择">
+                  <el-option label="老张" value="shanghai"></el-option>
+                  <el-option label="老李" value="beijing"></el-option>
+                </el-select>使用人
+                <el-select v-model="formInline.region" placeholder="请选择" style="margin-left:10px;">
+                  <el-option label="老张" value="shanghai"></el-option>
+                  <el-option label="老李" value="beijing"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="起始时间" :label-width="formLabelWidth">
+                <el-date-picker placeholder="选择时间"></el-date-picker>--
+                <el-date-picker placeholder="选择时间"></el-date-picker>
+              </el-form-item>
+
+              <el-form-item label="目的地" :label-width="formLabelWidth">
+                <el-input type="input" class="input-width"></el-input>里程
+                <el-input type="input" class="input-width"></el-input>
+              </el-form-item>
+
+              <el-form-item label="申请车辆" :label-width="formLabelWidth">
+                <el-select v-model="formInline.region" placeholder="请选择">
+                  <el-option label="冀JHSKDLL" value="shanghai"></el-option>
+                  <el-option label="冀JHSKDLL" value="beijing"></el-option>
+                </el-select>调度员
+                <el-select v-model="formInline.region" placeholder="请选择" style="margin-left:10px;">
+                  <el-option label="管理员" value="shanghai"></el-option>
+                  <el-option label="李长官" value="beijing"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="事由" :label-width="formLabelWidth">
+                <el-input class="input-width" placeholder v-model="input2" type="textarea"></el-input>
+              </el-form-item>
+              <el-form-item label="备注" :label-width="formLabelWidth">
+                <el-input class="input-width" placeholder v-model="input2" type="textarea"></el-input>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            </div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="车辆调度" name="second">
+          车辆调度
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
@@ -95,7 +143,8 @@
             </el-dialog>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="车辆调度" name="second">车辆调度
+        <el-tab-pane label="车辆审批" name="third">
+          车辆审批
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
@@ -181,7 +230,8 @@
             </el-dialog>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="车辆审批" name="third">车辆审批
+        <el-tab-pane label="待审批车辆" name="fourth">
+          待审批车辆
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
@@ -267,7 +317,8 @@
             </el-dialog>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="待审批车辆" name="fourth">待审批车辆
+        <el-tab-pane label="已审批车辆" name="fifth">
+          已审批车辆
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
@@ -353,7 +404,8 @@
             </el-dialog>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="已审批车辆" name="fifth">已审批车辆
+        <el-tab-pane label="进行中车辆" name="sixth">
+          进行中车辆
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
@@ -439,93 +491,8 @@
             </el-dialog>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="进行中车辆" name="sixth">进行中车辆
-          <div class="messages">
-            <el-form :inline="true" :model="formInline" class="demo-form-inline">
-              <el-form-item label>
-                <el-select v-model="formInline.region" placeholder="申请类型">
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label>
-                <el-select v-model="formInline.region" placeholder="申请状态">
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label>
-                <el-input v-model="formInline.user" placeholder="申请人"></el-input>
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click="onSubmit">查询</el-button>
-              </el-form-item>
-              <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
-            </el-form>
-          </div>
-          <div class="body">
-            <el-table
-              :data="tableData"
-              style="width: 100%"
-              :default-sort="{prop: 'license', order: 'descending'}"
-            >
-              <el-table-column prop="license" label="车牌号" sortable width="180"></el-table-column>
-              <el-table-column prop="carNo" label="车辆编号" sortable width="180"></el-table-column>
-              <el-table-column prop="ofDept" label="所属部门" sortable></el-table-column>
-              <el-table-column prop="applyPerson" label="申请人" sortable></el-table-column>
-              <el-table-column prop="type" label="申请类型" sortable></el-table-column>
-              <el-table-column prop="disc" label="申请描述" sortable></el-table-column>
-              <el-table-column prop="date" label="申请时间" sortable></el-table-column>
-              <el-table-column prop="status" label="申请状态" sortable></el-table-column>
-              <el-table-column label="操作">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-dialog title="用车信息" :visible.sync="dialogFormVisible">
-              <el-form :model="form">
-                <div class="flex"></div>
-                <el-form-item label="申请车辆" :label-width="formLabelWidth">
-                  <el-select v-model="formInline.region" placeholder="申请类型">
-                    <el-option label="冀JHSKDLL" value="shanghai"></el-option>
-                    <el-option label="冀JHSKDLL" value="beijing"></el-option>
-                  </el-select>
-                  <el-select
-                    v-model="formInline.region"
-                    placeholder="申请类型"
-                    style="margin-left:10px;"
-                  >
-                    <el-option label="外出" value="shanghai"></el-option>
-                    <el-option label="因私" value="beijing"></el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="日期筛选" :label-width="formLabelWidth">
-                  <el-date-picker
-                    class="input-width"
-                    v-model="value1"
-                    type="date"
-                    placeholder="选择日期"
-                  ></el-date-picker>--
-                  <el-date-picker
-                    class="input-width"
-                    v-model="value2"
-                    type="date"
-                    placeholder="选择日期"
-                  ></el-date-picker>
-                </el-form-item>
-                <el-form-item label="申请描述" :label-width="formLabelWidth">
-                  <el-input class="input-width" placeholder v-model="input2" type="textarea"></el-input>
-                </el-form-item>
-              </el-form>
-              <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-              </div>
-            </el-dialog>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="未批车辆" name="seventh">未批车辆
+        <el-tab-pane label="未批车辆" name="seventh">
+          未批车辆
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>

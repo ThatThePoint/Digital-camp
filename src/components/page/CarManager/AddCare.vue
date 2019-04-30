@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-favor"></i> 新增维修保养记录
+          <i class="el-icon-lx-favor"></i> 新增维护记录
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -74,21 +74,21 @@
         <div>
           <div>维修保养信息：</div>
           <div class="itemDet">
-            保养类型：
+            维护类型：
             <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
               <el-option
-                v-for="item in propertyOptions"
+                v-for="item in inoutOptions"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               ></el-option>
             </el-select>
-            <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
-            <el-button size="small" type="success">照片上传</el-button>
+            <el-input class="input-width" placeholder="经办人" v-model="input2"></el-input>
+            
           </div>
           <div class="itemDet">
             维修日期：
-            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>保养明细：
+            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>备注：
             <el-input type="textarea" class="wenben"></el-input>
           </div>
         </div>
@@ -172,15 +172,15 @@ export default {
       inoutOptions: [
         {
           value: "1",
-          label: "内部车辆"
+          label: "日常保养"
         },
         {
           value: "2",
-          label: "外部车辆"
+          label: "顺坏维修"
         },
         {
           value: "3",
-          label: "临时车辆"
+          label: "。。。"
         }
       ],
       propertyValue: "",

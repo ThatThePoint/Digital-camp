@@ -6,39 +6,7 @@
       </el-breadcrumb>
     </div>
     <div class="container">
-      <div class="messages">
-        <el-form :inline="true" :model="filterModel" class="demo-form-inline">
-          <el-form-item label="申请人部门">
-            <el-select v-model="filterModel.depts" placeholder="请选择">
-              <el-option label="组织部" value="shanghai"></el-option>
-              <el-option label="一连" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="申请状态">
-            <el-select v-model="filterModel.status" placeholder="请选择">
-              <el-option label="归档" value="shanghai"></el-option>
-              <el-option label="待审批" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="申请类型">
-            <el-select v-model="filterModel.types" placeholder="请选择">
-              <el-option label="请假" value="shanghai"></el-option>
-              <el-option label="出差" value="beijing"></el-option>
-              <el-option label="学习" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="姓名">
-            <el-input v-model="filterModel.name" placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="我的待办">
-            <el-checkbox v-model="checked"></el-checkbox>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
-          </el-form-item>
-            <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
-        </el-form>
-      </div>
+      
       <div class="body">
         <el-table
           :data="tableData"
@@ -57,7 +25,6 @@
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
-              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">退回</el-button>
             </template>
           </el-table-column>
         </el-table>

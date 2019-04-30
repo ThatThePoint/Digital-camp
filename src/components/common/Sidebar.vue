@@ -203,10 +203,6 @@ export default {
             {
               index: "carinout",
               title: "车辆进出记录"
-            },
-            {
-              index: "usecar",
-              title: "用车统计"
             }
           ]
         },
@@ -313,10 +309,6 @@ export default {
               title: "人员信息"
             },
             {
-              index:"addSoldier",
-              title:"新增现役人员"
-            },
-            {
               index: "EquipManage",
               title: "设备管理"
             }
@@ -336,7 +328,7 @@ export default {
               title: "审批权限"
             },
             {
-              index: "carApproveSetting",
+              index: "doorApproveSetting",
               title: "门禁权限"
             },
             {

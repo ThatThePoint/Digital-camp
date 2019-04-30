@@ -10,33 +10,48 @@
     <div class="container">
       <div class="messages">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="部门名称">
-            <el-input v-model="formInline.user" placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
-          </el-form-item>
-            <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
+          <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
         </el-form>
       </div>
       <div class="body">
-         <el-table
-          :data="tableData"
-          style="width: 100%"
-          :default-sort="{prop: 'parentNode', order: 'descending'}"
-        >
-          <el-table-column prop="name" label="部门名称" sortable width="180">
+        <el-table :data="tableData" style="width: 100%">
+          <el-table-column type="expand">
+            <template>
+              <el-table :data="tableData" :show-header="false" style="width: 100%">
+                <el-table-column type="expand">
+                  <template>
+                    <div>无下级部门</div>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="name" label="名称" sortable width="180"></el-table-column>
+                <el-table-column prop="note" label="描述" sortable width="180"></el-table-column>
+                <el-table-column prop="sort" label="序号" sortable></el-table-column>
+                <el-table-column prop="status" label="状态" sortable></el-table-column>
+                <el-table-column label="操作">
+                  <template slot-scope="scope">
+                    <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
+                    <el-button
+                      size="mini"
+                      type="danger"
+                      @click="handleEdit(scope.$index, scope.row)"
+                    >删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </template>
           </el-table-column>
-          <el-table-column prop="parentNode" label="上级部门" sortable width="180"></el-table-column>
-          <el-table-column prop="dutyPerson" label="部门负责人" sortable></el-table-column>
-          <el-table-column prop="deptType" label="部门类型" sortable></el-table-column>
-          <el-table-column prop="date" label="修改时间" sortable></el-table-column>
+          <el-table-column prop="name" label="名称" sortable width="180"></el-table-column>
+          <el-table-column prop="note" label="描述" sortable width="180"></el-table-column>
+          <el-table-column prop="sort" label="序号" sortable></el-table-column>
+          <el-table-column prop="status" label="状态" sortable></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
+              <el-button size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
+
         <el-dialog title="部门信息" :visible.sync="dialogFormVisible">
           <el-form :model="form">
             <div class="flex"></div>
@@ -101,57 +116,31 @@ export default {
       value1: "",
       value2: "",
       input2: "",
-      options: [
-        {
-          value: "1",
-          label: "普通"
-        },
-        {
-          value: "2",
-          label: "提醒"
-        },
-        {
-          value: "3",
-          label: "严重"
-        },
-        {
-          value: "4",
-          label: "警告"
-        },
-        {
-          value: "5",
-          label: "紧急"
-        }
-      ],
       value: "",
       tableData: [
         {
           name: "政治部",
-          parentNode:"2323",
-          dutyPerson: "老李",
-          deptType: "部队",
-          date: "2019-04-23"
+          note: "政治部",
+          sort: "1",
+          status: "有效"
         },
         {
           name: "政治部",
-          parentNode:"2323",
-          dutyPerson: "老李",
-          deptType: "部队",
-          date: "2019-04-23"
+          note: "政治部",
+          sort: "2",
+          status: "有效"
         },
         {
           name: "政治部",
-          parentNode:"2323",
-          dutyPerson: "老李",
-          deptType: "部队",
-          date: "2019-04-23"
+          note: "政治部",
+          sort: "3",
+          status: "有效"
         },
         {
           name: "政治部",
-          parentNode:"2323",
-          dutyPerson: "老李",
-          deptType: "部队",
-          date: "2019-04-23"
+          note: "政治部",
+          sort: "4",
+          status: "有效"
         }
       ],
       formInline: {

@@ -60,19 +60,15 @@
           :default-sort="{prop: 'license', order: 'descending'}"
         >
           <el-table-column prop="license" label="车牌号" sortable width="180">
-            <template slot-scope="scope">
-              
-              {{ scope.row.license }}
-            </template>
           </el-table-column>
-          <el-table-column prop="property" label="车辆编号" sortable width="180"></el-table-column>
-          <el-table-column prop="department" label="所属部门" sortable></el-table-column>
-          <el-table-column prop="carUser" label="保养类型" sortable></el-table-column>
-          <el-table-column prop="inout" label="保养时间" sortable></el-table-column>
+          <el-table-column prop="property" label="维护类型" sortable width="180"></el-table-column>
+          <el-table-column prop="department" label="维护原因" sortable></el-table-column>
+          <el-table-column prop="inout" label="维护时间" sortable></el-table-column>
+          <el-table-column prop="carUser" label="经办人" sortable></el-table-column>
+          <el-table-column prop="carUser" label="备注" sortable></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-              <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>

@@ -187,22 +187,40 @@ export default new Router({
                     meta: { title: '部门管理', permission: true }
                 },
                 {
-                    // 请假申请管理
-                    path: '/leavemanage',
-                    component: resolve => require(['../components/page/LeaveManage/LeaveManage.vue'], resolve),
-                    meta: { title: '请假申请管理', permission: true }
+                    // 请假申请
+                    path: '/outingApply',
+                    component: resolve => require(['../components/page/LeaveManage/outingApply.vue'], resolve),
+                    meta: { title: '请假申请', permission: true }
+                },
+                {
+                    // 请假审批
+                    path: '/outingApprove',
+                    component: resolve => require(['../components/page/LeaveManage/outingApprove.vue'], resolve),
+                    meta: { title: '请假审批', permission: true }
+                },
+                {
+                    // 待审批请假
+                    path: '/outingForApprove',
+                    component: resolve => require(['../components/page/LeaveManage/outingForApprove.vue'], resolve),
+                    meta: { title: '待审批请假', permission: true }
+                },
+                {
+                    // 已审批请假
+                    path: '/outingApproved',
+                    component: resolve => require(['../components/page/LeaveManage/outingApproved.vue'], resolve),
+                    meta: { title: '已审批请假', permission: true }
+                },
+                {
+                    // 销假记录
+                    path: '/cancelRecord',
+                    component: resolve => require(['../components/page/LeaveManage/cancelRecord.vue'], resolve),
+                    meta: { title: '销假记录', permission: true }
                 },
                 {
                     // 人员管理
                     path: '/UserManage',
                     component: resolve => require(['../components/page/DataCenter/UserManage.vue'], resolve),
                     meta: { title: '人员管理', permission: true }
-                },
-                {
-                    // 新增现役人员
-                    path: '/addSoldier',
-                    component: resolve => require(['../components/page/DataCenter/addSoldier.vue'], resolve),
-                    meta: { title: '新增现役人员', permission: true }
                 },
                 {
                     // 设备管理
@@ -230,8 +248,8 @@ export default new Router({
                 },
                 {
                     // 门禁权限
-                    path: '/carApproveSetting',
-                    component: resolve => require(['../components/page/SysConfig/carApproveSetting.vue'], resolve),
+                    path: '/doorApproveSetting',
+                    component: resolve => require(['../components/page/SysConfig/doorApproveSetting.vue'], resolve),
                     meta: { title: '门禁权限', permission: true }
                 },
                 {
