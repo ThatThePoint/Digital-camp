@@ -235,6 +235,12 @@ export default new Router({
                     meta: { title: '门禁权限', permission: true }
                 },
                 {
+                    // 新增人员
+                    path: '/addpeople',
+                    component: resolve => require(['../components/page/DataCenter/AddPeople.vue'], resolve),
+                    meta: { title: '新增人员', permission: true }
+                },
+                {
                     path: '/404',
                     component: resolve => require(['../components/page/404.vue'], resolve),
                     meta: { title: '404' }
