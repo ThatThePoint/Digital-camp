@@ -11,14 +11,6 @@
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="部队车辆" name="first">
           <div class="messages">
-            <el-select class="input-width" v-model="propertyValue" placeholder="车辆属性">
-              <el-option
-                v-for="item in propertyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
             <el-select class="input-width" v-model="departmentValue" placeholder="所属部门">
               <el-option
                 v-for="item in departmentOptions"
@@ -56,7 +48,7 @@
                   {{ scope.row.license }}
                 </template>
               </el-table-column>
-              <el-table-column prop="property" label="车辆属性" sortable width="180"></el-table-column>
+              <el-table-column prop="carUser1" label="车辆属性" sortable width="180"></el-table-column>
               <el-table-column prop="department" label="所属部门" sortable></el-table-column>
               <el-table-column prop="carUser" label="车主姓名" sortable></el-table-column>
               <el-table-column prop="tel" label="联系电话" sortable></el-table-column>
@@ -76,14 +68,6 @@
         </el-tab-pane>
         <el-tab-pane label="私家车辆" name="second">
           <div class="messages">
-            <el-select class="input-width" v-model="propertyValue" placeholder="车辆属性">
-              <el-option
-                v-for="item in propertyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
             <el-select class="input-width" v-model="departmentValue" placeholder="所属部门">
               <el-option
                 v-for="item in departmentOptions"
@@ -121,7 +105,7 @@
                   {{ scope.row.license }}
                 </template>
               </el-table-column>
-              <el-table-column prop="property" label="车辆属性" sortable width="180"></el-table-column>
+              <el-table-column prop="carUser2" label="车辆属性" sortable width="180"></el-table-column>
               <el-table-column prop="department" label="所属部门" sortable></el-table-column>
               <el-table-column prop="carUser" label="车主姓名" sortable></el-table-column>
               <el-table-column prop="tel" label="联系电话" sortable></el-table-column>
@@ -141,14 +125,6 @@
         </el-tab-pane>
         <el-tab-pane label="临时车辆" name="third">
           <div class="messages">
-            <el-select class="input-width" v-model="propertyValue" placeholder="车辆属性">
-              <el-option
-                v-for="item in propertyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
             <el-select class="input-width" v-model="departmentValue" placeholder="所属部门">
               <el-option
                 v-for="item in departmentOptions"
@@ -182,11 +158,10 @@
             >
               <el-table-column prop="license" label="车牌号" sortable width="180">
                 <template slot-scope="scope">
-                  
                   {{ scope.row.license }}
                 </template>
               </el-table-column>
-              <el-table-column prop="property" label="车辆属性" sortable width="180"></el-table-column>
+              <el-table-column prop="carUser3" label="车辆属性" sortable width="180"></el-table-column>
               <el-table-column prop="department" label="所属部门" sortable></el-table-column>
               <el-table-column prop="carUser" label="车主姓名" sortable></el-table-column>
               <el-table-column prop="tel" label="联系电话" sortable></el-table-column>
@@ -297,7 +272,10 @@ export default {
           license: "冀A1231312",
           property: "内部车辆",
           department: "连队1",
-          carUser: "小明",
+          carUser:"小明",
+          carUser1: "内部车辆",
+          carUser2: "私家车辆",
+          carUser3: "临时车辆",
           tel: "1329999999",
           inout: "内部车辆"
         },
@@ -305,7 +283,10 @@ export default {
           license: "冀A1231312",
           property: "内部车辆",
           department: "连队1",
-          carUser: "小明",
+          carUser:"小明",
+          carUser1: "内部车辆",
+          carUser2: "私家车辆",
+          carUser3: "临时车辆",
           tel: "1329999999",
           inout: "内部车辆"
         },
@@ -313,7 +294,10 @@ export default {
           license: "冀A1231312",
           property: "内部车辆",
           department: "连队1",
-          carUser: "小明",
+          carUser:"小明",
+          carUser1: "内部车辆",
+          carUser2: "私家车辆",
+          carUser3: "临时车辆",
           tel: "1329999999",
           inout: "内部车辆"
         },
@@ -321,7 +305,10 @@ export default {
           license: "冀A1231312",
           property: "内部车辆",
           department: "连队1",
-          carUser: "小明",
+          carUser:"小明",
+          carUser1: "内部车辆",
+          carUser2: "私家车辆",
+          carUser3: "临时车辆",
           tel: "1329999999",
           inout: "内部车辆"
         }

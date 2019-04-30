@@ -8,18 +8,6 @@
     <div class="container">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="值班执勤" name="first">
-          <div class="messages">
-            <span>所属部门</span>
-            <el-select class="input-width" v-model="value" filterable placeholder="请选择">
-              <el-option
-                v-for="item in depts"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <el-button type="primary">查询</el-button>
-          </div>
           <div class="body">
             <el-table
               :data="tableData"
@@ -84,12 +72,43 @@
                 </el-select>
               </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="dialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            <div class="footer">
+              <el-button >取 消</el-button>
+              <el-button type="primary">确 定</el-button>
             </div>
         </el-tab-pane>
-        <el-tab-pane label="值班查询" name="third">值班查询</el-tab-pane>
+        <el-tab-pane label="值班查询" name="third">
+              <div class="messages">
+            <span>所属部门</span>
+            <el-select class="input-width" v-model="value" filterable placeholder="请选择">
+              <el-option
+                v-for="item in depts"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+            <el-button type="primary">查询</el-button>
+          </div>
+          <div class="body">
+            <el-table
+              :data="tableData"
+              style="width: 100%"
+              :default-sort="{prop: 'job', order: 'descending'}"
+            >
+              <el-table-column prop="job" label="岗位名称" sortable width="180">{{}}</el-table-column>
+              <el-table-column prop="dept" label="单位" sortable width="180"></el-table-column>
+              <el-table-column prop="dutyNow" label="当前值班人"></el-table-column>
+              <el-table-column prop="dutyToday" label="当日值班安排"></el-table-column>
+              <el-table-column prop="remark" label="值班记录"></el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
