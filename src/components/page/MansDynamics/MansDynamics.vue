@@ -42,8 +42,8 @@
           <el-table-column prop="address" label="发送部门" :formatter="formatter"></el-table-column>
           <el-table-column prop="edit" label="发送人" :formatter="formatter"></el-table-column>
           <el-table-column prop="address" label="发送时间" :formatter="formatter"></el-table-column>
-          <el-table-column prop="edit" label="状态" ></el-table-column>
-          <el-table-column prop="edit" label="全部已阅" ></el-table-column>
+          <el-table-column prop="edit" label="状态"></el-table-column>
+          <el-table-column prop="edit" label="全部已阅"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -51,6 +51,16 @@
             </template>
           </el-table-column>
         </el-table>
+        <div class="pagination">
+          <el-pagination
+            background
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            layout="total, prev, pager, next, jumper"
+            :total="total"
+          ></el-pagination>
+        </div>
       </div>
     </div>
   </div>

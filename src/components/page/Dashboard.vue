@@ -103,7 +103,7 @@
                         <span>车库情况</span>
                         <el-button style="float: right; padding: 3px 0" type="text"></el-button>
                     </div>
-                    <el-table :data="garageInfo" :show-header="false" height="304" style="width: 100%;font-size:18px;background-color=#f0f9eb">
+                    <el-table :data="garageInfo" :show-header="false" height="304" style="width: 100%;font-size:18px; background-color:#f0f9eb">
                         <el-table-column width="20">
                             <template slot-scope="scope">
                                 <el-checkbox v-show="false" v-model="scope.row.status"></el-checkbox>
