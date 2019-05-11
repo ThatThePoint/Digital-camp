@@ -14,44 +14,18 @@
         </el-form>
       </div>
       <div class="body">
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column type="expand">
-            <template>
-              <el-table :data="tableData" :show-header="false" style="width: 100%">
-                <el-table-column type="expand">
-                  <template>
-                    <div>无下级部门</div>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="name" label="名称" sortable width="180"></el-table-column>
-                <el-table-column prop="note" label="描述" sortable width="180"></el-table-column>
-                <el-table-column prop="sort" label="序号" sortable></el-table-column>
-                <el-table-column prop="status" label="状态" sortable></el-table-column>
-                <el-table-column label="操作">
-                  <template slot-scope="scope">
-                    <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
-                    <el-button
-                      size="mini"
-                      type="danger"
-                      @click="handleEdit(scope.$index, scope.row)"
-                    >删除</el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </template>
-          </el-table-column>
+        <el-table :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id">
           <el-table-column prop="name" label="名称" sortable width="180"></el-table-column>
           <el-table-column prop="note" label="描述" sortable width="180"></el-table-column>
-          <el-table-column prop="sort" label="序号" sortable></el-table-column>
-          <el-table-column prop="status" label="状态" sortable></el-table-column>
-          <el-table-column label="操作">
+          <el-table-column sort="address" label="序号"></el-table-column>
+          <el-table-column status="address" label="状态"></el-table-column>
+          <el-table-column prop="address" label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
               <el-button size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
-
         <el-dialog title="部门信息" :visible.sync="dialogFormVisible">
           <el-form :model="form">
             <div class="flex"></div>
@@ -87,62 +61,12 @@ export default {
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
-        },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            }
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            }
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            }
-          }
-        ]
+        }
       },
       value1: "",
       value2: "",
       input2: "",
       value: "",
-      tableData: [
-        {
-          name: "政治部",
-          note: "政治部",
-          sort: "1",
-          status: "有效"
-        },
-        {
-          name: "政治部",
-          note: "政治部",
-          sort: "2",
-          status: "有效"
-        },
-        {
-          name: "政治部",
-          note: "政治部",
-          sort: "3",
-          status: "有效"
-        },
-        {
-          name: "政治部",
-          note: "政治部",
-          sort: "4",
-          status: "有效"
-        }
-      ],
       formInline: {
         user: "",
         region: ""
@@ -159,7 +83,78 @@ export default {
         resource: "",
         desc: ""
       },
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
+      tableData: [
+        {
+          id: 1,
+          name: "政治部",
+          note: "政治部",
+          sort: "1",
+          status: "有效",
+          children: [
+            {
+              id: 11,
+              name: "政治部",
+              note: "政治部",
+              sort: "1",
+              status: "有效"
+            },
+            {
+              id: 12,
+              name: "政治部",
+              note: "政治部",
+              sort: "2",
+              status: "有效"
+            }
+          ]
+        },
+        {
+          id: 2,
+          name: "政治部",
+          note: "政治部",
+          sort: "2",
+          status: "有效",
+          children: [
+            {
+              id: 21,
+              name: "政治部",
+              note: "政治部",
+              sort: "1",
+              status: "有效"
+            },
+            {
+              id: 22,
+              name: "政治部",
+              note: "政治部",
+              sort: "2",
+              status: "有效"
+            }
+          ]
+        },
+        {
+          id: 3,
+          name: "政治部",
+          note: "政治部",
+          sort: "3",
+          status: "有效",
+          children: [
+            {
+              id: 31,
+              name: "政治部",
+              note: "政治部",
+              sort: "1",
+              status: "有效"
+            },
+            {
+              id: 32,
+              name: "政治部",
+              note: "政治部",
+              sort: "2",
+              status: "有效"
+            }
+          ]
+        }
+      ]
     };
   },
   methods: {
@@ -180,6 +175,22 @@ export default {
     },
     handlePreview(file) {
       console.log(file);
+    },
+    load(tree, treeNode, resolve) {
+      resolve([
+        {
+          id: 31,
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄"
+        },
+        {
+          id: 32,
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄"
+        }
+      ]);
     },
     handleExceed(files, fileList) {
       this.$message.warning(
