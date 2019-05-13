@@ -427,6 +427,7 @@ const utils = {
     /**
      *    变量是否为数字
      */
+
     isNumber : function (str) {
         var regExp = /^\d+$/g;
         return regExp.test(str);
