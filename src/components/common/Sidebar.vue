@@ -237,38 +237,38 @@ export default {
         {
           icon: "el-icon-lx-copy",
           index: "electCorrect",
-          title: "电子纠察",
+          title: "*电子纠察",
           subs: [
             {
               index: "personOutRule",
-              title: "人员违纪"
+              title: "*人员违纪"
             },
             {
               index: "carOutRule",
-              title: "车辆违纪"
+              title: "*车辆违纪"
             }
           ]
         },
         {
           icon: "el-icon-lx-copy",
           index: "visitManage",
-          title: "访客管理",
+          title: "*访客管理",
           subs: [
             {
               index: "curVisitor",
-              title: "当前访客" //新增访客
+              title: "*当前访客" //新增访客
             },
             {
               index: "visitApprove",
-              title: "访客审批"
+              title: "*访客审批"
             },
             {
               index: "visitorInfo",
-              title: "访客信息"
+              title: "*访客信息"
             },
             {
               index: "blackList",
-              title: "黑名单"
+              title: "*黑名单"
             }
           ]
         },
@@ -329,11 +329,11 @@ export default {
             },
             {
               index: "doorApproveSetting",
-              title: "门禁权限"
+              title: "*门禁权限"
             },
             {
               index: "electSeal",
-              title: "电子印章"
+              title: "*电子印章"
             },
             {
               index: "DicManage",
