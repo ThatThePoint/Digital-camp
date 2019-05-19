@@ -38,7 +38,23 @@ export default {
       }
     };
   },
+  created(){
+//var host = "https://localhost:5001/api/";
+      var host = "http://digitalcamp.oicp.io:54373/api/";
+      this.$axios
+        .post(host + "sysConfig/BasedataList",  {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        })
+        .then(res => {
+          if (res.status == 200 && res.data.status == 1) {
+            alert("保存成功");
+          } else {
+            alert("保存失败。请联系管理员");
+          }
+        });
+  },
   methods: {
+    
     commit() {
       var host = "https://localhost:5001/api/";
       let params = {
