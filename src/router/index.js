@@ -235,6 +235,12 @@ export default new Router({
                     meta: { title: '字典管理', permission: true }
                 },
                 {
+                    // 新增字典 test
+                    path: '/addBaseinfo',
+                    component: resolve => require(['../components/page/SysConfig/addBaseinfo.vue'], resolve),
+                    meta: { title: '新增字典', permission: true }
+                },
+                {
                     // 用户权限
                     path: '/UserRight',
                     component: resolve => require(['../components/page/SysConfig/UserRight.vue'], resolve),

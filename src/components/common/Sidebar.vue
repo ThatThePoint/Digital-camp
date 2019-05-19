@@ -338,6 +338,10 @@ export default {
             {
               index: "DicManage",
               title: "字典管理"
+            },
+            {
+              index: "addBaseinfo",
+              title: "添加字典"
             }
           ]
         }

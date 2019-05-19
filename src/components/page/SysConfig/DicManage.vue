@@ -38,13 +38,13 @@
                 <el-button type="primary" @click="innerVisible = false">确 定</el-button>
               </div>
             </el-dialog>
-            <el-form :model="form">
+            <el-form :model="baseInfo">
               <div class="flex">
                 <el-form-item label="字典名称">
-                  <el-input v-model="formInline.user" placeholder="请输入"></el-input>
+                  <el-input v-model="baseInfo.user" placeholder="请输入"></el-input>
                 </el-form-item>
                 <el-form-item label="备注">
-                  <el-input v-model="formInline.user" placeholder="请输入" type="textarea"></el-input>
+                  <el-input v-model="baseInfo.user" placeholder="请输入" type="textarea"></el-input>
                 </el-form-item>
               </div>
               <el-form-item label="字典状态">
