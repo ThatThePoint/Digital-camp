@@ -5,9 +5,9 @@
         <el-breadcrumb-item>人员权限</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-     <div class="messages">
-            <el-button type="success" @click="addPeople" class="right">新增角色</el-button>
-          </div>
+    <div class="messages">
+      <el-button type="success" @click="addPeople" class="right">新增角色</el-button>
+    </div>
     <div class="container">
       <div class="body">
         <el-table
@@ -72,12 +72,12 @@ export default {
           status: "启用"
         },
         {
-         code: "seniorUser",
+          code: "seniorUser",
           name: "高级用户",
           status: "启用"
         }
       ],
-      
+
       formInline: {
         user: "",
         region: ""

@@ -203,6 +203,7 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      activeName: "first",
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
