@@ -29,7 +29,6 @@ export default {
   data() {
     return {
       radio: 1,
-      outerVisible: true,
       baseinfo: {
         code: "",
         name: "",
