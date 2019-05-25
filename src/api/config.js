@@ -1,0 +1,1 @@
+export const baseURL = 'http://digitalcamp.oicp.io:54373/api/';
