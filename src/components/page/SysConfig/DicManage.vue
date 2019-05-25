@@ -16,21 +16,27 @@
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
-            <el-button type="success" @click="outerVisible = true" class="right">新增</el-button>
+          <el-button type="success" @click="outerVisible = true" class="right">新增</el-button>
           <el-dialog title="添加字典" :visible.sync="outerVisible">
             <el-dialog width="30%" title="添加明细" :visible.sync="innerVisible" append-to-body>
-              <el-form :model="form">
+              <el-form :model="baseinfo">
                 <div class="flex">
-                  <el-form-item label="明细编号">
-                    <el-input v-model="formInline.user" :label-width="formLabelWidth" placeholder="请输入"></el-input>
+                  <el-form-item label="字典编码">
+                    <el-input v-model="baseinfo.code" placeholder="请输入"></el-input>
                   </el-form-item>
-                  <el-form-item label="显示值">
-                    <el-input v-model="formInline.user" :label-width="formLabelWidth" placeholder="请输入"></el-input>
+                  <el-form-item label="名称">
+                    <el-input v-model="baseinfo.name" placeholder="请输入" type="textarea"></el-input>
+                  </el-form-item>
+                  <el-form-item label="备注">
+                    <el-input v-model="baseinfo.note" placeholder="请输入" type="textarea"></el-input>
                   </el-form-item>
                 </div>
-                <el-form-item label="明细状态">
-                  <el-radio v-model="radio" label="1">启用</el-radio>
-                  <el-radio v-model="radio" label="2">禁用</el-radio>
+                <el-form-item label="字典状态">
+                  <el-radio v-model="baseinfo.status" :label="1">启用</el-radio>
+                  <el-radio v-model="baseinfo.status" :label="0">禁用</el-radio>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="commit">确 定</el-button>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
@@ -38,7 +44,7 @@
                 <el-button type="primary" @click="innerVisible = false">确 定</el-button>
               </div>
             </el-dialog>
-            <el-form :model="baseInfo">
+            <!-- <el-form :model="baseInfo">
               <div class="flex">
                 <el-form-item label="字典名称">
                   <el-input v-model="baseInfo.user" placeholder="请输入"></el-input>
@@ -74,7 +80,7 @@
                   </el-table-column>
                 </el-table>
               </div>
-            </el-form>
+            </el-form>-->
             <div slot="footer" class="dialog-footer">
               <el-button @click="outerVisible = false">取 消</el-button>
               <el-button type="primary" @click="outerVisible = false">确 定</el-button>
@@ -138,6 +144,13 @@ export default {
         ]
       },
       outerVisible: false,
+      radio: 1,
+      baseinfo: {
+        code: "",
+        name: "",
+        status: 1,
+        note:""
+      },
       innerVisible: false,
       value1: "",
       value2: "",
@@ -247,7 +260,5 @@ export default {
 .input-width {
   width: 180px;
   margin: 0 10px;
-}
-.messages {
 }
 </style>
