@@ -25,22 +25,23 @@ axios.interceptors.response.use(function (response) {
 function errorState(response) {
     // 隐藏loading
     // 如果http状态码正常，则直接返回数据
-    if (response && (response.status === 200 || response.status === 304 || response.status === 400)) {
-        // 如果不需要除了data之外的数据，可以直接 return response.data
-        return response
-    } else {
-        alert('数据获取错误')
-    }
+    // if (response && (response.status === 200 || response.status === 304 || response.status === 400)) {
+    //     // 如果不需要除了data之外的数据，可以直接 return response.data
+    //     return response
+    // } else {
+    // }
+    return response
 }
 
 // // 封装数据返回成功提示函数---------------------------------------------------------------------------
 function successState(res) {
     // 隐藏loading
     // 统一判断后端返回的错误码(错误码与后台协商而定)
-    if (res.data.code === '000000') {
-        alert('success')
-        return res
-    }
+    // if (res.data.code === '000000') {
+    //     alert('success')
+    //     return res
+    // }
+    return res
 }
 
 // 封装axios--------------------------------------------------------------------------------------
