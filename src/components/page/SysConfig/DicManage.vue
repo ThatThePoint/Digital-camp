@@ -9,7 +9,7 @@
     </div>
     <div class="container">
       <div class="messages">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline" v-loading="loading">
           <el-form-item label="字典名称">
             <el-input v-model="formInline.user" placeholder="请输入"></el-input>
           </el-form-item>
@@ -17,8 +17,9 @@
             <el-button type="primary" @click="handleSearch">查询</el-button>
           </el-form-item>
           <el-button type="success" @click="outerVisible = true" class="right">新增</el-button>
-          <el-dialog title="添加字典" :visible.sync="outerVisible">
+          <el-dialog :title="title" :visible.sync="outerVisible">
             <el-form :model="baseinfo">
+              <el-input v-model="baseinfo.tid" style="display:none;"></el-input>
               <el-form-item label="字典编码">
                 <el-input v-model="baseinfo.code" placeholder="请输入"></el-input>
               </el-form-item>
@@ -41,11 +42,7 @@
         </el-form>
       </div>
       <div class="body">
-        <el-table
-          :data="dicTableData"
-          style="width: 100%"
-          :default-sort="{prop: 'name', order: 'descending'}"
-        >
+        <el-table :data="dicTableData" style="width: 100%">
           <el-table-column prop="name" label="字典名称" sortable width="180"></el-table-column>
           <el-table-column prop="note" label="描述" sortable width="180"></el-table-column>
           <el-table-column prop="status" label="使用状态" :formatter="formatter"></el-table-column>
@@ -53,6 +50,7 @@
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" type="danger">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -74,15 +72,18 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      count: 0,
+      loading: true,
+      title: "添加字典",
       outerVisible: false,
+      count: 0,
       currentPage: 1,
       radio: 1,
       baseinfo: {
         code: "",
         name: "",
         status: 1,
-        note: ""
+        note: "",
+        tid: ""
       },
       innerVisible: false,
       dicTableData: [],
@@ -101,10 +102,40 @@ export default {
       }
     },
     handleEdit(index, row) {
-      console.log(index, row);
+      this.title = "编辑字典";
+      Object.assign(this.baseinfo, row);
+      this.outerVisible = true;
     },
     handleDelete(index, row) {
-      console.log(index, row);
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        center: true
+      })
+        .then(() => {
+          this.postAxios("Sysconfig/DeleteBasedata", { tid: row.tid })
+            .then(res => {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              this.initBaseinfo();
+            })
+            .catch(err => {
+               this.$message({
+                type: "success",
+                message: err.message
+              });
+            });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+      console.log(row);
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -115,6 +146,7 @@ export default {
           console.log(res);
           this.count = res.count;
           this.dicTableData = [...res.data];
+          this.loading = false;
         })
         .catch(err => {
           console.log(err);
@@ -131,6 +163,17 @@ export default {
       this.getData(this.formInline.user);
       this.currentPage = 1;
     },
+    initBaseinfo() {
+      this.baseinfo = {
+        code: "",
+        name: "",
+        status: 1,
+        note: ""
+      };
+      this.currentPage = 1;
+      this.title = "添加字典";
+      this.getData();
+    },
     handleSave() {
       console.log(this.baseinfo);
       let codeFlag = this.$utils.isEmpty(this.baseinfo.code);
@@ -145,11 +188,19 @@ export default {
               message: "保存成功",
               type: "success"
             });
+            this.initBaseinfo();
           })
           .catch(err => {
             console.log(err);
           });
+      } else {
+        this.$message({
+          message: "请填写完整信息",
+          type: "warning"
+        });
       }
+
+      this.innerVisible = false;
     }
   },
   created() {
