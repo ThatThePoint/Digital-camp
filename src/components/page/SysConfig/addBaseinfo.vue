@@ -33,33 +33,23 @@ export default {
         code: "",
         name: "",
         status: 1,
-        note:""
+        note: ""
       }
     };
   },
   methods: {
-    commit() {
-      var host = "https://localhost:5001/api/";
-      let params = {
-        basedata: this.baseinfo
-      };
-      this.$axios
-        .post(host + "sysConfig/SaveBasedata", qs.stringify(params), {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" }
-        })
+    getData() {
+      this.postAxios("sysConfig/BasedataList")
         .then(res => {
-          if (res.status == 200 && res.data.status == 1) {
-            alert("保存成功");
-            this.baseinfo = {
-              code: "",
-              name: "",
-              status: 1
-            };
-          } else {
-            alert("保存失败。请联系管理员");
-          }
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
         });
     }
+  },
+  created() {
+    this.getData();
   }
 };
 </script>
@@ -67,7 +57,5 @@ export default {
 .input-width {
   width: 180px;
   margin: 0 10px;
-}
-.messages {
 }
 </style>

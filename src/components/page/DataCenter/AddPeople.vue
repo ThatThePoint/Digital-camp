@@ -10,14 +10,10 @@
     <div class="container">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="军官信息登记表" name="first">
-          <Solidier/>
+          <Soldier></Soldier>
         </el-tab-pane>
-        <el-tab-pane label="士兵信息登记表" name="second">
-
-        </el-tab-pane>
-        <el-tab-pane label="文职人员信息登记表" name="third">
-
-        </el-tab-pane>
+        <el-tab-pane label="士兵信息登记表" name="second"><Officer/></el-tab-pane>
+        <el-tab-pane label="文职人员信息登记表" name="third"></el-tab-pane>
         <el-tab-pane label="社会聘用人员信息登记表" name="fourth">
           <el-form ref="form" :model="form" label-width="80px">
             <el-row>
@@ -873,9 +869,12 @@
   </div>
 </template>
 <script>
+import Soldier from "./registrationSheet/Soldier.vue";
+import Officer from './registrationSheet/Officer.vue'
 export default {
   name: "documentManagement",
-  components:{Solidier:require('./registrationSheet/Soldier.vue')
+  components: {
+    Soldier,Officer
   },
   data() {
     return {
@@ -1148,17 +1147,20 @@ export default {
     handleBack() {
       history.go(-1);
     },
-    getData(){
-      this.postAxios('sysConfig/BasedataList',).then(res=>{
-        console.log(res);
-      }).catch(err=>{
-        console.log(err);
-      })
+    getData() {
+      this.postAxios("sysConfig/BasedataList")
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message('数据获取错误')
+        });
     }
   },
   created() {
-   this.getData(); 
-  },
+    this.getData();
+  }
 };
 </script>
 <style scoped>
