@@ -35,7 +35,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="outerVisible = false">取 消</el-button>
-              <el-button type="primary" @click="outerVisible = false">确 定</el-button>
+              <el-button type="primary" @click="handleSave">确 定</el-button>
             </div>
           </el-dialog>
         </el-form>
@@ -56,9 +56,14 @@
             </template>
           </el-table-column>
         </el-table>
-         <div class="pagination">
-            <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total='count' :current-page.sync="currentPage">
-            </el-pagination>
+        <div class="pagination">
+          <el-pagination
+            background
+            @current-change="handleCurrentChange"
+            layout="prev, pager, next"
+            :total="count"
+            :current-page.sync="currentPage"
+          ></el-pagination>
         </div>
       </div>
     </div>
@@ -69,9 +74,9 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      count:0,
+      count: 0,
       outerVisible: false,
-      currentPage:1,
+      currentPage: 1,
       radio: 1,
       baseinfo: {
         code: "",
@@ -80,41 +85,11 @@ export default {
         note: ""
       },
       innerVisible: false,
-      value1: "",
-      value2: "",
-      input2: "",
-      radioStatus: "", //新增-启用/禁用 单选
-      options: [
-        {
-          value: "1",
-          label: "普通"
-        },
-        {
-          value: "2",
-          label: "提醒"
-        },
-        {
-          value: "3",
-          label: "严重"
-        },
-        {
-          value: "4",
-          label: "警告"
-        },
-        {
-          value: "5",
-          label: "紧急"
-        }
-      ],
-      value: "",
       dicTableData: [],
       formInline: {
         user: "",
         region: ""
-      },
-      dialogTableVisible: false,
-      dialogFormVisible: false,
-      formLabelWidth: "120px"
+      }
     };
   },
   methods: {
@@ -131,14 +106,11 @@ export default {
     handleDelete(index, row) {
       console.log(index, row);
     },
-    onSubmit() {
-      console.log("submit!");
-    },
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
-    getData(name,pageNum=1,pageSize=10) {
-      this.postAxios("Sysconfig/BasedataList", { name , pageNum, pageSize })
+    getData(name, pageNum = 1, pageSize = 10) {
+      this.postAxios("Sysconfig/BasedataList", { name, pageNum, pageSize })
         .then(res => {
           console.log(res);
           this.count = res.count;
@@ -150,29 +122,29 @@ export default {
     },
     // 分页导航
     handleCurrentChange(val) {
-      console.log(val)
+      console.log(val);
       // this.tableData1.cur_page = val;
-      this.currentPage =val;
-      this.getData('',val);
+      this.currentPage = val;
+      this.getData("", val);
     },
     handleSearch() {
-      // console.log(this.formInline.user)
-      // const flag = this.$utils.isEmpty(this.formInline.user);
-      // if(!flag){
-        this.getData(this.formInline.user);
-        this.currentPage=1;
-      // }else{
-      //   this.$message({
-      //     message: '请输入字典名称',
-      //     type: 'warning'
-      //   });
+      this.getData(this.formInline.user);
+      this.currentPage = 1;
     },
-    handleAdd() {
-      let flag = this.$utils();
-      if (flag) {
-        this.postAxios("", param)
+    handleSave() {
+      console.log(this.baseinfo);
+      let codeFlag = this.$utils.isEmpty(this.baseinfo.code);
+      let nameFlag = this.$utils.isEmpty(this.baseinfo.name);
+      let noteFlag = this.$utils.isEmpty(this.baseinfo.note);
+      console.log(codeFlag, nameFlag, noteFlag);
+      console.log(this.baseinfo);
+      if (!codeFlag && !nameFlag && !noteFlag) {
+        this.postAxios("Sysconfig/SaveBasedata", { baseinfo: this.baseinfo })
           .then(res => {
-            console.log(res);
+            this.$message({
+              message: "保存成功",
+              type: "success"
+            });
           })
           .catch(err => {
             console.log(err);
