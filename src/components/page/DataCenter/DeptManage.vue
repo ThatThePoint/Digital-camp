@@ -14,9 +14,9 @@
         </el-form>
       </div>
       <div class="body">
-        <el-table :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id">
-          <el-table-column prop="name" label="名称" sortable width="180"></el-table-column>
-          <el-table-column prop="note" label="描述" sortable width="180"></el-table-column>
+        <el-table :data="deptsTableData" style="width: 100%;margin-bottom: 20px;" row-key="id">
+          <el-table-column prop="name" label="名称" sortable ></el-table-column>
+          <el-table-column prop="note" label="描述" sortable ></el-table-column>
           <el-table-column sort="address" label="序号"></el-table-column>
           <el-table-column status="address" label="状态"></el-table-column>
           <el-table-column prop="address" label="操作">
@@ -54,6 +54,7 @@
   </div>
 </template>
 <script>
+
 export default {
   name: "documentManagement",
   data() {
@@ -84,77 +85,7 @@ export default {
         desc: ""
       },
       formLabelWidth: "120px",
-      tableData: [
-        {
-          id: 1,
-          name: "政治部",
-          note: "政治部",
-          sort: "1",
-          status: "有效",
-          children: [
-            {
-              id: 11,
-              name: "政治部",
-              note: "政治部",
-              sort: "1",
-              status: "有效"
-            },
-            {
-              id: 12,
-              name: "政治部",
-              note: "政治部",
-              sort: "2",
-              status: "有效"
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: "政治部",
-          note: "政治部",
-          sort: "2",
-          status: "有效",
-          children: [
-            {
-              id: 21,
-              name: "政治部",
-              note: "政治部",
-              sort: "1",
-              status: "有效"
-            },
-            {
-              id: 22,
-              name: "政治部",
-              note: "政治部",
-              sort: "2",
-              status: "有效"
-            }
-          ]
-        },
-        {
-          id: 3,
-          name: "政治部",
-          note: "政治部",
-          sort: "3",
-          status: "有效",
-          children: [
-            {
-              id: 31,
-              name: "政治部",
-              note: "政治部",
-              sort: "1",
-              status: "有效"
-            },
-            {
-              id: 32,
-              name: "政治部",
-              note: "政治部",
-              sort: "2",
-              status: "有效"
-            }
-          ]
-        }
-      ]
+      deptsTableData: [],
     };
   },
   methods: {
@@ -201,7 +132,21 @@ export default {
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    getData(name, pageNum = 1, pageSize = 10) {
+      this.postAxios("DataCenter/GetDepts", { name, pageNum, pageSize })
+        .then(res => {
+          console.log(res);
+          this.count = res.count;
+          this.deptsTableData = [...res.depts];
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
+  },
+  created() {
+    this.getData();
   }
 };
 </script>
