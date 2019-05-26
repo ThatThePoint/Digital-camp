@@ -24,6 +24,7 @@
   <script>
 import qs from "qs";
 
+
 export default {
   name: "documentManagement",
   data() {
@@ -38,12 +39,9 @@ export default {
     };
   },
   created(){
-//var host = "https://localhost:5001/api/";
+    return;
       var host = "http://digitalcamp.oicp.io:54373/api/";
-      this.$axios
-        .post(host + "sysConfig/BasedataList",  {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" }
-        })
+      this.postAxios("sysConfig/BasedataList",null)
         .then(res => {
           if (res.status == 200 && res.data.status == 1) {
             alert("保存成功");
