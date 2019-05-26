@@ -9,7 +9,7 @@
     </div>
     <div class="container">
       <div class="messages">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline" v-loading="loading">
           <el-form-item label="字典名称">
             <el-input v-model="formInline.user" placeholder="请输入"></el-input>
           </el-form-item>
@@ -72,6 +72,7 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      loading: true,
       title: "添加字典",
       outerVisible: false,
       count: 0,
@@ -106,14 +107,35 @@ export default {
       this.outerVisible = true;
     },
     handleDelete(index, row) {
-      console.log(row);
-      this.postAxios("Sysconfig/DeleteBasedata", { tid: row.tid })
-        .then(res => {
-          console.log(res);
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        center: true
+      })
+        .then(() => {
+          this.postAxios("Sysconfig/DeleteBasedata", { tid: row.tid })
+            .then(res => {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              this.initBaseinfo();
+            })
+            .catch(err => {
+               this.$message({
+                type: "success",
+                message: err.message
+              });
+            });
         })
-        .catch(err => {
-          console.log(err);
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
         });
+      console.log(row);
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -124,6 +146,7 @@ export default {
           console.log(res);
           this.count = res.count;
           this.dicTableData = [...res.data];
+          this.loading = false;
         })
         .catch(err => {
           console.log(err);
