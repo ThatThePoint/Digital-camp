@@ -18,6 +18,28 @@
           </el-form-item>
           <el-button type="success" @click="outerVisible = true" class="right">新增</el-button>
           <el-dialog :title="title" :visible.sync="outerVisible">
+            <el-dialog width="30%" title="添加明细" :visible.sync="innerVisible" append-to-body>
+              <el-form :model="detailInfo">
+                <div class="flex">
+                  <el-input v-model="detailInfo.tid" style="display:none;"></el-input>
+                  <el-input v-model="detailInfo.parentId" style="display:none;"></el-input>
+                  <el-form-item label="明细编号">
+                    <el-input v-model="detailInfo.code" :label-width="formLabelWidth" placeholder="请输入"></el-input>
+                  </el-form-item>
+                  <el-form-item label="显示值">
+                    <el-input v-model="detailInfo.name" :label-width="formLabelWidth" placeholder="请输入"></el-input>
+                  </el-form-item>
+                </div>
+                <el-form-item label="明细状态">
+                  <el-radio v-model="detailInfo.status" label="1">启用</el-radio>
+                  <el-radio v-model="detailInfo.status" label="2">禁用</el-radio>
+                </el-form-item>
+              </el-form>
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="innerVisible = false">取 消</el-button>
+                <el-button type="primary" @click="innerVisible = false">确 定</el-button>
+              </div>
+            </el-dialog>
             <el-form :model="baseinfo">
               <el-input v-model="baseinfo.tid" style="display:none;"></el-input>
               <el-form-item label="字典编码">
@@ -33,6 +55,29 @@
                 <el-radio v-model="baseinfo.status" :label="1">启用</el-radio>
                 <el-radio v-model="baseinfo.status" :label="0">禁用</el-radio>
               </el-form-item>
+              <div>
+                <el-form-item>
+                  <el-button type="primary" @click="innerVisible = true">添加明细</el-button>
+                </el-form-item>
+              </div>
+              <div>
+                <el-table
+                  :data="detailList"
+                  style="width: 100%"
+                  :default-sort="{prop: 'name', order: 'descending'}"
+                >
+                  <el-table-column prop="code" label="明细编码" sortable></el-table-column>
+                  <el-table-column prop="name" label="显示值" sortable></el-table-column>
+                  <el-table-column prop="status" label="状态" sortable :formatter="formatter"></el-table-column>
+                  <el-table-column prop="modifyTime" label="修改日期" sortable></el-table-column>
+                  <el-table-column label="操作" width="180">
+                    <template slot-scope="scope">
+                      <el-button size="mini" @click="editDetail(scope.row.tid)">编辑</el-button>
+                      <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
             </el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="outerVisible = false">取 消</el-button>
@@ -90,7 +135,10 @@ export default {
       formInline: {
         user: "",
         region: ""
-      }
+      },
+      detailList:[],//明细列表
+      detailInfo:{},
+      detailRadio:1
     };
   },
   methods: {
@@ -100,6 +148,19 @@ export default {
       } else {
         return "未启用";
       }
+    },
+    editDetail(tid){
+      this.innerVisible=true;
+      this.postAxios("Sysconfig/BasedataList", { name, pageNum, pageSize })
+        .then(res => {
+          console.log(res);
+          this.count = res.count;
+          this.dicTableData = [...res.data];
+          this.loading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     handleEdit(index, row) {
       this.title = "编辑字典";
