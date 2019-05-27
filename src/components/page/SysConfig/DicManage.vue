@@ -24,10 +24,10 @@
                   <el-input v-model="detailInfo.tid" style="display:none;"></el-input>
                   <el-input v-model="detailInfo.parentId" style="display:none;"></el-input>
                   <el-form-item label="明细编号">
-                    <el-input v-model="detailInfo.code" :label-width="formLabelWidth" placeholder="请输入"></el-input>
+                    <el-input v-model="detailInfo.code" placeholder="请输入"></el-input>
                   </el-form-item>
                   <el-form-item label="显示值">
-                    <el-input v-model="detailInfo.name" :label-width="formLabelWidth" placeholder="请输入"></el-input>
+                    <el-input v-model="detailInfo.name" placeholder="请输入"></el-input>
                   </el-form-item>
                 </div>
                 <el-form-item label="明细状态">
@@ -37,7 +37,7 @@
               </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="innerVisible = false">取 消</el-button>
-                <el-button type="primary" @click="innerVisible = false">确 定</el-button>
+                <el-button type="primary" @click="handledetailsave">确 定</el-button>
               </div>
             </el-dialog>
             <el-form :model="baseinfo">
@@ -70,9 +70,9 @@
                   <el-table-column prop="name" label="显示值" sortable></el-table-column>
                   <el-table-column prop="status" label="状态" sortable :formatter="formatter"></el-table-column>
                   <el-table-column prop="modifyTime" label="修改日期" sortable></el-table-column>
-                  <el-table-column label="操作" width="180">
+                  <el-table-column label="操作" >
                     <template slot-scope="scope">
-                      <el-button size="mini" @click="editDetail(scope.row.tid)">编辑</el-button>
+                      <el-button size="mini" @click="editDetail(scope.$index, scope.row)">编辑</el-button>
                       <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                     </template>
                   </el-table-column>
@@ -128,7 +128,7 @@ export default {
         name: "",
         status: 1,
         note: "",
-        tid: ""
+        tid: "",
       },
       innerVisible: false,
       dicTableData: [],
@@ -136,9 +136,9 @@ export default {
         user: "",
         region: ""
       },
-      detailList:[],//明细列表
-      detailInfo:{},
-      detailRadio:1
+      detailList: [], //明细列表
+      detailInfo: {},
+      detailRadio: 1
     };
   },
   methods: {
@@ -149,20 +149,28 @@ export default {
         return "未启用";
       }
     },
-    editDetail(tid){
-      this.innerVisible=true;
-      this.postAxios("Sysconfig/BasedataList", { name, pageNum, pageSize })
+    handledetailsave(){
+      this.SaveBasedata("Sysconfig/SaveBasedata",{detailInfo:this.detailInfo})
+        .then(res=>{
+          console.log(res);
+          this.detailInfo={};
+        }).catch(err=>{
+          console.log(err);
+        })
+    },
+    editDetail(index,row) {
+      Object.assign(this.detailInfo,row);
+    },
+    handleEdit(index, row) {
+      this.postAxios("Sysconfig/GetBaseinfo",{tid:row.tid})
         .then(res => {
           console.log(res);
-          this.count = res.count;
-          this.dicTableData = [...res.data];
-          this.loading = false;
+          Object.assign(this.detailList,res.detailList);
+          this.baseinfo = [...res.baseinfo];
         })
         .catch(err => {
           console.log(err);
         });
-    },
-    handleEdit(index, row) {
       this.title = "编辑字典";
       Object.assign(this.baseinfo, row);
       this.outerVisible = true;
@@ -184,7 +192,7 @@ export default {
               this.initBaseinfo();
             })
             .catch(err => {
-               this.$message({
+              this.$message({
                 type: "success",
                 message: err.message
               });
@@ -233,6 +241,7 @@ export default {
       };
       this.currentPage = 1;
       this.title = "添加字典";
+      this.detailInfo={};
       this.getData();
     },
     handleSave() {
