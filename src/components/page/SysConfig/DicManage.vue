@@ -24,20 +24,20 @@
                   <el-input v-model="detailInfo.tid" style="display:none;"></el-input>
                   <el-input v-model="detailInfo.parentId" style="display:none;"></el-input>
                   <el-form-item label="明细编号">
-                    <el-input v-model="detailInfo.code" :label-width="formLabelWidth" placeholder="请输入"></el-input>
+                    <el-input v-model="detailInfo.code" placeholder="请输入"></el-input>
                   </el-form-item>
                   <el-form-item label="显示值">
-                    <el-input v-model="detailInfo.name" :label-width="formLabelWidth" placeholder="请输入"></el-input>
+                    <el-input v-model="detailInfo.name" placeholder="请输入"></el-input>
                   </el-form-item>
                 </div>
                 <el-form-item label="明细状态">
-                  <el-radio v-model="detailInfo.status" label="1">启用</el-radio>
-                  <el-radio v-model="detailInfo.status" label="2">禁用</el-radio>
+                  <el-radio v-model="detailInfo.status" :label=1>启用</el-radio>
+                  <el-radio v-model="detailInfo.status" :label=0>禁用</el-radio>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="innerVisible = false">取 消</el-button>
-                <el-button type="primary" @click="innerVisible = false">确 定</el-button>
+                <el-button type="primary" @click="handledetailsave">确 定</el-button>
               </div>
             </el-dialog>
             <el-form :model="baseinfo">
@@ -52,12 +52,12 @@
                 <el-input v-model="baseinfo.note" placeholder="请输入" type="textarea"></el-input>
               </el-form-item>
               <el-form-item label="字典状态">
-                <el-radio v-model="baseinfo.status" :label="1">启用</el-radio>
-                <el-radio v-model="baseinfo.status" :label="0">禁用</el-radio>
+                <el-radio v-model="baseinfo.status" :label=1>启用</el-radio>
+                <el-radio v-model="baseinfo.status" :label=0>禁用</el-radio>
               </el-form-item>
               <div>
                 <el-form-item>
-                  <el-button type="primary" @click="innerVisible = true">添加明细</el-button>
+                  <el-button type="primary" @click="addDetail">添加明细</el-button>
                 </el-form-item>
               </div>
               <div>
@@ -70,9 +70,9 @@
                   <el-table-column prop="name" label="显示值" sortable></el-table-column>
                   <el-table-column prop="status" label="状态" sortable :formatter="formatter"></el-table-column>
                   <el-table-column prop="modifyTime" label="修改日期" sortable></el-table-column>
-                  <el-table-column label="操作" width="180">
+                  <el-table-column label="操作" >
                     <template slot-scope="scope">
-                      <el-button size="mini" @click="editDetail(scope.row.tid)">编辑</el-button>
+                      <el-button size="mini" @click="editDetail(scope.$index, scope.row)">编辑</el-button>
                       <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                     </template>
                   </el-table-column>
@@ -128,7 +128,7 @@ export default {
         name: "",
         status: 1,
         note: "",
-        tid: ""
+        tid: "",
       },
       innerVisible: false,
       dicTableData: [],
@@ -136,9 +136,9 @@ export default {
         user: "",
         region: ""
       },
-      detailList:[],//明细列表
-      detailInfo:{},
-      detailRadio:1
+      detailList: [], //明细列表
+      detailInfo: {},
+      detailRadio: 1
     };
   },
   methods: {
@@ -149,20 +149,53 @@ export default {
         return "未启用";
       }
     },
-    editDetail(tid){
+    addDetail(){
       this.innerVisible=true;
-      this.postAxios("Sysconfig/BasedataList", { name, pageNum, pageSize })
-        .then(res => {
+      this.detailInfo={
+        status:1,
+        parentId:this.baseinfo.tid
+      }
+    },
+    handledetailsave(){
+      let codeFlag = this.$utils.isEmpty(this.detailInfo.code);
+      let nameFlag = this.$utils.isEmpty(this.detailInfo.name);
+      console.log(codeFlag, nameFlag);
+      if (!codeFlag && !nameFlag) {
+      this.postAxios("Sysconfig/SaveBasedata",{baseinfo:this.detailInfo})
+        .then(res=>{
           console.log(res);
-          this.count = res.count;
-          this.dicTableData = [...res.data];
-          this.loading = false;
+          this.detailInfo={};
+          alert("保存成功");
+          this.innerVisible=false;
+          this.postAxios("Sysconfig/GetBaseinfo",{tid:this.baseinfo.tid})
+        .then(res => {
+          this.detailList=res.detailList;
+          this.baseinfo = [...res.baseinfo];
         })
         .catch(err => {
           console.log(err);
         });
+        }).catch(err=>{
+          console.log(err);
+        });
+      }
+    },
+    editDetail(index,row) {
+      Object.assign(this.detailInfo,row);
+      this.detailInfo.parentId=this.baseinfo.tid;
+      this.innerVisible=true;
     },
     handleEdit(index, row) {
+      this.postAxios("Sysconfig/GetBaseinfo",{tid:row.tid})
+        .then(res => {
+          console.log(res);
+          //Object.assign(this.detailList,res.detailList);
+          this.detailList=res.detailList;
+          this.baseinfo = [...res.baseinfo];
+        })
+        .catch(err => {
+          console.log(err);
+        });
       this.title = "编辑字典";
       Object.assign(this.baseinfo, row);
       this.outerVisible = true;
@@ -182,9 +215,17 @@ export default {
                 message: "删除成功!"
               });
               this.initBaseinfo();
+              this.postAxios("Sysconfig/GetBaseinfo",{tid:this.baseinfo.tid})
+        .then(res => {
+          this.detailList=res.detailList;
+          this.baseinfo = [...res.baseinfo];
+        })
+        .catch(err => {
+          console.log(err);
+        });
             })
             .catch(err => {
-               this.$message({
+              this.$message({
                 type: "success",
                 message: err.message
               });
@@ -233,6 +274,7 @@ export default {
       };
       this.currentPage = 1;
       this.title = "添加字典";
+      this.detailInfo={};
       this.getData();
     },
     handleSave() {
