@@ -38,11 +38,11 @@
           </div>
           <div class="body">
             <el-table
-              :data="tableData"
+              :data="carList"
               style="width: 100%"
               :default-sort="{prop: 'license', order: 'descending'}"
             >
-              <el-table-column prop="license" label="车牌号" sortable width="180">
+              <el-table-column prop="LicensePlate" label="车牌号" sortable width="180">
                 <template slot-scope="scope">
                   
                   {{ scope.row.license }}
