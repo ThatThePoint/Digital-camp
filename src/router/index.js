@@ -270,12 +270,7 @@ export default new Router({
                     component: resolve => require(['../components/page/menu.vue'], resolve),
                     meta: { title: '新增人员', permission: true }
                 },
-                {
-                    //   
-                    path: '/table1',
-                    component: resolve => require(['../components/common/table.vue'], resolve),
-                    meta: { title: '新增人员', permission: true }
-                },
+                
                 {
                     path: '/404',
                     component: resolve => require(['../components/page/404.vue'], resolve),
