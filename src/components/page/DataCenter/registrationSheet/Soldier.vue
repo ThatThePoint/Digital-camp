@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="性别">
-          <el-radio-group v-model="form.resource">
+          <el-radio-group v-model="form.gender">
             <el-radio label="男"></el-radio>
             <el-radio label="女"></el-radio>
           </el-radio-group>
@@ -16,7 +16,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="出生日期">
-          <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker class="input-width" v-model="birthday " type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
       </el-col>
       <el-col :span="6">
@@ -26,12 +26,12 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="籍贯">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.origin"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="4">
         <el-form-item label="民族">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.national"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="6"></el-col>
@@ -42,28 +42,37 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="出生地">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.bornArea"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="3">
         <el-form-item label="血型">
-          <el-select v-model="form.region" placeholder="请选择血型">
+          <el-select v-model="form.blood" placeholder="请选择血型">
             <el-option label="A" value="shanghai"></el-option>
             <el-option label="B" value="beijing"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
+    </el-row>
+    <el-row>
       <el-col :span="6">
-        <div class="grid-content bg-purple-light"></div>
+        <el-form-item label="入伍日期">
+          <el-date-picker class="input-width" v-model="joinArmyDate" type="date" placeholder="选择日期"></el-date-picker>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="工作日期">
+          <el-date-picker class="input-width" v-model="jobDate" type="date" placeholder="选择日期"></el-date-picker>
+        </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="4">
-        <el-form-item label="入伍日期">
-          <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
+      <el-col :span="6">
+        <el-form-item label="部职别">
+          <el-input v-model="form.buzhibie"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="6">
         <el-form-item label="政治面貌">
           <el-select v-model="form.politicsType" placeholder="请选择">
             <el-option label="团员" value="shaasanghai"></el-option>
@@ -77,7 +86,7 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="身份证">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.idcard"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="6">
@@ -102,31 +111,7 @@
       </el-col>
       <el-col :span="4">
         <el-form-item label="证件编号">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="6">
-        <el-form-item label="部职别">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="10">
-        <el-form-item label="士官改选日期">
-          <el-date-picker
-            class="input-width"
-            v-model="shiguanChangeDate"
-            type="date"
-            placeholder="选择日期"
-          ></el-date-picker>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="6">
-        <el-form-item label="工作岗位">
-          <el-input v-model="form.jobPostion"></el-input>
+          <el-input v-model="form.licenseCode"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
@@ -150,6 +135,11 @@
           </el-select>
         </el-form-item>
       </el-col>
+      <el-col :span="6">
+        <el-form-item label="后勤专业类别">
+          <el-input v-model="form.houqinProf"></el-input>
+        </el-form-item>
+      </el-col>
     </el-row>
     <el-row>
       <el-col :span="6">
@@ -164,12 +154,17 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="入学日期">
-          <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.schoolDate"
+            style="width: 100%;"
+          ></el-date-picker>
         </el-form-item>
       </el-col>
       <el-col :span="4">
         <el-form-item label="毕业院校">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.gradSchool"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
@@ -186,12 +181,17 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="毕业日期">
-          <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.gradDate"
+            style="width: 100%;"
+          ></el-date-picker>
         </el-form-item>
       </el-col>
       <el-col :span="4">
         <el-form-item label="毕业专业">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.gradProf"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
@@ -209,7 +209,7 @@
       </el-col>
       <el-col :span="8">
         <el-form-item label="主类别">
-          <el-radio-group v-model="form.resource">
+          <el-radio-group v-model="form.majorType">
             <el-radio label="军事"></el-radio>
             <el-radio label="政工"></el-radio>
             <el-radio label="后勤"></el-radio>
@@ -219,7 +219,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-form-item label="军衔及日期" :span="5">
           <el-select v-model="form.armyRank" placeholder="请选择">
             <el-option label="上将" value="shanghai"></el-option>
@@ -228,7 +228,34 @@
             <el-option label="大校" value="beijing"></el-option>
             <el-option label="。。。" value="beijing"></el-option>
           </el-select>
-          <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 40%;"></el-date-picker>
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.rankDate"
+            style="width: 40%;"
+          ></el-date-picker>
+        </el-form-item>
+      </el-col>
+      <el-col>
+        <el-form-item label="行政职务及日期" :span="5">
+          <el-input v-model="form.chiefPosition"></el-input>
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.chiefDate"
+            style="width: 40%;"
+          ></el-date-picker>
+        </el-form-item>
+      </el-col>
+      <el-col>
+        <el-form-item label="行政职务等级及日期" :span="5">
+          <el-input v-model="form.chiefLevel"></el-input>
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.chiefLevDate"
+            style="width: 40%;"
+          ></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
@@ -248,10 +275,13 @@ export default {
         tid: "",
         name: "",
         gender: "",
+        birthday:"",
         origin: "",
         national: "",
         bornArea: "",
         blood: "",
+        birthday :"",
+        jobDate:"",
         buzhibie: "",
         politicsType: "",
         idcard: "",
@@ -268,8 +298,9 @@ export default {
         gradDate: "",
         gradProf: "",
         retiredDate: "",
+        retiredDate:"",
         localWeather: "",
-        armyType: "",
+        ArmyType　: "",
         majorType: "",
         armyRank: "",
         rankDate: "",
@@ -277,9 +308,9 @@ export default {
         chiefDate: "",
         chiefLevel: "",
         chiefLevDate: "",
-        photoPath: "",
-        shiguanChangeDate: "",
-        jobPostion: ""
+        // photoPath: "",
+        // shiguanChangeDate: "",
+        // jobPostion: ""
       },
       pickerOptions: {
         disabledDate(time) {
@@ -501,8 +532,8 @@ export default {
     },
     handleBack() {
       history.go(-1);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="sass" scoped>

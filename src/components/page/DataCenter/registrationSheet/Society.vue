@@ -41,64 +41,9 @@
       <el-col :span="6">
         <el-form-item label="血型">
           <el-select v-model="form.blood" placeholder="请选择血型">
-            <el-option label="A" value="A"></el-option>
-            <el-option label="B" value="B"></el-option>
-            <el-option label="B" value="AB"></el-option>
-            <el-option label="B" value="O"></el-option>
+            <el-option label="A" value="shanghai"></el-option>
+            <el-option label="B" value="beijing"></el-option>
           </el-select>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="6">
-        <el-form-item label="入伍日期">
-          <el-date-picker class="input-width" v-model="joinArmyDate" type="date" placeholder="选择日期"></el-date-picker>
-        </el-form-item>
-      </el-col>
-      <el-col :span="6">
-        <el-form-item label="政治面貌">
-          <el-form-item label="政治面貌">
-            <el-select v-model="form.politicsType" placeholder="请选择">
-              <el-option label="团员" value="shaasanghai"></el-option>
-              <el-option label="党员" value="beisdjing"></el-option>
-              <el-option label="群众" value="shaasanghai"></el-option>
-              <el-option label="预备党员" value="beisdjing"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="6">
-        <el-form-item label="身份证">
-          <el-input v-model="form.idcard"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="6">
-        <el-form-item label="婚姻状况">
-          <el-select v-model="form.marry" placeholder="请选择">
-            <el-option label="已婚" value="shaasanghai"></el-option>
-            <el-option label="未婚" value="beisdjing"></el-option>
-            <el-option label="未知" value="shaasanghai"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="6">
-        <el-form-item label="证件类型">
-          <el-select v-model="form.licenseType" placeholder="请选择证件类型">
-            <el-option label="军官证" value="shanghai"></el-option>
-            <el-option label="文职干部证" value="beijing"></el-option>
-            <el-option label="离休证" value="beijing"></el-option>
-            <el-option label="退休证" value="beijing"></el-option>
-            <el-option label="学员证" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-col>
-      <el-col :span="6">
-        <el-form-item label="证件编号">
-          <el-input v-model="form.licenseCode"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
@@ -109,20 +54,25 @@
         </el-form-item>
       </el-col>
       <el-col :span="6">
-        <el-form-item label="士官改选日期">
-          <el-date-picker
-            class="input-width"
-            v-model="shiguanChangeDate"
-            type="date"
-            placeholder="选择日期"
-          ></el-date-picker>
+        <el-form-item label="工作日期">
+          <el-date-picker class="input-width" v-model="jobDate" type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="6">
-        <el-form-item label="工作岗位">
-          <el-input v-model="form.jobPostion"></el-input>
+        <el-form-item label="身份证">
+          <el-input v-model="form.idcard"></el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="政治面貌">
+          <el-select v-model="form.politicsType" placeholder="请选择">
+            <el-option label="团员" value="shaasanghai"></el-option>
+            <el-option label="党员" value="beisdjing"></el-option>
+            <el-option label="群众" value="shaasanghai"></el-option>
+            <el-option label="预备党员" value="beisdjing"></el-option>
+          </el-select>
         </el-form-item>
       </el-col>
     </el-row>
@@ -139,11 +89,51 @@
         </el-form-item>
       </el-col>
       <el-col :span="6">
-        <el-form-item label="后勤人员分类">
-          <el-select v-model="form.houqinType" placeholder="请选择">
-            <el-option label="机关人员" value="1"></el-option>
-            <el-option label="直属分队" value="2"></el-option>
+        <el-form-item label="婚姻状况">
+          <el-select v-model="form.marry" placeholder="请选择">
+            <el-option label="已婚" value="shaasanghai"></el-option>
+            <el-option label="未婚" value="beisdjing"></el-option>
+            <el-option label="未知" value="shaasanghai"></el-option>
           </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="离退休日期">
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.retiredDate"
+            style="width: 100%;"
+          ></el-date-picker>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="6">
+        <el-form-item label="职工身份类别">
+          <el-select v-model="form.employeeStatus" placeholder="请选择证件类型">
+            <el-option label="行政管理职员" value="shanghai"></el-option>
+            <el-option label="专业技术职员" value="beijing"></el-option>
+            <el-option label="全民固定工人" value="beijing"></el-option>
+            <el-option label="。。。" value="beijing"></el-option>
+            <el-option label="。。。" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="岗位情况">
+          <el-select v-model="form.dutySituation" placeholder="请选择">
+            <el-option label="在岗" value="shanghai"></el-option>
+            <el-option label="转岗非现役" value="beijing"></el-option>
+            <el-option label="抽组" value="beijing"></el-option>
+            <el-option label="托管" value="beijing"></el-option>
+            <el-option label="。。。" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="职工登记号码">
+          <el-input v-model="form.staffLoginNo"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
@@ -203,42 +193,72 @@
     </el-row>
     <el-row>
       <el-col :span="6">
-        <el-form-item label="军种">
-          <el-select v-model="form.armyType" placeholder="请选择">
-            <el-option label="陆军" value="shanghai"></el-option>
-            <el-option label="海军" value="beijing"></el-option>
-            <el-option label="空军" value="beijing"></el-option>
-            <el-option label="火箭军" value="beijing"></el-option>
-            <el-option label="战略支援部队" value="beijing"></el-option>
+        <el-form-item label="行政职务及日期">
+          <el-select v-model="form.chiefJob" placeholder="请选择">
+            <el-option label="上将" value="1"></el-option>
+            <el-option label="中将" value="2"></el-option>
+            <el-option label="少将" value="3"></el-option>
+            <el-option label="大校" value="4"></el-option>
+            <el-option label="。。。" value="5"></el-option>
           </el-select>
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.chiefJobDate"
+            style="width: 60%;"
+          ></el-date-picker>
         </el-form-item>
       </el-col>
       <el-col :span="8">
-        <el-form-item label="主类别">
-          <el-radio-group v-model="form.majorType">
-            <el-radio label="军事"></el-radio>
-            <el-radio label="政工"></el-radio>
-            <el-radio label="后勤"></el-radio>
-            <el-radio label="装备"></el-radio>
-          </el-radio-group>
+        <el-form-item label="行政职务（管理岗位）等级及日期">
+          <el-input v-model="form.chiefPosition" style="width: 60%;"></el-input>
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.chiefDate"
+            style="width: 60%;"
+          ></el-date-picker>
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="专业技术职务及日期">
+          <el-input v-model="form.professionTech" style="width: 60%;"></el-input>
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.professionTechDate"
+            style="width: 60%;"
+          ></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="6">
-        <el-form-item label="军衔">
-          <el-select v-model="form.armyRank" placeholder="请选择">
-            <el-option label="上将" value="shanghai"></el-option>
-            <el-option label="中将" value="beijing"></el-option>
-            <el-option label="少将" value="beijing"></el-option>
-            <el-option label="大校" value="beijing"></el-option>
-            <el-option label="。。。" value="beijing"></el-option>
+        <el-form-item label="岗位等级及日期">
+          <el-select v-model="form.professionTechLevel" placeholder="请选择">
+            <el-option label="上将" value="1"></el-option>
+            <el-option label="中将" value="2"></el-option>
+            <el-option label="少将" value="3"></el-option>
+            <el-option label="大校" value="4"></el-option>
+            <el-option label="。。。" value="5"></el-option>
           </el-select>
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.professionTechLevelDate"
+            style="width: 60%;"
+          ></el-date-picker>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
-        <el-form-item label="军衔日期">
-          <el-date-picker type="date" placeholder="选择日期" v-model="form.rankDate" style="width: 60%;"></el-date-picker>
+      <el-col :span="8">
+        <el-form-item label="文职人员级别及日期">
+          <el-input v-model="form.civilStaffLevel" style="width: 60%;"></el-input>
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.civilStaffLevelDate"
+            style="width: 60%;"
+          ></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
@@ -262,26 +282,30 @@ export default {
         national: "",
         bornArea: "",
         blood: "",
-        joinArmyDate: "",
-        politicsType: "",
+        buzhibie: "",
+        jobDate: "",
         idcard: "",
         marry: "",
-        licenseType: "",
-        licenseCode: "",
-        staffType: "",
-        jobPostion:"",
-        houqinType: "",
-        houqinProf: "",
+        retiredDate: "",
+        employeeStatus: "",
+        dutySituation: "",
+        staffLoginNo: "",
         educatLevel: "",
         schoolDate: "",
         gradSchool: "",
         graduateType: "",
         gradDate: "",
         gradProf: "",
-        ArmyType: "",
-        majorType: "",
-        armyRank: "",
-        rankDate: "",
+        chiefJob: "",
+        chiefJobDate: "",
+        chiefPosition: "",
+        chiefDate: "",
+        professionTech: "",
+        professionTechDate: "",
+        professionTechLevel: "",
+        professionTechLevelDate: "",
+        civilStaffLevel: "",
+        civilStaffLevelDate: ""
         // photoPath: "",
         // shiguanChangeDate: "",
         // jobPostion: ""
