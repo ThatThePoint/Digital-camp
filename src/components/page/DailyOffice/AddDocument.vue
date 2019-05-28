@@ -10,24 +10,13 @@
     </div>
     <div class="container">
       <div class="container-header">
-         收件人：
-        <el-select
-          v-model="value"
-          multiple
-          filterable
-          remote
-          reserve-keyword
-          placeholder="请输入关键词"
-          :remote-method="remoteMethod"
-          :loading="loading"
-        >
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
+         收件人：<el-input class="input-width" 
+                  v-model="input2"  
+                  placeholder="请输入关键词"
+                  @focus="focus"
+                  
+                  >
+                </el-input>
         <div>
           公文标题：
           <el-input class="input-width" v-model="input2"></el-input>
@@ -54,6 +43,10 @@
       </div>
      
     </div>
+    <div class="post" v-show="flag">
+      <postemail />
+    </div>
+    
   </div>
 </template>
 
@@ -62,10 +55,12 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import { quillEditor } from "vue-quill-editor";
+import postemail from "./postemail"; // 源码位置
 export default {
   name: "editor",
   data: function() {
     return {
+      flag:false,
       content: "",
       editorOption: {
         placeholder: ""
@@ -144,7 +139,7 @@ export default {
   },
 
   components: {
-    quillEditor
+    quillEditor,postemail
   },
   mounted() {
     this.list = this.states.map(item => {
@@ -152,6 +147,10 @@ export default {
     });
   },
   methods: {
+    focus(){
+      console.log("11")
+      this.flag = true
+    },
     onEditorChange({ editor, html, text }) {
       this.content = html;
     },
@@ -224,5 +223,14 @@ export default {
       width: 700px !important;
     }
   }
+}
+.post{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.7;
+  background:black;
 }
 </style>
