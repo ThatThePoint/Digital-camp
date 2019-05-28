@@ -36,16 +36,16 @@
             <el-table
               :data="tableData"
               style="width: 100%"
-              :default-sort="{prop: 'date', order: 'descending'}"
+              :default-sort="{prop: 'code', order: 'descending'}"
             >
-              <el-table-column prop="number" label="公文号" sortable width="180">{{}}</el-table-column>
-              <el-table-column prop="addMes" label="公文标题" sortable width="180"></el-table-column>
-              <el-table-column prop="docLever" label="公文等级" :formatter="formatterLever"></el-table-column>
-              <el-table-column prop="sendDept" label="发送部门"></el-table-column>
-              <el-table-column prop="sendPerson" label="发送人"></el-table-column>
-              <el-table-column prop="receiver" label="收件人"></el-table-column>
-              <el-table-column prop="date" label="发送时间"></el-table-column>
-              <el-table-column prop="addMes" label="状态" :formatter="formatterStaus"></el-table-column>
+              <el-table-column prop="code" label="公文号" sortable width="180">{{}}</el-table-column>
+              <el-table-column prop="title" label="公文标题" sortable width="180"></el-table-column>
+              <el-table-column prop="messageLevel" label="公文等级" :formatter="formatterLever"></el-table-column>
+              <el-table-column prop="sendDeptName" label="发送部门"></el-table-column>
+              <el-table-column prop="docCreaterName" label="发送人"></el-table-column>
+              <el-table-column prop="docReceiversName" label="收件人"></el-table-column>
+              <el-table-column prop="sendTime" label="发送时间"></el-table-column>
+              <el-table-column prop="docStatus" label="状态" :formatter="formatterStaus"></el-table-column>
               <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -84,14 +84,14 @@
               style="width: 100%"
               :default-sort="{prop: 'date', order: 'descending'}"
             >
-              <el-table-column prop="number" label="公文号" sortable width="180">{{}}</el-table-column>
-              <el-table-column prop="addMes2" label="公文标题" sortable width="180"></el-table-column>
-              <el-table-column prop="docLever" label="公文等级" :formatter="formatterLever"></el-table-column>
-              <el-table-column prop="sendDept" label="发送部门"></el-table-column>
-              <el-table-column prop="sendPerson" label="发送人"></el-table-column>
-              <el-table-column prop="receiver" label="收件人"></el-table-column>
-              <el-table-column prop="date" label="发送时间"></el-table-column>
-              <el-table-column prop="addMes2" label="状态" :formatter="formatterStaus"></el-table-column>
+              <el-table-column prop="code" label="公文号" sortable width="180">{{}}</el-table-column>
+              <el-table-column prop="title" label="公文标题" sortable width="180"></el-table-column>
+              <el-table-column prop="messageLevel" label="公文等级" :formatter="formatterLever"></el-table-column>
+              <el-table-column prop="sendDeptName" label="发送部门"></el-table-column>
+              <el-table-column prop="docCreaterName" label="发送人"></el-table-column>
+              <el-table-column prop="docReceiversName" label="收件人"></el-table-column>
+              <el-table-column prop="sendTime" label="发送时间"></el-table-column>
+              <el-table-column prop="docStatus" label="状态" :formatter="formatterStaus"></el-table-column>
               <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -130,14 +130,14 @@
               style="width: 100%"
               :default-sort="{prop: 'date', order: 'descending'}"
             >
-              <el-table-column prop="number" label="公文号" sortable width="180">{{}}</el-table-column>
-              <el-table-column prop="addMes3" label="公文标题" sortable width="180"></el-table-column>
-              <el-table-column prop="docLever" label="公文等级" :formatter="formatterLever"></el-table-column>
-              <el-table-column prop="sendDept" label="发送部门"></el-table-column>
-              <el-table-column prop="sendPerson" label="发送人"></el-table-column>
-              <el-table-column prop="receiver" label="收件人"></el-table-column>
-              <el-table-column prop="date" label="发送时间"></el-table-column>
-              <el-table-column prop="status" label="状态" :formatter="formatterStaus"></el-table-column>
+              <el-table-column prop="code" label="公文号" sortable width="180">{{}}</el-table-column>
+              <el-table-column prop="title" label="公文标题" sortable width="180"></el-table-column>
+              <el-table-column prop="messageLevel" label="公文等级" :formatter="formatterLever"></el-table-column>
+              <el-table-column prop="sendDeptName" label="发送部门"></el-table-column>
+              <el-table-column prop="docCreaterName" label="发送人"></el-table-column>
+              <el-table-column prop="docReceiversName" label="收件人"></el-table-column>
+              <el-table-column prop="sendTime" label="发送时间"></el-table-column>
+              <el-table-column prop="docStatus" label="状态" :formatter="formatterStaus"></el-table-column>
               <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -214,74 +214,15 @@ export default {
       value: "",
       tableData: [
         {
-          number: "121",
+          code: "121",
           title: "老哥来访",
-          docLever: 2,
-          sendDept: "独立团",
-          sendPerson: "张三丰",
-          receiver: "老刘，老李，张三",
-          date: "2016-05-02",
-          status: 1,
-          allReceive: 2,
-          addMes:"未读",
-          addMes2:"已读",
-          addMes3:"已发送"
-        },
-        {
-          number: "121",
-          title: "老哥来访",
-          docLever: 2,
-          sendDept: "独立团",
-          sendPerson: "张三丰",
-          receiver: "老刘，老李，张三",
-          date: "2016-05-02",
-          status: 2,
-          allReceive: 2,
-          addMes:"未读",
-          addMes2:"已读",
-          addMes3:"已发送"
-        },
-        {
-          number: "121",
-          title: "老哥来访",
-          docLever: 5,
-          sendDept: "独立团",
-          sendPerson: "张三丰",
-          receiver: "老刘，老李，张三",
-          date: "2016-05-02",
-          status: 1,
-          allReceive: 2,
-          addMes:"未读",
-          addMes2:"已读",
-          addMes3:"已发送"
-        },
-        {
-          number: "121",
-          title: "老哥来访",
-          docLever: 4,
-          sendDept: "独立团",
-          sendPerson: "张三丰",
-          receiver: "老刘，老李，张三",
-          date: "2016-05-02",
-          status: 1,
-          allReceive: 2,
-          addMes:"未读",
-          addMes2:"已读",
-          addMes3:"已发送"
-        },
-        {
-          number: "121",
-          title: "老哥来访",
-          docLever: 2,
-          sendDept: "独立团",
-          sendPerson: "张三丰",
-          receiver: "老刘，老李，张三",
-          date: "2016-05-02",
-          status: 2,
-          allReceive: 2,
-          addMes:"未读",
-          addMes2:"已读",
-          addMes3:"已发送"
+          messageLevel: 2,
+          sendDeptName: "独立团",
+          docCreaterName: "张三丰",
+          docReceiversName: "老刘，老李，张三",
+          sendTime: "2016-05-02",
+          docStatus: 1,
+          allReceive: 2
         }
       ]
     };

@@ -19,9 +19,9 @@
               </div>
               <div>
                 车辆类型
-                <el-select class="input-width" v-model="inoutValue" placeholder="请选择">
+                <el-select class="input-width" v-model="carInfo.carType" placeholder="请选择">
                   <el-option
-                    v-for="item in inoutOptions"
+                    v-for="item in carTypeOptions"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
@@ -35,7 +35,7 @@
               <p>车辆基本信息：</p>
               <div class="itemDet">
                 车辆品牌：
-                <el-select class="input-width" v-model="brandValue" placeholder="请选择">
+                <el-select class="input-width" v-model="carInfo.brand" placeholder="请选择">
                   <el-option
                     v-for="item in brandOptions"
                     :key="item.value"
@@ -43,7 +43,7 @@
                     :value="item.value"
                   ></el-option>
                 </el-select>车辆型号：
-                <el-select class="input-width" v-model="modelValue" placeholder="请选择">
+                <el-select class="input-width" v-model="carInfo.model" placeholder="请选择">
                   <el-option
                     v-for="item in modelOptions"
                     :key="item.value"
@@ -52,7 +52,7 @@
                   ></el-option>
                 </el-select>
                 <span class="color">颜色：</span>
-                <el-select class="input-width" v-model="colorValue" placeholder="请选择">
+                <el-select class="input-width" v-model="carInfo.color" placeholder="请选择">
                   <el-option
                     v-for="item in colorOptions"
                     :key="item.value"
@@ -60,12 +60,12 @@
                     :value="item.value"
                   ></el-option>
                 </el-select>行驶证号：
-                <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
+                <el-input class="input-width" placeholder="车牌号" v-model="carInfo.LicensePlate"></el-input>
                 <el-button size="small" type="success">照片上传</el-button>
               </div>
               <div class="itemDet">
                 车辆座位：
-                <el-select class="input-width" v-model="carSeat" placeholder="请选择">
+                <el-select class="input-width" v-model="carInfo.loadNumber" placeholder="请选择">
                   <el-option
                     v-for="item in seatOptions"
                     :key="item.value"
@@ -73,18 +73,18 @@
                     :value="item.value"
                   ></el-option>
                 </el-select>车辆载重：
-                <el-select class="input-width" v-model="value1" placeholder="请选择">
+                <el-select class="input-width" v-model="carInfo.load" placeholder="请选择">
                   <el-option v-for="item in seatOptions" :key="item.value" :value="item.value"></el-option>
                 </el-select>车架号：
-                <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>发动机号：
-                <el-input class="input-width" placeholder="车牌号" v-model="input2"></el-input>
+                <el-input class="input-width" placeholder="请输入" v-model="carInfo.frameCode"></el-input>发动机号：
+                <el-input class="input-width" placeholder="请输入" v-model="carInfo.motorCode"></el-input>
               </div>
             </div>
             <div class="two">
               <p>内部车辆附加：</p>
               <div class="itemDet">
                 所属单位：
-                <el-select class="input-width" v-model="carOfDept" placeholder="请选择">
+                <el-select class="input-width" v-model="carInfo.ofDept" placeholder="请选择">
                   <el-option
                     v-for="item in departmentOptions"
                     :key="item.value"
@@ -92,7 +92,7 @@
                     :value="item.value"
                   ></el-option>
                 </el-select>车辆类别1：
-                <el-select class="input-width" v-model="carType1" placeholder="请选择">
+                <el-select class="input-width" v-model="carInfo.carType1" placeholder="请选择">
                   <el-option
                     v-for="item in propertyOptions"
                     :key="item.value"
@@ -101,7 +101,7 @@
                   ></el-option>
                 </el-select>
                 <span class="carstwo">类别2：</span>
-                <el-select class="input-width" v-model="carType2" placeholder="请选择">
+                <el-select class="input-width" v-model="carInfo.carType2" placeholder="请选择">
                   <el-option
                     v-for="item in propertyOptions"
                     :key="item.value"
@@ -112,7 +112,7 @@
               </div>
               <div class="itemDet">
                 车辆权限：
-                <el-select class="input-width" v-model="carRight" placeholder="请选择">
+                <el-select class="input-width" v-model="carInfo.carRight" placeholder="请选择">
                   <el-option
                     v-for="item in rightOptions"
                     :key="item.value"
@@ -137,7 +137,7 @@
               </div>
               <div>
                 车辆类型
-                <el-select class="input-width" v-model="inoutValue" placeholder="请选择">
+                <el-select class="input-width" v-model="carInfo.carType" placeholder="请选择">
                   <el-option
                     v-for="item in inoutOptions"
                     :key="item.value"
@@ -152,10 +152,10 @@
             <p>外部车辆附加：</p>
             <div class="itemDet">
               车主姓名：
-              <el-input class="input-width" placeholder="请输入" v-model="hah1"></el-input>电话：
-              <el-input class="input-width" placeholder="请输入" v-model="hahhsd"></el-input>部队联系人：
-              <el-input class="input-width" placeholder="请输入" v-model="jhh"></el-input>联系人部门：
-              <el-select class="input-width" v-model="bumen" placeholder="请输入">
+              <el-input class="input-width" placeholder="请输入" v-model="carInfo.owner"></el-input>电话：
+              <el-input class="input-width" placeholder="请输入" v-model="carInfo.ownerTel"></el-input>部队联系人：
+              <el-input class="input-width" placeholder="请输入" v-model="carInfo.relater"></el-input>联系人部门：
+              <el-select class="input-width" v-model="carInfo.relaterDept" placeholder="请选择">
                 <el-option
                   v-for="item in departmentOptions"
                   :key="item.value"
@@ -166,7 +166,7 @@
             </div>
             <div class="itemDet">
               车辆权限：
-              <el-select class="input-width" v-model="carRight" placeholder="请选择">
+              <el-select class="input-width" v-model="carInfo.carRight" placeholder="请选择">
                 <el-option
                   v-for="item in rightOptions"
                   :key="item.value"
@@ -174,17 +174,17 @@
                   :value="item.value"
                 ></el-option>
               </el-select>权限有效期
-              <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker class="input-width" v-model="carInfo.rightValid" type="date" placeholder="选择日期"></el-date-picker>
             </div>
             <div class="itemDet">
               身份证：
-              <el-input class="input-width" placeholder="请输入" v-model="input2"></el-input>
+              <el-input class="input-width" placeholder="请输入" v-model="carInfo.ownerIdCard"></el-input>
               <el-button size="small" type="success">身份证正面上传</el-button>
               <el-button size="small" type="success">身份证背面上传</el-button>
             </div>
             <div class="itemDet">
               驾驶证：
-              <el-input class="input-width" placeholder="请输入" v-model="input2"></el-input>
+              <el-input class="input-width" placeholder="请输入" v-model="carInfo.relaterLicensePhoto"></el-input>
               <el-button size="small" type="success">驾驶证正面上传</el-button>
               <el-button size="small" type="success">驾驶证背面上传</el-button>
             </div>
@@ -207,35 +207,8 @@ export default {
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
-        },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            }
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            }
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            }
-          }
-        ]
+        }
       },
-      value1: "",
-      value2: "",
-      input2: "",
       departmentOptions: [
         {
           value: "1",
@@ -244,17 +217,9 @@ export default {
         {
           value: "2",
           label: "连队2"
-        },
-        {
-          value: "3",
-          label: "连队3"
-        },
-        {
-          value: "4",
-          label: "连队4"
         }
       ],
-      propertyOptions: [
+      carTypeOptions: [
         {
           value: "1",
           label: "内部车辆"
@@ -268,27 +233,6 @@ export default {
           label: "临时车辆"
         }
       ],
-      inoutOptions: [
-        {
-          value: "1",
-          label: "内部车辆"
-        },
-        {
-          value: "2",
-          label: "外部车辆"
-        },
-        {
-          value: "3",
-          label: "临时车辆"
-        }
-      ],
-      propertyValue: "", //车辆属性1-内部 2-外部 3-临时
-      departmentValue: "", //单位
-      carOfDept: "", //车辆单位
-      carType1: "", //type1
-      carType2: "", //
-      inoutValue: "", //出入库状态
-      brandValue: "", //品牌
       brandOptions: [
         {
           value: "1",
@@ -303,7 +247,6 @@ export default {
           label: "本田"
         }
       ],
-      modelValue: "", //型号
       modelOptions: [
         {
           value: "1",
@@ -333,9 +276,6 @@ export default {
           label: "绿色"
         }
       ],
-      VehicleNo: "", //行驶证号
-      driverNo: "", //驾驶证号
-      carSeat: 5, //座位数
       seatOptions: [
         {
           label: "1",
@@ -350,18 +290,6 @@ export default {
           value: "3"
         }
       ],
-      carLoad: "", //车辆载重
-      frameNo: "", //车架号
-      engineNo: "", //发动机号
-      carType1: "", //
-      carType2: "", //
-      carRight: "", //
-      date1: "",
-      date2: "",
-      bumen: "",
-      hah1: "",
-      jhh: "",
-      hahhsd: "",
       rightOptions: [
         {
           value: "1",
@@ -384,32 +312,119 @@ export default {
           carUser: "小明",
           tel: "1329999999",
           inout: "内部车辆"
-        },
-        {
-          license: "冀A1231312",
-          property: "内部车辆",
-          department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
-        },
-        {
-          license: "冀A1231312",
-          property: "内部车辆",
-          department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
-        },
-        {
-          license: "冀A1231312",
-          property: "内部车辆",
-          department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
         }
-      ]
+      ],
+      carInfo:{
+        tid:"",
+
+        //<summary>车辆类型 1-内部车辆 2-外部车辆 3-临时车辆</summary>
+        carType:"",
+
+        // <summary>车牌号</summary>
+        LicensePlate:"",
+
+        // <summary>部门</summary>
+        ofDept:"",
+
+        // <summary>部门名称</summary>
+        deptName:"",
+
+        // <summary>品牌code</summary>
+        brand:"",
+
+        // <summary>品牌名</summary>
+        brandName:"",
+
+        // <summary>型号</summary>
+        model:"",
+
+        // <summary>型号名</summary>
+        modelName:"",
+
+        // <summary>车架号</summary>
+        frameCode:"",
+
+        // <summary>发动机号</summary>
+        motorCode:"",
+
+        // <summary>技术状态（1-正常 2待修 3维修中 4报废）</summary>
+         useStatus:"",
+
+        // <summary>颜色</summary>
+        color:"",
+
+        // <summary>车辆类型1</summary>
+        carType1:"",
+
+        // <summary>类型2</summary>
+        carType2:"",
+
+        // <summary>载重</summary>
+        load:"",
+
+        // <summary>荷载人数</summary>
+         loadNumber:"",
+
+        // <summary>行驶证号</summary>
+        driveLicense:"",
+
+        // <summary>行驶证附件路径</summary>
+        DriveLicensephoto:"",
+
+        // <summary>当前位置（在内/在外）</summary>
+         inOrOut:"",
+
+        // <summary>车辆权限(参考人员权限，这里可能不需要这个字段)</summary>
+        carRight:"",
+
+        // <summary>权限有效期</summary>
+        rightValid:"",
+
+        // <summary>登记时间</summary>
+        registTime:"",
+
+        // <summary>车辆照片路径</summary>
+        carPhoto:"",
+
+        // <summary>下次保养时间</summary>
+        nextMainTime:"",
+
+        // <summary>保险有效期</summary>
+        insuranceValid:"",
+
+        // <summary>车主id</summary>
+        ownerId:"",
+
+        // <summary>车主</summary>
+        owner:"",
+
+        // <summary>车主电话</summary>
+        ownerTel:"",
+
+        // <summary>部队联系人</summary>
+        relater:"",
+
+        // <summary>部队联系人姓名</summary>
+        relaterName:"",
+
+        // <summary>联系人部门编号</summary>
+        relaterDept:"",
+
+        // <summary>联系人部门名称</summary>
+        relaterDeptName:"",
+
+        // <summary>车主驾驶证号</summary>
+        relaterLicenseNo:"",
+
+        // <summary>车主驾驶证附件</summary>
+        relaterLicensePhoto:"",
+
+        // <summary>车主身份证号</summary>
+        ownerIdCard:"",
+
+        // <summary>车主身份证照片</summary>
+        ownerIdCardPhoto:""
+      }
     };
   },
   methods: {

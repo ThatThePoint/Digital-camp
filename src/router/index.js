@@ -235,10 +235,10 @@ export default new Router({
                     meta: { title: '字典管理', permission: true }
                 },
                 {
-                    // 新增字典 test
-                    path: '/addBaseinfo',
-                    component: resolve => require(['../components/page/SysConfig/addBaseinfo.vue'], resolve),
-                    meta: { title: '新增字典', permission: true }
+                    // test test
+                    path: '/email',
+                    component: resolve => require(['../components/page/SysConfig/email.vue'], resolve),
+                    meta: { title: 'test', permission: true }
                 },
                 {
                     // 用户权限
@@ -270,12 +270,7 @@ export default new Router({
                     component: resolve => require(['../components/page/menu.vue'], resolve),
                     meta: { title: '新增人员', permission: true }
                 },
-                {
-                    //   
-                    path: '/table1',
-                    component: resolve => require(['../components/common/table.vue'], resolve),
-                    meta: { title: '新增人员', permission: true }
-                },
+                
                 {
                     path: '/404',
                     component: resolve => require(['../components/page/404.vue'], resolve),

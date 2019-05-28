@@ -17,7 +17,7 @@
           ></el-option>
         </el-select>
         <el-button type="primary">查询</el-button>
-        <span class="staffStatu" style="float:right">总人数：100人 在岗：98人 休假：1人</span>
+        <span class="staffStatu" style="float:right">总人数：100人  在岗：98人  休假：1人</span>
       </div>
       <div class="body">
         <el-table
@@ -25,22 +25,12 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="name" label="姓名">{{}}</el-table-column>
-          <el-table-column prop="gender" label="性别"></el-table-column>
-          <el-table-column prop="dept" label="单位"></el-table-column>
+          <el-table-column prop="name" label="姓名" >{{}}</el-table-column>
+          <el-table-column prop="gender" label="性别" ></el-table-column>
+          <el-table-column prop="dept" label="单位" ></el-table-column>
           <el-table-column prop="job" label="职务"></el-table-column>
           <el-table-column prop="status" label="状态"></el-table-column>
         </el-table>
-        <div class="pagination">
-          <el-pagination
-            background
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="currentPage"
-            layout="total, prev, pager, next, jumper"
-            :total="total"
-          ></el-pagination>
-        </div>
       </div>
     </div>
   </div>
@@ -136,11 +126,7 @@ export default {
         resource: "",
         desc: ""
       },
-      formLabelWidth: "120px",
-      keyword: "集团",
-      total: 12,
-      currentPage: 1,
-      multipleSelection: []
+      formLabelWidth: "120px"
     };
   },
   methods: {
@@ -152,29 +138,6 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
-    },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    callbackFunction(result) {
-      alert(result + "aaa");
-    },
-    fetchData() {
-      //获取数据
-      this.total = this.tableData.length;
-      // this.currentPage = res.body.curr;
-      // this.tableData = res.body.data;
-    },
-    handleSizeChange(val) {
-      this.pageSize = val;
-      this.currentPage = 1;
-      this.fetchData(1, val);
-      // console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      this.currentPage = val;
-      this.fetchData(val, this.pageSize);
-      // console.log(`当前页: ${val}`);
     }
   }
 };
@@ -189,7 +152,7 @@ export default {
 .flex {
   display: flex;
 }
-.staffStatu {
-  margin: 0 20px;
+.staffStatu{
+    margin: 0 20px;
 }
 </style>
