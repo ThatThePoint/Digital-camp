@@ -38,21 +38,22 @@
           </div>
           <div class="body">
             <el-table
-              :data="tableData"
+              :data="carList"
               style="width: 100%"
               :default-sort="{prop: 'license', order: 'descending'}"
             >
-              <el-table-column prop="license" label="车牌号" sortable width="180">
+              <el-table-column prop="LicensePlate" label="车牌号" sortable width="180">
                 <template slot-scope="scope">
                   
                   {{ scope.row.license }}
                 </template>
               </el-table-column>
-              <el-table-column prop="carUser1" label="车辆属性" sortable width="180"></el-table-column>
-              <el-table-column prop="department" label="所属部门" sortable></el-table-column>
-              <el-table-column prop="carUser" label="车主姓名" sortable></el-table-column>
-              <el-table-column prop="tel" label="联系电话" sortable></el-table-column>
-              <el-table-column prop="inout" label="出入状态" sortable></el-table-column>
+              <el-table-column prop="carType" label="车辆类型" sortable width="180" formatter=""></el-table-column>
+              <el-table-column prop="deptName" label="所属部门" sortable></el-table-column>
+              <el-table-column prop="brand" label="车辆品牌" sortable formatter=""></el-table-column>
+              <el-table-column prop="model" label="型号" sortable formatter=""></el-table-column>
+              <el-table-column prop="useStatus" label="技术状态" sortable formatter=""></el-table-column>
+              <el-table-column prop="inOrOut" label="出入状态" sortable formatter=""></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -105,11 +106,11 @@
                   {{ scope.row.license }}
                 </template>
               </el-table-column>
-              <el-table-column prop="carUser2" label="车辆属性" sortable width="180"></el-table-column>
-              <el-table-column prop="department" label="所属部门" sortable></el-table-column>
-              <el-table-column prop="carUser" label="车主姓名" sortable></el-table-column>
-              <el-table-column prop="tel" label="联系电话" sortable></el-table-column>
-              <el-table-column prop="inout" label="出入状态" sortable></el-table-column>
+              <el-table-column prop="owner" label="车主姓名" sortable></el-table-column>
+              <el-table-column prop="ownerTel" label="联系电话" sortable></el-table-column>
+               <el-table-column prop="registTime" label="登记时间" sortable width="180"></el-table-column>
+              <el-table-column prop="relaterName" label="部队联系人" sortable></el-table-column>
+              <el-table-column prop="inOrOut" label="出入状态" sortable></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -161,10 +162,9 @@
                   {{ scope.row.license }}
                 </template>
               </el-table-column>
-              <el-table-column prop="carUser3" label="车辆属性" sortable width="180"></el-table-column>
-              <el-table-column prop="department" label="所属部门" sortable></el-table-column>
-              <el-table-column prop="carUser" label="车主姓名" sortable></el-table-column>
+              <el-table-column prop="carType" label="车辆属性" sortable width="180"></el-table-column>
               <el-table-column prop="tel" label="联系电话" sortable></el-table-column>
+              <el-table-column prop="registTime" label="登记时间" sortable width="180"></el-table-column>
               <el-table-column prop="inout" label="出入状态" sortable></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
