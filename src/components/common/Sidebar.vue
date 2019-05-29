@@ -340,8 +340,8 @@ export default {
               title: "字典管理"
             },
             {
-              index: "addBaseinfo",
-              title: "添加字典"
+              index: "email",
+              title: "test"
             }
           ]
         }
