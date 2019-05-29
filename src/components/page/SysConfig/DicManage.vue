@@ -16,7 +16,7 @@
           <el-form-item>
             <el-button type="primary" @click="handleSearch">查询</el-button>
           </el-form-item>
-          <el-button type="success" @click="outerVisible = true" class="right">新增</el-button>
+          <el-button type="success" @click="AddBaseinfo" class="right">新增</el-button>
           <el-dialog :title="title" :visible.sync="outerVisible">
             <el-dialog width="30%" title="添加明细" :visible.sync="innerVisible" append-to-body>
               <el-form :model="detailInfo">
@@ -89,6 +89,7 @@
       <div class="body">
         <el-table :data="dicTableData" style="width: 100%">
           <el-table-column prop="name" label="字典名称" sortable width="180"></el-table-column>
+          <el-table-column prop="code" label="字典编码" sortable width="180"></el-table-column>
           <el-table-column prop="note" label="描述" sortable width="180"></el-table-column>
           <el-table-column prop="status" label="使用状态" :formatter="formatter"></el-table-column>
           <el-table-column prop="modifyTime" label="修改时间" sortable></el-table-column>
@@ -148,6 +149,11 @@ export default {
       } else {
         return "未启用";
       }
+    },
+    AddBaseinfo(){
+      this.baseinfo={status:1};
+      this.detailList= [];
+      this.outerVisible = true;
     },
     addDetail(){
       this.innerVisible=true;

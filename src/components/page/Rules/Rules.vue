@@ -11,18 +11,18 @@
       <div class="messages">
         <el-form :inline="true" :model="status" class="demo-form-inline">
           <el-form-item label="生效状态">
-            <el-select v-model="formInline.region" placeholder="请选择">
+            <el-select v-model="status" placeholder="请选择">
               <el-option label="有效" value="shanghai"></el-option>
               <el-option label="失效" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="规章名称">
-            <el-input v-model="formInline.user" placeholder="请输入"></el-input>
+            <el-input v-model="name" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
-            <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
+          <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
         </el-form>
       </div>
       <div class="body">
@@ -31,14 +31,14 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="name" label="制度名称" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="introduce" label="制度简介" sortable width="180"></el-table-column>
-          <el-table-column prop="version" label="版本" ></el-table-column>
-          <el-table-column prop="status" label="生效状态" ></el-table-column>
-          <el-table-column prop="releaser" label="发布人" ></el-table-column>
-          <el-table-column prop="date" label="发布时间" ></el-table-column>
-          <el-table-column prop="viewCount" label="阅读次数" ></el-table-column>
-          <el-table-column prop="downCount" label="下载次数" ></el-table-column>
+          <el-table-column prop="ruleName" label="制度名称" sortable width="180">{{}}</el-table-column>
+          <el-table-column prop="ruleSynopsis" label="制度简介" sortable width="180"></el-table-column>
+          <el-table-column prop="version" label="版本"></el-table-column>
+          <el-table-column prop="status" label="生效状态"></el-table-column>
+          <el-table-column prop="publisherName" label="发布人"></el-table-column>
+          <el-table-column prop="publishTime" label="发布时间"></el-table-column>
+          <el-table-column prop="readTimes" label="阅读次数"></el-table-column>
+          <el-table-column prop="downTimes" label="下载次数"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">预览</el-button>
@@ -47,17 +47,32 @@
           </el-table-column>
         </el-table>
         <el-dialog title="新增规章制度" :visible.sync="dialogFormVisible">
-          <el-form :model="form">
-            <div class="flex">
-            </div>
-            <el-form-item label="警报内容" :label-width="formLabelWidth">
-              <el-input class="input-width" placeholder="警报内容" v-model="input2"></el-input>
+          <el-form :model="ruleInfo">
+            <div class="flex"></div>
+            <el-form-item label="规章名称" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder="请输入" v-model="ruleInfo.ruleName"></el-input>
             </el-form-item>
-            <el-form-item label="警报等级" :label-width="formLabelWidth">
-              <el-select v-model="formInline.region" placeholder="请选择">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
+            <el-form-item label="版本" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder="请输入" v-model="ruleInfo.version"></el-input>
+            </el-form-item>
+            <el-form-item label="简介" :label-width="formLabelWidth">
+              <el-input type="text" placeholder="请输入" v-model="ruleInfo.ruleSynopsis"></el-input>
+            </el-form-item>
+            <el-form-item label="附件" :label-width="formLabelWidth">
+              <el-upload
+                class="upload-demo"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :before-remove="beforeRemove"
+                multiple
+                :limit="3"
+                :on-exceed="handleExceed"
+                :file-list="fileList"
+              >
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+              </el-upload>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -103,10 +118,8 @@ export default {
           }
         ]
       },
-      value1: "",
-      value2: "",
-      input2: "",
-      status:"",//生效状态
+      status: "", //生效状态
+      name:"",
       options: [
         {
           value: "1",
@@ -132,61 +145,22 @@ export default {
       value: "",
       tableData: [
         {
-          name:"宿舍管理条例",
-          introduce:"宿舍管理",
-          version:"1.0",
-          status:"生效",
-          releaser:"老张",
-          date: "2016-05-02",
-          viewCount:"23",
-          downCount:"22"
-        },
-        {
-          name:"宿舍管理条例",
-          introduce:"宿舍管理",
-          version:"1.0",
-          status:"生效",
-          releaser:"老张",
-          date: "2016-05-02",
-          viewCount:"23",
-          downCount:"22"
-        },
-        {
-          name:"宿舍管理条例",
-          introduce:"宿舍管理",
-          version:"1.0",
-          status:"生效",
-          releaser:"老张",
-          date: "2016-05-02",
-          viewCount:"23",
-          downCount:"22"
-        },
-        {
-          name:"宿舍管理条例",
-          introduce:"宿舍管理",
-          version:"1.0",
-          status:"生效",
-          releaser:"老张",
-          date: "2016-05-02",
-          viewCount:"23",
-          downCount:"22"
+          ruleName: "宿舍管理条例",
+          ruleSynopsis: "宿舍管理",
+          version: "1.0",
+          status: "生效",
+          publisherName: "老张",
+          publishTime: "2016-05-02",
+          readTimes: "23",
+          downTimes: "22"
         }
       ],
-      formInline: {
-        user: "",
-        region: ""
-      },
-      dialogTableVisible: false,
       dialogFormVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
+      ruleInfo: {
+        ruleName: "",
+        ruleSynopsis: "",
+        version: "",
+        status: ""
       },
       formLabelWidth: "120px"
     };
