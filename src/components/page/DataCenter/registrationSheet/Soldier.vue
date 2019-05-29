@@ -48,8 +48,10 @@
       <el-col :span="3">
         <el-form-item label="血型">
           <el-select v-model="form.blood" placeholder="请选择血型">
-            <el-option label="A" value="shanghai"></el-option>
-            <el-option label="B" value="beijing"></el-option>
+            <el-option label="A" value="1"></el-option>
+            <el-option label="B" value="2"></el-option>
+            <el-option label="AB" value="3"></el-option>
+            <el-option label="O" value="4"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -75,10 +77,10 @@
       <el-col :span="6">
         <el-form-item label="政治面貌">
           <el-select v-model="form.politicsType" placeholder="请选择">
-            <el-option label="团员" value="shaasanghai"></el-option>
-            <el-option label="党员" value="beisdjing"></el-option>
-            <el-option label="群众" value="shaasanghai"></el-option>
-            <el-option label="预备党员" value="beisdjing"></el-option>
+            <el-option label="团员" value="1"></el-option>
+            <el-option label="党员" value="2"></el-option>
+            <el-option label="群众" value="3"></el-option>
+            <el-option label="预备党员" value="4"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -92,9 +94,9 @@
       <el-col :span="6">
         <el-form-item label="婚姻状况">
           <el-select v-model="form.marry" placeholder="请选择">
-            <el-option label="已婚" value="shaasanghai"></el-option>
-            <el-option label="未婚" value="beisdjing"></el-option>
-            <el-option label="未知" value="shaasanghai"></el-option>
+            <el-option label="已婚" value="1"></el-option>
+            <el-option label="未婚" value="2"></el-option>
+            <el-option label="未知" value="3"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -103,9 +105,11 @@
       <el-col :span="6">
         <el-form-item label="证件类型">
           <el-select v-model="form.licenseType" placeholder="请选择证件类型">
-            <el-option label="士兵证" value="shanghai"></el-option>
-            <el-option label="退休证" value="beijing"></el-option>
-            <el-option label="学员" value="beijing"></el-option>
+            <el-option label="士兵证" value="1"></el-option>
+            <el-option label="退休证" value="2"></el-option>
+            <el-option label="学员" value="3"></el-option>
+            <el-option label="护照" value="4"></el-option>
+            <el-option label="军官证" value="5"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -236,7 +240,7 @@
           ></el-date-picker>
         </el-form-item>
       </el-col>
-      <el-col>
+      <el-col :span="8">
         <el-form-item label="行政职务及日期" :span="5">
           <el-input v-model="form.chiefPosition"></el-input>
           <el-date-picker
@@ -247,7 +251,7 @@
           ></el-date-picker>
         </el-form-item>
       </el-col>
-      <el-col>
+      <el-col :span="8">
         <el-form-item label="行政职务等级及日期" :span="5">
           <el-input v-model="form.chiefLevel"></el-input>
           <el-date-picker
@@ -272,15 +276,15 @@ export default {
       activeName: "first",
       form: {
         //以下才是对的数据
+        birthday:"",
+        joinArmyDate:"",
         tid: "",
         name: "",
         gender: "",
-        birthday:"",
         origin: "",
         national: "",
         bornArea: "",
         blood: "",
-        birthday :"",
         jobDate:"",
         buzhibie: "",
         politicsType: "",
@@ -288,7 +292,8 @@ export default {
         marry: "",
         licenseType: "",
         licenseCode: "",
-        staffType: "",
+        staffType: [
+        ],
         houqinType: "",
         houqinProf: "",
         educatLevel: "",
@@ -520,7 +525,8 @@ export default {
       ]
     };
   },
-  methods: {
+    methods: {
+      birthday(){},
     formatter(row, column) {
       return row.address;
     },
@@ -532,8 +538,21 @@ export default {
     },
     handleBack() {
       history.go(-1);
+    },
+     onSubmit() {},
+       handleClick(){},
+
+    getData() {
+      this.postAxios("sysConfig/BasedataList")
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message('数据获取错误')
+        });
     }
-  }
+  },
 };
 </script>
 <style lang="sass" scoped>
