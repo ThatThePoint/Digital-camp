@@ -39,16 +39,17 @@ export default {
   data() {
     return {
       mode: "transfer", // transfer addressList
+      //属性右侧默认数据
       fromData: [
         {
           id: 1,
           pid: 0,
-          name: "测试左侧",
+          name: "测试右侧",
           children: [
             {
               id: 2,
               pid: 1,
-              name: "水电费是打发斯蒂芬斯蒂芬gas噶水电费噶地方死光光",
+              name: "水电费是打发斯",
               // disabled: true,
               children: []
             },
@@ -105,27 +106,28 @@ export default {
             }
           ]
         }
-      ], // 穿梭框 - 源数据 - 树形
+      ], 
+      // 穿梭框 - 源数据 - 树形左侧默认数据
       toData: [
-        {
-          id: 1,
-          pid: 0,
-          name: "测试左侧",
-          children: [
-            {
-              id: 2,
-              pid: 1,
-              name: "水电费是打发斯蒂芬斯蒂芬gas噶水电费噶地方死光光",
-              children: [
-                {
-                  id: 22222222,
-                  pid: 2,
-                  name: "2222222222"
-                }
-              ]
-            }
-          ]
-        } 
+        // {
+        //   id: 1,
+        //   pid: 0,
+        //   name: "测试左侧",
+        //   children: [
+        //     {
+        //       id: 2,
+        //       pid: 1,
+        //       name: "水电费是打发斯蒂",
+        //       children: [
+        //         {
+        //           id: 22222222,
+        //           pid: 2,
+        //           name: "2222222222"
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // } 
       ], // 穿梭框 - 目标数据 - 树形
       fromArray: [
         {
