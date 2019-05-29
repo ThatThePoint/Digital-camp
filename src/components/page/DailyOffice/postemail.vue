@@ -24,7 +24,7 @@
           slot="title-right"
           class="my-title-right"
           @click="handleTitleRight"
-          >随便写点啥</span
+          ></span
         >
       </tree-transfer>
     </div>
@@ -252,7 +252,7 @@ export default {
   computed: {
     title() {
       if (this.mode == "transfer") {
-        return ["源列表", "目标列表"];
+        return ["人员", "收件人"];
       } else {
         return ["通讯录", "收件人", "抄送人", "密送人"];
       }

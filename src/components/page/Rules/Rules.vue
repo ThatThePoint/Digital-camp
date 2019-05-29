@@ -56,7 +56,7 @@
               <el-input class="input-width" placeholder="请输入" v-model="ruleInfo.version"></el-input>
             </el-form-item>
             <el-form-item label="简介" :label-width="formLabelWidth">
-              <el-input type="text" placeholder="请输入" v-model="ruleInfo.ruleSynopsis"></el-input>
+              <el-input type="textarea" class="input-width"  placeholder="请输入" v-model="ruleInfo.ruleSynopsis"></el-input>
             </el-form-item>
             <el-form-item label="附件" :label-width="formLabelWidth">
               <el-upload
