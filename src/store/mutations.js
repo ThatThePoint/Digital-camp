@@ -12,7 +12,6 @@ export default{
         this.state.flag=false
     },
     focus(){
-        debugger
         this.state.flag=true
     }
 }
