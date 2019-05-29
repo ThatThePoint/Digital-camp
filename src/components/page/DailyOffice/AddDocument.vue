@@ -13,10 +13,9 @@
         <div class="container-header-left">
           <span class="poster">收件人：</span>
           <el-input class="input-width" 
-              v-model="input2"  
-              placeholder="请输入关键词"
-            
-              @focus="dialogVisible = true"                  
+              v-model="postname"  
+              placeholder="请输入关键词"            
+              @focus="focus"                  
               >
           </el-input>
         </div>
@@ -51,17 +50,12 @@
       :visible.sync="dialogVisible"
       width="50%"
       :before-close="handleClose">
-      <span> <postemail /></span>
+      <span> <postemail  v-on:confirm="confirms"/></span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="confirm" >确 定</el-button>
       </span>
     </el-dialog>
-
-
-
-
-
   </div>
 </template>
 
@@ -76,6 +70,7 @@ export default {
   name: "editor",
   data: function() {
     return {
+      postname:"",//收件人
       dialogVisible: false,
       content: "",
       editorOption: {
@@ -167,6 +162,21 @@ export default {
 
   },
   methods: {
+    cancel(){
+      this.dialogVisible = false;
+    },
+    confirm(info){
+      console.log(info)
+      this.dialogVisible = false;
+
+    },
+    confirms(a){
+      this.postname = a
+      console.log(a)
+    },
+    focus(){
+      this.dialogVisible = true;
+    },
     handleClose(done) {
         this.$confirm('确认关闭？')
           .then(_ => {

@@ -10,15 +10,13 @@
         :defaultProps="{ label: 'name', children: 'children' }"
         :defaultCheckedKeys="defaultCheckedKeys"
         :mode="mode"
-        
         height="540px"
         node_key="id"
         @addBtn="add"
         @removeBtn="remove"
         @left-check-change="leftCheckChange"
         @right-check-change="rightCheckChange"
-        filter
-        
+        filter        
       >
         <span
           slot="title-right"
@@ -38,6 +36,7 @@ export default {
   name: "App",
   data() {
     return {
+      pername:[],//想父组件传值
       mode: "transfer", // transfer addressList
       //属性右侧默认数据
       fromData: [
@@ -183,9 +182,11 @@ export default {
     });
 
   },
+  computed:{
+    ...mapState["pername"]
+  },
   methods: {
-        // 标题自定义区点击事件
-
+    // 标题自定义区点击事件
     handleTitleRight() {
       alert("标题自定义区点击事件");
       this.$emit("chuan",false)
@@ -198,12 +199,21 @@ export default {
       }
     },
     // 添加按钮
+    // ...mapMutations["add"],
     add(fromData, toData, obj) {
       // 树形穿梭框模式transfer时，返回参数为左侧树移动后数据、右侧树移动后数据、移动的{keys,nodes,halfKeys,halfNodes}对象
       // 通讯录模式addressList时，返回参数为右侧收件人列表、右侧抄送人列表、右侧密送人列表
-      console.log("fromData:", fromData);
-      console.log("toData:", toData);
-      console.log("obj:", obj);
+      console.log("fromData1:", fromData);
+      console.log("toData1:", toData);
+      this.pername = []
+      for(let i = 0;i < toData.length; i++){
+        for(let j =0; j<toData[i].children.length; j++){
+          this.pername.push(toData[i].children[j].name)
+        }
+      }
+      this.$emit("confirm",this.pername.join(","))
+      console.log("1111",this.pername.join(","))
+      console.log("obj1:", obj);
     },
     // 移除按钮
     remove(fromData, toData, obj) {
@@ -212,6 +222,14 @@ export default {
       console.log("fromData:", fromData);
       console.log("toData:", toData);
       console.log("obj:", obj);
+      this.pername = []
+      for(let i = 0;i < toData.length; i++){
+        for(let j =0; j<toData[i].children.length; j++){
+          this.pername.push(toData[i].children[j].name)
+        }
+      }
+      this.$emit("confirm",this.pername.join(","))
+      console.log("1111",this.pername.join(","))
     },
     // 左侧源数据选中事件
     leftCheckChange(nodeObj, treeObj) {

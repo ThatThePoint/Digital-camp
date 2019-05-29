@@ -9,5 +9,7 @@ export default {
     //     {id:2,name:"lisi"},
     //     {id:3,name:"zhaowu"}
     // ]
-    flag:false
+    pername:[]
+
+
 }
