@@ -24,7 +24,7 @@
           slot="title-right"
           class="my-title-right"
           @click="handleTitleRight"
-          >确定</span
+          >随便写点啥</span
         >
       </tree-transfer>
     </div>
@@ -185,11 +185,11 @@ export default {
   },
   methods: {
         // 标题自定义区点击事件
-    ...mapMutations(["handleTitleRight"]),
-    // handleTitleRight() {
-    //   alert("标题自定义区点击事件");
-    //   this.$emit("chuan",false)
-    // },
+
+    handleTitleRight() {
+      alert("标题自定义区点击事件");
+      this.$emit("chuan",false)
+    },
     changeMode() {
       if (this.mode == "transfer") {
         this.mode = "addressList";

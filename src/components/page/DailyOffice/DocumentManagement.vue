@@ -26,7 +26,7 @@
                 :label="item.label"
                 :value="item.value"
               ></el-option>
-            </el-select>发送时间
+            </el-select>发送时间未读
             <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
             <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
             <el-button type="primary">查询</el-button>
@@ -72,7 +72,7 @@
                 :label="item.label"
                 :value="item.value"
               ></el-option>
-            </el-select>发送时间
+            </el-select>发送时间已读
             <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
             <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
             <el-button type="primary">查询</el-button>
@@ -254,6 +254,9 @@ export default {
     addDocument() {
       this.$router.push({ path: "/adddocument" });
       // router.push({ path: '/addcar' })
+    },
+    handleClick(tab, event) {
+      console.log(tab, event);
     }
   }
 };

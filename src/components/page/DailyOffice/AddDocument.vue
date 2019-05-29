@@ -15,7 +15,8 @@
           <el-input class="input-width" 
               v-model="input2"  
               placeholder="请输入关键词"
-              @focus="focus"                  
+            
+              @focus="dialogVisible = true"                  
               >
           </el-input>
         </div>
@@ -45,9 +46,22 @@
       </div>
      
     </div>
-    <div class="post" v-show="flag">
-      <postemail />
-    </div>
+    
+    <el-dialog
+      :visible.sync="dialogVisible"
+      width="50%"
+      :before-close="handleClose">
+      <span> <postemail /></span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+
+
+
+
+
   </div>
 </template>
 
@@ -62,6 +76,7 @@ export default {
   name: "editor",
   data: function() {
     return {
+      dialogVisible: false,
       content: "",
       editorOption: {
         placeholder: ""
@@ -148,15 +163,17 @@ export default {
     });
   },
   computed:{
-      ...mapState(['flag']),
+     
 
   },
   methods: {
-     ...mapMutations(["focus"]),
-    // focus(){
-      
-    //   this.flag = true
-    // },
+    handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      },
     onEditorChange({ editor, html, text }) {
       this.content = html;
     },
@@ -200,7 +217,19 @@ export default {
   }
 };
 </script>
-<style scoped lang="scss">
+<style lang="scss">
+.el-dialog__wrapper{
+  overflow: hidden !important;
+  .el-dialog{
+    margin-top: 50px !important;;
+  }
+}
+.el-dialog{
+  .el-dialog__body{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
 .editor-btn {
   margin-top: 20px;
 }
