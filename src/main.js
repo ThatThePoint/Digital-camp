@@ -10,7 +10,7 @@ import './components/common/directives';
 import "babel-polyfill";
 import utils  from './utils';
 import axiosApi from '@/api/axios';
-
+import store from './store'
 Vue.config.productionTip = false
 Vue.use(ElementUI, {
     size: 'small'
@@ -40,5 +40,6 @@ router.beforeEach((to, from, next) => {
 
 new Vue({
     router,
+    store,
     render: h => h(App)
 }).$mount('#app')

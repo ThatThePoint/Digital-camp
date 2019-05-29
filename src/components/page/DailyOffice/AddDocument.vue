@@ -10,15 +10,17 @@
     </div>
     <div class="container">
       <div class="container-header">
-         收件人：<el-input class="input-width" 
-                  v-model="input2"  
-                  placeholder="请输入关键词"
-                  @focus="focus"
-                  
-                  >
-                </el-input>
-        <div>
-          公文标题：
+        <div class="container-header-left">
+          <span class="poster">收件人：</span>
+          <el-input class="input-width" 
+              v-model="input2"  
+              placeholder="请输入关键词"
+              @focus="focus"                  
+              >
+          </el-input>
+        </div>
+        <div class="container-header-left">
+          <span>公文标题：</span>
           <el-input class="input-width" v-model="input2"></el-input>
         </div>
         <el-upload
@@ -46,7 +48,6 @@
     <div class="post" v-show="flag">
       <postemail />
     </div>
-    
   </div>
 </template>
 
@@ -54,13 +55,13 @@
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
+import {mapState,mapMutations,mapActions,mapGetters} from 'vuex'
 import { quillEditor } from "vue-quill-editor";
 import postemail from "./postemail"; // 源码位置
 export default {
   name: "editor",
   data: function() {
     return {
-      flag:false,
       content: "",
       editorOption: {
         placeholder: ""
@@ -146,11 +147,16 @@ export default {
       return { value: item, label: item };
     });
   },
+  computed:{
+      ...mapState(['flag']),
+
+  },
   methods: {
-    focus(){
-      console.log("11")
-      this.flag = true
-    },
+     ...mapMutations(["focus"]),
+    // focus(){
+      
+    //   this.flag = true
+    // },
     onEditorChange({ editor, html, text }) {
       this.content = html;
     },
@@ -230,7 +236,17 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  opacity: 0.7;
-  background:black;
+  background:#d0d0d0;
+  .box{
+    background: white !important;
+  }
+}
+.container-header-left{
+  text-align: left;
+  margin-bottom: 5px;
+  .poster{
+    display: inline-block;
+    width: 70px;
+  }
 }
 </style>

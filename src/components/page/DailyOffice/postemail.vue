@@ -24,7 +24,7 @@
           slot="title-right"
           class="my-title-right"
           @click="handleTitleRight"
-          >自定义内容</span
+          >确定</span
         >
       </tree-transfer>
     </div>
@@ -33,6 +33,7 @@
 
 <script>
 import treeTransfer from "@/components/common/transfer-extend"; // 源码位置
+import {mapState,mapMutations,mapActions,mapGetters} from 'vuex'
 export default {
   name: "App",
   data() {
@@ -181,6 +182,12 @@ export default {
 
   },
   methods: {
+        // 标题自定义区点击事件
+    ...mapMutations(["handleTitleRight"]),
+    // handleTitleRight() {
+    //   alert("标题自定义区点击事件");
+    //   this.$emit("chuan",false)
+    // },
     changeMode() {
       if (this.mode == "transfer") {
         this.mode = "addressList";
@@ -237,11 +244,8 @@ export default {
           </span>
         </span>
       );
-    },
-    // 标题自定义区点击事件
-    handleTitleRight() {
-      alert("标题自定义区点击事件");
     }
+
   },
   computed: {
     title() {
@@ -269,6 +273,7 @@ export default {
   width: 600px;
   margin: 0 auto;
   text-align: left;
+  background: white;
 }
 
 .btn {
@@ -280,7 +285,7 @@ export default {
 
 .my-title-right {
   float: right;
-  font-size: 12px;
+  font-size: 18px;
   cursor: pointer;
 }
 </style>
