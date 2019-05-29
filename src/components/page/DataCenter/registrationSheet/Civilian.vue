@@ -309,7 +309,34 @@ export default {
         // jobPostion: ""
       }
     };
-  }
+  },
+    methods: {
+    formatter(row, column) {
+      return row.address;
+    },
+    handleEdit(index, row) {
+      console.log(index, row);
+    },
+    handleDelete(index, row) {
+      console.log(index, row);
+    },
+    handleBack() {
+      history.go(-1);
+    },
+     onSubmit() {},
+       handleClick(){},
+
+    getData() {
+      this.postAxios("sysConfig/BasedataList")
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message('数据获取错误')
+        });
+    }
+  },
 };
 </script>
 <style lang="sass" scoped>

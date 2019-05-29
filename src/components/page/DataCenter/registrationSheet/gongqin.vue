@@ -55,7 +55,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="工作日期">
-          <el-date-picker class="input-width" v-model="jobDate" type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker class="input-width" v-model="joinArmyDate" type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
@@ -131,11 +131,6 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
-        <el-form-item label="职工登记号码">
-          <el-input v-model="form.staffLoginNo"></el-input>
-        </el-form-item>
-      </el-col>
     </el-row>
     <el-row>
       <el-col :span="6">
@@ -195,11 +190,11 @@
       <el-col :span="6">
         <el-form-item label="行政职务及日期">
           <el-select v-model="form.chiefJob" placeholder="请选择">
-            <el-option label="上将" value="1"></el-option>
-            <el-option label="中将" value="2"></el-option>
-            <el-option label="少将" value="3"></el-option>
-            <el-option label="大校" value="4"></el-option>
-            <el-option label="。。。" value="5"></el-option>
+            <el-option label="上将" value="shanghai"></el-option>
+            <el-option label="中将" value="beijing"></el-option>
+            <el-option label="少将" value="beijing"></el-option>
+            <el-option label="大校" value="beijing"></el-option>
+            <el-option label="。。。" value="beijing"></el-option>
           </el-select>
           <el-date-picker
             type="date"
@@ -212,21 +207,16 @@
       <el-col :span="8">
         <el-form-item label="行政职务（管理岗位）等级及日期">
           <el-input v-model="form.chiefPosition" style="width: 60%;"></el-input>
-          <el-date-picker
-            type="date"
-            placeholder="选择日期"
-            v-model="form.chiefDate"
-            style="width: 60%;"
-          ></el-date-picker>
+          <el-date-picker type="date" placeholder="选择日期" v-model="form.chiefDate" style="width: 60%;"></el-date-picker>
         </el-form-item>
       </el-col>
       <el-col :span="8">
         <el-form-item label="专业技术职务及日期">
-          <el-input v-model="form.professionTech" style="width: 60%;"></el-input>
+          <el-input v-model="form.chiefPosition" style="width: 60%;"></el-input>
           <el-date-picker
             type="date"
             placeholder="选择日期"
-            v-model="form.professionTechDate"
+            v-model="form.chiefDate"
             style="width: 60%;"
           ></el-date-picker>
         </el-form-item>
@@ -236,11 +226,11 @@
       <el-col :span="6">
         <el-form-item label="岗位等级及日期">
           <el-select v-model="form.professionTechLevel" placeholder="请选择">
-            <el-option label="上将" value="1"></el-option>
-            <el-option label="中将" value="2"></el-option>
-            <el-option label="少将" value="3"></el-option>
-            <el-option label="大校" value="4"></el-option>
-            <el-option label="。。。" value="5"></el-option>
+            <el-option label="上将" value="shanghai"></el-option>
+            <el-option label="中将" value="beijing"></el-option>
+            <el-option label="少将" value="beijing"></el-option>
+            <el-option label="大校" value="beijing"></el-option>
+            <el-option label="。。。" value="beijing"></el-option>
           </el-select>
           <el-date-picker
             type="date"
@@ -269,7 +259,6 @@
   </el-form>
 </template>
 <script>
-
 export default {
   data() {
     return {
@@ -283,14 +272,15 @@ export default {
         national: "",
         bornArea: "",
         blood: "",
-        buzhibie: "",
-        jobDate: "",
+        buzhibie,
+        joinArmyDate: "",
         idcard: "",
+        politicsType: "",
+        staffType: "",
         marry: "",
         retiredDate: "",
         employeeStatus: "",
         dutySituation: "",
-        staffLoginNo: "",
         educatLevel: "",
         schoolDate: "",
         gradSchool: "",
@@ -307,13 +297,14 @@ export default {
         professionTechLevelDate: "",
         civilStaffLevel: "",
         civilStaffLevelDate: ""
-        // photoPath: "",
-        // shiguanChangeDate: "",
-        // jobPostion: ""
       }
     };
   },
-    methods: {
+  methods: {
+      form(){
+
+      },
+       onSubmit() {},
     formatter(row, column) {
       return row.address;
     },
@@ -326,7 +317,6 @@ export default {
     handleBack() {
       history.go(-1);
     },
-     onSubmit() {},
        handleClick(){},
 
     getData() {
@@ -336,12 +326,9 @@ export default {
         })
         .catch(err => {
           console.log(err);
-          this.$message('数据获取错误')
+          this.$message("数据获取错误");
         });
     }
-  },
+  }
 };
 </script>
-<style lang="sass" scoped>
-
-</style>

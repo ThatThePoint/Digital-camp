@@ -21,7 +21,7 @@
         </div>
         <div class="container-header-left">
           <span>公文标题：</span>
-          <el-input class="input-width" v-model="input2"></el-input>
+          <el-input class="input-width" v-model="title"></el-input>
         </div>
         <el-upload
           class="upload"
@@ -72,6 +72,7 @@ export default {
     return {
       postname:"",//收件人
       dialogVisible: false,
+      title:"",
       content: "",
       editorOption: {
         placeholder: ""
@@ -160,6 +161,18 @@ export default {
   computed:{
      
 
+  },
+  created(){
+    var ff= this.$route.query.id;
+    if(ff!=null){
+      this.content="hhhhhhsdhfashdf";
+      this.title="欢迎欢迎";
+      this.postname="老张";
+    }else{
+      this.content="";
+      this.title="";
+      this.postname="";
+    }
   },
   methods: {
     cancel(){

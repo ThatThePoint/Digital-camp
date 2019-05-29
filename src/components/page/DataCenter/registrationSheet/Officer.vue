@@ -287,6 +287,11 @@ export default {
         // jobPostion: ""
       }
     };
+  },
+  methods:{
+     onSubmit() {},
+       handleClick(){},
+
   }
 };
 </script>
