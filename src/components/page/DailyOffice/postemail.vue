@@ -24,7 +24,7 @@
           slot="title-right"
           class="my-title-right"
           @click="handleTitleRight"
-          >确定</span
+          ></span
         >
       </tree-transfer>
     </div>
@@ -185,11 +185,11 @@ export default {
   },
   methods: {
         // 标题自定义区点击事件
-    ...mapMutations(["handleTitleRight"]),
-    // handleTitleRight() {
-    //   alert("标题自定义区点击事件");
-    //   this.$emit("chuan",false)
-    // },
+
+    handleTitleRight() {
+      alert("标题自定义区点击事件");
+      this.$emit("chuan",false)
+    },
     changeMode() {
       if (this.mode == "transfer") {
         this.mode = "addressList";
@@ -252,7 +252,7 @@ export default {
   computed: {
     title() {
       if (this.mode == "transfer") {
-        return ["源列表", "目标列表"];
+        return ["人员", "收件人"];
       } else {
         return ["通讯录", "收件人", "抄送人", "密送人"];
       }

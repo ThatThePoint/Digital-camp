@@ -8,10 +8,5 @@ export default{
     // updateMessage (state, message) {
     //     state.message = message
     //   }
-    handleTitleRight(){
-        this.state.flag=false
-    },
-    focus(){
-        this.state.flag=true
-    }
+
 }
