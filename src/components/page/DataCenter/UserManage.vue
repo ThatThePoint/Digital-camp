@@ -299,6 +299,9 @@ export default {
         this.deptVisible = false;
         this.outManVisible = true;
       }
+    },
+    handleClick(tab, event) {
+      console.log(tab, event);
     }
   }
 };
