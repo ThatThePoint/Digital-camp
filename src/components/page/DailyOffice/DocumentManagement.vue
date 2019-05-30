@@ -16,20 +16,20 @@
               class="input-width"
               placeholder="请输入内容"
               prefix-icon="el-icon-search"
-              v-model="input2"
+              v-model="title"
             ></el-input>
             <span>公文等级</span>
-            <el-select class="input-width" v-model="value" placeholder="请选择">
+            <el-select class="input-width" v-model="level" placeholder="请选择">
               <el-option
                 v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.code"
+                :label="item.name"
+                :value="item.code"
               ></el-option>
-            </el-select>发送时间未读
-            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
-            <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
-            <el-button type="primary">查询</el-button>
+            </el-select>发送时间
+            <el-date-picker class="input-width" v-model="start" type="date" placeholder="选择日期"></el-date-picker>--
+            <el-date-picker class="input-width" v-model="end" type="date" placeholder="选择日期"></el-date-picker>
+            <el-button type="primary" @click="getdata">查询</el-button>
             <el-button type="success" @click="addDocument()" class="right">新增</el-button>
           </div>
           <div class="body">
@@ -62,20 +62,20 @@
               class="input-width"
               placeholder="请输入内容"
               prefix-icon="el-icon-search"
-              v-model="input2"
+              v-model="title"
             ></el-input>
             <span>公文等级</span>
-            <el-select class="input-width" v-model="value" placeholder="请选择">
+            <el-select class="input-width" v-model="level" placeholder="请选择">
               <el-option
                 v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.code"
+                :label="item.name"
+                :value="item.code"
               ></el-option>
-            </el-select>发送时间已读
-            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
-            <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
-            <el-button type="primary">查询</el-button>
+            </el-select>发送时间
+            <el-date-picker class="input-width" v-model="start" type="date" placeholder="选择日期"></el-date-picker>--
+            <el-date-picker class="input-width" v-model="end" type="date" placeholder="选择日期"></el-date-picker>
+            <el-button type="primary" @click="getdata">查询</el-button>
             <el-button type="success" @click="addDocument()" class="right">新增</el-button>
           </div>
           <div class="body">
@@ -108,20 +108,20 @@
               class="input-width"
               placeholder="请输入内容"
               prefix-icon="el-icon-search"
-              v-model="input2"
+              v-model="title"
             ></el-input>
             <span>公文等级</span>
-            <el-select class="input-width" v-model="value" placeholder="请选择">
+            <el-select class="input-width" v-model="level" placeholder="请选择">
               <el-option
                 v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.code"
+                :label="item.name"
+                :value="item.code"
               ></el-option>
             </el-select>发送时间
-            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
-            <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
-            <el-button type="primary">查询</el-button>
+            <el-date-picker class="input-width" v-model="start" type="date" placeholder="选择日期"></el-date-picker>--
+            <el-date-picker class="input-width" v-model="end" type="date" placeholder="选择日期"></el-date-picker>
+            <el-button type="primary" @click="getdata">查询</el-button>
             <el-button type="success" @click="addDocument()" class="right">新增</el-button>
           </div>
           <div class="body">
@@ -157,61 +157,11 @@ export default {
   data() {
     return {
       activeName: 'first',
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            }
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            }
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            }
-          }
-        ]
-      },
-      value1: "",
-      value2: "",
-      input2: "",
-      options: [
-        {
-          value: "1",
-          label: "普通"
-        },
-        {
-          value: "2",
-          label: "提醒"
-        },
-        {
-          value: "3",
-          label: "严重"
-        },
-        {
-          value: "4",
-          label: "警告"
-        },
-        {
-          value: "5",
-          label: "紧急"
-        }
-      ],
-      value: "",
+      level: "",
+      title: "",
+      start: "",
+      end:"",
+      options: [],
       tableData: [
         {
           code: "121",
@@ -226,6 +176,9 @@ export default {
         }
       ]
     };
+  },
+  created(){
+    this.getdata();
   },
   methods: {
     formatterStaus(row, column) {
@@ -246,17 +199,34 @@ export default {
       return row.allReceive == 1 ? "已收录" : "待收录";
     },
     handleEdit(index, row) {
-      console.log(index, row);
+     this.$router.push({ path: "/adddocument" ,query:{id:"hahh"}});
     },
     handleDelete(index, row) {
       console.log(index, row);
     },
     addDocument() {
       this.$router.push({ path: "/adddocument" });
-      // router.push({ path: '/addcar' })
     },
     handleClick(tab, event) {
       console.log(tab, event);
+    },
+    getdata(){
+      var params={
+        tab:this.activeName,
+        title:this.title,
+        level:this.level,
+        start:this.start,
+        end:this.end
+      };
+      this.postAxios("DailyOffice/DocumentList",params)
+        .then(res => {
+          console.log(res);
+          //Object.assign(this.detailList,res.detailList);
+          this.options=res.levelOps;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
