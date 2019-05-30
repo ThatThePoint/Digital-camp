@@ -7,10 +7,10 @@
     </div>
     <div class="container">
       <div class="body">
-        <el-form :model="form" label-width="100px">
+        <el-form :model="form" label-width="130px">
           <el-row>
             <el-col :span="4">
-              <el-form-item label="姓名：">李云龙</el-form-item>
+              <el-form-item label="操作人：">李云龙</el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item label="部职别：">团长</el-form-item>
@@ -40,13 +40,24 @@
           </el-row>
           <el-row>
             <el-col :span="12" class="flex">
-              <el-form-item label="开始时间（离队）">
-                <el-date-picker v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
+              <el-form-item label="开始时间">
+                <el-date-picker
+                  v-model="starttime"
+                  type="datetime"
+                  placeholder="选择日期时间"
+                  default-time="12:00:00">
+                </el-date-picker>
               </el-form-item>
-              <el-form-item label="结束时间（归队）">
-                <el-date-picker v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
+              <el-form-item label="结束时间">
+                <el-date-picker
+                  v-model="endtime"
+                  type="datetime"
+                  placeholder="选择日期时间"
+                  default-time="12:00:00">
+                </el-date-picker>
               </el-form-item>
-              <el-form-item label="请假天数">1天</el-form-item>
+             <el-form-item label="请假时长："></el-form-item>
+             <el-form-item :label="timenum"></el-form-item>
             </el-col>
           </el-row>
           <el-row>
@@ -98,6 +109,7 @@
         <el-button type="primary" @click="confirm" >确 定</el-button>
       </span>
     </el-dialog>
+    {{starttime}}{{endtime}}
   </div>
 </template>
 <script>
@@ -106,6 +118,8 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      starttime:0,//请假开始时间
+      endtime:0,
       postname:"",//请假人名字
       dialogVisible: false,//控制穿梭框显示
             leaveOptions: [
@@ -206,9 +220,14 @@ export default {
       ]
     };
   },
-    components: {
-      postemail
-    },
+  components: {
+    postemail
+  },
+  computed:{
+    timenum(){
+      return ((new Date(this.endtime).getTime() - new Date(this.starttime).getTime())/(1000*3600)).toFixed(2) + "小时"
+    }
+  },
   methods: {
     confirms(a){
       this.postname = a
@@ -275,5 +294,10 @@ export default {
 .persons{
   font-size: 14px;
   color: #606266;
+}
+.el-form-item__content::after, .el-form-item__content::before {
+    display: table;
+    content: "";
+    width: 50px !important;
 }
 </style>
