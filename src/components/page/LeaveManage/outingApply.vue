@@ -7,39 +7,74 @@
     </div>
     <div class="container">
       <div class="body">
-        <el-form :model="form">
-          <div class="flex">
-            <el-form-item label="姓名：" :label-width="formLabelWidth">李云龙</el-form-item>
-            <el-form-item label="部门：" :label-width="formLabelWidth">独立团</el-form-item>
-            <el-form-item label="岗位：" :label-width="formLabelWidth">团长</el-form-item>
-          </div>
-          <div class="flex">
-            <el-form-item label="外出类型" :label-width="formLabelWidth">
-              <el-select placeholder="请选择">
-                <el-option label="学习" value="shanghai"></el-option>
-                <el-option label="出差" value="beijing"></el-option>
-                <el-option label="事假" value="shanghai"></el-option>
-                <el-option label="病假" value="beijing"></el-option>
-                <el-option label="婚假" value="shanghai"></el-option>
-                <el-option label="其他" value="beijing"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="外出原因" :label-width="formLabelWidth">
-              <el-input type="textarea" placeholder="请输入"></el-input>
-            </el-form-item>
-          </div>
-          <div class="flex">
-            <el-form-item label="开始日期" :label-width="formLabelWidth">
-              <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
-            </el-form-item>
-            <el-form-item label="结束日期" :label-width="formLabelWidth">
-              <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
-            </el-form-item>
-            <el-form-item label="请假时长" :label-width="formLabelWidth">19小时</el-form-item>
-          </div>
+        <el-form :model="form" label-width="100px">
+          <el-row>
+            <el-col :span="4">
+              <el-form-item label="姓名：">李云龙</el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="部职别：">团长</el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">
+              <el-form-item label="请假事由">
+                <el-select v-model="form.leave" placeholder="请选择">
+                  <el-option
+                    v-for="item in leaveOptions"
+                    :label="item.value"
+                    value="item.key"
+                    :key="item.key"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12" class="flex">
+              <el-form-item label="开始时间（离队）">
+                <el-date-picker v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
+              </el-form-item>
+              <el-form-item label="结束时间（归队）">
+                <el-date-picker v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
+              </el-form-item>
+              <el-form-item label="请假天数">1天</el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="4">
+              <el-form-item label="到达地点">
+                <el-input v-model="form.name"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="路途时间">
+                <el-input v-model="form.name"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="交通工具">
+                <el-input v-model="form.name"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">
+              <el-form-item label="一级审批人">
+                <el-select v-model="form.leave" placeholder="请选择">
+                  <el-option
+                    v-for="item in leaveOptions"
+                    :label="item.value"
+                    value="item.key"
+                    :key="item.key"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
         </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <div slot="footer" class="flex foot"  >
+          <el-button  style="margin-right:100px">取 消</el-button >
           <el-button type="primary" @click="dialogFormVisible = false">申 请</el-button>
         </div>
       </div>
@@ -51,6 +86,56 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      leaveOptions: [
+        {
+          value: "出差",
+          key: 1
+        },
+        {
+          value: "休假探亲",
+          key: 2
+        },
+        {
+          value: "事假",
+          key: 3
+        },
+        {
+          value: "病假",
+          key: 4
+        },
+        {
+          value: "公休假日离开驻地",
+          key: 5
+        },
+        {
+          value: "婚假",
+          key: 6
+        },
+        {
+          value: "疗养假",
+          key: 7
+        },
+        {
+          value: "护理假",
+          key: 8
+        },
+        {
+          value: "产假",
+          key: 9
+        },
+        {
+          value: "士官离队住宿",
+          key: 10
+        },
+        {
+          value: "借调",
+          key: 11
+        },
+        {
+          value: "其他",
+          key: 12
+        }
+      ],
       confirmLeave: {},
       confirmFormVisible: false,
       checked: "",
@@ -58,19 +143,6 @@ export default {
       value2: "",
       input2: "",
       value: "",
-      tableData: [
-        {
-          name: "李云龙",
-          dept: "保卫科",
-          type: "请假",
-          reason: "外出有事",
-          startDate: "2019-04-22",
-          returnDate: "2019-04-30",
-          length: "18小时",
-          curApproval: "老张",
-          status: "归档"
-        }
-      ],
       dialogFormVisible: false,
       form: {
         name: "",
@@ -82,7 +154,6 @@ export default {
         resource: "",
         desc: ""
       },
-      formLabelWidth: "120px",
       activities: [
         {
           content: "张主任",
@@ -127,5 +198,9 @@ export default {
 }
 .staffStatu {
   margin: 0 20px;
+}
+.foot{
+  justify-content: center;
+  margin-top:100px; 
 }
 </style>

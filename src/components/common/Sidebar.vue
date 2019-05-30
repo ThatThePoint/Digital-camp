@@ -215,10 +215,10 @@ export default {
               index: "outingApply",
               title: "请假申请"
             },
-            {
-              index: "outingApprove",
-              title: "请假审批"
-            },
+            // {
+            //   index: "outingApprove",
+            //   title: "请假审批"
+            // },
             {
               index: "outingForApprove",
               title: "待审批请假"
