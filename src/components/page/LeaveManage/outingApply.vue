@@ -57,11 +57,6 @@ export default {
       value1: "",
       value2: "",
       input2: "",
-      filterModel: {
-        name: "",
-        depts: "",
-        types: ""
-      },
       value: "",
       tableData: [
         {
@@ -74,64 +69,8 @@ export default {
           length: "18小时",
           curApproval: "老张",
           status: "归档"
-        },
-        {
-          name: "李云龙",
-          dept: "保卫科",
-          type: "请假",
-          reason: "外出有事",
-          startDate: "2019-04-22",
-          returnDate: "2019-04-30",
-          length: "18小时",
-          curApproval: "老张",
-          status: "归档"
-        },
-        {
-          name: "李云龙",
-          dept: "保卫科",
-          type: "请假",
-          reason: "外出有事",
-          startDate: "2019-04-22",
-          returnDate: "2019-04-30",
-          length: "18小时",
-          curApproval: "老张",
-          status: "归档"
-        },
-        {
-          name: "李云龙",
-          dept: "保卫科",
-          type: "请假",
-          reason: "外出有事",
-          startDate: "2019-04-22",
-          returnDate: "2019-04-30",
-          length: "18小时",
-          curApproval: "老张",
-          status: "归档"
         }
       ],
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
-      dialogTableVisible: false,
       dialogFormVisible: false,
       form: {
         name: "",
