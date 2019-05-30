@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row class="demo-autocomplete">
+    <!-- <el-row class="demo-autocomplete">
       <el-col :span="12">
         <div class="sub-title">激活即列出输入建议</div>
         <el-autocomplete
@@ -22,7 +22,7 @@
           @select="handleSelect"
         ></el-autocomplete>
       </el-col>
-    </el-row>
+    </el-row> -->
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>

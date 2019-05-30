@@ -9,19 +9,28 @@
       <div class="body">
         <el-form :model="form">
           <div class="flex">
-            <el-form-item label="姓名：" :label-width="formLabelWidth">李云龙</el-form-item>
+            <el-form-item label="操作人：" :label-width="formLabelWidth">李云龙</el-form-item>
             <el-form-item label="部门：" :label-width="formLabelWidth">独立团</el-form-item>
-            <el-form-item label="岗位：" :label-width="formLabelWidth">团长</el-form-item>
+            
+            <!-- <el-form-item label="岗位：" :label-width="formLabelWidth">团长</el-form-item> -->
+          </div>
+          <div class="person">
+            <span class="persons">请假人：</span>
+            <el-input type="text" 
+              class="input-widths" 
+              v-model="postname"           
+              @focus="focus"  >
+            </el-input>
           </div>
           <div class="flex">
             <el-form-item label="外出类型" :label-width="formLabelWidth">
-              <el-select placeholder="请选择">
-                <el-option label="学习" value="shanghai"></el-option>
-                <el-option label="出差" value="beijing"></el-option>
-                <el-option label="事假" value="shanghai"></el-option>
-                <el-option label="病假" value="beijing"></el-option>
-                <el-option label="婚假" value="shanghai"></el-option>
-                <el-option label="其他" value="beijing"></el-option>
+              <el-select placeholder="请选择" value="">
+                <el-option label="学习" value="shanghai1"></el-option>
+                <el-option label="出差" value="beijing2"></el-option>
+                <el-option label="事假" value="shanghai3"></el-option>
+                <el-option label="病假" value="beijing4"></el-option>
+                <el-option label="婚假" value="shanghai5"></el-option>
+                <el-option label="其他" value="beijing6"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="外出原因" :label-width="formLabelWidth">
@@ -44,13 +53,27 @@
         </div>
       </div>
     </div>
+
+    <el-dialog
+      :visible.sync="dialogVisible"
+      width="50%"
+      :before-close="handleClose">
+      <span> <postemail  v-on:confirm="confirms"/></span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="confirm" >确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
+import postemail from "../DailyOffice/postemail"; // 源码位置
 export default {
   name: "documentManagement",
   data() {
     return {
+      postname:"",//请假人名字
+      dialogVisible: false,//控制穿梭框显示
       confirmLeave: {},
       confirmFormVisible: false,
       checked: "",
@@ -99,7 +122,32 @@ export default {
       ]
     };
   },
+    components: {
+      postemail
+    },
   methods: {
+    confirms(a){
+      this.postname = a
+      console.log(a)
+    },
+    handleClose(done) {
+    this.$confirm('确认关闭？')
+      .then(_ => {
+        done();
+      })
+      .catch(_ => {});
+    },
+    focus(){
+      this.dialogVisible = true;
+    },
+    cancel(){
+      this.dialogVisible = false;
+    },
+    confirm(info){
+      console.log(info)
+      this.dialogVisible = false;
+
+    },
     formatter(row, column) {
       return row.address;
     },
@@ -127,5 +175,17 @@ export default {
 }
 .staffStatu {
   margin: 0 20px;
+}
+.input-widths {
+  width: 350px;
+}
+.person{
+  padding-left: 52px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+.persons{
+  font-size: 14px;
+  color: #606266;
 }
 </style>
