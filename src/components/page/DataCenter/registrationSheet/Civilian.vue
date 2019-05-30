@@ -187,9 +187,8 @@
           <el-select v-model="form.civilStaffType" placeholder="请选择">
             <el-option label="转改管理" value="shanghai"></el-option>
             <el-option label="转改技术" value="beijing"></el-option>
-            <el-option label="。。。" value="beijing"></el-option>
-            <el-option label="。。。" value="beijing"></el-option>
-            <el-option label="。。。" value="beijing"></el-option>
+            <el-option label="招录管理" value="beijing"></el-option>
+            <el-option label="招录技术" value="beijing"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
