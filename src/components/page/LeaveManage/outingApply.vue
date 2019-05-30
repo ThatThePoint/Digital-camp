@@ -79,9 +79,21 @@
         </div>
       </div>
     </div>
+
+    <el-dialog
+      :visible.sync="dialogVisible"
+      width="50%"
+      :before-close="handleClose">
+      <span> <postemail  v-on:confirm="confirms"/></span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="confirm" >确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
+import postemail from "../DailyOffice/postemail"; // 源码位置
 export default {
   name: "documentManagement",
   data() {
@@ -170,7 +182,32 @@ export default {
       ]
     };
   },
+    components: {
+      postemail
+    },
   methods: {
+    confirms(a){
+      this.postname = a
+      console.log(a)
+    },
+    handleClose(done) {
+    this.$confirm('确认关闭？')
+      .then(_ => {
+        done();
+      })
+      .catch(_ => {});
+    },
+    focus(){
+      this.dialogVisible = true;
+    },
+    cancel(){
+      this.dialogVisible = false;
+    },
+    confirm(info){
+      console.log(info)
+      this.dialogVisible = false;
+
+    },
     formatter(row, column) {
       return row.address;
     },
