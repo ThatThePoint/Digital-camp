@@ -17,6 +17,14 @@
             </el-col>
           </el-row>
           <el-row>
+          <div class="person">
+            <span class="persons">请假人：</span>
+            <el-input type="text" 
+              class="input-widths" 
+              v-model="postname"           
+              @focus="focus"  >
+            </el-input>
+          </div>
             <el-col :span="6">
               <el-form-item label="请假事由">
                 <el-select v-model="form.leave" placeholder="请选择">
@@ -98,7 +106,9 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      leaveOptions: [
+      postname:"",//请假人名字
+      dialogVisible: false,//控制穿梭框显示
+            leaveOptions: [
         {
           value: "出差",
           key: 1
@@ -155,6 +165,19 @@ export default {
       value2: "",
       input2: "",
       value: "",
+      tableData: [
+        {
+          name: "李云龙",
+          dept: "保卫科",
+          type: "请假",
+          reason: "外出有事",
+          startDate: "2019-04-22",
+          returnDate: "2019-04-30",
+          length: "18小时",
+          curApproval: "老张",
+          status: "归档"
+        }
+      ],
       dialogFormVisible: false,
       form: {
         name: "",
@@ -166,6 +189,7 @@ export default {
         resource: "",
         desc: ""
       },
+      formLabelWidth: "120px",
       activities: [
         {
           content: "张主任",
@@ -239,5 +263,17 @@ export default {
 .foot{
   justify-content: center;
   margin-top:100px; 
+}
+.input-widths {
+  width: 350px;
+}
+.person{
+  padding-left: 52px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+.persons{
+  font-size: 14px;
+  color: #606266;
 }
 </style>
