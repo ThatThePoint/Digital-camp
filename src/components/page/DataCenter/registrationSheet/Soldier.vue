@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="form" label-width="80px">
+  <el-form ref="form" :model="form" label-width="100px">
     <el-row>
       <el-col :span="6">
         <el-form-item label="姓名">
@@ -9,18 +9,15 @@
       <el-col :span="6">
         <el-form-item label="性别">
           <el-radio-group v-model="form.gender">
-            <el-radio label="男"></el-radio>
-            <el-radio label="女"></el-radio>
+            <el-radio label="男" value="1"></el-radio>
+            <el-radio label="女" value="2"></el-radio>
           </el-radio-group>
         </el-form-item>
       </el-col>
       <el-col :span="6">
         <el-form-item label="出生日期">
-          <el-date-picker class="input-width" v-model="birthday " type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker v-model="birthday " type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-light"></div>
       </el-col>
     </el-row>
     <el-row>
@@ -34,10 +31,6 @@
           <el-input v-model="form.national"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="6"></el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
     </el-row>
     <el-row>
       <el-col :span="6">
@@ -45,13 +38,14 @@
           <el-input v-model="form.bornArea"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="3">
+      <el-col :span="4">
         <el-form-item label="血型">
           <el-select v-model="form.blood" placeholder="请选择血型">
             <el-option label="A" value="1"></el-option>
             <el-option label="B" value="2"></el-option>
             <el-option label="AB" value="3"></el-option>
             <el-option label="O" value="4"></el-option>
+            <el-option label="其他" value="5"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -59,28 +53,36 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="入伍日期">
-          <el-date-picker class="input-width" v-model="joinArmyDate" type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker v-model="form.joinArmyDate" type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
       </el-col>
       <el-col :span="6">
         <el-form-item label="工作日期">
-          <el-date-picker class="input-width" v-model="jobDate" type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker v-model="form.jobDate" type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="6">
         <el-form-item label="部职别">
+          <el-select v-model="form.buzhibie" placeholder="请选择部门">
+            <el-option label="团员" value="1"></el-option>
+            <el-option label="党员" value="2"></el-option>
+            <el-option label="群众" value="3"></el-option>
+            <el-option label="预备党员" value="4"></el-option>
+          </el-select>
           <el-input v-model="form.buzhibie"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="6">
         <el-form-item label="政治面貌">
           <el-select v-model="form.politicsType" placeholder="请选择">
-            <el-option label="团员" value="1"></el-option>
-            <el-option label="党员" value="2"></el-option>
-            <el-option label="群众" value="3"></el-option>
-            <el-option label="预备党员" value="4"></el-option>
+            <el-option
+              v-for="item in politicsTypeOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -94,9 +96,12 @@
       <el-col :span="6">
         <el-form-item label="婚姻状况">
           <el-select v-model="form.marry" placeholder="请选择">
-            <el-option label="已婚" value="1"></el-option>
-            <el-option label="未婚" value="2"></el-option>
-            <el-option label="未知" value="3"></el-option>
+            <el-option
+              v-for="item in marryOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -123,11 +128,12 @@
       <el-col :span="6">
         <el-form-item label="人员类别">
           <el-select v-model="form.staffType" placeholder="请选择">
-            <el-option label="士官" value="shanghai"></el-option>
-            <el-option label="兵" value="beijing"></el-option>
-            <el-option label="培养士官学员" value="beijing"></el-option>
-            <el-option label="学兵" value="beijing"></el-option>
-            <el-option label="。。。" value="beijing"></el-option>
+            <el-option
+              v-for="item in staffTypeOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -149,10 +155,12 @@
       <el-col :span="6">
         <el-form-item label="文化程度">
           <el-select v-model="form.educatLevel" placeholder="请选择">
-            <el-option label="研究生" value="shanghai"></el-option>
-            <el-option label="大学本科" value="beijing"></el-option>
-            <el-option label="大学专科和专科学校" value="beijing"></el-option>
-            <el-option label="。。。" value="beijing"></el-option>
+            <el-option
+              v-for="item in educatLevelOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -162,7 +170,7 @@
             type="date"
             placeholder="选择日期"
             v-model="form.schoolDate"
-            style="width: 100%;"
+            style="width: 80%;"
           ></el-date-picker>
         </el-form-item>
       </el-col>
@@ -176,10 +184,12 @@
       <el-col :span="6">
         <el-form-item label="学位">
           <el-select v-model="form.graduateType" placeholder="请选择">
-            <el-option label="博士" value="shanghai"></el-option>
-            <el-option label="硕士" value="beijing"></el-option>
-            <el-option label="学士" value="beijing"></el-option>
-            <el-option label="其他" value="beijing"></el-option>
+            <el-option
+              v-for="item in graduateTypeOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -203,21 +213,22 @@
       <el-col :span="6">
         <el-form-item label="军种">
           <el-select v-model="form.armyType" placeholder="请选择">
-            <el-option label="陆军" value="shanghai"></el-option>
-            <el-option label="海军" value="beijing"></el-option>
-            <el-option label="空军" value="beijing"></el-option>
-            <el-option label="火箭军" value="beijing"></el-option>
-            <el-option label="战略支援部队" value="beijing"></el-option>
+              <el-option
+              v-for="item in armyTypeOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
       <el-col :span="8">
         <el-form-item label="主类别">
           <el-radio-group v-model="form.majorType">
-            <el-radio label="军事"></el-radio>
-            <el-radio label="政工"></el-radio>
-            <el-radio label="后勤"></el-radio>
-            <el-radio label="装备"></el-radio>
+            <el-radio label="军事" value="1"></el-radio>
+            <el-radio label="政工" value="2"></el-radio>
+            <el-radio label="后勤" value="3"></el-radio>
+            <el-radio label="装备" value="4"></el-radio>
           </el-radio-group>
         </el-form-item>
       </el-col>
@@ -226,11 +237,12 @@
       <el-col :span="8">
         <el-form-item label="军衔及日期" :span="5">
           <el-select v-model="form.armyRank" placeholder="请选择">
-            <el-option label="上将" value="shanghai"></el-option>
-            <el-option label="中将" value="beijing"></el-option>
-            <el-option label="少将" value="beijing"></el-option>
-            <el-option label="大校" value="beijing"></el-option>
-            <el-option label="。。。" value="beijing"></el-option>
+              <el-option
+              v-for="item in armyRankOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
           <el-date-picker
             type="date"
@@ -276,8 +288,8 @@ export default {
       activeName: "first",
       form: {
         //以下才是对的数据
-        birthday:"",
-        joinArmyDate:"",
+        birthday: "",
+        joinArmyDate: "",
         tid: "",
         name: "",
         gender: "",
@@ -285,15 +297,14 @@ export default {
         national: "",
         bornArea: "",
         blood: "",
-        jobDate:"",
+        jobDate: "",
         buzhibie: "",
         politicsType: "",
         idcard: "",
         marry: "",
         licenseType: "",
         licenseCode: "",
-        staffType: [
-        ],
+        staffType: [],
         houqinType: "",
         houqinProf: "",
         educatLevel: "",
@@ -303,49 +314,285 @@ export default {
         gradDate: "",
         gradProf: "",
         retiredDate: "",
-        retiredDate:"",
+        retiredDate: "",
         localWeather: "",
-        ArmyType　: "",
+        armyType: "",
         majorType: "",
         armyRank: "",
         rankDate: "",
         chiefPosition: "",
         chiefDate: "",
         chiefLevel: "",
-        chiefLevDate: "",
-        // photoPath: "",
-        // shiguanChangeDate: "",
-        // jobPostion: ""
+        chiefLevDate: ""
       },
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
+      politicsTypeOptions: [
+        {
+          key: 1,
+          value: "党员"
         },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            }
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            }
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            }
-          }
-        ]
-      },
+        {
+          key: 2,
+          value: "预备党员"
+        },
+        {
+          key: 3,
+          value: "团员"
+        },
+        {
+          key: 4,
+          value: "群众"
+        },
+        {
+          key: 5,
+          value: "其他"
+        }
+      ],
+      marryOptions: [
+        {
+          key: 1,
+          value: "未婚"
+        },
+        {
+          key: 2,
+          value: "已婚"
+        },
+        {
+          key: 3,
+          value: "丧偶"
+        },
+        {
+          key: 4,
+          value: "离婚"
+        }
+      ],
+      armyTypeOptions: [
+        {
+          key: 1,
+          value: "陆军"
+        },
+        {
+          key: 2,
+          value: "海军"
+        },
+        {
+          key: 3,
+          value: "火箭军"
+        },
+        {
+          key: 4,
+          value: "战略支援部队"
+        }
+      ],
+      localWeatherOptions: [
+        {
+          key: 1,
+          value: "高寒区"
+        },
+        {
+          key: 2,
+          value: "寒区"
+        },
+        {
+          key: 3,
+          value: "温区"
+        },
+        {
+          key: 4,
+          value: "亚热区"
+        },
+        {
+          key: 5,
+          value: "热区"
+        }
+      ],
+      staffTypeOptions: [
+        {
+          key: 1,
+          value: "军政后装军官"
+        },
+        {
+          key: 2,
+          value: "专业技术军官"
+        },
+        {
+          key: 3,
+          value: "其他军官"
+        },
+        {
+          key: 4,
+          value: "专业技术文职干部"
+        },
+        {
+          key: 5,
+          value: "非专业技术文职干部"
+        },
+        {
+          key: 6,
+          value: "其他文职干部"
+        },
+        {
+          key: 7,
+          value: "生长干部学员"
+        },
+        {
+          key: 8,
+          value: "离休干部"
+        },
+        {
+          key: 9,
+          value: "退休干部"
+        }
+      ],
+      armyRankOptions: [
+        {
+          key: 1,
+          value: "上将"
+        },
+        {
+          key: 2,
+          value: "中将"
+        },
+        {
+          key: 3,
+          value: "少将"
+        },
+        {
+          key: 4,
+          value: "大校"
+        },
+        {
+          key: 5,
+          value: "中校"
+        },
+        {
+          key: 6,
+          value: "少校"
+        },
+        {
+          key: 7,
+          value: "上尉"
+        },
+        {
+          key: 8,
+          value: "中尉"
+        },
+        {
+          key: 9,
+          value: "少尉"
+        },
+        {
+          key: 10,
+          value: "文职特技"
+        },
+        {
+          key: 11,
+          value: "文职1级"
+        },
+        {
+          key: 12,
+          value: "文职2级"
+        },
+        {
+          key: 13,
+          value: "文职3级"
+        },
+        {
+          key: 15,
+          value: "文职4级"
+        },
+        {
+          key: 16,
+          value: "文职5级"
+        },
+        {
+          key: 17,
+          value: "文职6级"
+        },
+        {
+          key: 18,
+          value: "文职7级"
+        },
+        {
+          key: 19,
+          value: "文职8级"
+        },
+        {
+          key: 20,
+          value: "文职9级"
+        },
+        {
+          key: 21,
+          value: "学员衔"
+        },
+        {
+          key: 22,
+          value: "未授衔"
+        }
+      ],
+      educatLevelOptions: [
+        {
+          key: 1,
+          value: "研究生"
+        },
+        {
+          key: 2,
+          value: "大学本科"
+        },
+        {
+          key: 3,
+          value: "大学专科"
+        },
+        {
+          key: 4,
+          value: "专科学校"
+        },
+        {
+          key: 5,
+          value: "中等专业学校"
+        },
+        {
+          key: 6,
+          value: "校工学校"
+        },
+        {
+          key: 7,
+          value: "高中"
+        },
+        {
+          key: 8,
+          value: "初中"
+        },
+        {
+          key: 9,
+          value: "小学"
+        },
+        {
+          key: 10,
+          value: "文盲"
+        },
+        {
+          key: 11,
+          value: "半文盲"
+        }
+      ],
+      graduateTypeOptions: [
+        {
+          key: 1,
+          value: "博士"
+        },
+        {
+          key: 2,
+          value: "硕士"
+        },
+        {
+          key: 3,
+          value: "学士"
+        },
+        {
+          key: 4,
+          value: "其他"
+        }
+      ],
       value1: "",
       value2: "",
       input2: "",
@@ -525,8 +772,8 @@ export default {
       ]
     };
   },
-    methods: {
-      birthday(){},
+  methods: {
+    birthday() {},
     formatter(row, column) {
       return row.address;
     },
@@ -539,8 +786,8 @@ export default {
     handleBack() {
       history.go(-1);
     },
-     onSubmit() {},
-       handleClick(){},
+    onSubmit() {},
+    handleClick() {},
 
     getData() {
       this.postAxios("sysConfig/BasedataList")
@@ -549,10 +796,10 @@ export default {
         })
         .catch(err => {
           console.log(err);
-          this.$message('数据获取错误')
+          this.$message("数据获取错误");
         });
     }
-  },
+  }
 };
 </script>
 <style lang="sass" scoped>
