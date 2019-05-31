@@ -41,8 +41,12 @@
       <el-col :span="6">
         <el-form-item label="血型">
           <el-select v-model="form.blood" placeholder="请选择血型">
-            <el-option label="A" value="shanghai"></el-option>
-            <el-option label="B" value="beijing"></el-option>
+            <el-option
+              v-for="item in bloodOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -50,28 +54,39 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="入伍日期">
-          <el-date-picker class="input-width" v-model="joinArmyDate" type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker
+            class="input-width"
+            v-model="form.joinArmyDate"
+            type="date"
+            placeholder="选择日期"
+          ></el-date-picker>
         </el-form-item>
       </el-col>
       <el-col :span="6">
         <el-form-item label="工作日期">
-          <el-date-picker class="input-width" v-model="jobDate" type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker class="input-width" v-model="form.jobDate" type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="6">
         <el-form-item label="部职别">
+          <el-select v-model="form.buzhibie" placeholder="请选择部门">
+            <el-option label="通讯科" value="1"></el-option>
+            <el-option label="参谋部" value="2"></el-option>
+          </el-select>
           <el-input v-model="form.buzhibie"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="6">
         <el-form-item label="政治面貌">
           <el-select v-model="form.politicsType" placeholder="请选择">
-            <el-option label="团员" value="shaasanghai"></el-option>
-            <el-option label="党员" value="beisdjing"></el-option>
-            <el-option label="群众" value="shaasanghai"></el-option>
-            <el-option label="预备党员" value="beisdjing"></el-option>
+            <el-option
+              v-for="item in politicsTypeOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -85,9 +100,12 @@
       <el-col :span="6">
         <el-form-item label="婚姻状况">
           <el-select v-model="form.marry" placeholder="请选择">
-            <el-option label="已婚" value="shaasanghai"></el-option>
-            <el-option label="未婚" value="beisdjing"></el-option>
-            <el-option label="未知" value="shaasanghai"></el-option>
+            <el-option
+              v-for="item in marryOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -96,11 +114,12 @@
       <el-col :span="6">
         <el-form-item label="军种">
           <el-select v-model="form.armyType" placeholder="请选择">
-            <el-option label="陆军" value="1"></el-option>
-            <el-option label="海军" value="2"></el-option>
-            <el-option label="空军" value="3"></el-option>
-            <el-option label="火箭军" value="4"></el-option>
-            <el-option label="战略支援部队" value="5"></el-option>
+            <el-option
+              v-for="item in armyTypeOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -131,10 +150,12 @@
       <el-col :span="6">
         <el-form-item label="文化程度">
           <el-select v-model="form.educatLevel" placeholder="请选择">
-            <el-option label="研究生" value="shanghai"></el-option>
-            <el-option label="大学本科" value="beijing"></el-option>
-            <el-option label="大学专科和专科学校" value="beijing"></el-option>
-            <el-option label="。。。" value="beijing"></el-option>
+            <el-option
+              v-for="item in educatLevelOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -158,10 +179,12 @@
       <el-col :span="6">
         <el-form-item label="学位">
           <el-select v-model="form.graduateType" placeholder="请选择">
-            <el-option label="博士" value="shanghai"></el-option>
-            <el-option label="硕士" value="beijing"></el-option>
-            <el-option label="学士" value="beijing"></el-option>
-            <el-option label="其他" value="beijing"></el-option>
+            <el-option
+              v-for="item in graduateTypeOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -185,22 +208,24 @@
       <el-col :span="6">
         <el-form-item label="人员类别">
           <el-select v-model="form.civilStaffType" placeholder="请选择">
-            <el-option label="转改管理" value="shanghai"></el-option>
-            <el-option label="转改技术" value="beijing"></el-option>
-            <el-option label="。。。" value="beijing"></el-option>
-            <el-option label="。。。" value="beijing"></el-option>
-            <el-option label="。。。" value="beijing"></el-option>
+            <el-option
+              v-for="item in civilStaffTypeOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
       <el-col :span="6">
         <el-form-item label="所在气候区">
           <el-select v-model="form.localWeather" placeholder="请选择">
-            <el-option label="高寒区" value="shanghai"></el-option>
-            <el-option label="寒区" value="beijing"></el-option>
-            <el-option label="温区" value="beijing"></el-option>
-            <el-option label="亚热区" value="beijing"></el-option>
-            <el-option label="热区" value="beijing"></el-option>
+            <el-option
+              v-for="item in localWeatherOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -209,10 +234,10 @@
       <el-col :span="8">
         <el-form-item label="主类别">
           <el-radio-group v-model="form.majorType">
-            <el-radio label="军事"></el-radio>
-            <el-radio label="政工"></el-radio>
-            <el-radio label="后勤"></el-radio>
-            <el-radio label="装备"></el-radio>
+            <el-radio label="军事" value="1"></el-radio>
+            <el-radio label="政工" value="2"></el-radio>
+            <el-radio label="后勤" value="3"></el-radio>
+            <el-radio label="装备" value="4"></el-radio>
           </el-radio-group>
         </el-form-item>
       </el-col>
@@ -221,11 +246,12 @@
       <el-col :span="6">
         <el-form-item label="岗位等级及日期">
           <el-select v-model="form.postionLevel" placeholder="请选择">
-            <el-option label="上将" value="shanghai"></el-option>
-            <el-option label="中将" value="beijing"></el-option>
-            <el-option label="少将" value="beijing"></el-option>
-            <el-option label="大校" value="beijing"></el-option>
-            <el-option label="。。。" value="beijing"></el-option>
+            <el-option
+              v-for="item in postionLevelOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
           <el-date-picker
             type="date"
@@ -307,10 +333,420 @@ export default {
         // photoPath: "",
         // shiguanChangeDate: "",
         // jobPostion: ""
-      }
+      },
+      politicsTypeOptions: [
+        {
+          key: 1,
+          value: "党员"
+        },
+        {
+          key: 2,
+          value: "预备党员"
+        },
+        {
+          key: 3,
+          value: "团员"
+        },
+        {
+          key: 4,
+          value: "群众"
+        },
+        {
+          key: 5,
+          value: "其他"
+        }
+      ],
+      marryOptions: [
+        {
+          key: 1,
+          value: "未婚"
+        },
+        {
+          key: 2,
+          value: "已婚"
+        },
+        {
+          key: 3,
+          value: "丧偶"
+        },
+        {
+          key: 4,
+          value: "离婚"
+        }
+      ],
+      armyTypeOptions: [
+        {
+          key: 1,
+          value: "陆军"
+        },
+        {
+          key: 2,
+          value: "海军"
+        },
+        {
+          key: 3,
+          value: "火箭军"
+        },
+        {
+          key: 4,
+          value: "战略支援部队"
+        }
+      ],
+      localWeatherOptions: [
+        {
+          key: 1,
+          value: "高寒区"
+        },
+        {
+          key: 2,
+          value: "寒区"
+        },
+        {
+          key: 3,
+          value: "温区"
+        },
+        {
+          key: 4,
+          value: "亚热区"
+        },
+        {
+          key: 5,
+          value: "热区"
+        }
+      ],
+      civilStaffTypeOptions: [
+        {
+          key: 1,
+          value: "转改管理文职人员"
+        },
+        {
+          key: 2,
+          value: "转改技术文职人员"
+        },
+        {
+          key: 3,
+          value: "招考管理文职人员"
+        },
+        {
+          key: 4,
+          value: "招考管理文职人员"
+        }
+      ],
+      armyRankOptions: [
+        {
+          key: 1,
+          value: "上将"
+        },
+        {
+          key: 2,
+          value: "中将"
+        },
+        {
+          key: 3,
+          value: "少将"
+        },
+        {
+          key: 4,
+          value: "大校"
+        },
+        {
+          key: 5,
+          value: "中校"
+        },
+        {
+          key: 6,
+          value: "少校"
+        },
+        {
+          key: 7,
+          value: "上尉"
+        },
+        {
+          key: 8,
+          value: "中尉"
+        },
+        {
+          key: 9,
+          value: "少尉"
+        },
+        {
+          key: 10,
+          value: "文职特技"
+        },
+        {
+          key: 11,
+          value: "文职1级"
+        },
+        {
+          key: 12,
+          value: "文职2级"
+        },
+        {
+          key: 13,
+          value: "文职3级"
+        },
+        {
+          key: 15,
+          value: "文职4级"
+        },
+        {
+          key: 16,
+          value: "文职5级"
+        },
+        {
+          key: 17,
+          value: "文职6级"
+        },
+        {
+          key: 18,
+          value: "文职7级"
+        },
+        {
+          key: 19,
+          value: "文职8级"
+        },
+        {
+          key: 20,
+          value: "文职9级"
+        },
+        {
+          key: 21,
+          value: "学员衔"
+        },
+        {
+          key: 22,
+          value: "未授衔"
+        }
+      ],
+      educatLevelOptions: [
+        {
+          key: 1,
+          value: "研究生"
+        },
+        {
+          key: 2,
+          value: "大学本科"
+        },
+        {
+          key: 3,
+          value: "大学专科"
+        },
+        {
+          key: 4,
+          value: "专科学校"
+        },
+        {
+          key: 5,
+          value: "中等专业学校"
+        },
+        {
+          key: 6,
+          value: "校工学校"
+        },
+        {
+          key: 7,
+          value: "高中"
+        },
+        {
+          key: 8,
+          value: "初中"
+        },
+        {
+          key: 9,
+          value: "小学"
+        },
+        {
+          key: 10,
+          value: "文盲"
+        },
+        {
+          key: 11,
+          value: "半文盲"
+        }
+      ],
+      graduateTypeOptions: [
+        {
+          key: 1,
+          value: "博士"
+        },
+        {
+          key: 2,
+          value: "硕士"
+        },
+        {
+          key: 3,
+          value: "学士"
+        },
+        {
+          key: 4,
+          value: "其他"
+        }
+      ],
+      bloodOptions: [
+        {
+          key: "1",
+          value: "A"
+        },
+        {
+          key: "2",
+          value: "B"
+        },
+        {
+          key: "3",
+          value: "AB"
+        },
+        {
+          key: "4",
+          value: "O"
+        },
+        {
+          key: "5",
+          value: "其他"
+        }
+      ],
+      postionLevelOptions: [
+        {
+          key: "1",
+          value: "部级副职"
+        },
+        {
+          key: "2",
+          value: "局级正职"
+        },
+        {
+          key: "3",
+          value: "局级副职"
+        },
+        {
+          key: "4",
+          value: "处级正职"
+        },
+        {
+          key: "5",
+          value: "处级副职"
+        },
+        {
+          key: "6",
+          value: "科级正职"
+        },
+        {
+          key: "7",
+          value: "科级副职"
+        },
+        {
+          key: "8",
+          value: "办事员一级"
+        },
+        {
+          key: "9",
+          value: "办事员二级"
+        },
+        {
+          key: "10",
+          value: "办事员三级"
+        },
+        {
+          key: "11",
+          value: "办事员四级"
+        },
+        {
+          key: "12",
+          value: "办事员五级"
+        },
+        {
+          key: "13",
+          value: "办事员六级"
+        },
+        {
+          key: "14",
+          value: "办事员七级"
+        },
+        {
+          key: "15",
+          value: "办事员八级"
+        },
+        {
+          key: "16",
+          value: "办事员九级"
+        },
+        {
+          key: "17",
+          value: "办事员十级"
+        },
+        {
+          key: "18",
+          value: "办事员十一级"
+        },
+        {
+          key: "19",
+          value: "办事员十二级"
+        },
+        {
+          key: "20",
+          value: "办事员十三级"
+        },
+        {
+          key: "21",
+          value: "文职人员级别转改特级"
+        },
+        {
+          key: "22",
+          value: "转改1级"
+        },
+        {
+          key: "23",
+          value: "转改2级"
+        },
+        {
+          key: "24",
+          value: "转改3级"
+        },
+        {
+          key: "25",
+          value: "转改4级"
+        },
+        {
+          key: "26",
+          value: "转改5级"
+        },
+        {
+          key: "27",
+          value: "转改6级"
+        },
+        {
+          key: "28",
+          value: "转改7级"
+        },
+        {
+          key: "29",
+          value: "转改8级"
+        }
+      ],
+      professionTechDutyOptions: [
+        {
+          key: "1",
+          value: "高级工程师"
+        },
+        {
+          key: "2",
+          value: "会计师"
+        },
+        {
+          key: "3",
+          value: "教授"
+        },
+        {
+          key: "4",
+          value: "研究员"
+        },
+        {
+          key: "5",
+          value: "医师"
+        }
+      ],
     };
   },
-    methods: {
+  methods: {
     formatter(row, column) {
       return row.address;
     },
@@ -323,8 +759,8 @@ export default {
     handleBack() {
       history.go(-1);
     },
-     onSubmit() {},
-       handleClick(){},
+    onSubmit() {},
+    handleClick() {},
 
     getData() {
       this.postAxios("sysConfig/BasedataList")
@@ -333,10 +769,10 @@ export default {
         })
         .catch(err => {
           console.log(err);
-          this.$message('数据获取错误')
+          this.$message("数据获取错误");
         });
     }
-  },
+  }
 };
 </script>
 <style lang="sass" scoped>

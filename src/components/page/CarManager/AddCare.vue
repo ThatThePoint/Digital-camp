@@ -13,89 +13,70 @@
         <div class="carDet">
           <div class="license">
             奔驰2号
-            <span class=" used">在用</span>
+            <span class="used">在用</span>
             所属单位
-            <el-input
-              class="input-width"
-              placeholder="车牌号"
-              value="警卫连"
-              disabled
-            ></el-input>
+            <el-input class="input-width" placeholder="车牌号" value="警卫连" disabled></el-input>
           </div>
           <div class="cars">
             车辆品牌：
-             <el-input
-              class="input-width"
-              value="大众"
-              disabled
-            ></el-input>车辆型号：
-            <el-input
-              class="input-width"
-              value="大众"
-              disabled
-            ></el-input><span class="colors">颜色：</span>
-             <el-input
-              class="input-width"
-              value="红色"
-              disabled
-            ></el-input>行驶证号：
-             <el-input
-              class="input-width"
-              value="DSK88339"
-              disabled
-            ></el-input>
+            <el-input class="input-width" value="大众" disabled></el-input>车辆型号：
+            <el-input class="input-width" value="大众" disabled></el-input>
+            <span class="colors">颜色：</span>
+            <el-input class="input-width" value="红色" disabled></el-input>行驶证号：
+            <el-input class="input-width" value="DSK88339" disabled></el-input>
           </div>
           <div class>
             车辆座位：
-             <el-input
-              class="input-width"
-              value="4座"
-              disabled
-            ></el-input>车辆载重：
-             <el-input
-              class="input-width"
-              value="2吨"
-              disabled
-            ></el-input>车架号：
-             <el-input
-              class="input-width"
-              value="123"
-              disabled
-            ></el-input>发动机号：
-             <el-input
-              class="input-width"
-              value="123"
-              disabled
-            ></el-input>
+            <el-input class="input-width" value="4座" disabled></el-input>车辆载重：
+            <el-input class="input-width" value="2吨" disabled></el-input>车架号：
+            <el-input class="input-width" value="123" disabled></el-input>发动机号：
+            <el-input class="input-width" value="123" disabled></el-input>
           </div>
         </div>
       </div>
       <div class="footer">
         <div>
           <div>维修保养信息：</div>
-          <div class="itemDet">
-            维护类型：
-            <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
-              <el-option
-                v-for="item in inoutOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <el-input class="input-width" placeholder="经办人" v-model="input2"></el-input>
-            
-          </div>
-          <div class="itemDet">
-            维修日期：
-            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>备注：
-            <el-input type="textarea" class="wenben"></el-input>
-          </div>
+          <el-form
+            :model="ruleForm"
+            :rules="rules"
+            ref="ruleForm"
+            label-width="100px"
+            class="demo-ruleForm"
+          >
+            <div class="itemDet">
+              维护类型：
+              <div></div>
+              <el-form-item prop="type" style="display:inline-block; width:120px;">
+                <el-select style="width:200px;" v-model="ruleForm.type" placeholder="请选择">
+                  <el-option
+                    v-for="item in inoutOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item prop="name" style="display:inline-block; margin-left:80px; ">
+                <el-input  placeholder="经办人" v-model="ruleForm.name"></el-input>
+              </el-form-item>
+            </div>
+            <div class="itemDet">
+              维修日期：
+              <div></div>
+              <el-form-item prop="value1" style="display:inline-block; " >
+                <el-date-picker class="input-width" v-model="ruleForm.value1" type="date" placeholder="选择日期"></el-date-picker>
+              </el-form-item>
+              <el-form-item prop="value2" label="备注：" style="display:inline-block;">
+                <el-input type="textarea" class="wenben" v-model="ruleForm.value2"></el-input>
+              </el-form-item>
+            </div>
+          </el-form>
         </div>
       </div>
-      <div class="flex-center submit ">
+      <div class="flex-center submit">
         <el-button type="danger">取消</el-button>
-        <el-button type="success" style="margin-left:40px;">保存</el-button>
+        <el-button type="success" style="margin-left:40px;" @click="submitForm('ruleForm')">保存</el-button>
       </div>
     </div>
   </div>
@@ -133,6 +114,32 @@ export default {
             }
           }
         ]
+      },
+      ruleForm: {
+        type: "",
+        value1: "",
+        value2: "",
+        name:""
+      },
+      rules: {
+        name: [
+          { required: true, message: "请输入经办人", trigger: "blur" },
+          { min: 2, max: 4, message: "长度在 2 到 4 个字符", trigger: "blur" }
+        ],
+        type: [
+          { required: true, message: "请选择保养类型", trigger: "change" }
+        ],
+        value2: [
+          { required: true, message: "请选择", trigger: "change" }
+        ],
+        value1: [
+          {
+            type: "date",
+            required: true,
+            message: "请选择日期",
+            trigger: "change"
+          }
+        ],
       },
       value1: "",
       value2: "",
@@ -232,6 +239,19 @@ export default {
     handleDelete(index, row) {
       console.log(index, row);
     },
+     submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            history.go(-1);
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      },
     addCar() {
       this.$router.push({ path: "/addcare" });
       // router.push({ path: '/addcar' })
@@ -279,7 +299,7 @@ export default {
   text-align: center;
 }
 
-.used{
+.used {
   display: inline-block;
   width: 40px;
   height: 20px;
@@ -287,23 +307,23 @@ export default {
   border-radius: 2px;
   color: red;
 }
-.cars{
+.cars {
   margin-bottom: 10px;
 }
-.colors{
+.colors {
   width: 68px;
   display: inline-block;
 }
-.fires{
+.fires {
   width: 75px;
   display: inline-block;
 }
 .itemDet[data-v-52dfd7c8] {
-    padding: 20px 0 0 120px !important;
+  padding: 20px 0 0 120px !important;
 }
 .wenben[data-v-52dfd7c8] {
-    width: 504px;
-    vertical-align: top;
+  width: 504px;
+  vertical-align: top;
 }
 /* .input-width[data-v-52dfd7c8]{
   margin: 0 20px 0 0 !important;

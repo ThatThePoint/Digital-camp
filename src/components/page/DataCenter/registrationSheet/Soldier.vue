@@ -1,13 +1,13 @@
 <template>
-  <el-form ref="form" :model="form" label-width="100px">
+  <el-form ref="form" :model="form" label-width="100px" :rules="rules">
     <el-row>
       <el-col :span="6">
-        <el-form-item label="姓名">
+        <el-form-item label="姓名" prop="name">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="6">
-        <el-form-item label="性别">
+        <el-form-item label="性别" prop="gender">
           <el-radio-group v-model="form.gender">
             <el-radio label="男" value="1"></el-radio>
             <el-radio label="女" value="2"></el-radio>
@@ -16,7 +16,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="出生日期">
-          <el-date-picker v-model="birthday " type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
@@ -41,18 +41,19 @@
       <el-col :span="4">
         <el-form-item label="血型">
           <el-select v-model="form.blood" placeholder="请选择血型">
-            <el-option label="A" value="1"></el-option>
-            <el-option label="B" value="2"></el-option>
-            <el-option label="AB" value="3"></el-option>
-            <el-option label="O" value="4"></el-option>
-            <el-option label="其他" value="5"></el-option>
+            <el-option
+              v-for="item in bloodOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="6">
-        <el-form-item label="入伍日期">
+        <el-form-item label="入伍日期" prop="joinArmyDate">
           <el-date-picker v-model="form.joinArmyDate" type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
       </el-col>
@@ -66,10 +67,8 @@
       <el-col :span="6">
         <el-form-item label="部职别">
           <el-select v-model="form.buzhibie" placeholder="请选择部门">
-            <el-option label="团员" value="1"></el-option>
-            <el-option label="党员" value="2"></el-option>
-            <el-option label="群众" value="3"></el-option>
-            <el-option label="预备党员" value="4"></el-option>
+            <el-option label="通讯科" value="1"></el-option>
+            <el-option label="参谋部" value="2"></el-option>
           </el-select>
           <el-input v-model="form.buzhibie"></el-input>
         </el-form-item>
@@ -140,8 +139,8 @@
       <el-col :span="6">
         <el-form-item label="后勤人员分类">
           <el-select v-model="form.houqinType" placeholder="请选择">
-            <el-option label="机关人员" value="shanghai"></el-option>
-            <el-option label="直属分队" value="beijing"></el-option>
+            <el-option label="机关人员" value="1"></el-option>
+            <el-option label="直属分队" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -213,7 +212,7 @@
       <el-col :span="6">
         <el-form-item label="军种">
           <el-select v-model="form.armyType" placeholder="请选择">
-              <el-option
+            <el-option
               v-for="item in armyTypeOptions"
               :label="item.value"
               :value="item.key"
@@ -237,7 +236,7 @@
       <el-col :span="8">
         <el-form-item label="军衔及日期" :span="5">
           <el-select v-model="form.armyRank" placeholder="请选择">
-              <el-option
+            <el-option
               v-for="item in armyRankOptions"
               :label="item.value"
               :value="item.key"
@@ -276,7 +275,7 @@
       </el-col>
     </el-row>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">立即创建</el-button>
+      <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
       <el-button>取消</el-button>
     </el-form-item>
   </el-form>
@@ -593,106 +592,43 @@ export default {
           value: "其他"
         }
       ],
-      value1: "",
-      value2: "",
-      input2: "",
-      departmentOptions: [
+      bloodOptions: [
         {
-          value: "1",
-          label: "连队1"
+          key: "1",
+          value: "A"
         },
         {
-          value: "2",
-          label: "连队2"
+          key: "2",
+          value: "B"
         },
         {
-          value: "3",
-          label: "连队3"
+          key: "3",
+          value: "AB"
         },
         {
-          value: "4",
-          label: "连队4"
+          key: "4",
+          value: "O"
+        },
+        {
+          key: "5",
+          value: "其他"
         }
       ],
-      propertyOptions: [
-        {
-          value: "1",
-          label: "内部车辆"
-        },
-        {
-          value: "2",
-          label: "外部车辆"
-        },
-        {
-          value: "3",
-          label: "临时车辆"
-        }
-      ],
-      inoutOptions: [
-        {
-          value: "1",
-          label: "内部车辆"
-        },
-        {
-          value: "2",
-          label: "外部车辆"
-        },
-        {
-          value: "3",
-          label: "临时车辆"
-        }
-      ],
-      propertyValue: "", //车辆属性1-内部 2-外部 3-临时
-      departmentValue: "", //单位
-      carOfDept: "", //车辆单位
-      carType1: "", //type1
-      carType2: "", //
-      inoutValue: "", //出入库状态
-      brandValue: "", //品牌
-      brandOptions: [
-        {
-          value: "1",
-          label: "丰田"
-        },
-        {
-          value: "2",
-          label: "大众"
-        },
-        {
-          value: "3",
-          label: "本田"
-        }
-      ],
-      modelValue: "", //型号
-      modelOptions: [
-        {
-          value: "1",
-          label: "途观"
-        },
-        {
-          value: "2",
-          label: "帕萨特"
-        },
-        {
-          value: "3",
-          label: "捷达"
-        }
-      ],
-      colorValue: "", //颜色
-      colorOptions: [
-        {
-          value: "1",
-          label: "红色"
-        },
-        {
-          value: "2",
-          label: "白色"
-        },
-        {
-          value: "3",
-          label: "绿色"
-        }
-      ],
+      rules: {
+        name: [
+          { required: true, message: "请输入姓名", trigger: "blur" },
+          { min: 2, max: 4, message: "长度在 2 到 4 个字符", trigger: "blur" }
+        ],
+        gender: [{ required: true, message: "请选择性别", trigger: "change" }],
+        joinArmyDate: [
+          {
+            type: "date",
+            required: true,
+            message: "请选择日期",
+            trigger: "change"
+          }
+        ]
+      },
       VehicleNo: "", //行驶证号
       driverNo: "", //驾驶证号
       carSeat: 5, //座位数
@@ -786,9 +722,23 @@ export default {
     handleBack() {
       history.go(-1);
     },
-    onSubmit() {},
-    handleClick() {},
-
+    onSubmit() {
+      console.log(this.$utils);
+      this.$utils.isEmpty(form.name);
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          history.go(-1);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
     getData() {
       this.postAxios("sysConfig/BasedataList")
         .then(res => {
