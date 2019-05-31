@@ -61,7 +61,7 @@
           </div>
           <div class="body">
             <el-table
-              :data="carList"
+              :data="tableData"
               style="width: 100%"
               :default-sort="{prop: 'license', order: 'descending'}"
             >
@@ -71,12 +71,12 @@
                   {{ scope.row.license }}
                 </template>
               </el-table-column>
-              <el-table-column prop="carType" label="车辆类型" sortable width="180" formatter=""></el-table-column>
+              <el-table-column prop="carType" label="车辆类型" sortable width="180" ></el-table-column>
               <el-table-column prop="deptName" label="所属部门" sortable></el-table-column>
-              <el-table-column prop="brand" label="车辆品牌" sortable formatter=""></el-table-column>
-              <el-table-column prop="model" label="型号" sortable formatter=""></el-table-column>
-              <el-table-column prop="useStatus" label="技术状态" sortable formatter=""></el-table-column>
-              <el-table-column prop="inOrOut" label="出入状态" sortable formatter=""></el-table-column>
+              <el-table-column prop="brand" label="车辆品牌" sortable ></el-table-column>
+              <el-table-column prop="model" label="型号" sortable ></el-table-column>
+              <el-table-column prop="useStatus" label="技术状态" sortable ></el-table-column>
+              <el-table-column prop="inOrOut" label="出入状态" sortable ></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -343,10 +343,16 @@ export default {
     };
   },
   methods: {
-    formatter(row, column) {
-      return row.address;
-    },
+    // formatter(row, column) {
+    //   return row.address;
+    // },
     handleEdit(index, row) {
+      this.$router.push({
+        path : '/addcar',
+          query : {
+            "row" : row
+          }
+      })
       console.log(index, row);
     },
     handleDelete(index, row) {
