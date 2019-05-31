@@ -288,7 +288,7 @@
       </el-col>
     </el-row>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">立即创建</el-button>
+      <el-button type="primary"  @click="submitForm('form')">立即创建</el-button>
       <el-button  @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
@@ -928,7 +928,32 @@ export default {
   methods: {
     cancel(){ history.go(-1);},
     form() {},
-    onSubmit() {},
+    onSubmit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          var nameFlag= this.$utils.isEmpty(this.form.name);
+      var codeFlag= this.$utils.isEmpty(this.form.gender);
+      if(nameFlag || codeFlag){
+        alert("请先输入部门名称和性别");
+        return false;
+      }else{
+        this.form.personType=5;
+        this.postAxios("DataCenter/SaveStaff", {staff:this.form})
+        .then(res => {
+          console.log(res);
+          alert("保存成功");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      }
+          history.go(-1);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
     formatter(row, column) {
       return row.address;
     },

@@ -35,10 +35,10 @@
             >
               <el-table-column prop="name" label="姓名"></el-table-column>
               <el-table-column prop="gender" label="性别"></el-table-column>
-              <el-table-column prop="dept" label="部门"></el-table-column>
-              <el-table-column prop="job" label="职位"></el-table-column>
+              <el-table-column prop="deptName" label="部门"></el-table-column>
+              <el-table-column prop="buzhibie" label="职位"></el-table-column>
               <el-table-column prop="tel" label="联系电话"></el-table-column>
-              <el-table-column prop="type" label="人员类型"></el-table-column>
+              <el-table-column prop="personType" label="人员类型"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -177,7 +177,7 @@
                   <el-button
                     size="mini"
                     type="danger"
-                    @click="handleEdit(scope.$index, scope.row)"
+                    @click="handleDelete(scope.$index, scope.row)"
                   >删除</el-button>
                 </template>
               </el-table-column>
@@ -281,7 +281,7 @@ export default {
       return row.address;
     },
     handleEdit(index, row) {
-      console.log(index, row);
+      this.$router.push({path:'/addpeople',query:{id:row.tid}});
     },
     handleDelete(index, row) {
       console.log(index, row);

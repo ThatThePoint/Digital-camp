@@ -629,35 +629,6 @@ export default {
           }
         ]
       },
-      VehicleNo: "", //行驶证号
-      driverNo: "", //驾驶证号
-      carSeat: 5, //座位数
-      seatOptions: [
-        {
-          label: "1",
-          value: "1"
-        },
-        {
-          label: "2",
-          value: "2"
-        },
-        {
-          label: "3",
-          value: "3"
-        }
-      ],
-      carLoad: "", //车辆载重
-      frameNo: "", //车架号
-      engineNo: "", //发动机号
-      carType1: "", //
-      carType2: "", //
-      carRight: "", //
-      date1: "",
-      date2: "",
-      bumen: "",
-      hah1: "",
-      jhh: "",
-      hahhsd: "",
       rightOptions: [
         {
           value: "1",
@@ -672,40 +643,6 @@ export default {
           label: "最低权限"
         }
       ],
-      tableData: [
-        {
-          license: "冀A1231312",
-          property: "内部车辆",
-          department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
-        },
-        {
-          license: "冀A1231312",
-          property: "内部车辆",
-          department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
-        },
-        {
-          license: "冀A1231312",
-          property: "内部车辆",
-          department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
-        },
-        {
-          license: "冀A1231312",
-          property: "内部车辆",
-          department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
-        }
-      ]
     };
   },
   methods: {
@@ -730,6 +667,22 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
+          var nameFlag= this.$utils.isEmpty(this.form.name);
+      var codeFlag= this.$utils.isEmpty(this.form.gender);
+      if(nameFlag || codeFlag){
+        alert("请先输入部门名称和性别");
+        return false;
+      }else{
+        this.form.personType=2;
+        this.postAxios("DataCenter/SaveStaff", {staff:this.form})
+        .then(res => {
+          console.log(res);
+          alert("保存成功");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      }
           history.go(-1);
         } else {
           console.log("error submit!!");
@@ -739,16 +692,6 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
-    },
-    getData() {
-      this.postAxios("sysConfig/BasedataList")
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
-          this.$message("数据获取错误");
-        });
     }
   }
 };

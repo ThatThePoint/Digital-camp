@@ -16,7 +16,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="出生日期">
-          <el-date-picker class="input-width" v-model="birthday" type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker class="input-width" v-model="form.birthday" type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
@@ -71,9 +71,13 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="部职别">
-          <el-select v-model="form.buzhibie" placeholder="请选择部门">
-            <el-option label="通讯科" value="1"></el-option>
-            <el-option label="参谋部" value="2"></el-option>
+          <el-select v-model="form.deptId" placeholder="请选择部门">
+             <el-option
+              v-for="item in deptOptions"
+              :label="item.name"
+              :value="item.tid"
+              :key="item.tid"
+            ></el-option>
           </el-select>
           <el-input v-model="form.buzhibie"></el-input>
         </el-form-item>
@@ -334,6 +338,7 @@ export default {
         // shiguanChangeDate: "",
         // jobPostion: ""
       },
+      deptOptions:[],
       politicsTypeOptions: [
         {
           key: 1,
@@ -760,19 +765,33 @@ export default {
     handleBack() {
       history.go(-1);
     },
-    onSubmit() {},
-    handleClick() {},
-
-    getData() {
-      this.postAxios("sysConfig/BasedataList")
+    onSubmit() {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          var nameFlag= this.$utils.isEmpty(this.form.name);
+      var codeFlag= this.$utils.isEmpty(this.form.gender);
+      if(nameFlag || codeFlag){
+        alert("请先输入部门名称和性别");
+        return false;
+      }else{
+        this.form.personType=3;
+        this.postAxios("DataCenter/SaveStaff", {staff:this.form})
         .then(res => {
           console.log(res);
+          alert("保存成功");
         })
         .catch(err => {
           console.log(err);
-          this.$message("数据获取错误");
         });
-    }
+      }
+          history.go(-1);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    handleClick() {}
   }
 };
 </script>
