@@ -1,11 +1,11 @@
 <template>
-    <div class="tags">
+    <div class="tags" v-if="showTags">
         <ul>
-            <li class="tags-li" :class="{'active': isActive(tagsList[0].path)}" >
-                <router-link :to="tagsList[0].path" class="tags-li-title">
-                    {{tagsList[0].title}}
+            <li class="tags-li" v-for="(item,index) in tagsList" :class="{'active': isActive(item.path)}" :key="index">
+                <router-link :to="item.path" class="tags-li-title">
+                    {{item.title}}
                 </router-link>
-                <span class="tags-li-icon" @click="closeTags(tagsList[0])"><i class="el-icon-close"></i></span>
+                <span class="tags-li-icon" @click="closeTags(index)"><i class="el-icon-close"></i></span>
             </li>
         </ul>
         <div class="tags-close-box">
@@ -35,9 +35,11 @@
                 return path === this.$route.fullPath;
             },
             // 关闭单个标签
-            closeTags(item) {
+            closeTags(index) {
+                const delItem = this.tagsList.splice(index, 1)[0];
+                const item = this.tagsList[index] ? this.tagsList[index] : this.tagsList[index - 1];
                 if (item) {
-                    this.$router.push(item.path);
+                    delItem.path === this.$route.fullPath && this.$router.push(item.path);
                 }else{
                     this.$router.push('/');
                 }
@@ -74,6 +76,11 @@
             },
             handleTags(command){
                 command === 'other' ? this.closeOther() : this.closeAll();
+            }
+        },
+        computed: {
+            showTags() {
+                return this.tagsList.length > 0;
             }
         },
         watch:{

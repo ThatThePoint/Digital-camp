@@ -6,7 +6,26 @@
       </el-breadcrumb>
     </div>
     <div class="messages">
-      <el-button type="success" @click="addPeople" class="right">新增角色</el-button>
+      <el-button type="success" @click="dialogVisible = true" class="right">新增角色</el-button>
+      <el-dialog
+        title="新增角色"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose">
+        <div class="role">
+          <span>角色编码：</span>
+          <input type="text" class="wenben" v-model="rolenum"/>
+        </div>
+        <div class="role">
+          <span>角色名称：</span>
+          <input type="text" class="wenben" v-model="rolename"/>
+        </div>
+        
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
     <div class="container">
       <div class="body">
@@ -35,6 +54,9 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      rolenum:"",//角色编码
+      rolename:"",//角色名称
+      dialogVisible: false,//新增角色弹框
       outerVisible: false,
       value1: "",
       value2: "",
@@ -152,6 +174,14 @@ export default {
     };
   },
   methods: {
+    //新增角色
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
     formatter(row, column) {
       return row.address;
     },
@@ -177,5 +207,11 @@ export default {
 }
 .staffStatu {
   margin: 0 20px;
+}
+.wenben{
+  margin-left: 20px;
+}
+.role{
+  margin-bottom: 10px;
 }
 </style>
