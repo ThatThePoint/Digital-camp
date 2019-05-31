@@ -47,7 +47,7 @@
             <div class="itemDet">
               维护类型：
               <div></div>
-              <el-form-item prop="type" style="display:inline-block; width:120px;">
+              <el-form-item prop="type" style="display:inline-block; width:200px;">
                 <el-select style="width:200px;" v-model="ruleForm.type" placeholder="请选择">
                   <el-option
                     v-for="item in inoutOptions"
@@ -75,7 +75,7 @@
         </div>
       </div>
       <div class="flex-center submit">
-        <el-button type="danger">取消</el-button>
+        <el-button type="danger" @click="cancel">取消</el-button>
         <el-button type="success" style="margin-left:40px;" @click="submitForm('ruleForm')">保存</el-button>
       </div>
     </div>
