@@ -75,7 +75,7 @@
           <div>维修保养信息：</div>
           <div class="itemDet">
             维护类型：
-            <el-select class="input-width" v-model="propertyValue" placeholder="请选择">
+            <el-select class="input-width" v-model="property" placeholder="请选择">
               <el-option
                 v-for="item in inoutOptions"
                 :key="item.value"
@@ -83,19 +83,19 @@
                 :value="item.value"
               ></el-option>
             </el-select>
-            <el-input class="input-width" placeholder="经办人" v-model="input2"></el-input>
+            <el-input class="input-width" placeholder="经办人" v-model="carUser"></el-input>
             
           </div>
           <div class="itemDet">
             维修日期：
-            <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>备注：
+            <el-date-picker class="input-width" v-model="inout" type="date" placeholder="选择日期"></el-date-picker>备注：
             <el-input type="textarea" class="wenben"></el-input>
           </div>
         </div>
       </div>
       <div class="flex-center submit ">
-        <el-button type="danger">取消</el-button>
-        <el-button type="success" style="margin-left:40px;">保存</el-button>
+        <el-button type="danger" @click="cancel">取消</el-button>
+        <el-button type="success" style="margin-left:40px;" @click="savedata">保存</el-button>
       </div>
     </div>
   </div>
@@ -105,6 +105,9 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      carUser:"",//经办人
+      inout:"",//维修日期
+      property:"",
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -222,7 +225,26 @@ export default {
       ]
     };
   },
+  created(){
+    console.log("!111111",this.$route.query.row)
+    if(this.$route.query.row){
+      this.carUser = this.$route.query.row.carUser
+      this.property = this.$route.query.row.property
+      this.inout = this.$route.query.row.inout
+    }
+
+  },
   methods: {
+    //保存
+    savedata(){
+      this.$destroy('AddCare')
+       this.$router.push({path: '/CarCare'})
+    },
+    //取消
+    cancel(){
+      this.$destroy('AddCare')
+      this.$router.push({path: '/CarCare'})
+    },
     formatter(row, column) {
       return row.address;
     },

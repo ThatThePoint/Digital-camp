@@ -68,7 +68,7 @@
           <el-table-column prop="carUser" label="备注" sortable></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
+              <el-button size="mini" @click="handleEditcar(scope.$index, scope.row)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -77,6 +77,7 @@
   </div>
 </template>
 <script>
+import {mapState,mapMutations,mapActions,mapGetters} from 'vuex'
 export default {
   name: "documentManagement",
   data() {
@@ -146,6 +147,7 @@ export default {
         }
       ],
       careTypeValue:"",//保养类型
+      inoutOptions:"",//先随便写个空，一直报错
       careType: [
         {
           value: "1",
@@ -203,13 +205,22 @@ export default {
     formatter(row, column) {
       return row.address;
     },
-    handleEdit(index, row) {
+    //详情
+    // ...mapMutations(['handleEditcar']),
+    handleEditcar(index, row) {
       console.log(index, row);
+      this.$router.push({
+        path : '/addcare',
+        query : {
+          "row" : row
+        }
+      })
     },
     handleDelete(index, row) {
       console.log(index, row);
     },
-          addCare(){
+    //新增
+    addCare(){
       this.$router.push({path: '/addcare'})
       // router.push({ path: '/addcar' })
     }
