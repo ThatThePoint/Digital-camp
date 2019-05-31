@@ -86,6 +86,9 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      carUser:"",//经办人
+      inout:"",//维修日期
+      property:"",
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -229,7 +232,26 @@ export default {
       ]
     };
   },
+  created(){
+    console.log("!111111",this.$route.query.row)
+    if(this.$route.query.row){
+      this.carUser = this.$route.query.row.carUser
+      this.property = this.$route.query.row.property
+      this.inout = this.$route.query.row.inout
+    }
+
+  },
   methods: {
+    //保存
+    savedata(){
+      this.$destroy('AddCare')
+       this.$router.push({path: '/CarCare'})
+    },
+    //取消
+    cancel(){
+      this.$destroy('AddCare')
+      this.$router.push({path: '/CarCare'})
+    },
     formatter(row, column) {
       return row.address;
     },
