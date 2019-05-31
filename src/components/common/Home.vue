@@ -23,7 +23,7 @@
     export default {
         data(){
             return {
-                tagsList: [],
+                tagsList: '',
                 collapse: false
             }
         },
@@ -43,6 +43,7 @@
                 }
                 this.tagsList = arr;
             })
-        }
+        },
+    
     }
 </script>

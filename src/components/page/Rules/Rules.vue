@@ -178,7 +178,8 @@ export default {
     onSubmit() {
       console.log("submit!");
     }
-  }
+  },
+  
 };
 </script>
 <style scoped>

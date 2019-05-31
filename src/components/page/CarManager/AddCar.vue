@@ -76,10 +76,15 @@
                 <el-select class="input-width" v-model="carInfo.load" placeholder="请选择">
                   <el-option v-for="item in seatOptions" :key="item.value" :value="item.value"></el-option>
                 </el-select>车架号：
-                <el-input class="input-width" placeholder="请输入" v-model="carInfo.frameCode"></el-input>发动机号：
-                <el-input class="input-width" placeholder="请输入" v-model="carInfo.motorCode"></el-input>
+                <el-input class="input-width" placeholder="请输入" v-model="carInfo.frameCode"></el-input>
+                发动机号：<el-input class="input-width" placeholder="请输入" v-model="carInfo.motorCode"></el-input></br>
+                手机号：<el-input class="input-width" placeholder="请输入" v-model="carInfotel"></el-input>
+                车牌号：<el-input class="input-width" placeholder="请输入" v-model="carInfonum"></el-input>
               </div>
             </div>
+
+
+
             <div class="two">
               <p>内部车辆附加：</p>
               <div class="itemDet">
@@ -148,6 +153,57 @@
               </div>
             </div>
           </div>
+            <div class="one three">
+              <p>车辆基本信息：</p>
+              <div class="itemDet">
+                车辆品牌：
+                <el-select class="input-width" v-model="carInfo.brand" placeholder="请选择">
+                  <el-option
+                    v-for="item in brandOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>车辆型号：
+                <el-select class="input-width" v-model="carInfo.model" placeholder="请选择">
+                  <el-option
+                    v-for="item in modelOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+                <span class="color">颜色：</span>
+                <el-select class="input-width" v-model="carInfo.color" placeholder="请选择">
+                  <el-option
+                    v-for="item in colorOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>行驶证号：
+                <el-input class="input-width" placeholder="车牌号" v-model="carInfo.LicensePlate"></el-input>
+                <el-button size="small" type="success">照片上传</el-button>
+              </div>
+              <div class="itemDet">
+                车辆座位：
+                <el-select class="input-width" v-model="carInfo.loadNumber" placeholder="请选择">
+                  <el-option
+                    v-for="item in seatOptions"
+                    :key="item.value"
+                    :label="item.value"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>车辆载重：
+                <el-select class="input-width" v-model="carInfo.load" placeholder="请选择">
+                  <el-option v-for="item in seatOptions" :key="item.value" :value="item.value"></el-option>
+                </el-select>车架号：
+                <el-input class="input-width" placeholder="请输入" v-model="carInfo.frameCode"></el-input>发动机号：
+                <el-input class="input-width" placeholder="请输入" v-model="carInfo.motorCode"></el-input>
+              </div>
+            </div>
+
+
           <div class="one">
             <p>外部车辆附加：</p>
             <div class="itemDet">
@@ -193,7 +249,7 @@
       </el-tabs>
       <div class="flex-center itemDet" style="margin-top:20px;">
         <el-button class="editor-btn" type="danger" @click="handleBack">取消</el-button>
-        <el-button class="editor-btn" type="success" style="margin-left:40px;">确定</el-button>
+        <el-button class="editor-btn" type="success" style="margin-left:40px;" @click="confirms">确定</el-button>
       </div>
     </div>
   </div>
@@ -203,6 +259,12 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      carInfotel:"",//手机号
+      carInfonum:"",//车牌号
+      inoutOptions:"",
+      value1:"",
+      value2:"",
+      propertyOptions:"",
       activeName: "first",
       pickerOptions: {
         disabledDate(time) {
@@ -427,7 +489,18 @@ export default {
       }
     };
   },
+  created(){
+    if(this.$route.query.row){
+      console.log(this.$route.query.row)
+      this.carInfotel = this.$route.query.row.tel
+      this.carInfonum = this.$route.query.row.license
+    }
+    
+  },
   methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
     formatter(row, column) {
       return row.address;
     },
@@ -438,6 +511,11 @@ export default {
       console.log(index, row);
     },
     handleBack() {
+      this.$destroy()
+      history.go(-1);
+    },
+    confirms(){
+      this.$destroy()
       history.go(-1);
     }
   }
