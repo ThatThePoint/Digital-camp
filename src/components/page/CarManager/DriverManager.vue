@@ -32,7 +32,6 @@
           v-model="input2"
         ></el-input>
         <el-button>搜索</el-button>
-        <el-button type="success"  @click="addCare()" class="right">新增</el-button>
       </div>
       <div class="body">
         <el-table
@@ -53,7 +52,6 @@
           </el-table-column>
         </el-table>
       </div>
-      <el-pagination background layout="prev, pager, next" :total="70"></el-pagination>
     </div>
   </div>
 </template>

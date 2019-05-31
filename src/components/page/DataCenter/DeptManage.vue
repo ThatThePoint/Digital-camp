@@ -37,10 +37,10 @@
                   ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="部门名称" :label-width="formLabelWidth">
+            <el-form-item label="部门名称" :label-width="formLabelWidth" required>
               <el-input class="input-width" placeholder="请输入" v-model="deptInfo.name" type="textarea"></el-input>
             </el-form-item>
-            <el-form-item label="部门编码" :label-width="formLabelWidth">
+            <el-form-item label="部门编码" :label-width="formLabelWidth" required>
               <el-input class="input-width" placeholder="请输入" v-model="deptInfo.code" type="textarea"></el-input>
             </el-form-item>
           </el-form>

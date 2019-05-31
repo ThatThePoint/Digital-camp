@@ -286,7 +286,7 @@
     </el-row>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">立即创建</el-button>
-      <el-button>取消</el-button>
+      <el-button @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -747,6 +747,7 @@ export default {
     };
   },
   methods: {
+    cancel(){ history.go(-1);},
     formatter(row, column) {
       return row.address;
     },

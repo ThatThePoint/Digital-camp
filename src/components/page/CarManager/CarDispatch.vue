@@ -78,7 +78,6 @@
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
               </el-form-item>
-              <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
             </el-form>
           </div>
           <div class="body">
@@ -165,7 +164,6 @@
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
               </el-form-item>
-              <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
             </el-form>
           </div>
           <div class="body">
@@ -252,7 +250,6 @@
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
               </el-form-item>
-              <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
             </el-form>
           </div>
           <div class="body">
@@ -339,7 +336,6 @@
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
               </el-form-item>
-              <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
             </el-form>
           </div>
           <div class="body">
@@ -426,7 +422,6 @@
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
               </el-form-item>
-              <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
             </el-form>
           </div>
           <div class="body">
@@ -513,7 +508,6 @@
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
               </el-form-item>
-              <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
             </el-form>
           </div>
           <div class="body">
