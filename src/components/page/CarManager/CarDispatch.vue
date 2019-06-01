@@ -57,7 +57,6 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="车辆调度" name="second">
-          车辆调度
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
@@ -100,40 +99,139 @@
                 </template>
               </el-table-column>
             </el-table>
-            <el-dialog title="用车信息" :visible.sync="dialogFormVisible">
-              <el-form :model="form">
-                <div class="flex"></div>
-                <el-form-item label="申请车辆" :label-width="formLabelWidth">
-                  <el-select v-model="formInline.region" placeholder="申请类型">
-                    <el-option label="冀JHSKDLL" value="shanghai"></el-option>
-                    <el-option label="冀JHSKDLL" value="beijing"></el-option>
-                  </el-select>
-                  <el-select
-                    v-model="formInline.region"
-                    placeholder="申请类型"
-                    style="margin-left:10px;"
-                  >
-                    <el-option label="外出" value="shanghai"></el-option>
-                    <el-option label="因私" value="beijing"></el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="日期筛选" :label-width="formLabelWidth">
-                  <el-date-picker
-                    class="input-width"
-                    v-model="value1"
-                    type="date"
-                    placeholder="选择日期"
-                  ></el-date-picker>--
-                  <el-date-picker
-                    class="input-width"
-                    v-model="value2"
-                    type="date"
-                    placeholder="选择日期"
-                  ></el-date-picker>
-                </el-form-item>
-                <el-form-item label="申请描述" :label-width="formLabelWidth">
-                  <el-input class="input-width" placeholder v-model="input2" type="textarea"></el-input>
-                </el-form-item>
+            <el-dialog title="调度信息" :visible.sync="secondFormVisible">
+              <el-form :model="form" ref="form" label-width="100px">
+                <div class="second-title">申请信息</div>
+                <el-row>
+                  <el-col :span="6">
+                    <el-form-item label="申请单号">
+                      <el-input v-model="form.danhao"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="6">
+                    <el-form-item label="用车人">
+                      <el-input v-model="form.yongcheren"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="6">
+                    <el-form-item label="用车部门">
+                      <el-input v-model="form.yongchebumen"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="8">
+                    <el-form-item label="用车开始时间">
+                      <el-date-picker
+                        type="datetime"
+                        placeholder="选择日期"
+                        v-model="form.startTime"
+                        style="width: 100%;"
+                      ></el-date-picker>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-form-item label="用车结束时间">
+                      <el-date-picker
+                        type="datetime"
+                        placeholder="选择日期"
+                        v-model="form.endTime"
+                        style="width: 100%;"
+                      ></el-date-picker>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="6">
+                    <el-form-item label="用车风险">
+                      <el-select v-model="form.region" placeholder="请选择">
+                        <el-option label="一般" value="1"></el-option>
+                        <el-option label="危险" value="2"></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="8">
+                    <el-form-item label="路线目的地">
+                      <el-input v-model="form.danhao"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="申请事由">
+                      <el-input type="texarea" v-model="form.danhao"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="6">
+                    <el-form-item label="随车负责人">
+                      <el-input v-model="form.danhao"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="6">
+                    <el-form-item label="申请人">
+                      <el-input v-model="form.danhao"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-form-item label="申请时间">
+                      <el-date-picker
+                        type="datetime"
+                        placeholder="选择日期"
+                        v-model="form.shenqingtime"
+                        style="width: 100%;"
+                      ></el-date-picker>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <div class="second-title">调度信息</div>
+                <el-row>
+                  <el-col :span="6">
+                    <el-form-item label="调度结果">
+                      <el-input v-model="form.danhao"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="6">
+                    <el-form-item label="调度人">
+                      <el-input v-model="form.danhao"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-form-item label="调度时间">
+                      <el-date-picker
+                        type="datetime"
+                        placeholder="选择日期"
+                        v-model="form.shenqingtime"
+                        style="width: 100%;"
+                      ></el-date-picker>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="6">
+                    <el-form-item label="车牌号">
+                      <el-input v-model="form.danhao"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="6">
+                    <el-form-item label="司机">
+                      <el-input v-model="form.danhao"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="6">
+                    <el-form-item label="联系电话">
+                      <el-input v-model="form.danhao"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="备注">
+                      <el-input type="texarea" v-model="form.beizhu"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
               </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -683,6 +781,7 @@ export default {
         user: "",
         region: ""
       },
+      secondFormVisible: false,
       dialogTableVisible: false,
       dialogFormVisible: false,
       form: {
@@ -704,6 +803,7 @@ export default {
     },
     handleEdit(index, row) {
       console.log(index, row);
+      this.secondFormVisible = true;
     },
     handleDelete(index, row) {
       console.log(index, row);
@@ -738,6 +838,8 @@ export default {
   width: 180px;
   margin: 0 10px;
 }
-.messages {
+.second-title{
+  font-size: 20px;
+  font-weight: 600;
 }
 </style>

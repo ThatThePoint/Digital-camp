@@ -204,7 +204,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="毕业专业">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.gradProf"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
@@ -289,7 +289,7 @@
       </el-col>
     </el-row>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">立即创建</el-button>
+      <el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
       <el-button @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
@@ -751,6 +751,16 @@ export default {
       ],
     };
   },
+  created(){
+    this.postAxios("DataCenter/StaffInfo")
+        .then(res => {
+          console.log(res);
+          this.deptOptions=res.deptOptions;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+  },
   methods: {
     cancel(){ history.go(-1);},
     formatter(row, column) {
@@ -765,7 +775,7 @@ export default {
     handleBack() {
       history.go(-1);
     },
-    onSubmit() {
+    onSubmit(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           var nameFlag= this.$utils.isEmpty(this.form.name);

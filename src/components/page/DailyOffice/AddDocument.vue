@@ -51,7 +51,7 @@
       <quill-editor ref="myTextEditor" v-model="content" :options="editorOption"></quill-editor>
       <div class="flex-center"> 
         <el-button class="editor-btn" type="danger" @click="handleBack" >取消</el-button>
-        <el-button class="editor-btn" type="warn " style="margin-left:40px;">保存</el-button>
+        <el-button class="editor-btn"  type="warn " style="margin-left:40px;">保存</el-button>
         <el-button class="editor-btn" type="success" @click="submit" style="margin-left:40px;">提交</el-button> 
       </div>
      
@@ -256,8 +256,6 @@ export default {
       this.content = html;
     },
     submit() {
-      console.log(this.content);
-      debugger
       let data = {
         docReceiversName : this.postname,
         docReceiversId : this.perid,
@@ -265,7 +263,8 @@ export default {
         title : this.title,
         messageLevel : this.level,
         content : this.content
-      }
+      };
+      console.log(data);
       let flag;
       for( let i in data){
         if(data[i] == ''){
@@ -277,13 +276,12 @@ export default {
       if(flag == false){
         this.open3()
       }
-      this.$message.success("提交成功！");
       this.postAxios("/DailyOffice/Savedocument",{
           model:data
         })
         .then(res => {
           console.log(res);
-          alert("保存成功");
+          this.$message.success("提交成功！");
         })
         .catch(err => {
           console.log(err);
