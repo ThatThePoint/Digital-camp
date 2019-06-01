@@ -9,22 +9,19 @@
       <div class="body">
         <el-form :model="form" label-width="130px">
           <el-row>
-            <el-col :span="4">
-              <el-form-item label="操作人：">李云龙</el-form-item>
+            <el-col :span="6">
+              <el-form-item label="操作人">李云龙</el-form-item>
             </el-col>
-            <el-col :span="4">
-              <el-form-item label="部职别：">团长</el-form-item>
+            <el-col :span="6">
+              <el-form-item label="部职别">团长</el-form-item>
             </el-col>
           </el-row>
           <el-row>
-          <div class="person">
-            <span class="persons">请假人：</span>
-            <el-input type="text" 
-              class="input-widths" 
-              v-model="postname"           
-              @focus="focus"  >
-            </el-input>
-          </div>
+            <el-col :span="6">
+              <el-form-item label="请假人">
+                <el-input type="text" v-model="postname" @focus="focus"></el-input>
+              </el-form-item>
+            </el-col>
             <el-col :span="6">
               <el-form-item label="请假事由">
                 <el-select v-model="form.leave" placeholder="请选择">
@@ -39,39 +36,44 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="12" class="flex">
+            <el-col :span="6">
               <el-form-item label="开始时间">
                 <el-date-picker
                   v-model="starttime"
                   type="datetime"
                   placeholder="选择日期时间"
-                  default-time="12:00:00">
-                </el-date-picker>
+                  default-time="12:00:00"
+                ></el-date-picker>
               </el-form-item>
+            </el-col>
+            <el-col :span="6">
               <el-form-item label="结束时间">
                 <el-date-picker
                   v-model="endtime"
                   type="datetime"
                   placeholder="选择日期时间"
-                  default-time="12:00:00">
-                </el-date-picker>
+                  default-time="12:00:00"
+                ></el-date-picker>
               </el-form-item>
-             <el-form-item label="请假时长："></el-form-item>
-             <el-form-item :label="timenum"></el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="请假时长：">
+                {{timenum}}
+              </el-form-item>
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4">
+            <el-col :span="6">
               <el-form-item label="到达地点">
                 <el-input v-model="form.name"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="4">
+            <el-col :span="6">
               <el-form-item label="路途时间">
                 <el-input v-model="form.name"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="4">
+            <el-col :span="6">
               <el-form-item label="交通工具">
                 <el-input v-model="form.name"></el-input>
               </el-form-item>
@@ -92,24 +94,23 @@
             </el-col>
           </el-row>
         </el-form>
-        <div slot="footer" class="flex foot"  >
-          <el-button  style="margin-right:100px">取 消</el-button >
+        <div slot="footer" class="flex foot">
+          <el-button style="margin-right:100px">取 消</el-button>
           <el-button type="primary" @click="dialogFormVisible = false">申 请</el-button>
         </div>
       </div>
     </div>
 
-    <el-dialog
-      :visible.sync="dialogVisible"
-      width="50%"
-      :before-close="handleClose">
-      <span> <postemail  v-on:confirm="confirms"/></span>
+    <el-dialog :visible.sync="dialogVisible" width="50%" :before-close="handleClose">
+      <span>
+        <postemail v-on:confirm="confirms"/>
+      </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
-        <el-button type="primary" @click="confirm" >确 定</el-button>
+        <el-button type="primary" @click="confirm">确 定</el-button>
       </span>
     </el-dialog>
-    {{starttime}}{{endtime}}
+    <!-- {{starttime}}{{endtime}} -->
   </div>
 </template>
 <script>
@@ -118,11 +119,11 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      starttime:0,//请假开始时间
-      endtime:0,
-      postname:"",//请假人名字
-      dialogVisible: false,//控制穿梭框显示
-            leaveOptions: [
+      starttime: 0, //请假开始时间
+      endtime: 0,
+      postname: "", //请假人名字
+      dialogVisible: false, //控制穿梭框显示
+      leaveOptions: [
         {
           value: "出差",
           key: 1
@@ -223,33 +224,38 @@ export default {
   components: {
     postemail
   },
-  computed:{
-    timenum(){
-      return ((new Date(this.endtime).getTime() - new Date(this.starttime).getTime())/(1000*3600)).toFixed(2) + "小时"
+  computed: {
+    timenum() {
+      return (
+        (
+          (new Date(this.endtime).getTime() -
+            new Date(this.starttime).getTime()) /
+          (1000 * 3600)
+        ).toFixed(2) + "小时"
+      );
     }
   },
   methods: {
-    confirms(a){
-      this.postname = a
-      console.log(a)
+    confirms(a) {
+      this.postname = a;
+      console.log(a);
     },
     handleClose(done) {
-    this.$confirm('确认关闭？')
-      .then(_ => {
-        done();
-      })
-      .catch(_ => {});
+      this.$confirm("确认关闭？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
     },
-    focus(){
+    focus() {
       this.dialogVisible = true;
     },
-    cancel(){
+    cancel() {
       this.dialogVisible = false;
     },
-    confirm(info){
-      console.log(info)
+    confirm(info) {
+      console.log(info);
       this.dialogVisible = false;
-
     },
     formatter(row, column) {
       return row.address;
@@ -279,25 +285,26 @@ export default {
 .staffStatu {
   margin: 0 20px;
 }
-.foot{
+.foot {
   justify-content: center;
-  margin-top:100px; 
+  margin-top: 100px;
 }
 .input-widths {
   width: 350px;
 }
-.person{
+.person {
   padding-left: 52px;
   margin-bottom: 10px;
   text-align: left;
 }
-.persons{
+.persons {
   font-size: 14px;
   color: #606266;
 }
-.el-form-item__content::after, .el-form-item__content::before {
-    display: table;
-    content: "";
-    width: 50px !important;
+.el-form-item__content::after,
+.el-form-item__content::before {
+  display: table;
+  content: "";
+  width: 50px !important;
 }
 </style>
