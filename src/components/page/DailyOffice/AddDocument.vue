@@ -23,6 +23,17 @@
           <span>公文标题：</span>
           <el-input class="input-width" v-model="title"></el-input>
         </div>
+        <div class="container-header-left">    
+        <span>公文等级：</span>
+          <el-select class="input-width" v-model="level" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.code"
+              :label="item.name"
+              :value="item.code"
+            ></el-option>
+          </el-select>
+          </div>
         <el-upload
           class="upload"
           action="https://jsonplaceholder.typicode.com/posts/"
@@ -33,7 +44,7 @@
           :limit="3"
           :on-exceed="handleExceed"
           :file-list="fileList"
-        >
+        >     
           <el-button size="small" type="primary">点击上传</el-button>
         </el-upload>
       </div>
@@ -50,12 +61,15 @@
       :visible.sync="dialogVisible"
       width="50%"
       :before-close="handleClose">
-      <span> <postemail  v-on:confirm="confirms"/></span>
+      <span> <postemail  v-on:confirm="confirms" :parentlist="parentlist"/></span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
         <el-button type="primary" @click="confirm" >确 定</el-button>
       </span>
     </el-dialog>
+    <template>
+      <el-button :plain="true" @click="open3">警告</el-button>
+    </template>
   </div>
 </template>
 
@@ -70,6 +84,10 @@ export default {
   name: "editor",
   data: function() {
     return {
+      perid:"",//接受父组件传过来的id
+      parentlist:[],//传给穿梭框的树表数据
+      level: "",//传给后台公文等级
+      options:"",//后台返回公文等级
       postname:"",//收件人
       dialogVisible: false,
       title:"",
@@ -162,19 +180,54 @@ export default {
      
 
   },
+
   created(){
+    let _this = this
+    this.postAxios("/DailyOffice/GetDocument",{
+        // tid:tid
+      })
+      .then(res => {
+        console.log(res);
+        this.options=res.options;
+        _this.parentlist = _this.getTree(res.fromData)
+        console.log("111111",arr,this,_this.parentlist)
+      })
+      .catch(err => {
+        console.log(err);
+    });
     var ff= this.$route.query.id;
-    if(ff!=null){
-      this.content="hhhhhhsdhfashdf";
-      this.title="欢迎欢迎";
-      this.postname="老张";
-    }else{
-      this.content="";
-      this.title="";
-      this.postname="";
-    }
   },
   methods: {
+    getTree(data){
+    let map = {};
+    let val = [];
+    //生成数据对象集合
+    data.forEach(it=>{
+      delete it.children;
+      map[it.id] = it;
+    })
+    //生成结果集
+    data.forEach(it=>{
+        const parent = map[it.pid];
+        if(parent){
+            if(!Array.isArray(parent.children)) parent.children = [];
+            parent.children.push(it);
+        }else{
+            val.push(it);
+        }
+    })
+    return val;
+  },
+    open3() {
+      this.$message({
+        message: '您有必填项未填',
+        type: 'warning'
+      });
+    },
+    //获取收件人
+    getPoster(){
+
+    },
     cancel(){
       this.dialogVisible = false;
     },
@@ -184,8 +237,10 @@ export default {
 
     },
     confirms(a){
-      this.postname = a
-      console.log(a)
+      debugger
+      this.postname = a[0]
+      this.perid = a[1]
+  
     },
     focus(){
       this.dialogVisible = true;
@@ -202,7 +257,37 @@ export default {
     },
     submit() {
       console.log(this.content);
+      debugger
+      let data = {
+        docReceiversName : this.postname,
+        docReceiversId : this.perid,
+
+        title : this.title,
+        messageLevel : this.level,
+        content : this.content
+      }
+      let flag;
+      for( let i in data){
+        if(data[i] == ''){
+          flag = false
+        }else{
+          flag = true
+        }
+      }
+      if(flag == false){
+        this.open3()
+      }
       this.$message.success("提交成功！");
+      this.postAxios("/DailyOffice/Savedocument",{
+          model:data
+        })
+        .then(res => {
+          console.log(res);
+          alert("保存成功");
+        })
+        .catch(err => {
+          console.log(err);
+      });
     },
     remoteMethod(query) {
       if (query !== "") {
@@ -265,7 +350,6 @@ export default {
 .container{
   .container-header{
     .el-select.el-select--small{
-      margin-left: 15px;
       width: 700px;
       margin-bottom: 5px;
     }
