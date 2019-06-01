@@ -927,7 +927,6 @@ export default {
   },
   methods: {
     cancel(){ history.go(-1);},
-    form() {},
     onSubmit(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
