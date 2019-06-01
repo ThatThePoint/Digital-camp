@@ -59,6 +59,14 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="部职别">
+          <el-select v-model="form.deptId" placeholder="请选择部门">
+             <el-option
+              v-for="item in deptOptions"
+              :label="item.name"
+              :value="item.tid"
+              :key="item.tid"
+            ></el-option>
+          </el-select>
           <el-input v-model="form.buzhibie"></el-input>
         </el-form-item>
       </el-col>
@@ -327,6 +335,7 @@ export default {
         // shiguanChangeDate: "",
         // jobPostion: ""
       },
+      deptOptions:[],
       politicsTypeOptions: [
         {
           key: 1,
