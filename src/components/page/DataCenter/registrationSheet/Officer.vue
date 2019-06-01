@@ -70,10 +70,12 @@
       <el-col :span="6">
         <el-form-item label="政治面貌">
           <el-select v-model="form.politicsType" placeholder="请选择">
-            <el-option label="团员" value="shaasanghai"></el-option>
-            <el-option label="党员" value="beisdjing"></el-option>
-            <el-option label="群众" value="shaasanghai"></el-option>
-            <el-option label="预备党员" value="beisdjing"></el-option>
+            <el-option
+              v-for="item in politicsTypeOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -86,12 +88,14 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="婚姻状况">
-          <el-option
-            v-for="item in marryOptions"
-            :label="item.value"
-            :value="item.key"
-            :key="item.key"
-          ></el-option>
+          <el-select v-model="form.marry" placeholder="请选择">
+            <el-option
+              v-for="item in marryOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
+          </el-select>
         </el-form-item>
       </el-col>
     </el-row>
@@ -116,9 +120,13 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="部职别">
-          <el-select v-model="form.buzhibie" placeholder="请选择部门">
-            <el-option label="通讯科" value="1"></el-option>
-            <el-option label="参谋部" value="2"></el-option>
+          <el-select v-model="form.deptId" placeholder="请选择部门">
+             <el-option
+              v-for="item in deptOptions"
+              :label="item.name"
+              :value="item.tid"
+              :key="item.tid"
+            ></el-option>
           </el-select>
           <el-input v-model="form.buzhibie"></el-input>
         </el-form-item>
@@ -271,7 +279,7 @@
     </el-row>
     <el-form-item>
       <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
-      <el-button  @click="cancel">取消</el-button>
+      <el-button @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -313,6 +321,7 @@ export default {
         // shiguanChangeDate: "",
         // jobPostion: ""
       },
+      deptOptions:[],
       politicsTypeOptions: [
         {
           key: 1,
@@ -550,26 +559,28 @@ export default {
     };
   },
   methods: {
-    cancel(){ history.go(-1);},
+    cancel() {
+      history.go(-1);
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          var nameFlag= this.$utils.isEmpty(this.form.name);
-      var codeFlag= this.$utils.isEmpty(this.form.gender);
-      if(nameFlag || codeFlag){
-        alert("请先输入部门名称和性别");
-        return false;
-      }else{
-        this.form.personType=1;
-        this.postAxios("DataCenter/SaveStaff", {staff:this.form})
-        .then(res => {
-          console.log(res);
-          alert("保存成功");
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      }
+          var nameFlag = this.$utils.isEmpty(this.form.name);
+          var codeFlag = this.$utils.isEmpty(this.form.gender);
+          if (nameFlag || codeFlag) {
+            alert("请先输入部门名称和性别");
+            return false;
+          } else {
+            this.form.personType = 1;
+            this.postAxios("DataCenter/SaveStaff", { staff: this.form })
+              .then(res => {
+                console.log(res);
+                alert("保存成功");
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
           history.go(-1);
         } else {
           console.log("error submit!!");
@@ -578,7 +589,7 @@ export default {
       });
     },
     handleClick() {}
-  },
+  }
 };
 </script>
 <style lang="sass" scoped>
