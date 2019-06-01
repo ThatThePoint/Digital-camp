@@ -51,7 +51,7 @@
       <quill-editor ref="myTextEditor" v-model="content" :options="editorOption"></quill-editor>
       <div class="flex-center"> 
         <el-button class="editor-btn" type="danger" @click="handleBack" >取消</el-button>
-        <el-button class="editor-btn"  type="warn " style="margin-left:40px;">保存</el-button>
+        <el-button class="editor-btn" type="warn " style="margin-left:40px;">保存</el-button>
         <el-button class="editor-btn" type="success" @click="submit" style="margin-left:40px;">提交</el-button> 
       </div>
      
