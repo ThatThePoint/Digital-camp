@@ -26,7 +26,8 @@
                 :label="item.name"
                 :value="item.code"
               ></el-option>
-            </el-select>发送时间
+            </el-select>
+            发送时间
             <el-date-picker class="input-width" v-model="start" type="date" placeholder="选择日期"></el-date-picker>--
             <el-date-picker class="input-width" v-model="end" type="date" placeholder="选择日期"></el-date-picker>
             <el-button type="primary" @click="getdata">查询</el-button>
@@ -221,7 +222,6 @@ export default {
       this.postAxios("DailyOffice/DocumentList",params)
         .then(res => {
           console.log(res);
-          //Object.assign(this.detailList,res.detailList);
           this.options=res.levelOps;
         })
         .catch(err => {
@@ -233,7 +233,7 @@ export default {
 </script>
 <style scoped>
 .input-width {
-  width: 180px;
+  width: 150px;
   margin: 0 10px;
 }
 </style>

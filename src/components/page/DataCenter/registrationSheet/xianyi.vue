@@ -883,7 +883,7 @@ export default {
   },
   methods: {
     cancel(){ history.go(-1);},
-    onSubmit(formName) {
+    submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           var nameFlag= this.$utils.isEmpty(this.form.name);

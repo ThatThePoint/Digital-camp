@@ -70,21 +70,8 @@ export default {
     },
     handleBack() {
       history.go(-1);
-    },
-    getData() {
-      this.postAxios("sysConfig/BasedataList")
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
-          this.$message("数据获取错误");
-        });
     }
-  },
-  created() {
-    this.getData();
-  }
+    }
 };
 </script>
 <style scoped>

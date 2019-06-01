@@ -204,7 +204,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="毕业专业">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.gradProf"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
@@ -289,7 +289,7 @@
       </el-col>
     </el-row>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit('formName')">立即创建</el-button>
+      <el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
       <el-button @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
