@@ -99,7 +99,7 @@
                 </template>
               </el-table-column>
             </el-table>
-            <el-dialog title="调度信息" :visible.sync="secondFormVisible">
+            <el-dialog  :visible.sync="secondFormVisible">
               <el-form :model="form" ref="form" label-width="100px">
                 <div class="second-title">申请信息</div>
                 <el-row>
@@ -232,10 +232,40 @@
                     </el-form-item>
                   </el-col>
                 </el-row>
+                <div class="second-title">审批信息</div>
+                <el-row>
+                  <el-col :span="6">
+                    <el-form-item label="审批结果">
+                      <el-input v-model="form.danhao"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="6">
+                    <el-form-item label="审批人">
+                      <el-input v-model="form.danhao"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-form-item label="审批时间">
+                      <el-date-picker
+                        type="datetime"
+                        placeholder="选择日期"
+                        v-model="form.shenqingtime"
+                        style="width: 100%;"
+                      ></el-date-picker>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="审批意见">
+                      <el-input type="texarea" v-model="form.beizhu"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
               </el-form>
               <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                <el-button @click="secondFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="secondFormVisible = false">确 定</el-button>
               </div>
             </el-dialog>
           </div>

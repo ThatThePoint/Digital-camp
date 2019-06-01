@@ -2,7 +2,7 @@
   <div>
     <div class="crumbs">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item>请假审批</el-breadcrumb-item>
+        <el-breadcrumb-item>待审批请假</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
