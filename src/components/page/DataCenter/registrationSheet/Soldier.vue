@@ -66,9 +66,13 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="部职别">
-          <el-select v-model="form.buzhibie" placeholder="请选择部门">
-            <el-option label="通讯科" value="1"></el-option>
-            <el-option label="参谋部" value="2"></el-option>
+          <el-select v-model="form.deptId" placeholder="请选择部门">
+             <el-option
+              v-for="item in deptOptions"
+              :label="item.name"
+              :value="item.tid"
+              :key="item.tid"
+            ></el-option>
           </el-select>
           <el-input v-model="form.buzhibie"></el-input>
         </el-form-item>
@@ -324,6 +328,7 @@ export default {
         chiefLevel: "",
         chiefLevDate: ""
       },
+      deptOptions:[],
       politicsTypeOptions: [
         {
           key: 1,
