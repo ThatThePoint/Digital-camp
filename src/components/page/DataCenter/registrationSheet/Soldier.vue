@@ -650,6 +650,16 @@ export default {
       ],
     };
   },
+  created(){
+    this.postAxios("DataCenter/StaffInfo")
+        .then(res => {
+          console.log(res);
+          this.deptOptions=res.deptOptions;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+  },
   methods: {
     cancel(){ history.go(-1);},
     birthday() {},

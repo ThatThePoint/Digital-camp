@@ -8,16 +8,16 @@
     <div class="container">
       <div class="messages">
         <span>所属部门</span>
-        <el-select class="input-width" v-model="value" filterable placeholder="请选择">
+        <el-select class="input-width" v-model="deptId" filterable placeholder="请选择">
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="item in deptOptions"
+            :key="item.tid"
+            :label="item.name"
+            :value="item.tid"
           ></el-option>
         </el-select>
-        <el-button type="primary">查询</el-button>
-        <span class="staffStatu" style="float:right">总人数：100人  在岗：98人  休假：1人</span>
+        <el-button type="primary" @click="getdata">查询</el-button>
+        <span class="staffStatu" style="float:right">{总人数：100人  在岗：98人  休假：1人}</span>
       </div>
       <div class="body">
         <el-table
@@ -28,7 +28,7 @@
           <el-table-column prop="name" label="姓名" >{{}}</el-table-column>
           <el-table-column prop="gender" label="性别" ></el-table-column>
           <el-table-column prop="dept" label="单位" ></el-table-column>
-          <el-table-column prop="job" label="职务"></el-table-column>
+          <el-table-column prop="jobPostion" label="职务"></el-table-column>
           <el-table-column prop="status" label="状态"></el-table-column>
         </el-table>
       </div>
@@ -40,104 +40,30 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      value1: "",
-      value2: "",
-      input2: "",
-      options: [
-        {
-          value: "1",
-          label: "连队1"
-        },
-        {
-          value: "2",
-          label: "连队2"
-        },
-        {
-          value: "3",
-          label: "连队3"
-        },
-        {
-          value: "4",
-          label: "连队4"
-        }
-      ],
-      value: "",
-      tableData: [
-        {
-          name: "李云龙",
-          gender: "男",
-          dept: "保卫科",
-          job: "保卫员",
-          status: "在岗"
-        },
-        {
-          name: "李云龙",
-          gender: "男",
-          dept: "保卫科",
-          job: "保卫员",
-          status: "在岗"
-        },
-        {
-          name: "李云龙",
-          gender: "男",
-          dept: "保卫科",
-          job: "保卫员",
-          status: "在岗"
-        },
-        {
-          name: "李云龙",
-          gender: "男",
-          dept: "保卫科",
-          job: "保卫员",
-          status: "在岗"
-        }
-      ],
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
-      dialogTableVisible: false,
-      dialogFormVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      formLabelWidth: "120px"
+      deptOptions: [],
+      tableData: []
     };
   },
+  created(){
+     this.getdata();
+  },
   methods: {
+    getdata(){
+      var params={
+        deptId: this.deptId
+      };
+      this.postAxios("DailyOffice/StaffDynamics",params)
+        .then(res => {
+          console.log(res);
+          this.tableData=res.list;
+          this.deptOptions=res.deptOptions;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     formatter(row, column) {
       return row.address;
-    },
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
     }
   }
 };

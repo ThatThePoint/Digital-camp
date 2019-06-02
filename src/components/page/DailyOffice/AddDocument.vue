@@ -256,8 +256,6 @@ export default {
       this.content = html;
     },
     submit() {
-      console.log(this.content);
-      debugger
       let data = {
         docReceiversName : this.postname,
         docReceiversId : this.perid,
@@ -265,7 +263,8 @@ export default {
         title : this.title,
         messageLevel : this.level,
         content : this.content
-      }
+      };
+      console.log(data);
       let flag;
       for( let i in data){
         if(data[i] == ''){
@@ -282,7 +281,7 @@ export default {
         })
         .then(res => {
           console.log(res);
-          alert("保存成功");
+          this.$message.success("提交成功！");
         })
         .catch(err => {
           console.log(err);

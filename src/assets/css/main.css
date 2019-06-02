@@ -31,6 +31,10 @@ a {
     text-decoration: none
 }
 
+.el-dialog{
+    min-width: 700px;
+}
+
 input{
     height: 26px !important;
 }
