@@ -47,7 +47,7 @@
           </el-table-column>
         </el-table>
         <el-dialog title="新增规章制度" :visible.sync="dialogFormVisible">
-          <el-form :model="ruleInfo">
+          <el-form :rules="checkRules" ref="ruleInfo" :model="ruleInfo">
             <div class="flex"></div>
             <el-form-item label="规章名称" :label-width="formLabelWidth">
               <el-input class="input-width" placeholder="请输入" v-model="ruleInfo.ruleName"></el-input>
@@ -56,19 +56,19 @@
               <el-input class="input-width" placeholder="请输入" v-model="ruleInfo.version"></el-input>
             </el-form-item>
             <el-form-item label="简介" :label-width="formLabelWidth">
-              <el-input type="textarea" class="input-width"  placeholder="请输入" v-model="ruleInfo.ruleSynopsis"></el-input>
+              <el-input
+                type="textarea"
+                class="input-width"
+                placeholder="请输入"
+                v-model="ruleInfo.ruleSynopsis"
+              ></el-input>
             </el-form-item>
             <el-form-item label="附件" :label-width="formLabelWidth">
               <el-upload
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :before-remove="beforeRemove"
                 multiple
                 :limit="3"
-                :on-exceed="handleExceed"
-                :file-list="fileList"
               >
                 <el-button size="small" type="primary">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -76,8 +76,8 @@
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            <el-button @click="cancel">取 消</el-button>
+            <el-button type="primary" @click="onSubmitForm('form')">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -119,30 +119,8 @@ export default {
         ]
       },
       status: "", //生效状态
-      name:"",
-      options: [
-        {
-          value: "1",
-          label: "普通"
-        },
-        {
-          value: "2",
-          label: "提醒"
-        },
-        {
-          value: "3",
-          label: "严重"
-        },
-        {
-          value: "4",
-          label: "警告"
-        },
-        {
-          value: "5",
-          label: "紧急"
-        }
-      ],
-      value: "",
+      name: "", //制度名称
+      options: [],
       tableData: [
         {
           ruleName: "宿舍管理条例",
@@ -162,10 +140,32 @@ export default {
         version: "",
         status: ""
       },
+      checkRules: {
+        ruleName: [{ required: true, message: "制度名称", trigger: "blur" }],
+        version: [{ required: true, message: "请输入版本号", trigger: "blur" }],
+        status: [{ required: true, message: "请选择状态", trigger: "blur" }]
+      },
       formLabelWidth: "120px"
     };
   },
+  created() {
+    var params = {
+      status: this.status,
+      name: this.name,
+      pageNum: "1",
+      pageSize: "10"
+    };
+    this.postAxios("DailyOffice/GetRules", params).then(res => {
+      console.log(res);
+      this.tableData = res.data;
+      this.totalPage = res.count;
+    });
+  },
   methods: {
+    cancel() {
+      this.dialogFormVisible = false;
+      this.ruleInfo = {};
+    },
     formatter(row, column) {
       return row.address;
     },
@@ -175,11 +175,10 @@ export default {
     handleDelete(index, row) {
       console.log(index, row);
     },
-    onSubmit() {
-      console.log("submit!");
+    onSubmitForm(form) {
+      
     }
-  },
-  
+  }
 };
 </script>
 <style scoped>
