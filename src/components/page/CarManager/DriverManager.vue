@@ -45,6 +45,17 @@
               <el-input v-model="carcode" placeholder="请输入内容"></el-input>
             </div>
             <div class="role">
+              <span class="widths">姓名：</span>
+                <el-select v-model="pername" placeholder="请选择">
+                  <el-option
+                    v-for="item in carnames"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+            </div>
+            <div class="role">
               <span class="widths">有效期：</span>
                 <el-date-picker
                   v-model="dateend"
@@ -106,7 +117,7 @@ export default {
   name: "documentManagement",
   data() {
     return {
-       fileList: [],
+      fileList: [],
       dateend : "",//驾驶证有效期
       carcode:"",//驾驶证号
       dialogVisible: false,//控制新增弹框
@@ -182,59 +193,75 @@ export default {
           name: "小明",
           department: "连队1",
           date: "2018-9-2",
-          licenseDate: "2020-9",
+          licenseDate: "2019-06-06",
           duty: "在岗"
         },
         {
           name: "小明",
           department: "连队1",
           date: "2018-9-2",
-          licenseDate: "2020-9",
+          licenseDate: "2019-06-06",
           duty: "在岗"
         },
         {
           name: "小明",
           department: "连队1",
           date: "2018-9-2",
-          licenseDate: "2020-9",
+          licenseDate: "2019-06-06",
           duty: "在岗"
         },
         {
           name: "小明",
           department: "连队1",
           date: "2018-9-2",
-          licenseDate: "2020-9",
+          licenseDate: "2019-06-06",
           duty: "在岗"
         },
         {
           name: "小明",
           department: "连队1",
           date: "2018-9-2",
-          licenseDate: "2020-9",
+          licenseDate: "2019-06-06",
           duty: "在岗"
         },
         {
           name: "小明",
           department: "连队1",
           date: "2018-9-2",
-          licenseDate: "2020-9",
+          licenseDate: "2019-06-06",
           duty: "在岗"
         },
         {
           name: "小明",
           department: "连队1",
           date: "2018-9-2",
-          licenseDate: "2020-9",
+          licenseDate: "2019-06-06",
           duty: "在岗"
         },
         {
           name: "小明",
           department: "连队1",
           date: "2018-9-2",
-          licenseDate: "2020-9",
+          licenseDate: "2019-06-06",
           duty: "在岗"
         }
-      ]
+      ],
+      carnames: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
     };
   },
   methods: {
@@ -249,6 +276,9 @@ export default {
       return row.address;
     },
     handleEdit(index, row) {
+      this.dialogVisible = true;
+      this.pername = row.name;
+      this.dateend = row.licenseDate
       console.log(index, row);
     },
     handleDelete(index, row) {
