@@ -277,7 +277,6 @@ export default {
       if(flag == false){
         this.open3()
       }
-      this.$message.success("提交成功！");
       this.postAxios("/DailyOffice/Savedocument",{
           model:data
         })
