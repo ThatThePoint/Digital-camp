@@ -21,7 +21,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="值班计划" name="second">
-            <el-form :model="form">
+            <el-form :model="rotaInfo">
               <div class="flex">
                 <el-form-item label="岗位部门" :label-width="formLabelWidth">
                   <el-select
@@ -53,13 +53,13 @@
               </div>
               <el-form-item label="值班时间" :label-width="formLabelWidth">
                     <el-date-picker
-                      v-model="value3"
+                      v-model="rotaInfo.start"
                       type="datetime"
                       placeholder="选择日期时间"
                       default-time="12:00:00">
                     </el-date-picker>--
                     <el-date-picker
-                      v-model="value4"
+                      v-model="rotaInfo.end"
                       type="datetime"
                       placeholder="选择日期时间"
                       default-time="12:00:00">
@@ -84,16 +84,16 @@
         <el-tab-pane label="值班查询" name="third">
               <div class="messages">
             <span>所属部门</span>
-            <el-select class="input-width" v-model="value" filterable placeholder="请选择">
+            <el-select class="input-width" v-model="dept" filterable placeholder="请选择">
               <el-option
-                v-for="item in depts"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in deptOptions"
+                :key="item.tid"
+                :label="item.name"
+                :value="item.tid"
               ></el-option>
             </el-select>
             <span>值班日期</span>
-              <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker class="input-width" v-model="dutyDate" type="date" placeholder="选择日期"></el-date-picker>
             <el-button type="primary">查询</el-button>
           </div>
           <div class="body">
@@ -121,7 +121,7 @@
 </template>
 <script>
 export default {
-  name: "documentManagement",
+  name: "rota",
   data() {
     return {
       persons: "",//值班人
