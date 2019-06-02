@@ -84,6 +84,7 @@ export default {
   name: "editor",
   data: function() {
     return {
+      docuId:"",//公文tid
       perid:"",//接受父组件传过来的id
       parentlist:[],//传给穿梭框的树表数据
       level: "",//传给后台公文等级
@@ -95,22 +96,7 @@ export default {
       editorOption: {
         placeholder: ""
       },
-      fileList: [
-        {
-          name: "food.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        },
-        {
-          name: "food2.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        }
-      ],
-      input2: "",
-      value: "",
-      options: [],
-      value: [],
+      fileList: [],
       list: [],
       loading: false,
       states: [
@@ -176,21 +162,19 @@ export default {
     });
   },
   computed:{
-     
-
   },
-
   created(){
-    var ff= this.$route.query.id;
+    this.docuId= this.$route.query.id;
     let _this = this
     this.postAxios("/DailyOffice/GetDocument",{
-         tid:ff
+         tid:this.docuId
       })
       .then(res => {
         console.log(res);
         this.options=res.options;
         _this.parentlist = _this.getTree(res.fromData);
         if(res.document){
+        _this.docuId=res.document.tid;
         _this.title=res.document.title;
         _this.content=res.document.content;
         _this.postname=res.document.docReceiversName;
@@ -262,6 +246,7 @@ export default {
     },
     submit() {
       let data = {
+        tid:this.docuId,
         docReceiversName : this.postname,
         docReceiversId : this.perid,
 

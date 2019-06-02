@@ -254,6 +254,7 @@ export default {
         : row.docLever == 4
         ? "警告"
         : "紧急";
+        
     },
     formatterReceive(row, column) {
       return row.allReceive == 1 ? "已收录" : "待收录";
