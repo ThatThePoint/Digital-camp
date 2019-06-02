@@ -48,7 +48,7 @@
           <el-button size="small" type="primary">点击上传</el-button>
         </el-upload>
       </div>
-      <quill-editor ref="myTextEditor" v-model="content" :options="editorOption"></quill-editor>
+      <quill-editor ref="myTextEditor" v-model="content" :options="editorOption" style="height: 300px"></quill-editor>
       <div class="flex-center"> 
         <el-button class="editor-btn" type="danger" @click="handleBack" >取消</el-button>
         <el-button class="editor-btn" type="warn " style="margin-left:40px;">保存</el-button>
@@ -67,8 +67,8 @@
         <el-button type="primary" @click="confirm" >确 定</el-button>
       </span>
     </el-dialog>
-    <template>
-      <el-button :plain="true" @click="open3">警告</el-button>
+    <template >
+      <el-button :plain="true" @click="open3" v-show="false">警告</el-button>
     </template>
   </div>
 </template>
@@ -249,7 +249,6 @@ export default {
         tid:this.docuId,
         docReceiversName : this.postname,
         docReceiversId : this.perid,
-
         title : this.title,
         messageLevel : this.level,
         content : this.content
@@ -265,18 +264,19 @@ export default {
       }
       if(flag == false){
         this.open3()
+      }else{
+        this.postAxios("/DailyOffice/Savedocument",{
+            model:data
+          })
+          .then(res => {
+            console.log(res);
+            this.$message.success("提交成功！");
+            history.go(-1);
+          })
+          .catch(err => {
+            console.log(err);
+        });
       }
-      this.postAxios("/DailyOffice/Savedocument",{
-          model:data
-        })
-        .then(res => {
-          console.log(res);
-          this.$message.success("提交成功！");
-          history.go(-1);
-        })
-        .catch(err => {
-          console.log(err);
-      });
     },
     remoteMethod(query) {
       if (query !== "") {
