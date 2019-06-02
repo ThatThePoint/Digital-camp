@@ -15,19 +15,18 @@
         :before-close="handleClose">
         <div class="role">
           <span>角色编码：</span>
-          <input type="text" class="wenben" v-model="rolenum"/>
+          <input type="text" class="wenben" v-model="roleInfo.code"/>
         </div>
         <div class="role">
           <span>角色名称：</span>
-          <input type="text" class="wenben" v-model="rolename"/>
+          <input type="text" class="wenben" v-model="roleInfo.name"/>
         </div>
         <div class="role">
           <span style="width:'90px',display:inline-block" class="state">状态：</span>
-          <el-switch
-            v-model="switchstate"
-            active-color="#13ce66"
-            inactive-color="#ff4949">
-          </el-switch>
+          <el-radio-group v-model="roleInfo.status">
+    <el-radio :label="3">启用</el-radio>
+    <el-radio :label="6">禁用</el-radio>
+  </el-radio-group>
         </div>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
@@ -50,7 +49,7 @@
         </div>
         
         <el-tree
-          :data="treedata"
+          :data="menuData"
           show-checkbox
           default-expand-all 
           node-key="id"
@@ -81,7 +80,7 @@
         </div>
         
         <el-tree
-          :data="treedata"
+          :data="deptStaffData"
           show-checkbox
           default-expand-all 
           node-key="id"
@@ -138,64 +137,86 @@ export default {
       rolename:"",//角色名称
       dialogVisible: false,//新增角色弹框
       outerVisible: false,
-      value1: "",
-      value2: "",
-      input2: "",
-      typeValue: "",
-      deptValue: "",
-      treedata: [{
-          id: 1,
-          label: '一级 1',
-          children: [{
-            id: 4,
-            label: '二级 1-1',
-            children: [{
-              id: 9,
-              label: '三级 1-1-1'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        }, {
-          id: 2,
-          label: '一级 2',
-          children: [{
-            id: 5,
-            label: '二级 2-1'
-          }, {
-            id: 6,
-            label: '二级 2-2'
-          }]
-        }, {
-          id: 3,
-          label: '一级 3',
-          children: [{
-            id: 7,
-            label: '二级 3-1'
-          }, {
-            id: 8,
-            label: '二级 3-2'
-          }]
-        }],
-      deptOptions: [
+      roleInfo:{
+        code:"",
+        name:"",
+        status
+      },
+      deptStaffData:
+          [
         {
-          value: "1",
-          label: "连队1"
+            "id": "4f4b5cf8-c589-4447-9bb0-6c19954175bf",
+            "pid": "e77b0cd8-57b4-4c6e-8b8f-ae6c3aa6f06a",
+            "name": "撒法发",
+            "children": []
         },
         {
-          value: "2",
-          label: "连队2"
+            "id": "5fbebecc-6601-47fc-8155-dafd856ebde1",
+            "pid": "ce7bc410-acfe-4691-a9cb-7ee7a9d409e3",
+            "name": "哈哈部门",
+            "children": []
         },
         {
-          value: "3",
-          label: "连队3"
+            "id": "84c71885-4d32-4e0e-983a-53d4d85c6f15",
+            "pid": "4f4b5cf8-c589-4447-9bb0-6c19954175bf",
+            "name": "一哈部门",
+            "children": []
         },
         {
-          value: "4",
-          label: "连队4"
+            "id": "ce7bc410-acfe-4691-a9cb-7ee7a9d409e3",
+            "pid": "4f4b5cf8-c589-4447-9bb0-6c19954175bf",
+            "name": "烦烦烦",
+            "children": []
+        },
+        {
+            "id": "e77b0cd8-57b4-4c6e-8b8f-ae6c3aa6f06a",
+            "pid": "",
+            "name": "哈哈哈哈",
+            "children": []
+        },
+        {
+            "id": "8c8aa69a-1d18-4e4a-a28e-6a38b72fb8e9",
+            "pid": "4f4b5cf8-c589-4447-9bb0-6c19954175bf",
+            "name": "是德国首都大概",
+            "children": []
+        },
+        {
+            "id": "9052b883-f74e-4e2d-8d81-d85c024f3d0f",
+            "pid": "ce7bc410-acfe-4691-a9cb-7ee7a9d409e3",
+            "name": "李时珍",
+            "children": []
+        },
+        {
+            "id": "c79337e2-c1f2-491c-8618-cea297b682d0",
+            "pid": "",
+            "name": "孙悟空",
+            "children": []
+        },
+        {
+            "id": "cd9e0920-649c-4c79-a3ae-5d6f835a4267",
+            "pid": "d05ab819-2471-45d2-a84b-268bdee300da",
+            "name": "猪八戒",
+            "children": []
+        },
+        {
+            "id": "f1919b84-cab2-4462-94d9-f39d1f60cf7b",
+            "pid": "84c71885-4d32-4e0e-983a-53d4d85c6f15",
+            "name": "张驴儿",
+            "children": []
+        },
+        {
+            "id": "f6a3ccd9-78d3-466d-8ccc-5a719676f94a",
+            "pid": "4f4b5cf8-c589-4447-9bb0-6c19954175bf",
+            "name": "张大爷",
+            "children": []
+        },
+        {
+            "id": "f75094e9-f2fd-4af8-93e8-53bd440118d2",
+            "pid": "5fbebecc-6601-47fc-8155-dafd856ebde1",
+            "name": "李世民",
+            "children": []
         }
-      ],
+    ],
       value: "",
       tableData: [
         {
@@ -214,81 +235,84 @@ export default {
           status: "启用"
         }
       ],
-
-      formInline: {
-        user: "",
-        region: ""
-      },
-      dialogTableVisible: false,
-      dialogFormVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      formLabelWidth: "120px",
-      data: [
+      menuData: [
         {
           id: 1,
-          label: "一级 1",
+          label: "日常办公",
           children: [
             {
               id: 4,
-              label: "二级 1-1",
-              children: [
-                {
-                  id: 9,
-                  label: "三级 1-1-1"
-                },
-                {
-                  id: 10,
-                  label: "三级 1-1-2"
-                }
-              ]
+              label: "公文管理"
+            },
+             {
+              id: 5,
+              label: "人员动态"
+            },
+            {
+              id: 6,
+              label: "警报传递"
             }
           ]
         },
         {
           id: 2,
-          label: "一级 2",
+          label: "车辆管理",
           children: [
             {
-              id: 5,
-              label: "二级 2-1"
+              id: 7,
+              label: "车辆信息管理"
             },
             {
-              id: 6,
-              label: "二级 2-2"
+              id: 8,
+              label: "车库管理"
             }
           ]
         },
         {
           id: 3,
-          label: "一级 3",
+          label: "请假审批管理",
           children: [
             {
-              id: 7,
-              label: "二级 3-1"
+              id: 9,
+              label: "请假申请"
             },
             {
-              id: 8,
-              label: "二级 3-2"
+              id: 10,
+              label: "待审批请假"
             }
           ]
         }
       ],
       defaultProps: {
         children: "children",
-        label: "label"
+        lable: "name"
       }
     };
   },
+  created(){
+    deptStaffData=this.getTree(this.deptStaffData);
+  },
   methods: {
+    getTree(data){
+    let map = {};
+    let val = [];
+    //生成数据对象集合
+    data.forEach(it=>{
+      delete it.children;
+      map[it.id] = it;
+    })
+    //生成结果集
+    data.forEach(it=>{
+        const parent = map[it.pid];
+        if(parent){
+            if(!Array.isArray(parent.children)) parent.children = [];
+            parent.children.push(it);
+        }else{
+            val.push(it);
+        }
+    })
+    return val;
+  },
     handleRole(index,row){
       this.jueserenyuan = true
     },

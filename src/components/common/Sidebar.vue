@@ -275,7 +275,7 @@ export default {
         {
           icon: "el-icon-lx-copy",
           index: "dataStat",
-          title: "数据统计分析",
+          title: "*数据统计分析",
           subs: [
             {
               index: "usecar",
