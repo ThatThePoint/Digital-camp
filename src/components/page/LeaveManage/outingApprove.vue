@@ -6,15 +6,14 @@
       </el-breadcrumb>
     </div>
     <div class="container">
-      
       <div class="body">
         <el-table
           :data="tableData"
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="name" label="申请人" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="dept" label="申请人部门" sortable width="180"></el-table-column>
+          <el-table-column prop="name" label="申请人" sortable></el-table-column>
+          <el-table-column prop="dept" label="申请人部门" sortable></el-table-column>
           <el-table-column prop="type" label="外出类型"></el-table-column>
           <el-table-column prop="reason" label="外出内容"></el-table-column>
           <el-table-column prop="startDate" label="外出时间"></el-table-column>
@@ -96,30 +95,6 @@ export default {
           status: "归档"
         }
       ],
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
-      dialogTableVisible: false,
-      dialogFormVisible: false,
       form: {
         name: "",
         region: "",
@@ -130,7 +105,6 @@ export default {
         resource: "",
         desc: ""
       },
-      formLabelWidth: "120px",
       activities: [
         {
           content: "张主任",

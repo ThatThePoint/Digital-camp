@@ -99,175 +99,6 @@
                 </template>
               </el-table-column>
             </el-table>
-            <el-dialog  :visible.sync="secondFormVisible">
-              <el-form :model="form" ref="form" label-width="100px">
-                <div class="second-title">申请信息</div>
-                <el-row>
-                  <el-col :span="6">
-                    <el-form-item label="申请单号">
-                      <el-input v-model="form.danhao"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="6">
-                    <el-form-item label="用车人">
-                      <el-input v-model="form.yongcheren"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="6">
-                    <el-form-item label="用车部门">
-                      <el-input v-model="form.yongchebumen"></el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="8">
-                    <el-form-item label="用车开始时间">
-                      <el-date-picker
-                        type="datetime"
-                        placeholder="选择日期"
-                        v-model="form.startTime"
-                        style="width: 100%;"
-                      ></el-date-picker>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item label="用车结束时间">
-                      <el-date-picker
-                        type="datetime"
-                        placeholder="选择日期"
-                        v-model="form.endTime"
-                        style="width: 100%;"
-                      ></el-date-picker>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="6">
-                    <el-form-item label="用车风险">
-                      <el-select v-model="form.region" placeholder="请选择">
-                        <el-option label="一般" value="1"></el-option>
-                        <el-option label="危险" value="2"></el-option>
-                      </el-select>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="8">
-                    <el-form-item label="路线目的地">
-                      <el-input v-model="form.danhao"></el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="12">
-                    <el-form-item label="申请事由">
-                      <el-input type="texarea" v-model="form.danhao"></el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="6">
-                    <el-form-item label="随车负责人">
-                      <el-input v-model="form.danhao"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="6">
-                    <el-form-item label="申请人">
-                      <el-input v-model="form.danhao"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item label="申请时间">
-                      <el-date-picker
-                        type="datetime"
-                        placeholder="选择日期"
-                        v-model="form.shenqingtime"
-                        style="width: 100%;"
-                      ></el-date-picker>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <div class="second-title">调度信息</div>
-                <el-row>
-                  <el-col :span="6">
-                    <el-form-item label="调度结果">
-                      <el-input v-model="form.danhao"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="6">
-                    <el-form-item label="调度人">
-                      <el-input v-model="form.danhao"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item label="调度时间">
-                      <el-date-picker
-                        type="datetime"
-                        placeholder="选择日期"
-                        v-model="form.shenqingtime"
-                        style="width: 100%;"
-                      ></el-date-picker>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="6">
-                    <el-form-item label="车牌号">
-                      <el-input v-model="form.danhao"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="6">
-                    <el-form-item label="司机">
-                      <el-input v-model="form.danhao"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="6">
-                    <el-form-item label="联系电话">
-                      <el-input v-model="form.danhao"></el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="12">
-                    <el-form-item label="备注">
-                      <el-input type="texarea" v-model="form.beizhu"></el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <div class="second-title">审批信息</div>
-                <el-row>
-                  <el-col :span="6">
-                    <el-form-item label="审批结果">
-                      <el-input v-model="form.danhao"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="6">
-                    <el-form-item label="审批人">
-                      <el-input v-model="form.danhao"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item label="审批时间">
-                      <el-date-picker
-                        type="datetime"
-                        placeholder="选择日期"
-                        v-model="form.shenqingtime"
-                        style="width: 100%;"
-                      ></el-date-picker>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="12">
-                    <el-form-item label="审批意见">
-                      <el-input type="texarea" v-model="form.beizhu"></el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-              </el-form>
-              <div slot="footer" class="dialog-footer">
-                <el-button @click="secondFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="secondFormVisible = false">确 定</el-button>
-              </div>
-            </el-dialog>
           </div>
         </el-tab-pane>
         <el-tab-pane label="待审批车辆" name="fourth">
@@ -310,54 +141,13 @@
               <el-table-column prop="status" label="申请状态" sortable></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
+                  <el-button size="mini" @click="handleFourthEdit(scope.$index, scope.row)">详情</el-button>
                 </template>
               </el-table-column>
             </el-table>
-            <el-dialog title="用车信息" :visible.sync="dialogFormVisible">
-              <el-form :model="form">
-                <div class="flex"></div>
-                <el-form-item label="申请车辆" :label-width="formLabelWidth">
-                  <el-select v-model="formInline.region" placeholder="申请类型">
-                    <el-option label="冀JHSKDLL" value="shanghai"></el-option>
-                    <el-option label="冀JHSKDLL" value="beijing"></el-option>
-                  </el-select>
-                  <el-select
-                    v-model="formInline.region"
-                    placeholder="申请类型"
-                    style="margin-left:10px;"
-                  >
-                    <el-option label="外出" value="shanghai"></el-option>
-                    <el-option label="因私" value="beijing"></el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="日期筛选" :label-width="formLabelWidth">
-                  <el-date-picker
-                    class="input-width"
-                    v-model="value1"
-                    type="date"
-                    placeholder="选择日期"
-                  ></el-date-picker>--
-                  <el-date-picker
-                    class="input-width"
-                    v-model="value2"
-                    type="date"
-                    placeholder="选择日期"
-                  ></el-date-picker>
-                </el-form-item>
-                <el-form-item label="申请描述" :label-width="formLabelWidth">
-                  <el-input class="input-width" placeholder v-model="input2" type="textarea"></el-input>
-                </el-form-item>
-              </el-form>
-              <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-              </div>
-            </el-dialog>
           </div>
         </el-tab-pane>
         <el-tab-pane label="已审批车辆" name="fifth">
-          已审批车辆
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
@@ -488,11 +278,7 @@
                     <el-option label="冀JHSKDLL" value="shanghai"></el-option>
                     <el-option label="冀JHSKDLL" value="beijing"></el-option>
                   </el-select>
-                  <el-select
-                    v-model="useCarInfo.type"
-                    placeholder="申请类型"
-                    style="margin-left:10px;"
-                  >
+                  <el-select v-model="useCarInfo.type" placeholder="申请类型" style="margin-left:10px;">
                     <el-option label="外出" value="shanghai"></el-option>
                     <el-option label="因私" value="beijing"></el-option>
                   </el-select>
@@ -512,7 +298,12 @@
                   ></el-date-picker>
                 </el-form-item>
                 <el-form-item label="申请描述" :label-width="formLabelWidth">
-                  <el-input class="input-width" placeholder v-model="useCarInfo.input2" type="textarea"></el-input>
+                  <el-input
+                    class="input-width"
+                    placeholder
+                    v-model="useCarInfo.input2"
+                    type="textarea"
+                  ></el-input>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
@@ -609,6 +400,191 @@
           </div>
         </el-tab-pane>
       </el-tabs>
+      <el-dialog :visible.sync="secondFormVisible">
+        <el-form :model="form" ref="form" label-width="100px">
+          <div class="second-title">申请信息</div>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="申请单号">
+                <!-- <el-input v-model="form.danhao"></el-input> -->
+                <el-input value="aa-8798-88"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="用车人">
+                <!-- <el-input v-model="form.yongcheren"></el-input> -->
+                <el-input value="李连长"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="用车部门">
+                <!-- <el-input v-model="form.yongchebumen"></el-input> -->
+                 <el-input value="一连"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="用车开始时间">
+                <el-date-picker
+                  type="datetime"
+                  placeholder="选择日期"
+                  v-model="form.startTime"
+                  style="width: 100%;"
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="用车结束时间">
+                <el-date-picker
+                  type="datetime"
+                  placeholder="选择日期"
+                  v-model="form.endTime"
+                  style="width: 100%;"
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="用车风险">
+                <!-- <el-select v-model="form.region" placeholder="请选择">
+                  <el-option label="一般" value="1"></el-option>
+                  <el-option label="危险" value="2"></el-option>
+                </el-select> -->
+                <el-select v-model="form.region" vlaue="一般" placeholder="请选择">
+                  <el-option label="一般" value="1"></el-option>
+                  <el-option label="危险" value="2"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="路线目的地">
+                <el-input value="张洼村"></el-input>
+                <!-- <el-input v-model="form.danhao"></el-input> -->
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="申请事由">
+                <el-input value="接取技术人员"></el-input>
+                <!-- <el-input type="texarea" v-model="form.danhao"></el-input> -->
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="随车负责人">
+                <!-- <el-input v-model="form.danhao"></el-input> -->
+                <el-input value="老张"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="申请人">
+                <el-input value="小刘"></el-input>
+                <!-- <el-input v-model="form.danhao"></el-input> -->
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="申请时间">
+                <el-date-picker
+                  type="datetime"
+                  placeholder="选择日期"
+                  v-model="form.shenqingtime"
+                  style="width: 100%;"
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <div class="second-title">调度信息</div>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="调度结果">
+                <el-input value="同意"></el-input>
+                <!-- <el-input v-model="form.danhao"></el-input> -->
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="调度人">
+                <el-input value="老吴"></el-input>
+                <!-- <el-input v-model="form.danhao"></el-input> -->
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="调度时间">
+                <el-date-picker
+                  type="datetime"
+                  placeholder="选择日期"
+                  v-model="form.shenqingtime"
+                  style="width: 100%;"
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="车牌号">
+                <el-input value="冀A88888"></el-input>
+                <!-- <el-input v-model="form.danhao"></el-input> -->
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="司机">
+                <el-input value="王猛"></el-input>
+                <!-- <el-input v-model="form.danhao"></el-input> -->
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="联系电话">
+                <el-input value="1588888888"></el-input>
+                <!-- <el-input v-model="form.danhao"></el-input> -->
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="备注">
+                <el-input value="无"></el-input>
+                <!-- <el-input type="texarea" v-model="form.beizhu"></el-input> -->
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <div v-if="activeName!=='second'">
+            <div class="second-title" >审批信息</div>
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="审批人">
+                  <el-input value="张三"></el-input>
+                  <!-- <el-input v-model="form.danhao"></el-input> -->
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="审批时间">
+                  <el-date-picker
+                    type="datetime"
+                    placeholder="选择日期"
+                    v-model="form.shenqingtime"
+                    style="width: 100%;"
+                  ></el-date-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="审批意见">
+                  <el-input value="无"></el-input>
+                  <!-- <el-input type="texarea" v-model="form.beizhu"></el-input> -->
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </div>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="secondFormVisible = false">{{activeName==='fourth' ? '退回':'取 消'}}</el-button>
+          <el-button type="primary" @click="secondFormVisible = false">{{activeName==='fourth' ? '同 意':'确 定'}}</el-button>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -646,10 +622,10 @@ export default {
           }
         ]
       },
-      useCarInfo:{
-        region:"shanghai",
-        type:"shanghai",
-        input2:"天津战备支援"
+      useCarInfo: {
+        region: "shanghai",
+        type: "shanghai",
+        input2: "天津战备支援"
       },
       value1: "",
       value2: "",
@@ -729,7 +705,7 @@ export default {
       dialogFormVisible: false,
       form: {
         name: "",
-        region: "",
+        region: "1",
         date1: "",
         date2: "",
         delivery: false,
@@ -746,6 +722,9 @@ export default {
     },
     handleEdit(index, row) {
       console.log(index, row);
+      this.secondFormVisible = true;
+    },
+    handleFourthEdit() {
       this.secondFormVisible = true;
     },
     handleDelete(index, row) {
@@ -781,7 +760,7 @@ export default {
   width: 180px;
   margin: 0 10px;
 }
-.second-title{
+.second-title {
   font-size: 20px;
   font-weight: 600;
 }

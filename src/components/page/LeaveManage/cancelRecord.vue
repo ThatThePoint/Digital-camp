@@ -36,7 +36,7 @@
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
-            <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
+          <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
         </el-form>
       </div>
       <div class="body">
@@ -120,18 +120,6 @@
               <el-timeline-item timestamp="2018/4/2" placement="top">
                 <el-card>
                   <h4>张主任</h4>
-                  <p>同意</p>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item timestamp="2018/4/3" placement="top">
-                <el-card>
-                  <h4>王主任</h4>
-                  <p>同意</p>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item timestamp="2018/4/3" placement="top">
-                <el-card>
-                  <h4>高首长</h4>
                   <p>同意</p>
                 </el-card>
               </el-timeline-item>
@@ -274,7 +262,7 @@ export default {
     },
     onSubmit() {
       console.log("submit!");
-    },
+    }
   }
 };
 </script>

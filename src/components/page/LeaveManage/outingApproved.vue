@@ -6,7 +6,6 @@
       </el-breadcrumb>
     </div>
     <div class="container">
-      
       <div class="body">
         <el-table
           :data="tableData"
@@ -28,6 +27,15 @@
             </template>
           </el-table-column>
         </el-table>
+        <div class="pagination">
+          <el-pagination
+            background
+            @current-change="handleCurrentChange"
+            layout="prev, pager, next"
+            :total="count"
+            :current-page.sync="currentPage"
+          ></el-pagination>
+        </div>
         <el-dialog title="外出申请" :visible.sync="confirmFormVisible">
           <el-form :model="form" label-width="100px" ref="form">
             <el-row>
@@ -90,7 +98,7 @@
           </div>
           <div slot="footer" class="dialog-footer">
             <el-button @click="confirmFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="confirmFormVisible = false">申 请</el-button>
+            <el-button type="primary" @click="confirmFormVisible = false">确定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -112,6 +120,18 @@ export default {
         name: "",
         depts: "",
         types: ""
+      },
+      count: 0,
+      currentPage: 1,
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
       },
       value: "",
       tableData: [
@@ -160,41 +180,6 @@ export default {
           status: "归档"
         }
       ],
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
-      dialogTableVisible: false,
-      dialogFormVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      formLabelWidth: "120px",
       activities: [
         {
           content: "张主任",
@@ -225,6 +210,72 @@ export default {
     },
     onSubmit() {
       console.log("submit!");
+    },
+    // 分页导航
+    handleCurrentChange(val) {
+      console.log(val);
+      this.currentPage = val;
+      this.getData("", val);
+    },
+    handleSearch() {
+      this.getData(this.formInline.user);
+      this.currentPage = 1;
+    },
+    initBaseinfo() {
+      this.baseinfo = {
+        code: "",
+        name: "",
+        status: 1,
+        note: ""
+      };
+      this.currentPage = 1;
+      this.title = "添加字典";
+      this.detailInfo = {};
+      this.getData();
+    },
+    handleSave() {
+      console.log(this.baseinfo);
+      let codeFlag = this.$utils.isEmpty(this.baseinfo.code);
+      let nameFlag = this.$utils.isEmpty(this.baseinfo.name);
+      let noteFlag = this.$utils.isEmpty(this.baseinfo.note);
+      console.log(codeFlag, nameFlag, noteFlag);
+      console.log(this.baseinfo);
+      if (!codeFlag && !nameFlag && !noteFlag) {
+        this.postAxios("Sysconfig/SaveBasedata", { baseinfo: this.baseinfo })
+          .then(res => {
+            this.$message({
+              message: "保存成功",
+              type: "success"
+            });
+            this.initBaseinfo();
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        this.$message({
+          message: "请填写完整信息",
+          type: "warning"
+        });
+      }
+      this.innerVisible = false;
+    },
+    getData(approvalStatus = "0", pageNum = "1", pageSize = "10") {
+      var params = {
+        approvalStatus: "0",
+        pageNum: "1",
+        pageSize: "10"
+      };
+      this.postAxios("OutApply/OutingApplyList", params)
+        .then(res => {
+          console.log(res);
+          this.count = res.count;
+          this.tableData = [...res.data];
+          this.loading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };

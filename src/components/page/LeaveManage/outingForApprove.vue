@@ -23,7 +23,6 @@
           <el-table-column prop="status" label="审批状态"></el-table-column>
           <el-table-column label="操作" sortable width="300px">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">同意</el-button>
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
             </template>
           </el-table-column>
@@ -92,14 +91,23 @@
               <el-timeline-item timestamp="2018/4/3" placement="top">
                 <el-card>
                   <h4>高首长</h4>
-                  <p>同意</p>
+                  <el-radio-group v-model="resource">
+                    <el-radio label="同意" value="1"></el-radio>
+                    <el-radio label="退回" value="2"></el-radio>
+                  </el-radio-group>
+                  <el-row>
+                    <el-col :span="18" class="flex">
+                      <div style="width:80px;">意见</div>
+                      <el-input v-model="name"></el-input>
+                    </el-col>
+                  </el-row>
                 </el-card>
               </el-timeline-item>
             </el-timeline>
           </div>
           <div slot="footer" class="dialog-footer">
             <el-button @click="confirmFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="confirmFormVisible = false">申 请</el-button>
+            <el-button type="primary" @click="confirmFormVisible = false">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -111,8 +119,10 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      count:0,
-      currentPage:1,
+      name: "",
+      resource: 1,
+      count: 0,
+      currentPage: 1,
       confirmLeave: {},
       confirmFormVisible: false,
       checked: "",
@@ -137,9 +147,7 @@ export default {
           curApproval: "老张",
           status: "待审批"
         }
-        ],
-      dialogTableVisible: false,
-      dialogFormVisible: false,
+      ],
       form: {
         name: "",
         region: "",
@@ -220,12 +228,12 @@ export default {
       this.innerVisible = false;
     },
     getData(approvalStatus = "0", pageNum = "1", pageSize = "10") {
-      var params={
-        approvalStatus:"0",
-        pageNum : "1",
-        pageSize : "10"
+      var params = {
+        approvalStatus: "0",
+        pageNum: "1",
+        pageSize: "10"
       };
-      this.postAxios("OutApply/OutingApplyList",params)
+      this.postAxios("OutApply/OutingApplyList", params)
         .then(res => {
           console.log(res);
           this.count = res.count;
@@ -249,7 +257,7 @@ export default {
     }
   },
   created() {
-    this.getData();
+    // this.getData();
   }
 };
 </script>
