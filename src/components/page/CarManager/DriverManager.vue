@@ -32,6 +32,52 @@
           v-model="input2"
         ></el-input>
         <el-button>搜索</el-button>
+        <el-button size="mini" @click="dialogVisible = true" type="success">新增</el-button>
+        <!-- 新增框 -->
+        <div class="messages">
+          <el-dialog
+            title="新增司机"
+            :visible.sync="dialogVisible"
+            width="30%"
+            :before-close="handleClose">
+            <div class="role">
+              <span class="widths">驾驶证号：</span>
+              <el-input v-model="carcode" placeholder="请输入内容"></el-input>
+            </div>
+            <div class="role">
+              <span class="widths">有效期：</span>
+                <el-date-picker
+                  v-model="dateend"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+            </div>
+            <div class="role">
+              <span class="widths">驾驶证附件：</span>
+              <el-upload
+                class="upload-demo"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :before-remove="beforeRemove"
+                multiple
+                :limit="1"
+                :on-exceed="handleExceed"
+                :file-list="fileList">
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+              </el-upload>
+
+            </div>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogVisible = false">取 消</el-button>
+              <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+          </el-dialog>
+        </div>
+
+
+
       </div>
       <div class="body">
         <el-table
@@ -60,6 +106,10 @@ export default {
   name: "documentManagement",
   data() {
     return {
+       fileList: [],
+      dateend : "",//驾驶证有效期
+      carcode:"",//驾驶证号
+      dialogVisible: false,//控制新增弹框
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -188,6 +238,13 @@ export default {
     };
   },
   methods: {
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
     formatter(row, column) {
       return row.address;
     },
@@ -196,11 +253,30 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
+    },
+    //上传文件三个函数
+    //删除
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${ file.name }？`);
     }
   }
 };
 </script>
-<style scoped>
+<style scoped lang='scss'>
+.messages{
+  .el-dialog__body{
+    height: 350px;
+  }
+}
 .input-width {
   width: 180px;
   margin: 0 10px;
@@ -211,5 +287,17 @@ export default {
   background: red;
   display: inline-block;
   vertical-align: middle;
+}
+.el-input {
+  width: 200px;
+}
+.role{
+  display: flex;
+  height: 40px;
+  line-height: 40px;
+}
+.widths{
+  display: inline-block;
+  width: 100px;
 }
 </style>

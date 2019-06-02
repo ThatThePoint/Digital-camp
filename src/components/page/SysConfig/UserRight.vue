@@ -297,13 +297,13 @@ export default {
   methods: {
     //将数据源的name改为lable
     changeKey(array){
-      var keyMap = {
+      let keyMap = {
           "name" : "label"
       };
-      for(var i = 0;i < array.length;i++){
-        var obj = array[i];
-        for(var key in obj){
-          var newKey = keyMap[key];
+      for(let i = 0;i < array.length;i++){
+        let obj = array[i];
+        for(let key in obj){
+          let newKey = keyMap[key];
           if(newKey){
               obj[newKey] = obj[key];
               delete obj[key];
