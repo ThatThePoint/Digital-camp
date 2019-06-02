@@ -167,7 +167,6 @@ export default {
       ],
     };
   },
-
   components: {
     quillEditor,postemail
   },
@@ -182,20 +181,26 @@ export default {
   },
 
   created(){
+    var ff= this.$route.query.id;
     let _this = this
     this.postAxios("/DailyOffice/GetDocument",{
-        // tid:tid
+         tid:ff
       })
       .then(res => {
         console.log(res);
         this.options=res.options;
-        _this.parentlist = _this.getTree(res.fromData)
-        console.log("111111",arr,this,_this.parentlist)
+        _this.parentlist = _this.getTree(res.fromData);
+        if(res.document){
+        _this.title=res.document.title;
+        _this.content=res.document.content;
+        _this.postname=res.document.docReceiversName;
+        _this.level=res.document.messageLevel;
+        }
       })
       .catch(err => {
         console.log(err);
     });
-    var ff= this.$route.query.id;
+    
   },
   methods: {
     getTree(data){

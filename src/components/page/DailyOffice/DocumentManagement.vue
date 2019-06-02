@@ -259,7 +259,7 @@ export default {
       return row.allReceive == 1 ? "已收录" : "待收录";
     },
     handleEdit(index, row) {
-     this.$router.push({ path: "/adddocument" ,query:{id:"hahh"}});
+     this.$router.push({ path: "/adddocument" ,query:{id:row.tid}});
     },
     handleDelete(index, row) {
       console.log(index, row);
