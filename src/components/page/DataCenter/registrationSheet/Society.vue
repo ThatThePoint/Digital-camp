@@ -929,6 +929,16 @@ export default {
     };
     
   },
+  created(){
+    this.postAxios("DataCenter/StaffInfo")
+        .then(res => {
+          console.log(res);
+          this.deptOptions=res.deptOptions;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+  },
   methods: {
     cancel(){ history.go(-1);},
     formatter(row, column) {
@@ -944,7 +954,7 @@ export default {
     handleBack() {
       history.go(-1);
     },
-    onSubmit(formName) {
+    submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           var nameFlag= this.$utils.isEmpty(this.form.name);

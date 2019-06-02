@@ -2,19 +2,18 @@
   <div>
     <div class="crumbs">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item>请假外出管理</el-breadcrumb-item>
+        <el-breadcrumb-item>待审批请假</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
-      
       <div class="body">
         <el-table
           :data="tableData"
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="name" label="申请人" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="dept" label="申请人部门" sortable width="180"></el-table-column>
+          <el-table-column prop="name" label="申请人" sortable></el-table-column>
+          <el-table-column prop="dept" label="申请人部门" sortable></el-table-column>
           <el-table-column prop="type" label="外出类型"></el-table-column>
           <el-table-column prop="reason" label="外出内容"></el-table-column>
           <el-table-column prop="startDate" label="外出时间"></el-table-column>
@@ -26,64 +25,55 @@
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">同意</el-button>
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
-              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">退回</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <el-dialog title="外出申请" :visible.sync="dialogFormVisible">
-          <el-form :model="form">
-            <div class="flex">
-              <el-form-item label="姓名：" :label-width="formLabelWidth">李云龙</el-form-item>
-              <el-form-item label="部门：" :label-width="formLabelWidth">独立团</el-form-item>
-              <el-form-item label="岗位：" :label-width="formLabelWidth">团长</el-form-item>
-            </div>
-            <div class="flex">
-              <el-form-item label="外出类型" :label-width="formLabelWidth">
-                <el-select placeholder="请选择">
-                  <el-option label="学习" value="shanghai"></el-option>
-                  <el-option label="出差" value="beijing"></el-option>
-                  <el-option label="事假" value="shanghai"></el-option>
-                  <el-option label="病假" value="beijing"></el-option>
-                  <el-option label="婚假" value="shanghai"></el-option>
-                  <el-option label="其他" value="beijing"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="外出原因" :label-width="formLabelWidth">
-                <el-input type="textarea" placeholder="请输入"></el-input>
-              </el-form-item>
-            </div>
-            <div class="flex">
-              <el-form-item label="开始日期" :label-width="formLabelWidth">
-                <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
-              </el-form-item>
-              <el-form-item label="结束日期" :label-width="formLabelWidth">
-                <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
-              </el-form-item>
-              <el-form-item label="请假天数" :label-width="formLabelWidth">2天</el-form-item>
-            </div>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">申 请</el-button>
-          </div>
-        </el-dialog>
-
+        <div class="pagination">
+          <el-pagination
+            background
+            @current-change="handleCurrentChange"
+            layout="prev, pager, next"
+            :total="count"
+            :current-page.sync="currentPage"
+          ></el-pagination>
+        </div>
         <el-dialog title="外出申请" :visible.sync="confirmFormVisible">
-          <el-form :model="form">
-            <div class="flex">
-              <el-form-item label="姓名：" :label-width="formLabelWidth">{{confirmLeave.name}}</el-form-item>
-              <el-form-item label="部门：" :label-width="formLabelWidth">{{confirmLeave.dept}}</el-form-item>
-              <el-form-item label="岗位：" :label-width="formLabelWidth">科长</el-form-item>
-            </div>
-            <div class="flex">
-              <el-form-item label="外出类型：" :label-width="formLabelWidth">{{confirmLeave.type}}</el-form-item>
-              <el-form-item label="外出原因：" :label-width="formLabelWidth">{{confirmLeave.reason}}</el-form-item>
-            </div>
-            <div class="flex">
-              <el-form-item label="开始日期：" :label-width="formLabelWidth">{{confirmLeave.startDate}}</el-form-item>
-              <el-form-item label="结束日期：" :label-width="formLabelWidth">{{confirmLeave.returnDate}}</el-form-item>
-              <el-form-item label="请假天数：" :label-width="formLabelWidth">{{confirmLeave.length}}</el-form-item>
-            </div>
+          <el-form :model="form" label-width="100px" ref="form">
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="申请人">{{confirmLeave.name}}</el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="请假人">{{confirmLeave.name}}</el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="部门">{{confirmLeave.dept}}</el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="岗位">科长</el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="外出类型">{{confirmLeave.type}}</el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="外出原因">{{confirmLeave.reason}}</el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="开始日期">{{confirmLeave.startDate}}</el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="结束日期">{{confirmLeave.returnDate}}</el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="请假时间">{{confirmLeave.length}}</el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
           <div class="block">
             <el-timeline>
@@ -121,6 +111,8 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      count:0,
+      currentPage:1,
       confirmLeave: {},
       confirmFormVisible: false,
       checked: "",
@@ -213,7 +205,6 @@ export default {
         resource: "",
         desc: ""
       },
-      formLabelWidth: "120px",
       activities: [
         {
           content: "张主任",
@@ -234,6 +225,67 @@ export default {
     formatter(row, column) {
       return row.address;
     },
+    // 分页导航
+    handleCurrentChange(val) {
+      console.log(val);
+      this.currentPage = val;
+      this.getData("", val);
+    },
+    handleSearch() {
+      this.getData(this.formInline.user);
+      this.currentPage = 1;
+    },
+    initBaseinfo() {
+      this.baseinfo = {
+        code: "",
+        name: "",
+        status: 1,
+        note: ""
+      };
+      this.currentPage = 1;
+      this.title = "添加字典";
+      this.detailInfo = {};
+      this.getData();
+    },
+    handleSave() {
+      console.log(this.baseinfo);
+      let codeFlag = this.$utils.isEmpty(this.baseinfo.code);
+      let nameFlag = this.$utils.isEmpty(this.baseinfo.name);
+      let noteFlag = this.$utils.isEmpty(this.baseinfo.note);
+      console.log(codeFlag, nameFlag, noteFlag);
+      console.log(this.baseinfo);
+      if (!codeFlag && !nameFlag && !noteFlag) {
+        this.postAxios("Sysconfig/SaveBasedata", { baseinfo: this.baseinfo })
+          .then(res => {
+            this.$message({
+              message: "保存成功",
+              type: "success"
+            });
+            this.initBaseinfo();
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        this.$message({
+          message: "请填写完整信息",
+          type: "warning"
+        });
+      }
+      this.innerVisible = false;
+    },
+    getData(approvalStatus = "0", pageNum = "1", pageSize = "10") {
+      this.postAxios("OutApply/OutingApplyList", { approvalStatus, pageNum, pageSize })
+        .then(res => {
+          console.log(res);
+          this.count = res.count;
+          this.tableData = [...res.data];
+          this.loading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     handleEdit(index, row) {
       console.log(index, row);
       this.confirmFormVisible = true;
@@ -245,6 +297,9 @@ export default {
     onSubmit() {
       console.log("submit!");
     }
+  },
+  created() {
+    this.getData();
   }
 };
 </script>
