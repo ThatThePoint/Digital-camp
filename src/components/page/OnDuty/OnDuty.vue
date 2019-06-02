@@ -28,56 +28,56 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="值班计划" name="second">
-            <el-form :model="form">
+            <el-form :model="rotaInfo">
               <div class="flex">
                 <el-form-item label="岗位部门" :label-width="formLabelWidth">
                   <el-select
                     label="部门"
                     class="input-width"
-                    v-model="value"
+                    v-model="rotaInfo.deptId"
                     filterable
                     placeholder="所属部门"
                   >
                     <el-option
-                      v-for="item in depts"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+                      v-for="item in deptOptions"
+                      :key="item.tid"
+                      :label="item.name"
+                      :value="item.tid"
                     ></el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item label="岗位" :label-width="formLabelWidth">
-                  <el-select class="input-width" v-model="value" filterable placeholder="岗位">
+                  <el-select class="input-width" v-model="rotaInfo.posiId" filterable placeholder="岗位">
                     <el-option
-                      v-for="item in jobs"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+                      v-for="item in jobOptions"
+                      :key="item.tid"
+                      :label="item.name"
+                      :value="item.tid"
                     ></el-option>
                   </el-select>
                 </el-form-item>
               </div>
               <el-form-item label="值班时间" :label-width="formLabelWidth">
                     <el-date-picker
-                      v-model="value3"
+                      v-model="rotaInfo.start"
                       type="datetime"
                       placeholder="选择日期时间"
                       default-time="12:00:00">
                     </el-date-picker>--
                     <el-date-picker
-                      v-model="value4"
+                      v-model="rotaInfo.end"
                       type="datetime"
                       placeholder="选择日期时间"
                       default-time="12:00:00">
                     </el-date-picker>
               </el-form-item>
               <el-form-item label="值班人" :label-width="formLabelWidth">
-                <el-select class="input-width" v-model="value" filterable placeholder="值班人">
+                <el-select class="input-width" v-model="rotaInfo.staffId" filterable placeholder="值班人">
                   <el-option
-                    v-for="item in person"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    v-for="item in personOptions"
+                    :key="item.tid"
+                    :label="item.name"
+                    :value="item.tid"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -90,16 +90,16 @@
         <el-tab-pane label="值班查询" name="third">
               <div class="messages">
             <span>所属部门</span>
-            <el-select class="input-width" v-model="value" filterable placeholder="请选择">
+            <el-select class="input-width" v-model="dept" filterable placeholder="请选择">
               <el-option
-                v-for="item in depts"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in deptOptions"
+                :key="item.tid"
+                :label="item.name"
+                :value="item.tid"
               ></el-option>
             </el-select>
             <span>值班日期</span>
-              <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker class="input-width" v-model="dutyDate" type="date" placeholder="选择日期"></el-date-picker>
             <el-button type="primary">查询</el-button>
           </div>
           <div class="body">
@@ -127,11 +127,9 @@
 </template>
 <script>
 export default {
-  name: "documentManagement",
+  name: "rota",
   data() {
     return {
-      value3:"",
-      value4:"",
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -162,56 +160,9 @@ export default {
         ]
       },
       activeName: "first",
-      value1: "",
-      value2: "",
-      input2: "",
-      depts: [
-        {
-          value: "1",
-          label: "信息科"
-        },
-        {
-          value: "2",
-          label: "保卫处"
-        },
-        {
-          value: "3",
-          label: "后勤处"
-        },
-        {
-          value: "4",
-          label: "警告"
-        }
-      ],
-      jobs: [
-        {
-          value: "1",
-          label: "班长"
-        },
-        {
-          value: "2",
-          label: "后勤员"
-        },
-        {
-          value: "3",
-          label: "科长"
-        }
-      ],
-      person: [
-        {
-          value: "1",
-          label: "张大锤"
-        },
-        {
-          value: "2",
-          label: "刘力"
-        },
-        {
-          value: "3",
-          label: "哈哈"
-        }
-      ],
-      value: "",
+      deptOptions: [], //部门下拉框数据源
+      jobOptions: [],  //值班岗位下拉框数据源
+      personOptions: [],
       tableData: [
         {
           job: "门卫",
@@ -219,47 +170,16 @@ export default {
           dutyNow: "王小虎",
           dutyToday: "8:00-20:00 王小虎<br>20:00-24:00 王小虎",
           remark: "值班正常"
-        },
-        {
-          job: "门卫",
-          dept: "保卫处",
-          dutyNow: "王小虎",
-          dutyToday: "8:00-20:00王小虎</br>20:00-24:00 王小虎",
-          remark: "值班正常"
-        },
-        {
-          job: "门卫",
-          dept: "保卫处",
-          dutyNow: "王小虎",
-          dutyToday: "8:00-20:00王小虎</br>20:00-24:00 王小虎",
-          remark: "值班正常"
-        },
-        {
-          job: "门卫",
-          dept: "保卫处",
-          dutyNow: "王小虎",
-          dutyToday: "8:00-20:00王小虎</br>20:00-24:00 王小虎",
-          remark: "值班正常"
-        },
-        {
-          job: "门卫",
-          dept: "保卫处",
-          dutyNow: "王小虎",
-          dutyToday: "8:00-20:00王小虎</br>20:00-24:00 王小虎",
-          remark: "值班正常"
         }
       ],
-      dialogTableVisible: false,
-      dialogFormVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
+      dutyDate:"", //值班时间筛选项
+      rotaInfo: {  //新增/修改 值班信息
+        deptId:"",//不用传给后台
+        tid:"",
+        posiId:"", // 岗位id
+        staffId:"", // 值班人id
+        start:"", // 开始时间
+        end:""  //结束时间
       },
       formLabelWidth: "120px"
     };
