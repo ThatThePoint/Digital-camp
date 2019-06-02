@@ -282,6 +282,7 @@ export default {
         .then(res => {
           console.log(res);
           this.$message.success("提交成功！");
+          history.go(-1);
         })
         .catch(err => {
           console.log(err);

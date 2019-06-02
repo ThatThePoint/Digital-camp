@@ -58,8 +58,18 @@
                 </el-form-item>
               </div>
               <el-form-item label="值班时间" :label-width="formLabelWidth">
-                <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
-                <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
+                    <el-date-picker
+                      v-model="value3"
+                      type="datetime"
+                      placeholder="选择日期时间"
+                      default-time="12:00:00">
+                    </el-date-picker>--
+                    <el-date-picker
+                      v-model="value4"
+                      type="datetime"
+                      placeholder="选择日期时间"
+                      default-time="12:00:00">
+                    </el-date-picker>
               </el-form-item>
               <el-form-item label="值班人" :label-width="formLabelWidth">
                 <el-select class="input-width" v-model="value" filterable placeholder="值班人">
@@ -120,6 +130,8 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      value3:"",
+      value4:"",
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
