@@ -56,9 +56,9 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="添加车库" name="third">
+      <!-- <el-tab-pane label="添加车库" name="third">
         <div>添加车库</div>
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>
