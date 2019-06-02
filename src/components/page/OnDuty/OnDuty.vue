@@ -86,7 +86,7 @@
             <span>所属部门</span>
             <el-select class="input-width" v-model="dept" filterable placeholder="请选择">
               <el-option
-                v-for="item in deptOptions"
+                v-for="item in searchtableData"
                 :key="item.tid"
                 :label="item.name"
                 :value="item.tid"
@@ -124,6 +124,12 @@ export default {
   name: "rota",
   data() {
     return {
+      dept : "",//所属部门
+      dutyDate:"",//值班日期
+      rotaInfo: {
+        start : "",
+        end : ""
+      },
       persons: "",//值班人
       gangweidetail: '',//岗位值
       gangwei: '',//岗位部门值
