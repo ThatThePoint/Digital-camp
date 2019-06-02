@@ -290,15 +290,36 @@ export default {
     };
   },
   created(){
-    deptStaffData=this.getTree(this.deptStaffData);
+    let rolelist = this.changeKey(this.deptStaffData);
+    this.deptStaffData = this.getTree(rolelist)
   },
+
   methods: {
+    //将数据源的name改为lable
+    changeKey(array){
+      var keyMap = {
+          "name" : "label"
+      };
+      for(var i = 0;i < array.length;i++){
+        var obj = array[i];
+        for(var key in obj){
+          var newKey = keyMap[key];
+          if(newKey){
+              obj[newKey] = obj[key];
+              delete obj[key];
+            }
+          }
+      }
+      return array
+    },
     getTree(data){
     let map = {};
     let val = [];
     //生成数据对象集合
     data.forEach(it=>{
+
       delete it.children;
+      
       map[it.id] = it;
     })
     //生成结果集
