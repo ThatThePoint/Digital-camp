@@ -225,10 +225,7 @@ export default {
         pageNum : "1",
         pageSize : "10"
       };
-      // this.postAxios("OutApply/OutingApplyList", {approvalStatus:"0",
-      //   pageNum : "1",
-      //   pageSize : "10"})
-      this.postAxios("OutApply/OutingApplyList?approvalStatus=0")
+      this.postAxios("OutApply/OutingApplyList",params)
         .then(res => {
           console.log(res);
           this.count = res.count;
