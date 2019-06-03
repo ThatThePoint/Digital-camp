@@ -128,6 +128,19 @@
                 </template>
               </el-table-column>
             </el-table>
+            <div class="block">
+          <!-- <span class="demonstration">显示总数</span> -->
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage1"
+              :page-size="100"
+              layout="total, prev, pager, next"
+              :total="1000"
+              >
+            </el-pagination>
+          </div>
+
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -139,7 +152,8 @@ export default {
   name: "rota",
   data() {
     return {
-      currentPage1: 1,//分页选中当前页
+      pageNum : 1,//值班执勤分页页数
+      currentPage1: 1,//分页选中当前页，感觉这个参数没意义，先别删
       dept : "",//所属部门
       dutyDate:"",//值班日期
       rotaInfo: {
@@ -210,7 +224,7 @@ export default {
   created(){
     let data = {
       pageNum : 1,
-      pageSize : 25
+      pageSize : 2
     }
     let _this = this;
     this.postAxios("/DailyOffice/JobRota",data)
@@ -227,6 +241,39 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
+      this.pageNum = val;
+      this.getdataone()
+      this.getdatatwo()
+    },
+    //值班执勤分页
+    getdataone(){
+      let data = {
+        pageNum : this.pageNum,
+        pageSize : 2
+      }
+      let _this = this;
+      this.postAxios("/DailyOffice/JobRota",data)
+        .then(res => {
+          _this.tableData = res.list
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
+    //值班查询分页
+    getdatatwo(){
+      let data = {
+        pageNum : 1,
+        pageSize : 2
+      }
+      let _this = this;
+      this.postAxios("/DailyOffice/RotaList",data)
+        .then(res => {
+          _this.searchtableData = res.list
+        })
+        .catch(err => {
+          console.log(err);
+      });
     },
     //选择岗位部门切换岗位
     selected(){
@@ -264,22 +311,11 @@ export default {
       this.person = []
       let index = tab.index
       if(index == 0){
-        let data = {
-          pageNum : 1,
-          pageSize : 25
-        }
-        let _this = this;
-        this.postAxios("/DailyOffice/JobRota",data)
-          .then(res => {
-            _this.tableData = res.list
-          })
-          .catch(err => {
-            console.log(err);
-        });
+        this.getdataone()
       }else if(index == 1){
         let data = {
           pageNum : 1,
-          pageSize : 25
+          pageSize : 2
         }
         let _this = this;
         this.postAxios("/DailyOffice/RotaInfo",data)
@@ -296,19 +332,7 @@ export default {
             console.log(err);
         });
       }else if(index == 2){
-        let data = {
-          pageNum : 1,
-          pageSize : 25
-        }
-        let _this = this;
-        this.postAxios("/DailyOffice/RotaList",data)
-          .then(res => {
-            _this.searchtableData = res.list
-          })
-          .catch(err => {
-            console.log(err);
-        });
-
+        this.getdatatwo()
       }
     },
   }
