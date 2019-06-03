@@ -20,6 +20,21 @@
             </el-table>
           </div>
         </el-tab-pane>
+        <div class="block">
+          <!-- <span class="demonstration">显示总数</span> -->
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage1"
+            :page-size="100"
+            layout="total, prev, pager, next"
+            :total="1000"
+            >
+          </el-pagination>
+        </div>
+
+
+
         <el-tab-pane label="值班计划" name="second">
             <el-form :model="rotaInfo">
               <div class="flex">
@@ -124,6 +139,7 @@ export default {
   name: "rota",
   data() {
     return {
+      currentPage1: 1,//分页选中当前页
       dept : "",//所属部门
       dutyDate:"",//值班日期
       rotaInfo: {
@@ -206,6 +222,12 @@ export default {
     });
   },
   methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
     //选择岗位部门切换岗位
     selected(){
       this.jobs = []
