@@ -419,7 +419,7 @@
             <el-col :span="8">
               <el-form-item label="用车部门">
                 <!-- <el-input v-model="form.yongchebumen"></el-input> -->
-                 <el-input value="一连"></el-input>
+                <el-input value="一连"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -449,7 +449,7 @@
                 <!-- <el-select v-model="form.region" placeholder="请选择">
                   <el-option label="一般" value="1"></el-option>
                   <el-option label="危险" value="2"></el-option>
-                </el-select> -->
+                </el-select>-->
                 <el-select v-model="form.region" vlaue="一般" placeholder="请选择">
                   <el-option label="一般" value="1"></el-option>
                   <el-option label="危险" value="2"></el-option>
@@ -480,7 +480,7 @@
                 <el-input value="老张"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="8 ">
               <el-form-item label="申请人">
                 <el-input value="小刘"></el-input>
                 <!-- <el-input v-model="form.danhao"></el-input> -->
@@ -551,7 +551,7 @@
             </el-col>
           </el-row>
           <div v-if="activeName!=='second'">
-            <div class="second-title" >审批信息</div>
+            <div class="second-title">审批信息</div>
             <el-row>
               <el-col :span="8">
                 <el-form-item label="审批人">
@@ -582,7 +582,10 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="secondFormVisible = false">{{activeName==='fourth' ? '退回':'取 消'}}</el-button>
-          <el-button type="primary" @click="secondFormVisible = false">{{activeName==='fourth' ? '同 意':'确 定'}}</el-button>
+          <el-button
+            type="primary"
+            @click="secondFormVisible = false"
+          >{{activeName==='fourth' ? '同 意':'确 定'}}</el-button>
         </div>
       </el-dialog>
     </div>

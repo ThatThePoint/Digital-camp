@@ -9,18 +9,22 @@
     </div>
     <div class="container">
       <div class="messages">
-        <el-form :inline="true" :model="status" class="demo-form-inline">
+        <el-form :inline="true" :model="params" class="demo-form-inline">
           <el-form-item label="生效状态">
-            <el-select v-model="status" placeholder="请选择">
-              <el-option label="有效" value="shanghai"></el-option>
-              <el-option label="失效" value="beijing"></el-option>
+            <el-select v-model="params.status" placeholder="请选择">
+              <el-option
+                    v-for="item in statusOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="规章名称">
-            <el-input v-model="name" placeholder="请输入"></el-input>
+            <el-input v-model="params.name" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
+            <el-button type="primary" @click="getdata">查询</el-button>
           </el-form-item>
           <el-button type="success" @click="addrules" class="right">新增</el-button>
         </el-form>
@@ -34,7 +38,7 @@
           <el-table-column prop="ruleName" label="制度名称" sortable width="100"></el-table-column>
           <el-table-column prop="ruleSynopsis" label="制度简介" sortable width="120"></el-table-column>
           <el-table-column prop="version" label="版本"  width="100"></el-table-column>
-          <el-table-column prop="status" label="生效状态" width="100"></el-table-column>
+          <el-table-column prop="status" label="生效状态" width="100" :formatter="statusFormatter"></el-table-column>
           <el-table-column prop="publisherName" label="发布人"  width="100"></el-table-column>
           <el-table-column prop="publishTime" label="发布时间" width="200"></el-table-column>
           <el-table-column prop="readTimes" label="阅读次数" width="100"></el-table-column>
@@ -86,61 +90,33 @@
 </template>
 <script>
 export default {
-  name: "documentManagement",
+  name: "rule",
   data() {
     return {
       form:{
         ruleInfo: {
+          tid:"",
           ruleName: "",
           ruleSynopsis: "",
           version: "",
           status: ""
         },
       },
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            }
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            }
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            }
-          }
-        ]
-      },
-      status: {}, //生效状态
+      params:{
+      status: 1, //生效状态
       name: "", //制度名称
-      options: [],
-      tableData: [
+      },
+      statusOptions:[
         {
-          ruleName: "宿舍管理条例",
-          ruleSynopsis: "宿舍管理",
-          version: "1.0",
-          status: "生效",
-          publisherName: "老张",
-          publishTime: "2016-05-02",
-          readTimes: "23",
-          downTimes: "22"
+          label:"有效",
+          value : 1
+        },
+        {
+          label:"有效",
+          value : 0
         }
       ],
+      tableData: [],
       dialogFormVisible: false,
 
       checkRules: {
@@ -152,51 +128,48 @@ export default {
     };
   },
   created() {
-    var params = {
-      status: this.status,
-      name: this.name,
-      pageNum: "1",
-      pageSize: "10"
+    this.getdata("1","10");
+  },
+  methods: {
+    getdata(num,size){
+      var pa = {
+      status: this.params.status,
+      name: this.params.name,
+      pageNum:num,
+      pageSize:size
     };
-    this.postAxios("/DailyOffice/GetRules", params).then(res => {
+    this.postAxios("/DailyOffice/GetRules", pa).then(res => {
       console.log(res);
       this.tableData = res.data;
       this.totalPage = res.count;
     });
-  },
-  methods: {
+    },
     //新增规章制度
     addrules(){
-      this.dialogFormVisible = true
-
+      this.form.ruleInfo={};
+      this.dialogFormVisible = true;
     },
     cancel() {
       this.dialogFormVisible = false;
       this.form.ruleInfo = {};
     },
-    formatter(row, column) {
-      return row.address;
-    },
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
+    statusFormatter(row, column) {
+      return row.status==1?"有效":"失效";
     },
     onSubmitForm(form) {
       let data = {
-        ruleName : this.form.ruleInfo.ruleName,
-        version : this.form.ruleInfo.version,
-        ruleSynopsis : this.form.ruleInfo.ruleSynopsis,
-        pageNum : 1,
-        pageSize : 2
+        // ruleName : this.form.ruleInfo.ruleName,
+        // version : this.form.ruleInfo.version,
+        // ruleSynopsis : this.form.ruleInfo.ruleSynopsis
+        model:this.form.ruleInfo
       }
       if(this.form.ruleInfo.ruleName && this.form.ruleInfo.version && this.form.ruleInfo.ruleSynopsis){
         let _this = this;
         this.postAxios("/DailyOffice/SaveRules",data)
           .then(res => {
-            console.log(res)
-            _this.dialogFormVisible = true
+            console.log(res);
+            _this.dialogFormVisible = false;
+            _this.getdata("1","10");
           })
           .catch(err => {
             console.log(err);
@@ -204,9 +177,6 @@ export default {
       }else{
         this.$message.warning("输入不能为空")
       }
-
-    },
-    onSubmit(){
 
     }
   }
