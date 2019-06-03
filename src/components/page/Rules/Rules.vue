@@ -22,7 +22,7 @@
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
-          <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
+          <el-button type="success" @click="addrules" class="right">新增</el-button>
         </el-form>
       </div>
       <div class="body">
@@ -31,14 +31,14 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="ruleName" label="制度名称" sortable width="180">{{}}</el-table-column>
-          <el-table-column prop="ruleSynopsis" label="制度简介" sortable width="180"></el-table-column>
-          <el-table-column prop="version" label="版本"></el-table-column>
-          <el-table-column prop="status" label="生效状态"></el-table-column>
-          <el-table-column prop="publisherName" label="发布人"></el-table-column>
-          <el-table-column prop="publishTime" label="发布时间"></el-table-column>
-          <el-table-column prop="readTimes" label="阅读次数"></el-table-column>
-          <el-table-column prop="downTimes" label="下载次数"></el-table-column>
+          <el-table-column prop="ruleName" label="制度名称" sortable width="100"></el-table-column>
+          <el-table-column prop="ruleSynopsis" label="制度简介" sortable width="120"></el-table-column>
+          <el-table-column prop="version" label="版本"  width="100"></el-table-column>
+          <el-table-column prop="status" label="生效状态" width="100"></el-table-column>
+          <el-table-column prop="publisherName" label="发布人"  width="100"></el-table-column>
+          <el-table-column prop="publishTime" label="发布时间" width="200"></el-table-column>
+          <el-table-column prop="readTimes" label="阅读次数" width="100"></el-table-column>
+          <el-table-column prop="downTimes" label="下载次数" width="100"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">预览</el-button>
@@ -47,20 +47,20 @@
           </el-table-column>
         </el-table>
         <el-dialog title="新增规章制度" :visible.sync="dialogFormVisible">
-          <el-form :rules="checkRules" ref="ruleInfo" :model="ruleInfo">
+          <el-form :rules="checkRules" ref="ruleInfo" :model="form.ruleInfo">
             <div class="flex"></div>
-            <el-form-item label="规章名称" :label-width="formLabelWidth">
-              <el-input class="input-width" placeholder="请输入" v-model="ruleInfo.ruleName"></el-input>
+            <el-form-item label="规章名称1" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder="请输入" v-model="form.ruleInfo.ruleName"></el-input>
             </el-form-item>
-            <el-form-item label="版本" :label-width="formLabelWidth">
-              <el-input class="input-width" placeholder="请输入" v-model="ruleInfo.version"></el-input>
+            <el-form-item label="版本1" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder="请输入" v-model="form.ruleInfo.version"></el-input>
             </el-form-item>
             <el-form-item label="简介" :label-width="formLabelWidth">
               <el-input
                 type="textarea"
                 class="input-width"
                 placeholder="请输入"
-                v-model="ruleInfo.ruleSynopsis"
+                v-model="form.ruleInfo.ruleSynopsis"
               ></el-input>
             </el-form-item>
             <el-form-item label="附件" :label-width="formLabelWidth">
@@ -89,6 +89,14 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      form:{
+        ruleInfo: {
+          ruleName: "",
+          ruleSynopsis: "",
+          version: "",
+          status: ""
+        },
+      },
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -118,7 +126,7 @@ export default {
           }
         ]
       },
-      status: "", //生效状态
+      status: {}, //生效状态
       name: "", //制度名称
       options: [],
       tableData: [
@@ -134,18 +142,13 @@ export default {
         }
       ],
       dialogFormVisible: false,
-      ruleInfo: {
-        ruleName: "",
-        ruleSynopsis: "",
-        version: "",
-        status: ""
-      },
+
       checkRules: {
         ruleName: [{ required: true, message: "制度名称", trigger: "blur" }],
         version: [{ required: true, message: "请输入版本号", trigger: "blur" }],
         status: [{ required: true, message: "请选择状态", trigger: "blur" }]
       },
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
     };
   },
   created() {
@@ -155,16 +158,21 @@ export default {
       pageNum: "1",
       pageSize: "10"
     };
-    this.postAxios("DailyOffice/GetRules", params).then(res => {
+    this.postAxios("/DailyOffice/GetRules", params).then(res => {
       console.log(res);
       this.tableData = res.data;
       this.totalPage = res.count;
     });
   },
   methods: {
+    //新增规章制度
+    addrules(){
+      this.dialogFormVisible = true
+
+    },
     cancel() {
       this.dialogFormVisible = false;
-      this.ruleInfo = {};
+      this.form.ruleInfo = {};
     },
     formatter(row, column) {
       return row.address;
@@ -176,7 +184,30 @@ export default {
       console.log(index, row);
     },
     onSubmitForm(form) {
-      
+      let data = {
+        ruleName : this.form.ruleInfo.ruleName,
+        version : this.form.ruleInfo.version,
+        ruleSynopsis : this.form.ruleInfo.ruleSynopsis,
+        pageNum : 1,
+        pageSize : 2
+      }
+      if(this.form.ruleInfo.ruleName && this.form.ruleInfo.version && this.form.ruleInfo.ruleSynopsis){
+        let _this = this;
+        this.postAxios("/DailyOffice/SaveRules",data)
+          .then(res => {
+            console.log(res)
+            _this.dialogFormVisible = true
+          })
+          .catch(err => {
+            console.log(err);
+        });
+      }else{
+        this.$message.warning("输入不能为空")
+      }
+
+    },
+    onSubmit(){
+
     }
   }
 };
