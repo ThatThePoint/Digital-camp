@@ -14,7 +14,7 @@
               style="width: 100%"
               :default-sort="{prop: 'posiName', order: 'descending'}"
             >
-              <el-table-column prop="posiName" label="岗位名称" sortable width="180">{{}}</el-table-column>
+              <el-table-column prop="posiName" label="岗位名称" sortable width="180"></el-table-column>
               <el-table-column prop="dept" label="单位" sortable width="180"></el-table-column>
               <el-table-column prop="curDuty" label="当前值班人"></el-table-column>
             </el-table>
@@ -25,9 +25,9 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage1"
-            :page-size="100"
+            :page-size="2"
             layout="total, prev, pager, next"
-            :total="1000"
+            :total="count"
             >
           </el-pagination>
         </div>
@@ -57,7 +57,7 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item label="岗位" :label-width="formLabelWidth">
-                  <el-select class="input-width" v-model="gangweidetail" filterable placeholder="岗位">
+                  <el-select class="input-width" v-model="gangweidetail" filterable placeholder="岗位" @change="selectedgangwei">
                     <el-option
                       v-for="item in jobs"
                       :key="item.tid"
@@ -67,10 +67,12 @@
                   </el-select>
                 </el-form-item>
               </div>
+
               <el-form-item label="值班时间" :label-width="formLabelWidth">
                     <el-date-picker
                       v-model="rotaInfo.start"
                       type="datetime"
+                      :default-value="default_value"
                       placeholder="选择日期时间"
                       default-time="12:00:00">
                     </el-date-picker>--
@@ -80,9 +82,10 @@
                       placeholder="选择日期时间"
                       default-time="12:00:00">
                     </el-date-picker>
+
               </el-form-item>
               <el-form-item label="值班人" :label-width="formLabelWidth">
-                <el-select class="input-width" v-model="persons" filterable placeholder="值班人">
+                <el-select class="input-width" v-model="persons" filterable placeholder="值班人" @change="selectperson">
                   <el-option
                     v-for="item in person"
                     :key="item.tid"
@@ -94,7 +97,7 @@
             </el-form>
             <div class="footer">
               <el-button >取 消</el-button>
-              <el-button type="primary">确 定</el-button>
+              <el-button type="primary" @click="confirm">确 定</el-button>
             </div>
         </el-tab-pane>
         <el-tab-pane label="值班查询" name="third">
@@ -118,9 +121,9 @@
               style="width: 100%"
               :default-sort="{prop: 'job', order: 'descending'}"
             >
-              <el-table-column prop="job" label="岗位名称" sortable width="180">{{}}</el-table-column>
+              <el-table-column prop="job" label="岗位名称" sortable width="180"></el-table-column>
               <el-table-column prop="dept" label="单位" sortable width="180"></el-table-column>
-              <el-table-column prop="dutyNow" label="当前值班人"></el-table-column>
+              <el-table-column prop="dutyPerson" label="当前值班人"></el-table-column>
               <el-table-column prop="dutyToday" label="当日值班安排"></el-table-column>
               <el-table-column prop="remark" label="值班记录"></el-table-column>
               <el-table-column label="操作">
@@ -132,11 +135,11 @@
             <div class="block">
             <el-pagination
               @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
+              @current-change="handleCurrentChangetwo"
               :current-page.sync="currentPage1"
-              :page-size="100"
+              :page-size="2"
               layout="total, prev, pager, next"
-              :total="1000"
+              :total="count"
               >
             </el-pagination>
           </div>
@@ -152,14 +155,17 @@ export default {
   name: "rota",
   data() {
     return {
+      count:0,//数据总条数
       pageNum : 1,//值班执勤分页页数
+      search_page : 1,//值班查询页数
       currentPage1: 1,//分页选中当前页，感觉这个参数没意义，先别删
       dept : "",//所属部门
       dutyDate:"",//值班日期
       rotaInfo: {
-        start : "",
-        end : ""
+        start : 'Tue Nov 07 2019 22:38:00 GMT+0800 (中国标准时间)',
+        end : ''
       },
+      default_value:[new Date(2000, 10, 10, 10, 10)],
       persons: "",//值班人
       gangweidetail: '',//岗位值
       gangwei: '',//岗位部门值
@@ -218,7 +224,10 @@ export default {
         resource: "",
         desc: ""
       },
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
+      posiId : '',//传给后台保存用的岗位id
+      staffId : '',//传给后台保存用的人员id
+      tid : '',//修改时带过来的
     };
   },
   created(){
@@ -230,19 +239,74 @@ export default {
     this.postAxios("/DailyOffice/JobRota",data)
       .then(res => {
         _this.tableData = res.list
+        _this.count = res.count
       })
       .catch(err => {
         console.log(err);
     });
   },
   methods: {
+    //获取值班人id
+    selectperson(){
+      this.staffId = this.persons
+    },
+    //岗位变化事获取id
+    selectedgangwei(){
+      this.posiId	= this.gangweidetail
+    },
+    //保存值班计划
+    confirm(){
+      let data = {
+        tid:this.tid,
+        posiId : this.posiId,
+        staffId : this.staffId,
+        start : this.rotaInfo.start,
+        end : this.rotaInfo.end
+      }
+      let _this = this;
+      this.postAxios("/DailyOffice/SaveRotaInfo",data)
+        .then(res => {
+          if(res.status){
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            });
+          }else{
+            this.$message({
+              message: '保存失败',
+              type: 'warning'
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
+      this.jobDatalist = []
+      this.personlist = []
+      this.searchtableData = []
+      this.tableData = []
+      this.depts = []
+      this.jobs = []
+      this.person = []
       this.pageNum = val;
       this.getdataone()
+    },
+    //值班查询改变页码
+    handleCurrentChangetwo(val){
+      this.jobDatalist = []
+      this.personlist = []
+      this.searchtableData = []
+      this.tableData = []
+      this.depts = []
+      this.jobs = []
+      this.person = []
+      this.search_page = val;
       this.getdatatwo()
     },
     //值班执勤分页
@@ -255,6 +319,7 @@ export default {
       this.postAxios("/DailyOffice/JobRota",data)
         .then(res => {
           _this.tableData = res.list
+          _this.count = res.count
         })
         .catch(err => {
           console.log(err);
@@ -263,7 +328,7 @@ export default {
     //值班查询分页
     getdatatwo(){
       let data = {
-        pageNum : 1,
+        pageNum : this.search_page,
         pageSize : 2
       }
       let _this = this;
@@ -295,13 +360,24 @@ export default {
     formatter(row, column) {
       return row.address;
     },
+    //值班查询编辑
     handleEdit(index, row) {
-
+      this.activeName = "second"
+      this.gangwei = row.dept
+      this.persons = row.dutyPerson
+      // this.gangweidetail = row.
+      this.rotaInfo.start=new Date(Date.parse(row.startTime.replace(/-/g, '/')))
+      this.rotaInfo.end = new Date(Date.parse(row.endTime.replace(/-/g, '/')))
+      console.log(this.rotaInfo.start,this.rotaInfo.end)
+      this.tid = row.tid
+      this.confirm()
     },
     handleDelete(index, row) {
 
     },
     handleClick(tab, event) {
+
+      console.log(tab,event)
       this.jobDatalist = []
       this.personlist = []
       this.searchtableData = []

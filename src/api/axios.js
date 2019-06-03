@@ -56,7 +56,7 @@ function apiAxios(method, url, params) {
         headers:  { 'Content-Type': "application/x-www-form-urlencoded" } ,
         params: method === 'GET' || method === 'DELETE' ?  params: null,
         data: method === 'POST' || method === 'PUT' ? qs.stringify(params) : null,
-        timeout: 10000
+        timeout: 100000
     }
 
     // 注意**Promise**使用(Promise首字母大写)
