@@ -11,6 +11,15 @@ import "babel-polyfill";
 import utils  from './utils';
 import axiosApi from '@/api/axios';
 import store from './store'
+import moment from 'moment'
+ 
+// 定义全局过滤器--时间格式化
+Vue.filter('format',function(val,arg){
+    if(!val) return;
+    val = val.toString()
+    return moment(val).format(arg)
+})
+
 Vue.config.productionTip = false
 Vue.use(ElementUI, {
     size: 'small'

@@ -12,15 +12,15 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="name" label="申请人" sortable></el-table-column>
-          <el-table-column prop="dept" label="申请人部门" sortable></el-table-column>
-          <el-table-column prop="type" label="外出类型"></el-table-column>
-          <el-table-column prop="reason" label="外出内容"></el-table-column>
-          <el-table-column prop="startDate" label="外出时间"></el-table-column>
-          <el-table-column prop="returnDate" label="返岗时间"></el-table-column>
-          <el-table-column prop="length" label="申请时长"></el-table-column>
-          <el-table-column prop="curApproval" label="当前审批人"></el-table-column>
-          <el-table-column prop="status" label="审批状态"></el-table-column>
+          <el-table-column prop="applyerName" label="申请人" sortable></el-table-column>
+          <el-table-column prop="applyDeptName" label="申请人部门" sortable></el-table-column>
+          <el-table-column prop="outingType" label="外出类型"></el-table-column>
+          <el-table-column prop="outingContent" label="外出内容"></el-table-column>
+          <el-table-column prop="startTime" label="外出时间" :formatter="starttimeFormatter"></el-table-column>
+          <el-table-column prop="endTime" label="返岗时间" :formatter="endtimeFormatter"></el-table-column>
+          <el-table-column prop="timeLength" label="申请时长"></el-table-column>
+          <el-table-column prop="curApprovalName" label="当前审批人"></el-table-column>
+          <el-table-column prop="status" label="审批状态" :formatter="statusFormatter"></el-table-column>
           <el-table-column label="操作" sortable width="300px">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
@@ -40,37 +40,34 @@
           <el-form :model="form" label-width="100px" ref="form">
             <el-row>
               <el-col :span="6">
-                <el-form-item label="申请人">{{confirmLeave.name}}</el-form-item>
+                <el-form-item label="申请人">{{form.applyerName}}</el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="部门">{{form.applyDeptName}}</el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="6">
-                <el-form-item label="请假人">{{confirmLeave.name}}</el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="部门">{{confirmLeave.dept}}</el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="岗位">科长</el-form-item>
+                <el-form-item label="请假人">{{form.outingStaffName}}</el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="6">
-                <el-form-item label="外出类型">{{confirmLeave.type}}</el-form-item>
+                <el-form-item label="外出类型">{{form.outingType}}</el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="外出原因">{{confirmLeave.reason}}</el-form-item>
+                <el-form-item label="外出原因">{{form.outingContent}}</el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="6">
-                <el-form-item label="开始日期">{{confirmLeave.startDate}}</el-form-item>
+              <el-col :span="8">
+                <el-form-item label="开始日期">{{form.startTime}}</el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="结束日期">{{form.endTime}}</el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="结束日期">{{confirmLeave.returnDate}}</el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="请假时间">{{confirmLeave.length}}</el-form-item>
+                <el-form-item label="请假时间">{{form.timeLength}}</el-form-item>
               </el-col>
             </el-row>
           </el-form>
@@ -80,6 +77,18 @@
                 <el-card>
                   <h4>张主任</h4>
                   <p>同意</p>
+                  <div>
+                    <el-radio-group v-model="resource">
+                      <el-radio label="同意" value="1"></el-radio>
+                      <el-radio label="退回" value="2"></el-radio>
+                    </el-radio-group>
+                    <el-row>
+                      <el-col :span="18" class="flex">
+                        <div style="width:80px;">意见</div>
+                        <el-input v-model="name"></el-input>
+                      </el-col>
+                    </el-row>
+                  </div>
                 </el-card>
               </el-timeline-item>
               <el-timeline-item timestamp="2018/4/3" placement="top">
@@ -120,44 +129,17 @@ export default {
   data() {
     return {
       name: "",
+      form: {},
+      curNode:1,
+      seletOptions: {},
       resource: 1,
-      count: 0,
+      count: 1,
       currentPage: 1,
       confirmLeave: {},
       confirmFormVisible: false,
       checked: "",
-      value1: "",
-      value2: "",
-      input2: "",
-      filterModel: {
-        name: "",
-        depts: "",
-        types: ""
-      },
       value: "",
-      tableData: [
-        {
-          name: "李云龙",
-          dept: "保卫科",
-          type: "请假",
-          reason: "外出有事",
-          startDate: "2019-04-22",
-          returnDate: "2019-04-30",
-          length: "18小时",
-          curApproval: "老张",
-          status: "待审批"
-        }
-      ],
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
+      tableData: [],
       activities: [
         {
           content: "张主任",
@@ -175,8 +157,45 @@ export default {
     };
   },
   methods: {
-    formatter(row, column) {
-      return row.address;
+    //  当前节点 1-建单 
+    // 2-一级审批（有二级审批）
+    //  3-一级审批（无二级审批）
+    //   4-二级审批（有三级审批）
+    //   5-二级审批（无三级审批）
+    //    6-三级审批 
+    //     7-归档：此时只能查看不能修改（表单退回即为归档）
+    starttimeFormatter(row, column) {
+      if (row.startTime) {
+        return row.startTime.replace("T", " ");
+      } else {
+        return row.startTime;
+      }
+    },
+    endtimeFormatter(row, column) {
+      if (row.endTime) {
+        return row.endTime.replace("T", " ");
+      } else {
+        return row.endTime;
+      }
+    },
+    statusFormatter(row, colum) {
+      switch (row.status) {
+        case 1:
+          return "待审批";
+          break;
+        case 2:
+          return "归档";
+          break;
+        case 1:
+          return "退回";
+          break;
+        case 1:
+          return "草稿";
+          break;
+        default:
+          return "待审批";
+          break;
+      }
     },
     // 分页导航
     handleCurrentChange(val) {
@@ -200,33 +219,44 @@ export default {
       this.detailInfo = {};
       this.getData();
     },
-    handleSave() {
-      console.log(this.baseinfo);
-      let codeFlag = this.$utils.isEmpty(this.baseinfo.code);
-      let nameFlag = this.$utils.isEmpty(this.baseinfo.name);
-      let noteFlag = this.$utils.isEmpty(this.baseinfo.note);
-      console.log(codeFlag, nameFlag, noteFlag);
-      console.log(this.baseinfo);
-      if (!codeFlag && !nameFlag && !noteFlag) {
-        this.postAxios("Sysconfig/SaveBasedata", { baseinfo: this.baseinfo })
-          .then(res => {
-            this.$message({
-              message: "保存成功",
-              type: "success"
-            });
-            this.initBaseinfo();
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      } else {
-        this.$message({
-          message: "请填写完整信息",
-          type: "warning"
+    getFormData(tid) {
+      this.postAxios("OutApply/ApplyInfo", { tid })
+        .then(res => {
+          console.log(res);
+          this.seletOptions = [...res.data];
+          this.loading = false;
+        })
+        .catch(err => {
+          console.log(err);
         });
-      }
-      this.innerVisible = false;
     },
+    // handleSave() {
+    //   console.log(this.baseinfo);
+    //   let codeFlag = this.$utils.isEmpty(this.baseinfo.code);
+    //   let nameFlag = this.$utils.isEmpty(this.baseinfo.name);
+    //   let noteFlag = this.$utils.isEmpty(this.baseinfo.note);
+    //   console.log(codeFlag, nameFlag, noteFlag);
+    //   console.log(this.baseinfo);
+    //   if (!codeFlag && !nameFlag && !noteFlag) {
+    //     this.postAxios("Sysconfig/SaveBasedata", { baseinfo: this.baseinfo })
+    //       .then(res => {
+    //         this.$message({
+    //           message: "保存成功",
+    //           type: "success"
+    //         });
+    //         this.initBaseinfo();
+    //       })
+    //       .catch(err => {
+    //         console.log(err);
+    //       });
+    //   } else {
+    //     this.$message({
+    //       message: "请填写完整信息",
+    //       type: "warning"
+    //     });
+    //   }
+    //   this.innerVisible = false;
+    // },
     getData(approvalStatus = "0", pageNum = "1", pageSize = "10") {
       var params = {
         approvalStatus: "0",
@@ -245,9 +275,9 @@ export default {
         });
     },
     handleEdit(index, row) {
-      console.log(index, row);
       this.confirmFormVisible = true;
-      this.confirmLeave = this.tableData[index];
+      this.form = this.tableData[index];
+      this.getFormData(row.tid);
     },
     handleDelete(index, row) {
       console.log(index, row);
@@ -257,7 +287,7 @@ export default {
     }
   },
   created() {
-    // this.getData();
+    this.getData();
   }
 };
 </script>
