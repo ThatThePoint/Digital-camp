@@ -19,8 +19,7 @@
               <el-table-column prop="curDuty" label="当前值班人"></el-table-column>
             </el-table>
           </div>
-        </el-tab-pane>
-        <div class="block">
+          <div class="block">
           <!-- <span class="demonstration">显示总数</span> -->
           <el-pagination
             @size-change="handleSizeChange"
@@ -32,6 +31,8 @@
             >
           </el-pagination>
         </div>
+        </el-tab-pane>
+
 
 
 
@@ -129,7 +130,6 @@
               </el-table-column>
             </el-table>
             <div class="block">
-          <!-- <span class="demonstration">显示总数</span> -->
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
