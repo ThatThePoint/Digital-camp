@@ -61,21 +61,20 @@
           </div>
           <div class="body">
             <el-table
-              :data="tableData"
+              :data="tableDataone"
               style="width: 100%"
               :default-sort="{prop: 'license', order: 'descending'}"
             >
-              <el-table-column prop="LicensePlate" label="车牌号" sortable width="180">
-                <template slot-scope="scope">
-                  
+              <el-table-column prop="licensePlate" label="车牌号" sortable width="120" >
+                <!-- <template slot-scope="scope">
                   {{ scope.row.license }}
-                </template>
+                </template> -->
               </el-table-column>
-              <el-table-column prop="carType" label="车辆类型" sortable width="180" ></el-table-column>
-              <el-table-column prop="deptName" label="所属部门" sortable></el-table-column>
-              <el-table-column prop="brand" label="车辆品牌" sortable ></el-table-column>
-              <el-table-column prop="model" label="型号" sortable ></el-table-column>
-              <el-table-column prop="useStatus" label="技术状态" sortable ></el-table-column>
+              <el-table-column prop="carType" label="车辆类型" sortable width="120" :formatter="carnum"></el-table-column>
+              <el-table-column prop="deptName" label="所属部门" sortable width="120"></el-table-column>
+              <el-table-column prop="brand" label="车辆品牌" sortable width="120"></el-table-column>
+              <el-table-column prop="model" label="型号" sortable width="120"></el-table-column>
+              <el-table-column prop="useStatus" label="技术状态" sortable width="120"></el-table-column>
               <el-table-column prop="inOrOut" label="出入状态" sortable ></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -119,7 +118,7 @@
           </div>
           <div class="body">
             <el-table
-              :data="tableData"
+              :data="tableDatatwo"
               style="width: 100%"
               :default-sort="{prop: 'license', order: 'descending'}"
             >
@@ -176,7 +175,7 @@
           </div>
           <div class="body">
             <el-table
-              :data="tableData"
+              :data="tableDatathree"
               style="width: 100%"
               :default-sort="{prop: 'license', order: 'descending'}"
             >
@@ -294,35 +293,60 @@ export default {
       propertyValue: "",
       departmentValue: "",
       inoutValue: "",
-      tableData: [
-        {
-          license: "冀A1231312",
-          carType: "内部车辆",
-          deptName:"独立团",
-          owner:"张山峰",
-          ownerTel:"1329999999",
-          registTime:"2019-05-22",
-          relaterName:"张队长",
-          brand : "丰田",
-          model : "雅阁",
-          useStatus : "正常使用",
-          inOrOut : "在库",
-          property: "内部车辆",
-          department: "连队1",
-          carUser:"小明",
-          carUser1: "内部车辆",
-          carUser2: "私家车辆",
-          carUser3: "临时车辆",
-          tel: "1329999999",
-          inout: "内部车辆"
-        }
-      ]
+      tableDataone : [],
+      tableDatatwo : [],
+      tableDatathree : [],
+      tableData: []
     };
   },
+  created(){
+    this.getdataone()
+  },
   methods: {
-    // formatter(row, column) {
-    //   return row.address;
-    // },
+    carnum(row,index){
+      return row.carType == '1' ? "内部车辆" : row.carType == '2' ? "外部车辆" : "临时车辆"
+      console.log(row)
+    },
+    //获取部队车辆列表
+    getdataone(){
+      let _this = this;
+      this.postAxios("/CarInfo/GetCarList",{
+        carType : 1
+      })
+        .then(res => {
+          _this.tableDataone = res.carList
+          _this.count = res.count
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
+    getdatatwo(){
+      let _this = this;
+      this.postAxios("/CarInfo/GetCarList",{
+        carType : 2
+      })
+        .then(res => {
+          _this.tableDatatwo = res.carList
+          _this.count = res.count
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
+    getdatathree(){
+      let _this = this;
+      this.postAxios("/CarInfo/GetCarList",{
+        carType : 3
+      })
+        .then(res => {
+          _this.tableDatathree = res.carList
+          _this.count = res.count
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
     handleEdit(index, row) {
       this.$router.push({
         path : '/addcar',
@@ -332,15 +356,32 @@ export default {
       })
       console.log(index, row);
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+    //删除
+    handleDelete(index, row){
+      debugger
+      let _this = this;
+      this.postAxios("/CarInfo/DeleteCar",{id : row.tid})
+        .then(res => {
+          _this.$message.success("删除成功")
+          _this.getdataone()
+        })
+        .catch(err => {
+          console.log(err);
+      });
     },
     addCar() {
       this.$router.push({ path: "/addcar" });
       // router.push({ path: '/addcar' })
     },
     handleClick(tab, event) {
-      console.log(tab, event);
+      if(tab.index == '0') {
+        this.getdataone()
+      }else if(tab.index == '1'){
+        this.getdatatwo()
+      }else if(tab.index == '2'){
+        this.getdatathree()
+      }
+      console.log(tab.index, event);
     },
       querySearch(queryString, cb) {
         debugger
