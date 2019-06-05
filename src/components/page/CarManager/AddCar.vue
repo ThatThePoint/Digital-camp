@@ -62,7 +62,7 @@
                   ></el-option>
                 </el-select>
                 <span class="starred">*</span>行驶证号：
-                <el-input class="input-width" placeholder="车牌号" v-model="carInfo.LicensePlate"></el-input>
+                <el-input class="input-width" placeholder="车牌号" v-model="carInfo.driveLicense"></el-input>
                 <el-button size="small" type="success">照片上传</el-button>
               </div>
               <div class="itemDet">
@@ -185,7 +185,7 @@
                     :value="item.code"
                   ></el-option>
                 </el-select>行驶证号：
-                <el-input class="input-width" placeholder="车牌号" v-model="carInfo.LicensePlate"></el-input>
+                <el-input class="input-width" placeholder="车牌号" v-model="carInfo.driveLicense"></el-input>
                 <el-button size="small" type="success">照片上传</el-button>
               </div>
               <div class="itemDet">
@@ -281,8 +281,6 @@ export default {
       carRightOptions : [],//车辆权限
       carType1Options : [],//车辆类别1
       carType2Options :[],//车辆类别2
-      carInfotel:"",//手机号
-      LicensePlate:"",//车牌号
       inoutOptions:"",
       value1:"",
       value2:"",
@@ -373,10 +371,7 @@ export default {
 
         //<summary>车辆类型 1-内部车辆 2-外部车辆 3-临时车辆</summary>
         carType:"",
-        LicensePlate :'',//车牌号
-        // <summary>行驶证号</summary>
-        LicensePlate:"",
-
+        LicensePlate:"",//车牌号
         // <summary>部门</summary>
         ofDept:"",
         // <summary>部门名称</summary>
@@ -484,10 +479,8 @@ export default {
   created(){
     //编辑时进入页面
     if(this.$route.query.row){
-      console.log(this.$route.query.row)
-      this.carInfotel = this.$route.query.row.tel
-      this.LicensePlate = this.$route.query.row.license
-
+      this.carInfo = this.$route.query.row
+      console.log(this.$route.query.row.licensePlate,this.carInfo.licensePlate)
     }
     this.getSelectValue()
   },
@@ -529,7 +522,7 @@ export default {
     confirms(){
       console.log(this.carInfo)
       let info = this.carInfo
-      if(info.carType == '' || info.LicensePlate == '' || info.brand == '' || info.model == '' || info.color == '' || info.LicensePlate == '' || info.motorCode == '' || info.frameCode == '' || info.load == ''|| info.loadNumber == ''|| info.ofDept == ''|| info.carRight == ''){
+      if(info.carType == '' || info.LicensePlate == '' || info.brand == '' || info.model == '' || info.color == '' || info.driveLicense == '' || info.motorCode == '' || info.frameCode == '' || info.load == ''|| info.loadNumber == ''|| info.ofDept == ''|| info.carRight == ''){
         this.$message.warning("必填项不能为空")
       }else{
         let _this = this;

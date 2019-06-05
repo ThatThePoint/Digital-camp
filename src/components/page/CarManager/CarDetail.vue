@@ -348,6 +348,7 @@ export default {
       });
     },
     handleEdit(index, row) {
+      console.log("111")
       this.$router.push({
         path : '/addcar',
           query : {
