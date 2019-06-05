@@ -180,6 +180,9 @@ const utils = {
 
     isMobilePhone: function (source) {
         var regex = /^((\(\d{3}\))|(\d{3}\-))?1\d{10}/;
+        if(! regex.test(source)){
+            alert("手机号格式不对")
+        }
         return regex.test(source);
     },
 

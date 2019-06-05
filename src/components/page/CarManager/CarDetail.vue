@@ -63,7 +63,7 @@
             <el-table
               :data="tableDataone"
               style="width: 100%"
-              :default-sort="{prop: 'license', order: 'descending'}"
+              :default-sort="{prop: 'licensePlate', order: 'descending'}"
             >
               <el-table-column prop="licensePlate" label="车牌号" sortable width="120" >
                 <!-- <template slot-scope="scope">
@@ -120,13 +120,13 @@
             <el-table
               :data="tableDatatwo"
               style="width: 100%"
-              :default-sort="{prop: 'license', order: 'descending'}"
+              :default-sort="{prop: 'licensePlate', order: 'descending'}"
             >
-              <el-table-column prop="license" label="车牌号" sortable width="180">
-                <template slot-scope="scope">
+              <el-table-column prop="licensePlate" label="车牌号" sortable width="180">
+                <!-- <template slot-scope="scope">
                   
                   {{ scope.row.license }}
-                </template>
+                </template> -->
               </el-table-column>
               <el-table-column prop="owner" label="车主姓名" sortable></el-table-column>
               <el-table-column prop="ownerTel" label="联系电话" sortable></el-table-column>
@@ -177,16 +177,12 @@
             <el-table
               :data="tableDatathree"
               style="width: 100%"
-              :default-sort="{prop: 'license', order: 'descending'}"
+              :default-sort="{prop: 'licensePlate', order: 'descending'}"
             >
-              <el-table-column prop="license" label="车牌号" sortable width="180">
-                <template slot-scope="scope">
-                  {{ scope.row.license }}
-                </template>
-              </el-table-column>
-              <el-table-column prop="carType" label="车辆属性" sortable width="180"></el-table-column>
+              <el-table-column prop="licensePlate" label="车牌号" sortable width="120"></el-table-column>
+              <el-table-column prop="carType" label="车辆属性" sortable width="120"></el-table-column>
               <el-table-column prop="tel" label="联系电话" sortable></el-table-column>
-              <el-table-column prop="registTime" label="登记时间" sortable width="180"></el-table-column>
+              <el-table-column prop="registTime" label="登记时间" sortable width="120"></el-table-column>
               <el-table-column prop="inout" label="出入状态" sortable></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
