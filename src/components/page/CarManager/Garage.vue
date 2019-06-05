@@ -69,7 +69,7 @@ export default {
     return {
       departmentOptions: [
         {
-          value: "1-2",
+          value: "1-2-1",
           label: "A1",
           statu: "use"
         },
@@ -89,7 +89,7 @@ export default {
           statu: "use"
         },
         {
-          value: "1-2",
+          value: "1-2-4",
           label: "A5",
           statu: "use"
         },

@@ -15,22 +15,22 @@
         :before-close="handleClose">
         <div class="role">
           <span>角色编码：</span>
-          <input type="text" class="wenben" v-model="roleInfo.code"/>
+          <input type="text" class="wenben" v-model="code"/>
         </div>
         <div class="role">
           <span>角色名称：</span>
-          <input type="text" class="wenben" v-model="roleInfo.name"/>
+          <input type="text" class="wenben" v-model="name"/>
         </div>
         <div class="role">
           <span style="width:'90px',display:inline-block" class="state">状态：</span>
-          <el-radio-group v-model="roleInfo.status">
-    <el-radio :label="3">启用</el-radio>
-    <el-radio :label="6">禁用</el-radio>
-  </el-radio-group>
+          <el-radio-group v-model="status">
+            <el-radio :label="1">启用</el-radio>
+            <el-radio :label="0">禁用</el-radio>
+          </el-radio-group>
         </div>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          <el-button type="primary" @click="confirms">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -69,8 +69,6 @@
         :visible.sync="jueserenyuan"
         width="30%"
         :before-close="handleClose">
-
-
         <div class="rolemenu">
           <span>角色名称：</span>
           <span class="rights">{{rolemingcheng}}</span>
@@ -78,7 +76,6 @@
           <el-button type="primary" size="mini">移除用户</el-button>
            <el-button type="warning" size="mini">返回</el-button>
         </div>
-        
         <el-tree
           :data="deptStaffData"
           show-checkbox
@@ -86,9 +83,6 @@
           node-key="id"
           :props="defaultProps">
         </el-tree>
-
-
-
         <span slot="footer" class="dialog-footer">
           <el-button @click="jueserenyuan = false">取 消</el-button>
           <el-button type="primary" @click="jueserenyuan = false">确 定</el-button>
@@ -109,12 +103,12 @@
         >
           <el-table-column prop="code" label="角色编码" width="250">{{}}</el-table-column>
           <el-table-column prop="name" label="角色名称" width="250"></el-table-column>
-          <el-table-column prop="status" label="状态" width="250"></el-table-column>
+          <el-table-column prop="status" label="状态" width="150" :formatter="state"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="editDialogVisible(scope.$index, scope.row)">编辑</el-button>
               <el-button size="mini" @click="handleRole(scope.$index, scope.row)">角色人员</el-button>
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">删除</el-button>
+              <el-button size="mini" @click="handleDel(scope.$index, scope.row)">删除</el-button>
               <el-button size="mini" @click="handRoleperim(scope.$index, scope.row)">角色权限</el-button>
             </template>
           </el-table-column>
@@ -128,19 +122,21 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      tid:"",
       jueserenyuan: false,//角色人员弹框
       rolemingcheng: "孙老板",//角色人员弹框名字
       rolehandle:"",//角色权限框的角色名称
       roleperim : false,//角色权限弹框
       switchstate:false,//角色状态狂false默认没有
-      rolenum:"",//角色编码
-      rolename:"",//角色名称
+      code:"",//角色编码
+      name:"",//角色名称
+      status:1,//jinyong
       dialogVisible: false,//新增角色弹框
       outerVisible: false,
       roleInfo:{
         code:"",
         name:"",
-        status
+        status:1
       },
       deptStaffData:
           [
@@ -218,23 +214,7 @@ export default {
         }
     ],
       value: "",
-      tableData: [
-        {
-          code: "admin",
-          name: "管理员",
-          status: "启用"
-        },
-        {
-          code: "generalUser",
-          name: "普通用户",
-          status: "启用"
-        },
-        {
-          code: "seniorUser",
-          name: "高级用户",
-          status: "启用"
-        }
-      ],
+      tableData: [],
       menuData: [
         {
           id: 1,
@@ -292,9 +272,48 @@ export default {
   created(){
     let rolelist = this.changeKey(this.deptStaffData);
     this.deptStaffData = this.getTree(rolelist)
+    this.getTableData()
   },
 
   methods: {
+    //新增修改保存数据
+    confirms(){
+      let _this = this;
+      // let data = _this.roleInfo
+      let data = {
+        code : this.code,
+        name : this.name,
+        status : this.status,
+        tid : this.tid
+      }
+      if (this.code&&this.name&&this.status){
+        this.postAxios("/Sysconfig/SaveRole",data)
+          .then(res => {
+            console.log(res)
+            _this.getTableData()
+            _this.dialogVisible = false
+          })
+          .catch(err => {
+            console.log(err);
+        });
+      }else{
+        this.$message.warning("您有必填项未填写")
+      }
+    },
+    state(row,index){
+      return row.status == 1 ? "启用" : "禁用"
+    },
+    //获取table数据
+    getTableData(){
+      let _this = this;
+      this.postAxios("/Sysconfig/RoleList",{})
+        .then(res => {
+          _this.tableData = res.data
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
     //将数据源的name改为lable
     changeKey(array){
       let keyMap = {
@@ -313,27 +332,25 @@ export default {
       return array
     },
     getTree(data){
-    let map = {};
-    let val = [];
-    //生成数据对象集合
-    data.forEach(it=>{
-
-      delete it.children;
-      
-      map[it.id] = it;
-    })
-    //生成结果集
-    data.forEach(it=>{
-        const parent = map[it.pid];
-        if(parent){
-            if(!Array.isArray(parent.children)) parent.children = [];
-            parent.children.push(it);
-        }else{
-            val.push(it);
-        }
-    })
-    return val;
-  },
+      let map = {};
+      let val = [];
+      //生成数据对象集合
+      data.forEach(it=>{
+        delete it.children;
+        map[it.id] = it;
+      })
+      //生成结果集
+      data.forEach(it=>{
+          const parent = map[it.pid];
+          if(parent){
+              if(!Array.isArray(parent.children)) parent.children = [];
+              parent.children.push(it);
+          }else{
+              val.push(it);
+          }
+      })
+      return val;
+    },
     handleRole(index,row){
       this.jueserenyuan = true
     },
@@ -342,7 +359,7 @@ export default {
       this.rolehandle = row.name
       this.roleperim = true
     },
-    //新增角色
+    //新增X角色
     handleClose(done) {
       this.$confirm('确认关闭？')
         .then(_ => {
@@ -352,32 +369,36 @@ export default {
     },
     //新增打开角色框
     adddialogVisible(){
-      this.rolenum = ''
-      this.rolename = ''
-      this.switchstate = false
+      this.name = ''
+      this.code = ''
+      this.status = 1
       this.dialogVisible = true
     },
     //编辑打开角色框
     editDialogVisible(index, row){
       console.log(index,row)
-      this.rolenum = row.code
-      this.rolename = row.name
-      if( row.status == '启用'){
-        this.switchstate = true
-      }else{
-        this.switchstate = false
-      }
+      this.name = row.name;
+      this.code = row.code;
+      this.status = row.status;
+      this.tid = row.tid
       this.dialogVisible = true
     },
     formatter(row, column) {
       return row.address;
     },
-    handleEdit(index, row) {
+    //删除
+    handleDel(index, row) {
       console.log(index, row);
-      this.outerVisible = true;
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
+      let _this = this;
+      this.postAxios("/Sysconfig/DeleteRole",{
+        tid : row.tid
+      })
+        .then(res => {
+          _this.getTableData()
+        })
+        .catch(err => {
+          console.log(err);
+      });
     }
   }
 };
