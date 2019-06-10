@@ -36,7 +36,7 @@
           <el-form-item>
             <el-button type="primary" @click="handleSearch">查询</el-button>
           </el-form-item>
-          <el-button type="success" @click="dialogFormVisible = true" class="right">新增</el-button>
+          <el-button type="success" @click="handleAdd" class="right">新增</el-button>
         </el-form>
       </div>
       <div class="body">
@@ -46,27 +46,26 @@
           :default-sort="{prop: 'deptName', order: 'descending'}"
         >
           <el-table-column prop="name" label="设备名称" sortable width="180"></el-table-column>
-          <el-table-column prop="equipNo" label="设备编号" sortable width="180"></el-table-column>
+          <el-table-column prop="code" label="设备编号" sortable width="180"></el-table-column>
           <el-table-column prop="deptName" label="所属部门" sortable></el-table-column>
           <el-table-column prop="type" label="设备类型" sortable></el-table-column>
-          <el-table-column prop="status" label="状态" sortable></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-              <el-button size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)">删除</el-button>
+              <el-button size="mini" @click="handleEdit(scope.row.tid)">编辑</el-button>
+              <el-button size="mini" type="danger" @click="handleDelete(scope.row.tid)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
         <el-dialog title="设备信息" :visible.sync="dialogFormVisible">
           <el-form :model="form">
             <div class="flex"></div>
-            <el-form-item label="设备名称" :label-width="formLabelWidth">
+            <el-form-item label="设备名称" :label-width="formLabelWidth" required>
               <el-input class="input-width" placeholder="请输入" v-model="form.name" type="input"></el-input>
             </el-form-item>
-            <el-form-item label="设备编号" :label-width="formLabelWidth">
+            <el-form-item label="设备编号" :label-width="formLabelWidth" required>
               <el-input class="input-width" placeholder="请输入" v-model="form.code" type="input"></el-input>
             </el-form-item>
-            <el-form-item label="设备类型" :label-width="formLabelWidth">
+            <el-form-item label="设备类型" :label-width="formLabelWidth" required>
               <el-select v-model="form.type" placeholder="请选择">
                 <el-option
                 v-for="item in typeOps"
@@ -76,7 +75,7 @@
               ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="所属部门" :label-width="formLabelWidth">
+            <el-form-item label="所属部门" :label-width="formLabelWidth" required>
               <el-select v-model="form.deptId" placeholder="请选择">
                 <el-option
                 v-for="item in deptOps"
@@ -129,12 +128,49 @@ export default {
     formatter(row, column) {
       return row.address;
     },
+    handleEdit(id){
+      this.postAxios("DataCenter/EquipInfo", {tid:id })
+        .then(res => {
+          console.log(res);
+          this.form=res.equipInfo;
+          this.dialogFormVisible=true;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    handleAdd(){
+      this.postAxios("DataCenter/EquipInfo")
+        .then(res => {
+          console.log(res);
+          this.form={};
+          this.dialogFormVisible=true;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    handleDelete(id){
+      if(confirm("确定删除吗?")){
+        this.postAxios("DataCenter/DeleteEquip", {tid:id })
+        .then(res => {
+          console.log(res);
+          alert("删除成功");
+          this.getData();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      }
+    },
     getData(deptId,equipType,name, pageNum = 1, pageSize = 10) {
       this.postAxios("DataCenter/EquipList", { deptId,equipType,name, pageNum, pageSize })
         .then(res => {
           console.log(res);
           this.count = res.count;
           this.tableData = [...res.data];
+          this.deptOps=[...res.deptOps];
+          this.typeOps=[...res.typeOps];
         })
         .catch(err => {
           console.log(err);
@@ -168,6 +204,9 @@ export default {
           .catch(err => {
             console.log(err);
           });
+      }
+      else{
+        alert("请输入必填信息");
       }
     }
   },
