@@ -12,9 +12,9 @@
         <el-select class="input-width" v-model="departmentValue" placeholder="所属部门">
           <el-option
             v-for="item in departmentOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :key="item.tid"
+            :label="item.name"
+            :value="item.tid"
           ></el-option>
         </el-select>
         <el-select class="input-width" v-model="dutyValue" placeholder="在岗状态">
@@ -32,7 +32,7 @@
           v-model="input2"
         ></el-input>
         <el-button>搜索</el-button>
-        <el-button size="mini" @click="dialogVisible = true" type="success">新增</el-button>
+        <el-button size="mini" @click="addDriver" type="success">新增</el-button>
         <!-- 新增框 -->
         <div class="messages">
           <el-dialog
@@ -49,9 +49,9 @@
                 <el-select v-model="pername" placeholder="请选择">
                   <el-option
                     v-for="item in carnames"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                    :key="item.tid"
+                    :label="item.name"
+                    :value="item.tid">
                   </el-option>
                 </el-select>
             </div>
@@ -82,7 +82,7 @@
             </div>
             <span slot="footer" class="dialog-footer">
               <el-button @click="dialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+              <el-button type="primary" @click="confirms">确 定</el-button>
             </span>
           </el-dialog>
         </div>
@@ -97,10 +97,9 @@
           :default-sort="{prop: 'name', order: 'descending'}"
         >
           <el-table-column prop="name" label="姓名" sortable width="180"></el-table-column>
-          <el-table-column prop="department" label="所属部门" sortable></el-table-column>
-          <el-table-column prop="date" label="入职时间" sortable></el-table-column>
-          <el-table-column prop="licenseDate" label="驾驶证有效期" sortable></el-table-column>
-          <el-table-column prop="duty" label="在岗状态" sortable></el-table-column>
+          <el-table-column prop="deptName" label="所属部门" sortable width="180"></el-table-column>
+          <el-table-column prop="licensedate" label="驾驶证有效期" sortable width="180"></el-table-column>
+          <el-table-column prop="duty" label="在岗状态" sortable width="180" :formatter="state"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -117,6 +116,7 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      pername:"",
       fileList: [],
       dateend : "",//驾驶证有效期
       carcode:"",//驾驶证号
@@ -154,24 +154,7 @@ export default {
       value2: "",
       input2: "",
       departmentValue:"",//所属部门
-      departmentOptions: [
-        {
-          value: "1",
-          label: "连队1"
-        },
-        {
-          value: "2",
-          label: "连队2"
-        },
-        {
-          value: "3",
-          label: "连队3"
-        },
-        {
-          value: "4",
-          label: "连队4"
-        }
-      ],
+      departmentOptions: [],//部门下拉框
       dutyOptions: [
         {
           value: "1",
@@ -264,7 +247,59 @@ export default {
         }],
     };
   },
+  created(){
+    this.getTableData()
+  },
   methods: {
+    //新增确认
+    confirms(){
+      let data = {
+        licensedate : this.dateend,//驾驶证号
+        licenseNo: this.carcode,//驾驶证号
+        staffid: this.pername,//姓名
+      }
+      let _this = this;
+      this.postAxios("/Garage/SaveDriver",data)
+        .then(res => {
+          _this.getTableData()
+          _this.dialogVisible = false
+        })
+        .catch(err => {
+          console.log(err);
+      });
+// dialogVisible
+    },
+    //打开新增司机弹框
+    addDriver(){
+      this.dialogVisible = true
+      let _this = this;
+      this.postAxios("/Garage/GetDriver",{})
+        .then(res => {
+          _this.carnames = res.staffOptions
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
+    // perlicensedate(row,index){
+    //   return row.licensedate.slice(0,10)
+    // },
+    //在岗状态
+    state(row,index){
+      return row.staffStatus == 1 ? "在岗" : row.staffStatus == 0 ? "外出" : "请假"
+    },
+    //获取table数据
+    getTableData(){
+      let _this = this;
+      this.postAxios("/Garage/GetDriverList",{})
+        .then(res => {
+          _this.tableData = res.list
+          _this.departmentOptions = res.deptOptions
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
     handleClose(done) {
       this.$confirm('确认关闭？')
         .then(_ => {
