@@ -52,7 +52,7 @@ input{
 }
 
 .content {
-    min-width: 1200px;
+    min-width: 850px;
     height: 100%;
     padding: 10px;
     overflow-y: scroll;

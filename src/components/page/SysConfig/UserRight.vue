@@ -7,7 +7,7 @@
     </div>
     <!-- 角色编辑框 -->
     <div class="messages">
-      <el-button type="success" @click="adddialogVisible" class="right">新增角色</el-button>
+      
       <el-dialog
         title="新增角色"
         :visible.sync="dialogVisible"
@@ -34,6 +34,8 @@
         </span>
       </el-dialog>
     </div>
+
+
     <!-- 角色权限弹框 -->
     <div class="messages">
       <el-dialog
@@ -44,24 +46,25 @@
         <div class="rolemenu">
           <span>角色名称：</span>
           <span class="rights">{{rolehandle}}</span>
-          <el-button type="primary" size="mini">授权</el-button>
-           <el-button type="warning" size="mini">返回</el-button>
         </div>
-        
         <el-tree
+          ref="tre"
           :data="menuData"
           show-checkbox
           default-expand-all 
           node-key="id"
+          :default-checked-keys="defaultarrtwo"
           :props="defaultProps">
         </el-tree>
-
         <span slot="footer" class="dialog-footer">
           <el-button @click="roleperim = false">取 消</el-button>
-          <el-button type="primary" @click="roleperim = false">确 定</el-button>
+          <el-button type="primary" @click="roleperimss">确 定</el-button>
         </span>
       </el-dialog>
     </div>
+
+
+
     <!-- 角色人员弹框 -->
     <div class="messages">
       <el-dialog
@@ -78,6 +81,7 @@
           show-checkbox
           default-expand-all 
           node-key="id"
+          :default-checked-keys="defaultArr"
           ref="tree"
           :props="defaultProps">
         </el-tree>
@@ -88,15 +92,16 @@
       </el-dialog>
     </div>
     <div class="container">
+      <el-button type="success" @click="adddialogVisible" class="right">新增角色</el-button>
       <div class="body">
         <el-table
           :data="tableData"
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="code" label="角色编码" width="250">{{}}</el-table-column>
-          <el-table-column prop="name" label="角色名称" width="250"></el-table-column>
-          <el-table-column prop="status" label="状态" width="150" :formatter="state"></el-table-column>
+          <el-table-column prop="code" label="角色编码" width="150">{{}}</el-table-column>
+          <el-table-column prop="name" label="角色名称" width="150"></el-table-column>
+          <el-table-column prop="status" label="状态" width="120" :formatter="state"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="editDialogVisible(scope.$index, scope.row)">编辑</el-button>
@@ -115,6 +120,9 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      defaultarrtwo :[],//角色权限人员弹框打开默认选中
+      defaultArr:[],//角色人员弹框打开时默认选中的
+      roleId:"",//每一行的tid,打开角色框时保存用
       tid:"",
       jueserenyuan: false,//角色人员弹框
       rolemingcheng: "孙老板",//角色人员弹框名字
@@ -202,6 +210,7 @@ export default {
   },
 
   methods: {
+    //角色人员弹框确定事件
     jueserenyuansss(){
       let selectId = this.$refs.tree.getCheckedNodes()
       let selectIdArr = []
@@ -210,8 +219,22 @@ export default {
           selectIdArr.push(selectId[i].id)
         }
       }
-      console.log(selectIdArr)
-      // this.jueserenyuan = false
+      this.postAxios("Sysconfig/SaveRoleUser",{
+        userIds : selectIdArr.join(";"),
+        roleId : this.roleId
+      })
+        .then(res => {
+          console.log(res)
+          if(res.status == 1){
+            this.jueserenyuan = false
+          }
+          // 
+        })
+        .catch(err => {
+          console.log(err);
+      });
+      
+      
     },
     //新增修改保存数据
     confirms(){
@@ -290,11 +313,15 @@ export default {
     },
     //角色人员弹框
     handleRole(index,row){
+      this.defaultArr = []
       let _this = this;
       this.postAxios("/Sysconfig/RoleUserList",{tid : row.tid})
         .then(res => {
           console.log(res)
           _this.deptStaffData = res.staffList
+          for(let i = 0; i < res.checkedOps.length; i++){
+            _this.defaultArr.push(res.checkedOps[i].id)
+          }
           let rolelist = _this.changeKey(_this.deptStaffData);
           _this.deptStaffData = _this.getTree(rolelist)
         })
@@ -302,12 +329,55 @@ export default {
           console.log(err);
       });
       this.jueserenyuan = true
+      this.roleId = row.tid
     },
-    //角色权限弹框
+
+
+
+    //打开角色权限弹框
     handRoleperim(index,row){
+      this.defaultarrtwo = []
+      let _this = this;
+      this.postAxios("/Sysconfig/RoleRightList",{tid : row.tid})
+        .then(res => {
+          console.log(res)
+          _this.menuData = res.menuList
+          for(let i = 0; i < res.checkedOps.length; i++){
+            _this.defaultarrtwo.push(res.checkedOps[i].id)
+          }
+          let rolelist = _this.changeKey(_this.menuData);
+          _this.menuData = _this.getTree(rolelist)
+        })
+        .catch(err => {
+          console.log(err);
+      });
       this.rolehandle = row.name
       this.roleperim = true
     },
+    //角色权限弹框确认事件
+    roleperimss(){
+      let selectId = this.$refs.tre.getCheckedNodes()
+      let selectIdArr = []
+      for(let i = 0; i < selectId.length; i++){
+        if(!selectId[i].children){
+          selectIdArr.push(selectId[i].id)
+        }
+      }
+      this.postAxios("/Sysconfig/SaveRoleMenu",{
+        menuIds : selectIdArr.join(";"),
+        roleId : this.roleId
+      })
+        .then(res => {
+          console.log(res)
+          if(res.status == 1){
+            this.roleperim = false
+          }
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
+
     //新增X角色
     handleClose(done) {
       this.$confirm('确认关闭？')
