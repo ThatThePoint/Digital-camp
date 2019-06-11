@@ -36,10 +36,12 @@
           </div>
         <el-upload
           class="upload"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="https://localhost:44352/api/Upload/Upload"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :before-remove="beforeRemove"
+          :on-error="errorHandle"
+          :on-success="successHandle"
           multiple
           :limit="3"
           :on-exceed="handleExceed"
@@ -305,6 +307,12 @@ export default {
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    errorHandle(){
+      console.log("error");
+    },
+    successHandle(){
+      console.log("success");
     },
     handleBack(){
       history.go(-1);
