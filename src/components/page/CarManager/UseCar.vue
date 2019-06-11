@@ -25,22 +25,25 @@
             :value="item.value"
           ></el-option>
         </el-select>
-        <el-select class="input-width" v-model="statuValue" placeholder="状态">
-          <el-option
-            v-for="item in statuOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>日期筛选
-        <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
-        <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
         <el-input
           class="input-width"
           placeholder="车牌号"
           prefix-icon="el-icon-search"
           v-model="input2"
         ></el-input>
+        <el-select class="input-width status" v-model="statuValue" placeholder="状态">
+          <el-option
+            v-for="item in statuOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+        <span>
+        日期筛选
+        <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
+        <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
+        </span>
         <el-button>搜索</el-button>
       </div>
       <div class="body">
@@ -210,6 +213,12 @@ export default {
 };
 </script>
 <style scoped>
+@media screen and (max-width: 1050px) and (min-width: 800px){
+    .status {
+        margin-right: 200px;
+        display: inline-block;
+    }
+}
 .input-width {
   width: 120px;
   margin: 0 10px;

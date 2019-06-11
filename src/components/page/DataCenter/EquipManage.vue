@@ -11,7 +11,7 @@
       <div class="messages">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="归属部门" :label-width="formLabelWidth">
-            <el-select v-model="formInline.deptId" placeholder="请选择">
+            <el-select v-model="formInline.deptId" placeholder="请选择" style="width: 100px">
               <el-option
                 v-for="item in deptOps"
                 :key="item.tid"
@@ -21,7 +21,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="设备类型" :label-width="formLabelWidth">
-            <el-select v-model="formInline.equipType" placeholder="请选择">
+            <el-select v-model="formInline.equipType" placeholder="请选择" style="width: 100px">
               <el-option
                 v-for="item in typeOps"
                 :key="item.code"
@@ -31,7 +31,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="设备名称">
-            <el-input v-model="formInline.equipName" placeholder="请输入"></el-input>
+            <el-input v-model="formInline.equipName" placeholder="请输入" style="width: 100px"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleSearch">查询</el-button>
@@ -45,10 +45,10 @@
           style="width: 100%"
           :default-sort="{prop: 'deptName', order: 'descending'}"
         >
-          <el-table-column prop="name" label="设备名称" sortable width="180"></el-table-column>
-          <el-table-column prop="code" label="设备编号" sortable width="180"></el-table-column>
-          <el-table-column prop="deptName" label="所属部门" sortable></el-table-column>
-          <el-table-column prop="type" label="设备类型" sortable></el-table-column>
+          <el-table-column prop="name" label="设备名称" sortable width="120"></el-table-column>
+          <el-table-column prop="code" label="设备编号" sortable width="120"></el-table-column>
+          <el-table-column prop="deptName" label="所属部门" sortable width="120"></el-table-column>
+          <el-table-column prop="type" label="设备类型" sortable width="120"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.row.tid)">编辑</el-button>
@@ -121,7 +121,7 @@ export default {
         deptName: "",
         note: ""
       },
-      formLabelWidth: "120px"
+      formLabelWidth: "75px"
     };
   },
   methods: {
@@ -217,8 +217,11 @@ export default {
 </script>
 <style scoped>
 .input-width {
-  width: 180px;
+  width: 100px;
   margin: 0 10px;
+}
+.el-form-item__content{
+  width: 100px;
 }
 .messages {
 }

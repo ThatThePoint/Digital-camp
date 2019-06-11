@@ -33,8 +33,8 @@
               style="width: 100%"
               :default-sort="{prop: 'name', order: 'descending'}"
             >
-              <el-table-column prop="name" label="姓名"></el-table-column>
-              <el-table-column prop="gender" label="性别"></el-table-column>
+              <el-table-column prop="name" label="姓名" width="100"></el-table-column>
+              <el-table-column prop="gender" label="性别" width="100"></el-table-column>
               <el-table-column prop="deptName" label="部门"></el-table-column>
               <el-table-column prop="buzhibie" label="职位"></el-table-column>
               <el-table-column label="操作">
@@ -101,9 +101,9 @@
               style="width: 100%"
               :default-sort="{prop: 'name', order: 'descending'}"
             >
-              <el-table-column prop="name" label="姓名"></el-table-column>
-              <el-table-column prop="gender" label="性别"></el-table-column>
-              <el-table-column prop="deptName" label="部门"></el-table-column>
+              <el-table-column prop="name" label="姓名" width="100"></el-table-column>
+              <el-table-column prop="gender" label="性别" width="100"></el-table-column>
+              <el-table-column prop="deptName" label="部门" width="100"></el-table-column>
               <el-table-column prop="buzhibie" label="职位"></el-table-column>
               <el-table-column prop="tel" label="联系电话"></el-table-column>
               <el-table-column label="操作">
