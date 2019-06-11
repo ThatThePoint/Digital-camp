@@ -12,17 +12,17 @@
         <el-select class="input-width" v-model="departmentValue" placeholder="所属部门">
           <el-option
             v-for="item in departmentOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :key="item.tid"
+            :label="item.name"
+            :value="item.tid"
           ></el-option>
         </el-select>
         <el-select class="input-width" v-model="careTypeValue" placeholder="保养类型">
           <el-option
             v-for="item in careType"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :key="item.code"
+            :label="item.name"
+            :value="item.code"
           ></el-option>
         </el-select>
         发送时间
@@ -34,7 +34,7 @@
           prefix-icon="el-icon-search"
           v-model="input2"
         ></el-input>
-        <el-button>搜索</el-button>
+        <el-button @click="search">搜索</el-button>
         <el-button type="success"  @click="addCare()" class="right">新增</el-button>
       </div>
       <div class="body">
@@ -43,13 +43,13 @@
           style="width: 100%"
           :default-sort="{prop: 'license', order: 'descending'}"
         >
-          <el-table-column prop="license" label="车牌号" sortable width="180">
+          <el-table-column prop="licensePlate" label="车牌号" sortable width="120">
           </el-table-column>
-          <el-table-column prop="property" label="维护类型" sortable width="180"></el-table-column>
-          <el-table-column prop="department" label="维护原因" sortable></el-table-column>
-          <el-table-column prop="inout" label="维护时间" sortable></el-table-column>
-          <el-table-column prop="carUser" label="经办人" sortable></el-table-column>
-          <el-table-column prop="carUser" label="备注" sortable></el-table-column>
+          <el-table-column prop="careTypeName" label="维护类型" sortable width="120"></el-table-column>
+
+          <el-table-column prop="operateDate" label="维护时间" sortable width="150" :formatter="returnTime"></el-table-column>
+          <el-table-column prop="careOperatorName" label="经办人" sortable width="120"></el-table-column>
+          <el-table-column prop="note" label="备注" sortable width="350"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEditcar(scope.$index, scope.row)">详情</el-button>
@@ -102,18 +102,6 @@ export default {
         {
           value: "1",
           label: "连队1"
-        },
-        {
-          value: "2",
-          label: "连队2"
-        },
-        {
-          value: "3",
-          label: "连队3"
-        },
-        {
-          value: "4",
-          label: "连队4"
         }
       ],
       propertyOptions: [
@@ -185,12 +173,46 @@ export default {
       ]
     };
   },
+  created(){
+    this.getTableData({})
+  },
   methods: {
+    returnTime(row,index){
+      if(row.operateDate){
+        return row.operateDate.slice(0,10)
+      }
+      
+    },
+    //搜索数据
+    search(){
+      let data = {
+        deptName : this.departmentValue,
+        careTypeName : this.careTypeValue,
+        StartTime : this.value1,
+        EndTime : this.value2,
+        licensePlate : this.input2
+      }
+      this.getTableData(data)
+    },
+    //表格数据
+    getTableData(data){
+      let _this = this;
+      this.postAxios("/CarInfo/GetCareRecordList",data)
+        .then(res => {
+          console.log(res)
+          _this.tableData = res.careList;
+          _this.departmentOptions = res.deptOptions
+          _this.careType = res.careTypeOptions
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
     formatter(row, column) {
       return row.address;
     },
     //详情
-    // ...mapMutations(['handleEditcar']),
     handleEditcar(index, row) {
       console.log(index, row);
       this.$router.push({

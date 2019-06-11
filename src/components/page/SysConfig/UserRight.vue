@@ -72,28 +72,21 @@
         <div class="rolemenu">
           <span>角色名称：</span>
           <span class="rights">{{rolemingcheng}}</span>
-          <el-button type="primary" size="mini">添加用户</el-button>
-          <el-button type="primary" size="mini">移除用户</el-button>
-           <el-button type="warning" size="mini">返回</el-button>
         </div>
         <el-tree
           :data="deptStaffData"
           show-checkbox
           default-expand-all 
           node-key="id"
+          ref="tree"
           :props="defaultProps">
         </el-tree>
         <span slot="footer" class="dialog-footer">
           <el-button @click="jueserenyuan = false">取 消</el-button>
-          <el-button type="primary" @click="jueserenyuan = false">确 定</el-button>
+          <el-button type="primary" @click="jueserenyuansss">确 定</el-button>
         </span>
       </el-dialog>
     </div>
-
-
-
-
-
     <div class="container">
       <div class="body">
         <el-table
@@ -138,80 +131,14 @@ export default {
         name:"",
         status:1
       },
-      deptStaffData:
+      deptStaffData://树
           [
-        {
-            "id": "4f4b5cf8-c589-4447-9bb0-6c19954175bf",
-            "pid": "e77b0cd8-57b4-4c6e-8b8f-ae6c3aa6f06a",
-            "name": "撒法发",
-            "children": []
-        },
-        {
-            "id": "5fbebecc-6601-47fc-8155-dafd856ebde1",
-            "pid": "ce7bc410-acfe-4691-a9cb-7ee7a9d409e3",
-            "name": "哈哈部门",
-            "children": []
-        },
-        {
-            "id": "84c71885-4d32-4e0e-983a-53d4d85c6f15",
-            "pid": "4f4b5cf8-c589-4447-9bb0-6c19954175bf",
-            "name": "一哈部门",
-            "children": []
-        },
-        {
-            "id": "ce7bc410-acfe-4691-a9cb-7ee7a9d409e3",
-            "pid": "4f4b5cf8-c589-4447-9bb0-6c19954175bf",
-            "name": "烦烦烦",
-            "children": []
-        },
-        {
-            "id": "e77b0cd8-57b4-4c6e-8b8f-ae6c3aa6f06a",
-            "pid": "",
-            "name": "哈哈哈哈",
-            "children": []
-        },
-        {
-            "id": "8c8aa69a-1d18-4e4a-a28e-6a38b72fb8e9",
-            "pid": "4f4b5cf8-c589-4447-9bb0-6c19954175bf",
-            "name": "是德国首都大概",
-            "children": []
-        },
-        {
-            "id": "9052b883-f74e-4e2d-8d81-d85c024f3d0f",
-            "pid": "ce7bc410-acfe-4691-a9cb-7ee7a9d409e3",
-            "name": "李时珍",
-            "children": []
-        },
-        {
-            "id": "c79337e2-c1f2-491c-8618-cea297b682d0",
-            "pid": "",
-            "name": "孙悟空",
-            "children": []
-        },
-        {
-            "id": "cd9e0920-649c-4c79-a3ae-5d6f835a4267",
-            "pid": "d05ab819-2471-45d2-a84b-268bdee300da",
-            "name": "猪八戒",
-            "children": []
-        },
-        {
-            "id": "f1919b84-cab2-4462-94d9-f39d1f60cf7b",
-            "pid": "84c71885-4d32-4e0e-983a-53d4d85c6f15",
-            "name": "张驴儿",
-            "children": []
-        },
-        {
-            "id": "f6a3ccd9-78d3-466d-8ccc-5a719676f94a",
-            "pid": "4f4b5cf8-c589-4447-9bb0-6c19954175bf",
-            "name": "张大爷",
-            "children": []
-        },
-        {
-            "id": "f75094e9-f2fd-4af8-93e8-53bd440118d2",
-            "pid": "5fbebecc-6601-47fc-8155-dafd856ebde1",
-            "name": "李世民",
-            "children": []
-        }
+            {
+                "id": "4f4b5cf8-c589-4447-9bb0-6c19954175bf",
+                "pid": "e77b0cd8-57b4-4c6e-8b8f-ae6c3aa6f06a",
+                "name": "撒法发",
+                "children": []
+            }
     ],
       value: "",
       tableData: [],
@@ -270,12 +197,22 @@ export default {
     };
   },
   created(){
-    let rolelist = this.changeKey(this.deptStaffData);
-    this.deptStaffData = this.getTree(rolelist)
+    
     this.getTableData()
   },
 
   methods: {
+    jueserenyuansss(){
+      let selectId = this.$refs.tree.getCheckedNodes()
+      let selectIdArr = []
+      for(let i = 0; i < selectId.length; i++){
+        if(!selectId[i].children){
+          selectIdArr.push(selectId[i].id)
+        }
+      }
+      console.log(selectIdArr)
+      // this.jueserenyuan = false
+    },
     //新增修改保存数据
     confirms(){
       let _this = this;
@@ -351,7 +288,19 @@ export default {
       })
       return val;
     },
+    //角色人员弹框
     handleRole(index,row){
+      let _this = this;
+      this.postAxios("/Sysconfig/RoleUserList",{tid : row.tid})
+        .then(res => {
+          console.log(res)
+          _this.deptStaffData = res.staffList
+          let rolelist = _this.changeKey(_this.deptStaffData);
+          _this.deptStaffData = _this.getTree(rolelist)
+        })
+        .catch(err => {
+          console.log(err);
+      });
       this.jueserenyuan = true
     },
     //角色权限弹框
