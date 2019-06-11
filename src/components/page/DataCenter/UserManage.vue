@@ -10,19 +10,19 @@
         <el-tab-pane label="现役人员" name="first">
           <div class="messages">
             <span>部门</span>
-            <el-select class="input-width" v-model="value" filterable placeholder="请选择">
+            <el-select class="input-width" v-model="deptValue" filterable placeholder="请选择">
               <el-option
                 v-for="item in DeptOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.tid"
+                :label="item.name"
+                :value="item.tid"
               ></el-option>
             </el-select>
             <el-input
               class="input-width"
               placeholder="请输入姓名"
               prefix-icon="el-icon-search"
-              v-model="input2"
+              v-model="name"
             ></el-input>
             <el-button type="primary">查询</el-button>
             <el-button type="success" @click="addPeople" class="right">新增</el-button>
@@ -37,15 +37,13 @@
               <el-table-column prop="gender" label="性别"></el-table-column>
               <el-table-column prop="deptName" label="部门"></el-table-column>
               <el-table-column prop="buzhibie" label="职位"></el-table-column>
-              <el-table-column prop="tel" label="联系电话"></el-table-column>
-              <el-table-column prop="personType" label="人员类型"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                   <el-button
                     size="mini"
                     type="danger"
-                    @click="handleEdit(scope.$index, scope.row)"
+                    @click="handleDelete(scope.$index, scope.row)"
                   >删除</el-button>
                 </template>
               </el-table-column>
@@ -54,20 +52,11 @@
         </el-tab-pane>
         <el-tab-pane label="部队家属" name="secend">
           <div class="messages">
-            <span>联系人部门</span>
-            <el-select class="input-width" v-model="value" filterable placeholder="请选择">
-              <el-option
-                v-for="item in DeptOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
             <el-input
               class="input-width"
               placeholder="请输入姓名"
               prefix-icon="el-icon-search"
-              v-model="input2"
+              v-model="name"
             ></el-input>
             <el-button type="primary">查询</el-button>
             <el-button type="success" @click="addPeople" class="right">新增</el-button>
@@ -80,8 +69,7 @@
             >
               <el-table-column prop="name" label="姓名"></el-table-column>
               <el-table-column prop="gender" label="性别"></el-table-column>
-              <el-table-column prop="name" label="部队联系人"></el-table-column>
-              <el-table-column prop="dept" label="联系人部门"></el-table-column>
+              <el-table-column prop="sodierName" label="部队联系人"></el-table-column>
               <el-table-column prop="tel" label="联系电话"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -98,20 +86,11 @@
         </el-tab-pane>
         <el-tab-pane label="部队职工" name="third">
           <div class="messages">
-            <span>职工部门</span>
-            <el-select class="input-width" v-model="value" filterable placeholder="请选择">
-              <el-option
-                v-for="item in DeptOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
             <el-input
               class="input-width"
               placeholder="请输入姓名"
               prefix-icon="el-icon-search"
-              v-model="input2"
+              v-model="name"
             ></el-input>
             <el-button type="primary">查询</el-button>
             <el-button type="success" @click="addPeople" class="right">新增</el-button>
@@ -124,8 +103,8 @@
             >
               <el-table-column prop="name" label="姓名"></el-table-column>
               <el-table-column prop="gender" label="性别"></el-table-column>
-              <el-table-column prop="dept" label="部门"></el-table-column>
-              <el-table-column prop="job" label="职位"></el-table-column>
+              <el-table-column prop="deptName" label="部门"></el-table-column>
+              <el-table-column prop="buzhibie" label="职位"></el-table-column>
               <el-table-column prop="tel" label="联系电话"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -142,20 +121,11 @@
         </el-tab-pane>
         <el-tab-pane label="临时人员" name="fouth">
           <div class="messages">
-            <span>联系人部门</span>
-            <el-select class="input-width" v-model="value" filterable placeholder="请选择">
-              <el-option
-                v-for="item in DeptOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
             <el-input
               class="input-width"
               placeholder="请输入姓名"
               prefix-icon="el-icon-search"
-              v-model="input2"
+              v-model="name"
             ></el-input>
             <el-button type="primary">查询</el-button>
             <el-button type="success" @click="addPeople" class="right">新增</el-button>
@@ -168,8 +138,6 @@
             >
               <el-table-column prop="name" label="姓名"></el-table-column>
               <el-table-column prop="gender" label="性别"></el-table-column>
-              <el-table-column prop="name" label="联系人"></el-table-column>
-              <el-table-column prop="dept" label="联系人部门"></el-table-column>
               <el-table-column prop="tel" label="电话"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -182,7 +150,8 @@
                 </template>
               </el-table-column>
             </el-table>
-          </div></el-tab-pane>
+          </div>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -192,32 +161,11 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      radio: 1,
-      dialogFormVisible: false,
-      deptVisible: true,
-      value1: "",
-      value2: "",
-      input2: "",
+      deptValue: "",
+      name: "",
       activeName: "first",
-      DeptOptions: [
-        {
-          value: "1",
-          label: "连队1"
-        },
-        {
-          value: "2",
-          label: "连队2"
-        },
-        {
-          value: "3",
-          label: "连队3"
-        },
-        {
-          value: "4",
-          label: "连队4"
-        }
-      ],
-      value: "",
+      count: 0,
+      DeptOptions: [],
       tableData: [
         {
           name: "李云龙",
@@ -226,81 +174,69 @@ export default {
           job: "保卫员",
           tel: "1388585452",
           type: "现役"
-        },
-        {
-          name: "李云龙",
-          gender: "男",
-          dept: "保卫科",
-          job: "保卫员",
-          tel: "1388585452",
-          type: "现役"
-        },
-        {
-          name: "李云龙",
-          gender: "男",
-          dept: "保卫科",
-          job: "保卫员",
-          tel: "1388585452",
-          type: "现役"
-        },
-        {
-          name: "李云龙",
-          gender: "男",
-          dept: "保卫科",
-          job: "保卫员",
-          tel: "1388585452",
-          type: "现役"
         }
       ],
-      outManVisible: true,
-      dialogTableVisible: false,
-      dialogFormVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      formLabelWidth: "120px",
-      formInline: {
-        user: "",
-        region: "",
-        dept: "",
-        status: "",
-        relaterDept: "",
-        relater: ""
-      }
+      formLabelWidth: "120px"
     };
   },
+  created() {
+    this.getdata("1", "10");
+  },
   methods: {
+    getdata(num, size) {
+      if (this.activeName !== "first") {
+        this.deptValue = "";
+      }
+      var params = {
+        personType:
+          this.activeName == "first"
+            ? 1
+            : this.activeName == "secend"
+            ? "2"
+            : this.activeName == "third"
+            ? "3"
+            : "4",
+        deptId: this.deptValue,
+        where: this.name,
+        pageNum: num,
+        pageSize: size
+      };
+      this.postAxios("DataCenter/StaffList", params)
+        .then(res => {
+          console.log(res);
+          this.count = res.count;
+          this.tableData = res.data;
+          this.DeptOptions = res.deptOptions;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     formatter(row, column) {
       return row.address;
     },
     handleEdit(index, row) {
-      this.$router.push({path:'/addpeople',query:{id:row.tid}});
+      this.$router.push({ path: "/addpeople", query: { id: row.tid } });
     },
     handleDelete(index, row) {
       console.log(index, row);
-    },
-    addPeople(){
-      this.$router.push('/addpeople');
-    },
-    InOutUser(ss) {
-      console.log(ss);
-      console.log("status" + this.formInline.status);
-      if (this.formInline.status <= 3) {
-        this.deptVisible = true;
-        this.outManVisible = false;
-      } else {
-        this.deptVisible = false;
-        this.outManVisible = true;
+      if (confirm("确认删除？")) {
+        this.postAxios("DataCenter/DeleteStaff", { tid: row.tid })
+          .then(res => {
+            console.log(res);
+            alert("删除成功");
+            this.getdata("1", "10");
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     },
+    addPeople() {
+      this.$router.push("/addpeople");
+    },
     handleClick(tab, event) {
+      this.getdata("1", "10");
       console.log(tab, event);
     }
   }

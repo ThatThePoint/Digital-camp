@@ -226,11 +226,11 @@ export default {
             {
               index: "outingApproved", //区别于请假审批
               title: "已审批请假"
-            },
-            {
-              index: "cancelRecord",
-              title: "销假记录"
-            }
+            }//,
+            // {
+            //   index: "cancelRecord",
+            //   title: "销假记录"
+            // }
           ]
         },
 
