@@ -45,10 +45,10 @@
           style="width: 100%"
           :default-sort="{prop: 'deptName', order: 'descending'}"
         >
-          <el-table-column prop="name" label="设备名称" sortable width="120"></el-table-column>
-          <el-table-column prop="code" label="设备编号" sortable width="120"></el-table-column>
-          <el-table-column prop="deptName" label="所属部门" sortable width="120"></el-table-column>
-          <el-table-column prop="type" label="设备类型" sortable width="120"></el-table-column>
+          <el-table-column prop="name" label="设备名称" sortable ></el-table-column>
+          <el-table-column prop="code" label="设备编号" sortable ></el-table-column>
+          <el-table-column prop="deptName" label="所属部门" sortable ></el-table-column>
+          <el-table-column prop="type" label="设备类型" sortable ></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.row.tid)">编辑</el-button>

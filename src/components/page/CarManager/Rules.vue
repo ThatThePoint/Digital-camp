@@ -33,15 +33,15 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="name" label="制度名称" sortable width="180">{{}}</el-table-column>
+          <el-table-column prop="name" label="制度名称" sortable width="100">{{}}</el-table-column>
           <el-table-column prop="introduce" label="制度简介" sortable width="180"></el-table-column>
-          <el-table-column prop="version" label="版本" ></el-table-column>
-          <el-table-column prop="status" label="生效状态" ></el-table-column>
-          <el-table-column prop="releaser" label="发布人" ></el-table-column>
-          <el-table-column prop="date" label="发布时间" ></el-table-column>
-          <el-table-column prop="viewCount" label="阅读次数" ></el-table-column>
-          <el-table-column prop="downCount" label="下载次数" ></el-table-column>
-          <el-table-column label="操作">
+          <el-table-column prop="version" label="版本"  width="100"></el-table-column>
+          <el-table-column prop="status" label="生效状态" width="100"></el-table-column>
+          <el-table-column prop="releaser" label="发布人" width="100"></el-table-column>
+          <el-table-column prop="date" label="发布时间" width="160"></el-table-column>
+          <el-table-column prop="viewCount" label="阅读次数" width="100"></el-table-column>
+          <el-table-column prop="downCount" label="下载次数" width="100"></el-table-column>
+          <el-table-column label="操作" width="250">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">预览</el-button>
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">下载</el-button>

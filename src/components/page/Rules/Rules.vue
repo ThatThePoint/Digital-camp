@@ -43,7 +43,7 @@
           <el-table-column prop="publishTime" label="发布时间" width="200"></el-table-column>
           <el-table-column prop="readTimes" label="阅读次数" width="100"></el-table-column>
           <el-table-column prop="downTimes" label="下载次数" width="100"></el-table-column>
-          <el-table-column label="操作">
+          <el-table-column label="操作" width="200">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">预览</el-button>
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">下载</el-button>
