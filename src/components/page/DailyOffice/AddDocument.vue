@@ -36,12 +36,14 @@
           </div>
         <el-upload
           class="upload"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :before-remove="beforeRemove"
+          :on-error="errorHandle"
+          :on-success="successHandle"
           multiple
-          :limit="3"
+          :limit="1"
           :on-exceed="handleExceed"
           :file-list="fileList"
         >     
@@ -98,6 +100,8 @@ export default {
       fileList: [],
       list: [],
       loading: false,
+      fileName1:"",//图片上传id
+      filePath1 :"",//图片上传路径
       states: [
         "Alabama",
         "Alaska",
@@ -178,6 +182,7 @@ export default {
         _this.content=res.document.content;
         _this.postname=res.document.docReceiversName;
         _this.level=res.document.messageLevel;
+        _this.fileList=[{"url":"http://digitalcamp.oicp.io:54373"+res.filePath1}]
         }
       })
       .catch(err => {
@@ -225,7 +230,6 @@ export default {
 
     },
     confirms(a){
-      debugger
       this.postname = a[0]
       this.perid = a[1]
   
@@ -245,6 +249,8 @@ export default {
     },
     submit() {
       let data = {
+        fileName1 : this.fileName1,
+        filePath1:this.filePath1,
         tid:this.docuId,
         docReceiversName : this.postname,
         docReceiversId : this.perid,
@@ -264,9 +270,7 @@ export default {
       if(flag == false){
         this.open3()
       }else{
-        this.postAxios("/DailyOffice/Savedocument",{
-            model:data
-          })
+        this.postAxios("/DailyOffice/Savedocument", data)
           .then(res => {
             console.log(res);
             this.$message.success("提交成功！");
@@ -291,6 +295,7 @@ export default {
       }
     },
     handleRemove(file, fileList) {
+
       console.log(file, fileList);
     },
     handlePreview(file) {
@@ -298,13 +303,21 @@ export default {
     },
     handleExceed(files, fileList) {
       this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${
+        `当前限制选择 1 个文件，本次选择了 ${
           files.length
         } 个文件，共选择了 ${files.length + fileList.length} 个文件`
       );
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    errorHandle(){
+      console.log("error");
+    },
+    successHandle(file, fileList){
+      this.filePath1 = file.path;
+      this.fileName1 = file.fileName;
+      console.log("success",file,fileList);
     },
     handleBack(){
       history.go(-1);

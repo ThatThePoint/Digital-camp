@@ -85,14 +85,14 @@
               style="width: 100%"
               :default-sort="{prop: 'license', order: 'descending'}"
             >
-              <el-table-column prop="license" label="车牌号" sortable width="180"></el-table-column>
-              <el-table-column prop="carNo" label="车辆编号" sortable width="180"></el-table-column>
-              <el-table-column prop="ofDept" label="所属部门" sortable></el-table-column>
-              <el-table-column prop="applyPerson" label="申请人" sortable></el-table-column>
-              <el-table-column prop="type" label="申请类型" sortable></el-table-column>
-              <el-table-column prop="disc" label="申请描述" sortable></el-table-column>
-              <el-table-column prop="date" label="申请时间" sortable></el-table-column>
-              <el-table-column prop="status" label="申请状态" sortable></el-table-column>
+              <el-table-column prop="license" label="车牌号" sortable width="100"></el-table-column>
+              <el-table-column prop="carNo" label="车辆编号" sortable width="120"></el-table-column>
+              <el-table-column prop="ofDept" label="所属部门" sortable width="100"></el-table-column>
+              <el-table-column prop="applyPerson" label="申请人" sortable width="100"></el-table-column>
+              <el-table-column prop="type" label="申请类型" sortable width="100"></el-table-column>
+              <el-table-column prop="disc" label="申请描述" sortable width="160"></el-table-column>
+              <el-table-column prop="date" label="申请时间" sortable width="100"></el-table-column>
+              <el-table-column prop="status" label="申请状态" sortable width="100"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
@@ -131,14 +131,14 @@
               style="width: 100%"
               :default-sort="{prop: 'license', order: 'descending'}"
             >
-              <el-table-column prop="license" label="车牌号" sortable width="180"></el-table-column>
-              <el-table-column prop="carNo" label="车辆编号" sortable width="180"></el-table-column>
-              <el-table-column prop="ofDept" label="所属部门" sortable></el-table-column>
-              <el-table-column prop="applyPerson" label="申请人" sortable></el-table-column>
-              <el-table-column prop="type" label="申请类型" sortable></el-table-column>
-              <el-table-column prop="disc" label="申请描述" sortable></el-table-column>
-              <el-table-column prop="date" label="申请时间" sortable></el-table-column>
-              <el-table-column prop="status" label="申请状态" sortable></el-table-column>
+              <el-table-column prop="license" label="车牌号" sortable width="100"></el-table-column>
+              <el-table-column prop="carNo" label="车辆编号" sortable width="100"></el-table-column>
+              <el-table-column prop="ofDept" label="所属部门" sortable width="100"></el-table-column>
+              <el-table-column prop="applyPerson" label="申请人" sortable width="100"></el-table-column>
+              <el-table-column prop="type" label="申请类型" sortable width="100"></el-table-column>
+              <el-table-column prop="disc" label="申请描述" sortable width="160"></el-table-column>
+              <el-table-column prop="date" label="申请时间" sortable width="100"></el-table-column>
+              <el-table-column prop="status" label="申请状态" sortable width="100"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleFourthEdit(scope.$index, scope.row)">详情</el-button>
@@ -176,14 +176,14 @@
               style="width: 100%"
               :default-sort="{prop: 'license', order: 'descending'}"
             >
-              <el-table-column prop="license" label="车牌号" sortable width="180"></el-table-column>
-              <el-table-column prop="carNo" label="车辆编号" sortable width="180"></el-table-column>
-              <el-table-column prop="ofDept" label="所属部门" sortable></el-table-column>
-              <el-table-column prop="applyPerson" label="申请人" sortable></el-table-column>
-              <el-table-column prop="type" label="申请类型" sortable></el-table-column>
-              <el-table-column prop="disc" label="申请描述" sortable></el-table-column>
-              <el-table-column prop="date" label="申请时间" sortable></el-table-column>
-              <el-table-column prop="status" label="申请状态" sortable></el-table-column>
+              <el-table-column prop="license" label="车牌号" sortable width="100"></el-table-column>
+              <el-table-column prop="carNo" label="车辆编号" sortable width="100"></el-table-column>
+              <el-table-column prop="ofDept" label="所属部门" sortable width="100"></el-table-column>
+              <el-table-column prop="applyPerson" label="申请人" sortable width="100"></el-table-column>
+              <el-table-column prop="type" label="申请类型" sortable width="100"></el-table-column>
+              <el-table-column prop="disc" label="申请描述" sortable width="160"></el-table-column>
+              <el-table-column prop="date" label="申请时间" sortable width="100"></el-table-column>
+              <el-table-column prop="status" label="申请状态" sortable width="100"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
@@ -256,14 +256,14 @@
               style="width: 100%"
               :default-sort="{prop: 'license', order: 'descending'}"
             >
-              <el-table-column prop="license" label="车牌号" sortable width="180"></el-table-column>
-              <el-table-column prop="carNo" label="车辆编号" sortable width="180"></el-table-column>
-              <el-table-column prop="ofDept" label="所属部门" sortable></el-table-column>
-              <el-table-column prop="applyPerson" label="申请人" sortable></el-table-column>
-              <el-table-column prop="type" label="申请类型" sortable></el-table-column>
-              <el-table-column prop="disc" label="申请描述" sortable></el-table-column>
-              <el-table-column prop="date" label="申请时间" sortable></el-table-column>
-              <el-table-column prop="status" label="申请状态" sortable></el-table-column>
+              <el-table-column prop="license" label="车牌号" sortable width="100"></el-table-column>
+              <el-table-column prop="carNo" label="车辆编号" sortable width="100"></el-table-column>
+              <el-table-column prop="ofDept" label="所属部门" sortable width="100"></el-table-column>
+              <el-table-column prop="applyPerson" label="申请人" sortable width="100"></el-table-column>
+              <el-table-column prop="type" label="申请类型" sortable width="100"></el-table-column>
+              <el-table-column prop="disc" label="申请描述" sortable width="160"></el-table-column>
+              <el-table-column prop="date" label="申请时间" sortable width="100"></el-table-column>
+              <el-table-column prop="status" label="申请状态" sortable width="100"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
@@ -343,14 +343,14 @@
               style="width: 100%"
               :default-sort="{prop: 'license', order: 'descending'}"
             >
-              <el-table-column prop="license" label="车牌号" sortable width="180"></el-table-column>
-              <el-table-column prop="carNo" label="车辆编号" sortable width="180"></el-table-column>
-              <el-table-column prop="ofDept" label="所属部门" sortable></el-table-column>
-              <el-table-column prop="applyPerson" label="申请人" sortable></el-table-column>
-              <el-table-column prop="type" label="申请类型" sortable></el-table-column>
-              <el-table-column prop="disc" label="申请描述" sortable></el-table-column>
-              <el-table-column prop="date" label="申请时间" sortable></el-table-column>
-              <el-table-column prop="status" label="申请状态" sortable></el-table-column>
+              <el-table-column prop="license" label="车牌号" sortable width="100"></el-table-column>
+              <el-table-column prop="carNo" label="车辆编号" sortable width="100"></el-table-column>
+              <el-table-column prop="ofDept" label="所属部门" sortable width="100"></el-table-column>
+              <el-table-column prop="applyPerson" label="申请人" sortable width="100"></el-table-column>
+              <el-table-column prop="type" label="申请类型" sortable width="100"></el-table-column>
+              <el-table-column prop="disc" label="申请描述" sortable width="160"></el-table-column>
+              <el-table-column prop="date" label="申请时间" sortable width="100"></el-table-column>
+              <el-table-column prop="status" label="申请状态" sortable width="100"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">详情</el-button>

@@ -150,12 +150,6 @@ export default new Router({
                     meta: { title: '车辆进出', permission: true }
                 },
                 {
-                    // 车辆进出
-                    path: '/carinout',
-                    component: resolve => require(['../components/page/CarManager/CarInout.vue'], resolve),
-                    meta: { title: '车辆进出', permission: true }
-                },
-                {
                     // 车辆派遣
                     path: '/cardispatch',
                     component: resolve => require(['../components/page/CarManager/CarDispatch.vue'], resolve),
@@ -268,7 +262,7 @@ export default new Router({
                     //   
                     path: '/menu',
                     component: resolve => require(['../components/page/menu.vue'], resolve),
-                    meta: { title: '新增人员', permission: true }
+                    meta: { title: '菜单', permission: true }
                 },
                 
                 {

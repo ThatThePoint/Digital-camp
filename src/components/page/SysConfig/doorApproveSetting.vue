@@ -17,8 +17,8 @@
               style="width: 100%"
               :default-sort="{prop: 'date', order: 'descending'}"
             >
-              <el-table-column prop="code" label="权限编码"></el-table-column>
-              <el-table-column prop="name" label="权限名称"></el-table-column>
+              <el-table-column prop="code" label="权限编码" width="120px"></el-table-column>
+              <el-table-column prop="name" label="权限名称" width="120px"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑权限</el-button>
@@ -39,8 +39,8 @@
               style="width: 100%"
               :default-sort="{prop: 'date', order: 'descending'}"
             >
-              <el-table-column prop="code" label="权限编码"></el-table-column>
-              <el-table-column prop="name" label="权限名称"></el-table-column>
+              <el-table-column prop="code" label="权限编码" width="120px"></el-table-column>
+              <el-table-column prop="name" label="权限名称" width="120px"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑权限</el-button>

@@ -8,12 +8,12 @@
       </el-breadcrumb>
     </div>
     <div class="container">
-      <div class="header-container">
+
+
+      <!-- <div class="header-container">
         <div class="carImg">车辆照片</div>
         <div class="carDet">
           <div class="license">
-            奔驰2号
-            <span class="used">在用</span>
             所属单位
             <el-input class="input-width" placeholder="车牌号" value="警卫连" disabled></el-input>
           </div>
@@ -33,50 +33,45 @@
             <el-input class="input-width" value="123" disabled></el-input>
           </div>
         </div>
-      </div>
+      </div> -->
+
+
       <div class="footer">
         <div>
           <div>维修保养信息：</div>
-          <el-form
-            :model="ruleForm"
-            :rules="rules"
-            ref="ruleForm"
-            label-width="100px"
-            class="demo-ruleForm"
-          >
             <div class="itemDet">
+              维护车辆：
+              <el-select style="width:200px;margin-right:20px;"  v-model="ruleForm.carId" placeholder="选择车辆">
+                <el-option
+                  v-for="item in selectCar"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
+              </el-select>
+              <br/>
+              <br/>
               维护类型：
-              <div></div>
-              <el-form-item prop="type" style="display:inline-block; width:200px;">
-                <el-select style="width:200px;" v-model="ruleForm.type" placeholder="请选择">
-                  <el-option
-                    v-for="item in inoutOptions"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item prop="name" style="display:inline-block; margin-left:80px; ">
-                <el-input  placeholder="经办人" v-model="ruleForm.name"></el-input>
-              </el-form-item>
+              <el-select style="width:200px; margin-right: 20px;" v-model="ruleForm.careTypeCode" placeholder="保养类型"  @change="getProvince" id="province">
+                <el-option
+                  v-for="item in careType"
+                  :key="item.code"
+                  :label="item.name"
+                  :value="item.code"
+                ></el-option>
+              </el-select>
+              <el-input  placeholder="经办人" v-model="ruleForm.careOperatorName" style="width:200px;margin-right:20px;display:inline-block;"></el-input>
             </div>
             <div class="itemDet">
               维修日期：
-              <div></div>
-              <el-form-item prop="value1" style="display:inline-block; " >
-                <el-date-picker class="input-width" v-model="ruleForm.value1" type="date" placeholder="选择日期"></el-date-picker>
-              </el-form-item>
-              <el-form-item prop="value2" label="备注：" style="display:inline-block;">
-                <el-input type="textarea" class="wenben" v-model="ruleForm.value2"></el-input>
-              </el-form-item>
+              <el-date-picker class="input-width" v-model="ruleForm.operateDate" type="date" placeholder="选择日期" style="width:150px;margin-right:20px;"></el-date-picker>
+              <el-input type="textarea" class="wenben" v-model="ruleForm.note"></el-input>
             </div>
-          </el-form>
         </div>
       </div>
       <div class="flex-center submit">
         <el-button type="danger" @click="cancel">取消</el-button>
-        <el-button type="success" style="margin-left:40px;" @click="submitForm('ruleForm')">保存</el-button>
+        <el-button type="success" style="margin-left:40px;" @click="savedata">保存</el-button>
       </div>
     </div>
   </div>
@@ -86,8 +81,8 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      carUser:"",//经办人
-      inout:"",//维修日期
+      selectCar : [],//车辆类型
+      careType:[],//维护类型
       property:"",
       pickerOptions: {
         disabledDate(time) {
@@ -119,10 +114,13 @@ export default {
         ]
       },
       ruleForm: {
-        type: "",
-        value1: "",
-        value2: "",
-        name:""
+        carId:"",//车辆id 
+        careTypeCode: "",//维护类型
+        operateDate: "",//维修日期
+        note: "",//备注
+        careOperatorName: "",//经办人
+        careTypeName :"",
+        tid : ""
       },
       rules: {
         name: [
@@ -196,56 +194,61 @@ export default {
       propertyValue: "",
       departmentValue: "",
       inoutValue: "",
-      tableData: [
-        {
-          license: "冀A1231312",
-          property: "内部车辆",
-          department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
-        },
-        {
-          license: "冀A1231312",
-          property: "内部车辆",
-          department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
-        },
-        {
-          license: "冀A1231312",
-          property: "内部车辆",
-          department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
-        },
-        {
-          license: "冀A1231312",
-          property: "内部车辆",
-          department: "连队1",
-          carUser: "小明",
-          tel: "1329999999",
-          inout: "内部车辆"
-        }
-      ]
+      tableData: []
     };
   },
   created(){
-    console.log("!111111",this.$route.query.row)
     if(this.$route.query.row){
-      this.carUser = this.$route.query.row.carUser
-      this.property = this.$route.query.row.property
-      this.inout = this.$route.query.row.inout
+      console.log(this.$route.query.row)
+      this.ruleForm.tid = this.$route.query.row.tid
     }
-
+    this.getselectData(this.ruleForm)
   },
   methods: {
+    getProvince(){
+      let str = this.ruleForm.careTypeCode;
+      for ( let i = 0;i < this.careType.length; i++){
+        if(str == this.careType[i].code)
+          this.ruleForm.careTypeName = this.careType[i].name
+      }
+      console.log(this.ruleForm.careTypeName)
+    },
+    //获取下拉框内容
+    getselectData(data){
+      let _this = this;
+      this.postAxios("/CarInfo/GetCareRecord",data)
+        .then(res => {
+          console.log(res)
+          // _this.tableData = res.careList;
+          _this.selectCar = res.carOptions
+          _this.careType = res.careTypeOptions;
+          _this.ruleForm = res.info
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
     //保存
     savedata(){
-      this.$destroy('AddCare')
-       this.$router.push({path: '/CarCare'})
+      let info = this.ruleForm
+      let _this = this;
+      this.postAxios("/CarInfo/SaveCareRecord",info)
+        .then(res => {
+          console.log(res)
+          if(res.status == 1){
+            _this.$message.success("保存成功")
+            _this.$destroy('AddCare')
+            _this.$router.push({path: '/CarCare'})
+          }
+        })
+        .catch(err => {
+          console.log(err);
+      });
+
+
+      // this.$destroy('AddCare')
+      // this.$router.push({path: '/CarCare'})
     },
     //取消
     cancel(){
@@ -261,19 +264,19 @@ export default {
     handleDelete(index, row) {
       console.log(index, row);
     },
-     submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            history.go(-1);
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      },
+    // submitForm(formName) {
+    //   this.$refs[formName].validate((valid) => {
+    //     if (valid) {
+    //       history.go(-1);
+    //     } else {
+    //       console.log('error submit!!');
+    //       return false;
+    //     }
+    //   });
+    // },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
     addCar() {
       this.$router.push({ path: "/addcare" });
       // router.push({ path: '/addcar' })
@@ -282,6 +285,9 @@ export default {
 };
 </script>
 <style scoped>
+.input-width{
+  width: 150px;
+}
 .input-width {
   width: 100px;
   margin: 0 10px;

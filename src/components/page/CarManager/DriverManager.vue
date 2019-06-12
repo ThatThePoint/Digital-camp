@@ -66,19 +66,21 @@
             <div class="role">
               <span class="widths">驾驶证附件：</span>
               <el-upload
-                class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
+                class="upload"
+                action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :before-remove="beforeRemove"
+                :on-error="errorHandle"
+                :on-success="successHandle"
                 multiple
                 :limit="1"
                 :on-exceed="handleExceed"
-                :file-list="fileList">
+                :file-list="fileList"
+              > 
                 <el-button size="small" type="primary">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
               </el-upload>
-
             </div>
             <span slot="footer" class="dialog-footer">
               <el-button @click="dialogVisible = false">取 消</el-button>
@@ -86,9 +88,6 @@
             </span>
           </el-dialog>
         </div>
-
-
-
       </div>
       <div class="body">
         <el-table
@@ -96,10 +95,10 @@
           style="width: 100%"
           :default-sort="{prop: 'name', order: 'descending'}"
         >
-          <el-table-column prop="name" label="姓名" sortable width="180"></el-table-column>
-          <el-table-column prop="deptName" label="所属部门" sortable width="180"></el-table-column>
-          <el-table-column prop="licensedate" label="驾驶证有效期" sortable width="180"></el-table-column>
-          <el-table-column prop="duty" label="在岗状态" sortable width="180" :formatter="state"></el-table-column>
+          <el-table-column prop="name" label="姓名" sortable width="100"></el-table-column>
+          <el-table-column prop="deptName" label="所属部门" sortable width="100"></el-table-column>
+          <el-table-column prop="licensedate" label="驾驶证有效期" sortable width="160"></el-table-column>
+          <el-table-column prop="duty" label="在岗状态" sortable width="100" :formatter="state"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -117,7 +116,8 @@ export default {
   data() {
     return {
       pername:"",
-      fileList: [],
+      fileList:[],
+      licensePath1 :"",//图片上传路径
       dateend : "",//驾驶证有效期
       carcode:"",//驾驶证号
       dialogVisible: false,//控制新增弹框
@@ -254,6 +254,7 @@ export default {
     //新增确认
     confirms(){
       let data = {
+        licensePath1:this.licensePath1,
         licensedate : this.dateend,//驾驶证号
         licenseNo: this.carcode,//驾驶证号
         staffid: this.pername,//姓名
@@ -322,17 +323,29 @@ export default {
     //上传文件三个函数
     //删除
     handleRemove(file, fileList) {
+
       console.log(file, fileList);
     },
     handlePreview(file) {
       console.log(file);
     },
     handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      this.$message.warning(
+        `当前限制选择 1 个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
     },
     beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${ file.name }？`);
-    }
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    errorHandle(){
+      console.log("error");
+    },
+    successHandle(file, fileList){
+      this.licensePath1 = file.path
+      console.log(this.licensePath1,file)
+    },
   }
 };
 </script>
