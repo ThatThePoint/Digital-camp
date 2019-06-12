@@ -69,13 +69,19 @@
             </el-form-item>
             <el-form-item label="附件" :label-width="formLabelWidth">
               <el-upload
-                class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
+                class="upload"
+                action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :before-remove="beforeRemove"
+                :on-error="errorHandle"
+                :on-success="successHandle"
                 multiple
-                :limit="3"
-              >
+                :limit="1"
+                :on-exceed="handleExceed"
+                :file-list="fileList"
+              > 
                 <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
               </el-upload>
             </el-form-item>
           </el-form>
@@ -93,6 +99,9 @@ export default {
   name: "rule",
   data() {
     return {
+      fileList:[],
+      fileId:"",//图片上传id
+      filePath1 :"",//图片上传路径
       form:{
         ruleInfo: {
           tid:"",
@@ -156,11 +165,45 @@ export default {
     statusFormatter(row, column) {
       return row.status==1?"有效":"失效";
     },
+
+
+
+    handleRemove(file, fileList) {
+
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(
+        `当前限制选择 1 个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    errorHandle(){
+      console.log("error");
+    },
+    successHandle(file, fileList){
+      this.fileId = file.fileId;
+      this.filePath1 = file.filePath1
+      console.log("success",this.fileId, this.filePath1);
+    },
+
+
+
+
     onSubmitForm(form) {
       let data = {
         // ruleName : this.form.ruleInfo.ruleName,
         // version : this.form.ruleInfo.version,
         // ruleSynopsis : this.form.ruleInfo.ruleSynopsis
+        fileId:this.fileId,
+        filePath1:this.filePath1,
         model:this.form.ruleInfo
       }
       if(this.form.ruleInfo.ruleName && this.form.ruleInfo.version && this.form.ruleInfo.ruleSynopsis){

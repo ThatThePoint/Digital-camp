@@ -11,7 +11,19 @@
       <el-tabs v-model="activeName" @tab-click="handleClick" >
         <el-tab-pane label="内部车辆" name="first" :disabled="flagone">
           <div class="header-container">
-            <div class="carImg">车辆照片</div>
+
+            <div class="carImg">
+              <el-upload
+                class="avatar-uploader"
+                action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload">
+                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </div>
+
             <div class="carDet">
               <div class="license">
               </div>
@@ -50,6 +62,7 @@
                     :value="item.code"
                   ></el-option>
                 </el-select>
+                <br/>
                 <span class="color"><span class="starred">*</span>颜色：</span>
                 <el-select class="input-width" v-model="carInfo.color" placeholder="请选择">
                   <el-option
@@ -61,7 +74,8 @@
                 </el-select>
                 <span class="starred">*</span>行驶证号：
                 <el-input class="input-width" placeholder="行驶证号" v-model="carInfo.driveLicense"></el-input>
-                <el-button size="small" type="success">照片上传</el-button>
+                <!-- <el-button size="small" type="success">照片上传</el-button> -->
+
               </div>
               <div class="itemDet">
                 <span class="starred">*</span>车辆座位：
@@ -76,12 +90,28 @@
                 <span class="starred">*</span>车辆载重：
                 <el-select class="input-width" v-model="carInfo.load" placeholder="请选择">
                   <el-option v-for="item in countCar" :key="item.value" :value="item.value"></el-option>
-                </el-select>
-                <span class="starred">*</span>车架号：
+                </el-select><br/>
+                <span class="starred">*</span><span class="chejia">车架号：</span>
                 <el-input class="input-width" placeholder="请输入" v-model="carInfo.frameCode"></el-input>
                 <span class="starred">*</span>发动机号：<el-input class="input-width" placeholder="请输入" v-model="carInfo.motorCode"></el-input>
                 
               </div>
+              <el-upload
+                class="upload"
+                action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :before-remove="beforeRemove"
+                :on-error="errorHandle"
+                :on-success="successHandle"
+                multiple
+                :limit="1"
+                :on-exceed="handleExceed"
+                :file-list="fileList"
+              > 
+                <el-button size="small" type="primary">点击上传行驶证照片</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+              </el-upload>
             </div>
 
 
@@ -135,7 +165,17 @@
         </el-tab-pane>
         <el-tab-pane label="外部车辆/临时车辆" name="second" :disabled="flagtwo">
           <div class="header-container">
-            <div class="carImg">车辆照片</div>
+            <div class="carImg">
+              <el-upload
+                class="avatar-uploader"
+                action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload">
+                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </div>
             <div class="carDet">
               <div class="license">
               </div>
@@ -172,6 +212,7 @@
                     :value="item.code"
                   ></el-option>
                 </el-select>
+                <br/>
                 <span class="color"><span class="starred">*</span>颜色：</span>
                 <el-select class="input-width" v-model="carInfo.color" placeholder="请选择">
                   <el-option
@@ -182,7 +223,6 @@
                   ></el-option>
                 </el-select><span class="starred">*</span>行驶证号：
                 <el-input class="input-width" placeholder="行驶证号" v-model="carInfo.driveLicense"></el-input>
-                <el-button size="small" type="success">照片上传</el-button>
               </div>
               <div class="itemDet">
                 <span class="starred">*</span>车辆座位：
@@ -196,18 +236,46 @@
                 </el-select><span class="starred">*</span>车辆载重：
                 <el-select class="input-width" v-model="carInfo.load" placeholder="请选择">
                   <el-option v-for="item in seatOptions" :key="item.value" :value="item.value"></el-option>
-                </el-select><span class="starred">*</span>车架号：
-                <el-input class="input-width" placeholder="请输入" v-model="carInfo.frameCode"></el-input><span class="starred">*</span>发动机号：
+                </el-select><br/>
+                 <span class="starred">*</span><span class="chejia">车架号：</span>
+                <el-input class="input-width" placeholder="请输入" v-model="carInfo.frameCode"></el-input>
+                <span class="starred">*</span>发动机号：
                 <el-input class="input-width" placeholder="请输入" v-model="carInfo.motorCode"></el-input>
+                <div>
+                  <el-upload
+                    class="upload twoq"
+                    action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :before-remove="beforeRemove"
+                    :on-error="errorHandle"
+                    :on-success="successHandle"
+                    multiple
+                    :limit="1"
+                    :on-exceed="handleExceed"
+                    :file-list="fileList"
+                  > 
+                    <el-button size="small" type="primary">点击上传行驶证照片</el-button>
+                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                  </el-upload>
+                </div>
               </div>
+
             </div>
           <div class="one">
             <p>外部车辆附加：</p>
             <div class="itemDet">
-              <span class="starred">*</span>车主姓名：<el-input class="input-width" placeholder="请输入" v-model="carInfo.owner"></el-input>
-              <span class="starred">*</span>手机号： <el-input class="input-width" placeholder="请输入" v-model="carInfo.ownerTel" @blur="telBlue" type="number"></el-input>
-              <span class="starred">*</span>部队联系人：<el-input class="input-width" placeholder="请输入" v-model="carInfo.relater"></el-input>
-              <span class="starred">*</span>联系人部门：
+              <span class="starred">*</span>
+              <span class="ddd">车主姓名：</span>
+              <el-input class="input-width" placeholder="请输入" v-model="carInfo.owner"></el-input>
+              <span class="starred">*</span>
+              <span class="ddd">手机号： </span>
+              <el-input class="input-width" placeholder="请输入" v-model="carInfo.ownerTel" @blur="telBlue" type="number"></el-input><br/>
+              <span class="starred">*</span>
+              <span class="ddd">部队联系人：</span>
+              <el-input class="input-width" placeholder="请输入" v-model="carInfo.relater"></el-input>
+              <span class="starred">*</span>
+              <span class="ddd">联系人部门：</span>
               <el-select class="input-width" v-model="carInfo.relaterDept" placeholder="请选择">
                 <el-option
                   v-for="item in departmentOptions"
@@ -218,7 +286,7 @@
               </el-select>
             </div>
             <div class="itemDet">
-              车辆权限：
+              <span class="dddd">车辆权限：</span>
               <el-select class="input-width" v-model="carInfo.carRight" placeholder="请选择">
                 <el-option
                   v-for="item in carRightOptions"
@@ -226,20 +294,73 @@
                   :label="item.name"
                   :value="item.code"
                 ></el-option>
-              </el-select>权限有效期
+              </el-select>
+              <span class="ddd">权限有效期：</span>
               <el-date-picker class="input-width" v-model="carInfo.rightValid" type="date" placeholder="选择日期"></el-date-picker>
             </div>
             <div class="itemDet">
               身份证：
-              <el-input class="input-width" placeholder="请输入" v-model="carInfo.ownerIdCard" @blur="cardBlue"></el-input>
-              <el-button size="small" type="success">身份证正面上传</el-button>
-              <el-button size="small" type="success">身份证背面上传</el-button>
+              <el-input class="input-width cards" placeholder="请输入" v-model="carInfo.ownerIdCard" @blur="cardBlue"></el-input>
+                <div style="display:flex">
+                  <div class="carImg" style="margin-right:50px">
+                    <el-upload
+                      class="avatar-uploader"
+                      action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
+                      :show-file-list="false"
+                      :on-success="handleAvatarSuccess"
+                      :before-upload="beforeAvatarUpload">
+                      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>     
+                  </div>
+                  <div class="carImg">
+                    <el-upload
+                      class="avatar-uploader"
+                      action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
+                      :show-file-list="false"
+                      :on-success="handleAvatarSuccess"
+                      :before-upload="beforeAvatarUpload">
+                      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>                   
+                  </div>
+                </div>
+                <div style="display:flex">
+                  <div style="margin-right:70px;margin-left:10px;">身份证正面</div>
+                  <div>身份证反面</div>
+                </div>
             </div>
             <div class="itemDet">
               驾驶证：
-              <el-input class="input-width" placeholder="请输入" v-model="carInfo.relaterLicenseNo"></el-input>
-              <el-button size="small" type="success">驾驶证正面上传</el-button>
-              <el-button size="small" type="success">驾驶证背面上传</el-button>
+              <el-input class="input-width cards" placeholder="请输入" v-model="carInfo.relaterLicenseNo"></el-input>
+                <div style="display:flex">
+                  <div class="carImg" style="margin-right:50px">
+                    <el-upload
+                      class="avatar-uploader"
+                      action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
+                      :show-file-list="false"
+                      :on-success="handleAvatarSuccess"
+                      :before-upload="beforeAvatarUpload">
+                      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>     
+                  </div>
+                  <div class="carImg">
+                    <el-upload
+                      class="avatar-uploader"
+                      action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
+                      :show-file-list="false"
+                      :on-success="handleAvatarSuccess"
+                      :before-upload="beforeAvatarUpload">
+                      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>                   
+                  </div>
+                </div>
+                <div style="display:flex">
+                  <div style="margin-right:70px;margin-left:10px;">驾驶证正面</div>
+                  <div>驾驶证反面</div>
+                </div>
             </div>
           </div>
         </el-tab-pane>
@@ -273,6 +394,11 @@ export default {
   },
   data() {
     return {
+
+      fileList:[],
+      fileId:"",//图片上传id
+      path :"",//图片上传路径
+
       flagone:false,
       flagtwo:false,
       carRightOptions : [],//车辆权限
@@ -313,6 +439,7 @@ export default {
       colorOptions: [],
       rightOptions: [],
       tableData: [],
+      imageUrl: '',
       carInfo:{
         tid:"",
         //<summary>车辆类型 1-内部车辆 2-外部车辆 3-临时车辆</summary>
@@ -437,6 +564,57 @@ export default {
     this.getSelectValue()
   },
   methods: {
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(res,file,this.imageUrl)
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
+
+
+    handleRemove(file, fileList) {
+
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(
+        `当前限制选择 1 个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    errorHandle(){
+      console.log("error");
+    },
+    successHandle(file, fileList){
+      this.fileId = file.fileId;
+      this.path = file.path
+      console.log("success",this.fileId, this.path);
+    },
+
+
+
+
+
+
+
+
     //验证手机号
     telBlue(){
       utils.isMobilePhone(this.carInfo.ownerTel)
@@ -531,6 +709,7 @@ export default {
   /* width: 100px; */
   width: 150px;
   margin: 0 10px;
+  margin-bottom: 5px;
 }
 .header-container {
   /* background:#d8d5d5; */
@@ -565,11 +744,11 @@ export default {
   margin-top: 5px;
 }
 .itemDet[data-v-b889b1ce] {
-  padding: 7px 0 7px 80px;
+  padding: 7px 0 0 80px;
 }
 .color {
   display: inline-block;
-  width: 68px;
+  width: 91px;
 }
 .datas {
   display: inline-block;
@@ -587,4 +766,48 @@ export default {
   border-radius: 2px;
   color: red;
 }
+.chejia{
+  display: inline-block;
+  width: 85px;
+}
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 100px;
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+  }
+  .avatar {
+    width: 100px;
+    height: 120px;
+    display: block;
+  }
+  .upload{
+    margin-left: 82px;
+  }
+  .twoq{
+    margin-left: 0;
+  }
+  .ddd{
+    display: inline-block;
+    width: 100px;
+  }
+  .dddd{
+    display: inline-block;
+    width: 107px;
+  }
+  .cards{
+    width: 200px;
+  }
 </style>

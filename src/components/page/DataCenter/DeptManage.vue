@@ -20,7 +20,7 @@
           <el-table-column  label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.row.tid)">详情</el-button>
-              <el-button size="mini" type="danger" @click="handleEdit(scope.row.tid)">删除</el-button>
+              <el-button size="mini" type="danger" @click="handleDelete(scope.row.tid)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -98,14 +98,17 @@ export default {
       this.dialogFormVisible = true;
     },
     handleDelete(tid) {
+      if(confirm("确定删除？")){
       this.postAxios("DataCenter/DeleteDept", {deptId:tid})
         .then(res => {
           console.log(res);
           alert("删除成功");
+          this.getData();
         })
         .catch(err => {
           console.log(err);
         });
+      }
     },
     handleCancel(){
       this.dialogFormVisible = false;
@@ -132,9 +135,6 @@ export default {
     },
     formatter(row, column) {
       return row.address;
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
     },
     getData(name, pageNum = 1, pageSize = 10) {
       this.postAxios("DataCenter/GetDepts", { name, pageNum, pageSize })
