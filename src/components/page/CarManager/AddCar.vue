@@ -307,9 +307,9 @@
                       class="avatar-uploader"
                       action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
                       :show-file-list="false"
-                      :on-success="handleAvatarSuccess"
+                      :on-success="cardone"
                       :before-upload="beforeAvatarUpload">
-                      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                      <img v-if="cardimg1" :src="cardimg1" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>     
                   </div>
@@ -318,9 +318,9 @@
                       class="avatar-uploader"
                       action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
                       :show-file-list="false"
-                      :on-success="handleAvatarSuccess"
+                      :on-success="cardtwo"
                       :before-upload="beforeAvatarUpload">
-                      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                      <img v-if="cardimg2" :src="cardimg2" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>                   
                   </div>
@@ -339,9 +339,9 @@
                       class="avatar-uploader"
                       action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
                       :show-file-list="false"
-                      :on-success="handleAvatarSuccess"
+                      :on-success="liceone"
                       :before-upload="beforeAvatarUpload">
-                      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                      <img v-if="liceimg1" :src="liceimg1" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>     
                   </div>
@@ -350,9 +350,9 @@
                       class="avatar-uploader"
                       action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
                       :show-file-list="false"
-                      :on-success="handleAvatarSuccess"
+                      :on-success="licetwo"
                       :before-upload="beforeAvatarUpload">
-                      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                      <img v-if="liceimg2" :src="liceimg2" class="avatar">
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>                   
                   </div>
@@ -396,9 +396,6 @@ export default {
     return {
 
       fileList:[],
-      fileId:"",//图片上传id
-      path :"",//图片上传路径
-
       flagone:false,
       flagtwo:false,
       carRightOptions : [],//车辆权限
@@ -440,6 +437,11 @@ export default {
       rightOptions: [],
       tableData: [],
       imageUrl: '',
+      cardimg1:"",
+      cardimg2:"",
+      liceimg1:"",
+      liceimg2:"",
+      carPhoto:"",//车辆照片
       carInfo:{
         tid:"",
         //<summary>车辆类型 1-内部车辆 2-外部车辆 3-临时车辆</summary>
@@ -542,7 +544,11 @@ export default {
         ownerIdCard:"",
 
         // <summary>车主身份证照片</summary>
-        ownerIdCardPhoto:""
+        ownerIdCardPhoto:"",
+        ownerIdCardPhoto1:"",//身份证正面
+        ownerIdCardPhoto2:"",//身份证背面
+        relaterLicensePhoto1:"",//驾驶证正面
+        relaterLicensePhoto2:"",//驾驶证背面
       }
     };
   },
@@ -566,8 +572,26 @@ export default {
   methods: {
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
-      console.log(res,file,this.imageUrl)
+      this.carInfo.carPhoto = res.path
+      console.log(this.carInfo.carPhoto)
     },
+    cardone(res, file){
+      this.cardimg1 = URL.createObjectURL(file.raw);
+      this.carInfo.ownerIdCardPhoto1 = res.path
+    },
+    cardtwo(res, file){
+      this.cardimg2 = URL.createObjectURL(file.raw);
+      this.carInfo.ownerIdCardPhoto2 = res.path
+    },
+    liceone(res, file){
+      this.liceimg1 = URL.createObjectURL(file.raw);
+      this.carInfo.relaterLicensePhoto1 = res.path
+    },
+    licetwo(res, file){
+      this.liceimg2 = URL.createObjectURL(file.raw);
+      this.carInfo.relaterLicensePhoto2 = res.path
+    },
+
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;
@@ -603,9 +627,8 @@ export default {
       console.log("error");
     },
     successHandle(file, fileList){
-      this.fileId = file.fileId;
-      this.path = file.path
-      console.log("success",this.fileId, this.path);
+      this.carInfo.DriveLicensephoto = file.path
+      console.log(this.carInfo.DriveLicensephoto)
     },
 
 
@@ -668,7 +691,6 @@ export default {
           this.postAxios("/CarInfo/SaveCarInfo",_this.carInfo)
             .then(res => {
               console.log(res)
-              //确定保存成功后的回调,先注释
               _this.$destroy()
               history.go(-1);
             })
@@ -684,7 +706,6 @@ export default {
           this.postAxios("/CarInfo/SaveCarInfo",_this.carInfo)
             .then(res => {
               console.log(res)
-              //确定保存成功后的回调,先注释
               _this.$destroy()
               history.go(-1);
             })

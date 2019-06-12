@@ -75,7 +75,7 @@
                 :limit="1"
                 :on-exceed="handleExceed"
                 :file-list="fileList"
-              >
+              > 
                 <el-button size="small" type="primary">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
               </el-upload>
@@ -152,7 +152,7 @@ export default {
     confirms() {
       let data = {
         tid: this.driverId,
-        licensePath1: this.path,
+        licensePath1:this.licensePath1,
         licensedate: this.dateend, //驾驶证号
         licenseNo: this.carcode, //驾驶证号
         staffid: this.pername //姓名
@@ -259,6 +259,7 @@ export default {
     //上传文件三个函数
     //删除
     handleRemove(file, fileList) {
+
       console.log(file, fileList);
     },
     handlePreview(file) {
@@ -274,14 +275,13 @@ export default {
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
     },
-    errorHandle() {
+    errorHandle(){
       console.log("error");
     },
-    successHandle(file, fileList) {
-      this.fileId = file.fileId;
-      this.path = file.path;
-      console.log("success", this.fileId, this.path);
-    }
+    successHandle(file, fileList){
+      this.licensePath1 = file.path
+      console.log(this.licensePath1,file)
+    },
   }
 };
 </script>
