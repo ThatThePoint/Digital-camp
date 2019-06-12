@@ -67,13 +67,17 @@
                 <el-form-item label="结束日期">{{form.endTime}}</el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="请假时间">{{form.timeLength}}</el-form-item>
+                <el-form-item label="请假时间">{{form.timeLength}}小时</el-form-item>
               </el-col>
             </el-row>
           </el-form>
           <div class="block">
             <el-timeline>
-              <el-timeline-item timestamp="2018/4/2" placement="top">
+              <el-timeline-item
+                timestamp="2018/4/2"
+                placement="top"
+                v-if="!activities.secApproverList"
+              >
                 <el-card>
                   <h4>张主任</h4>
                   <p>同意</p>
@@ -91,25 +95,36 @@
                   </div>
                 </el-card>
               </el-timeline-item>
-              <el-timeline-item timestamp="2018/4/3" placement="top">
+              <el-timeline-item
+                timestamp="2018/4/2"
+                placement="top"
+                v-if="activities.secApproverList"
+              >
+                <el-card>
+                  <h4>张主任</h4>
+                  <p>同意</p>
+                  <div>
+                    <el-radio-group v-model="resource">
+                      <el-radio label="同意" value="1"></el-radio>
+                      <el-radio label="退回" value="2"></el-radio>
+                    </el-radio-group>
+                    <el-row>
+                      <el-col :span="18" class="flex">
+                        <div style="width:80px;">意见</div>
+                        <el-input v-model="name"></el-input>
+                      </el-col>
+                    </el-row>
+                  </div>
+                </el-card>
+              </el-timeline-item>
+              <el-timeline-item
+                timestamp="2018/4/3"
+                placement="top"
+                v-if="activities.thdApproverList"
+              >
                 <el-card>
                   <h4>王主任</h4>
                   <p>同意</p>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item timestamp="2018/4/3" placement="top">
-                <el-card>
-                  <h4>高首长</h4>
-                  <el-radio-group v-model="resource">
-                    <el-radio label="同意" value="1"></el-radio>
-                    <el-radio label="退回" value="2"></el-radio>
-                  </el-radio-group>
-                  <el-row>
-                    <el-col :span="18" class="flex">
-                      <div style="width:80px;">意见</div>
-                      <el-input v-model="name"></el-input>
-                    </el-col>
-                  </el-row>
                 </el-card>
               </el-timeline-item>
             </el-timeline>
@@ -130,7 +145,7 @@ export default {
     return {
       name: "",
       form: {},
-      curNode:1,
+      curNode: 1,
       seletOptions: {},
       resource: 1,
       count: 1,
@@ -140,30 +155,17 @@ export default {
       checked: "",
       value: "",
       tableData: [],
-      activities: [
-        {
-          content: "张主任",
-          timestamp: "2018-04-15"
-        },
-        {
-          content: "王主任",
-          timestamp: "2018-04-13"
-        },
-        {
-          content: "高首长",
-          timestamp: "2018-04-11"
-        }
-      ]
+      activities: {}
     };
   },
   methods: {
-    //  当前节点 1-建单 
-    // 2-一级审批（有二级审批）
+    //  当前节点 1-建单
+    //  2-一级审批（有二级审批）
     //  3-一级审批（无二级审批）
-    //   4-二级审批（有三级审批）
-    //   5-二级审批（无三级审批）
-    //    6-三级审批 
-    //     7-归档：此时只能查看不能修改（表单退回即为归档）
+    //  4-二级审批（有三级审批）
+    //  5-二级审批（无三级审批）
+    //  6-三级审批
+    //  7-归档：此时只能查看不能修改（表单退回即为归档）
     starttimeFormatter(row, column) {
       if (row.startTime) {
         return row.startTime.replace("T", " ");
@@ -222,8 +224,9 @@ export default {
     getFormData(tid) {
       this.postAxios("OutApply/ApplyInfo", { tid })
         .then(res => {
-          console.log(res);
-          this.seletOptions = [...res.data];
+          this.activities = { ...res };
+          console.log(111111111111);
+          console.log(this.activities);
           this.loading = false;
         })
         .catch(err => {
