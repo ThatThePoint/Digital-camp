@@ -36,14 +36,14 @@
           </div>
         <el-upload
           class="upload"
-          action="https://localhost:44352/api/Upload/Upload"
+          action="http://digitalcamp.oicp.io:54373/api/Upload/Upload"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :before-remove="beforeRemove"
           :on-error="errorHandle"
           :on-success="successHandle"
           multiple
-          :limit="3"
+          :limit="1"
           :on-exceed="handleExceed"
           :file-list="fileList"
         >     
@@ -100,6 +100,8 @@ export default {
       fileList: [],
       list: [],
       loading: false,
+      fileId:"",//图片上传id
+      path :"",//图片上传路径
       states: [
         "Alabama",
         "Alaska",
@@ -247,6 +249,8 @@ export default {
     },
     submit() {
       let data = {
+        fileId:this.fileId,
+        path:this.path,
         tid:this.docuId,
         docReceiversName : this.postname,
         docReceiversId : this.perid,
@@ -293,6 +297,7 @@ export default {
       }
     },
     handleRemove(file, fileList) {
+
       console.log(file, fileList);
     },
     handlePreview(file) {
@@ -300,7 +305,7 @@ export default {
     },
     handleExceed(files, fileList) {
       this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${
+        `当前限制选择 1 个文件，本次选择了 ${
           files.length
         } 个文件，共选择了 ${files.length + fileList.length} 个文件`
       );
@@ -311,8 +316,10 @@ export default {
     errorHandle(){
       console.log("error");
     },
-    successHandle(){
-      console.log("success");
+    successHandle(file, fileList){
+      this.fileId = file.fileId;
+      this.path = file.path
+      console.log("success",this.fileId, this.path);
     },
     handleBack(){
       history.go(-1);
