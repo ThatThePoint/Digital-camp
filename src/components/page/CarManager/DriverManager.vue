@@ -121,8 +121,7 @@ export default {
     return {
       pername:"",
       fileList:[],
-      fileId:"",//图片上传id
-      path :"",//图片上传路径
+      licensePath1 :"",//图片上传路径
       dateend : "",//驾驶证有效期
       carcode:"",//驾驶证号
       dialogVisible: false,//控制新增弹框
@@ -259,8 +258,7 @@ export default {
     //新增确认
     confirms(){
       let data = {
-        fileId:this.fileId,
-        path:this.path,
+        licensePath1:this.licensePath1,
         licensedate : this.dateend,//驾驶证号
         licenseNo: this.carcode,//驾驶证号
         staffid: this.pername,//姓名
@@ -349,9 +347,8 @@ export default {
       console.log("error");
     },
     successHandle(file, fileList){
-      this.fileId = file.fileId;
-      this.path = file.path
-      console.log("success",this.fileId, this.path);
+      this.licensePath1 = file.path
+      console.log(this.licensePath1,file)
     },
   }
 };
