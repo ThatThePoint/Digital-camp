@@ -100,8 +100,8 @@ export default {
       fileList: [],
       list: [],
       loading: false,
-      fileId:"",//图片上传id
-      path :"",//图片上传路径
+      fileName1:"",//图片上传id
+      filePath1 :"",//图片上传路径
       states: [
         "Alabama",
         "Alaska",
@@ -182,6 +182,7 @@ export default {
         _this.content=res.document.content;
         _this.postname=res.document.docReceiversName;
         _this.level=res.document.messageLevel;
+        _this.fileList=[{"url":"http://digitalcamp.oicp.io:54373"+res.filePath1}]
         }
       })
       .catch(err => {
@@ -229,7 +230,6 @@ export default {
 
     },
     confirms(a){
-      debugger
       this.postname = a[0]
       this.perid = a[1]
   
@@ -249,8 +249,8 @@ export default {
     },
     submit() {
       let data = {
-        fileId:this.fileId,
-        path:this.path,
+        fileName1 : this.fileName1,
+        filePath1:this.filePath1,
         tid:this.docuId,
         docReceiversName : this.postname,
         docReceiversId : this.perid,
@@ -270,9 +270,7 @@ export default {
       if(flag == false){
         this.open3()
       }else{
-        this.postAxios("/DailyOffice/Savedocument",{
-            model:data
-          })
+        this.postAxios("/DailyOffice/Savedocument", data)
           .then(res => {
             console.log(res);
             this.$message.success("提交成功！");
@@ -317,9 +315,9 @@ export default {
       console.log("error");
     },
     successHandle(file, fileList){
-      this.fileId = file.fileId;
-      this.path = file.path
-      console.log("success",this.fileId, this.path);
+      this.filePath1 = file.path;
+      this.fileName1 = file.fileName;
+      console.log("success",file,fileList);
     },
     handleBack(){
       history.go(-1);

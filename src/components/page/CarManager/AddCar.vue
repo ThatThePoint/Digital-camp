@@ -592,10 +592,6 @@ export default {
       this.carInfo.relaterLicensePhoto2 = res.path
     },
 
-
-
-
-
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;
