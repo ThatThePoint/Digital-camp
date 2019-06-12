@@ -53,10 +53,10 @@
         <el-dialog title="新增规章制度" :visible.sync="dialogFormVisible">
           <el-form :rules="checkRules" ref="ruleInfo" :model="form.ruleInfo">
             <div class="flex"></div>
-            <el-form-item label="规章名称1" :label-width="formLabelWidth">
+            <el-form-item label="规章名称" :label-width="formLabelWidth">
               <el-input class="input-width" placeholder="请输入" v-model="form.ruleInfo.ruleName"></el-input>
             </el-form-item>
-            <el-form-item label="版本1" :label-width="formLabelWidth">
+            <el-form-item label="版本" :label-width="formLabelWidth">
               <el-input class="input-width" placeholder="请输入" v-model="form.ruleInfo.version"></el-input>
             </el-form-item>
             <el-form-item label="简介" :label-width="formLabelWidth">

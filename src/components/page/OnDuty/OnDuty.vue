@@ -201,7 +201,6 @@ export default {
     };
   },
   created() {
-    this.default_value=this.getToday();
     let data = {
       where: this.dept,
       pageNum: 1,
@@ -351,7 +350,8 @@ export default {
       this.confirm();
     },
     cancelPlan(){
-      this.activeName="frist";
+      this.activeName="first";
+      this.getdataone();
       this.rotaInfo={};
       this.persons="";
     },
