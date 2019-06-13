@@ -45,6 +45,8 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      
+      debugger
       this.$refs[formName].validate(valid => {
         if (valid) {
           var params = {
@@ -56,6 +58,7 @@ export default {
               console.log(res);
               if(res.status==1){
                 localStorage.setItem("ms_username", this.ruleForm.username);
+                sessionStorage.setItem("token",res.token)
               this.$router.push("/");
               }else{
                   this.$message.warning(res.msg);

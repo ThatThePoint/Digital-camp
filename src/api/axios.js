@@ -53,7 +53,10 @@ function apiAxios(method, url, params) {
         // baseURL:"https://localhost:44352/api/",
         // `params` 是即将与请求一起发送的 URL 参数
         // `data` 是作为请求主体被发送的数据 
-        headers:  { 'Content-Type': "application/x-www-form-urlencoded" } ,
+        headers:  { 
+            'Content-Type': "application/x-www-form-urlencoded",
+            "token" : sessionStorage.getItem("token")
+        } ,
         params: method === 'GET' || method === 'DELETE' ?  params: null,
         data: method === 'POST' || method === 'PUT' ? qs.stringify(params) : null,
         timeout: 100000

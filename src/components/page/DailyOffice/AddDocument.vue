@@ -102,6 +102,7 @@ export default {
       loading: false,
       fileName1:"",//图片上传id
       filePath1 :"",//图片上传路径
+      downloadUrl:"",
       states: [
         "Alabama",
         "Alaska",
@@ -184,6 +185,10 @@ export default {
         _this.postname=res.document.docReceiversName;
         _this.level=res.document.messageLevel;
         _this.fileList=[{"url":"http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1,"name":res.document.fileName1}]
+        _this.downloadUrl = "http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1
+
+
+
         }
       })
       .catch(err => {
@@ -300,6 +305,10 @@ export default {
       console.log(file, fileList);
     },
     handlePreview(file) {
+      var a = document.createElement('a');
+      a.href = this.downloadUrl;
+      a.download = 'dname';
+      a.click();
       console.log(file);
     },
     handleExceed(files, fileList) {
