@@ -222,7 +222,7 @@ export default {
           // _this.tableData = res.careList;
           _this.selectCar = res.carOptions
           _this.careType = res.careTypeOptions;
-          _this.ruleForm = res.info
+          // _this.ruleForm = res.info
           console.log(res)
         })
         .catch(err => {
