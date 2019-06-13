@@ -11,7 +11,7 @@
       <div class="messages">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="发布单位">
-            <el-select v-model="formInline.dept" placeholder="请选择">
+            <el-select clearable v-model="formInline.dept" placeholder="请选择">
               <el-option
                     v-for="item in deptsOps"
                     :key="item.tid"
@@ -21,7 +21,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="警报等级">
-            <el-select v-model="formInline.level" placeholder="请选择">
+            <el-select clearable v-model="formInline.level" placeholder="请选择">
               <el-option
                     v-for="item in messageLevelOps"
                     :key="item.code"
@@ -31,7 +31,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="警报状态">
-            <el-select v-model="formInline.status" placeholder="请选择">
+            <el-select clearable v-model="formInline.status" placeholder="请选择">
               <el-option label="生效" value="1"></el-option>
               <el-option label="失效" value="0"></el-option>
             </el-select>
@@ -70,7 +70,7 @@
               <el-input class="input-width" placeholder="警报内容" v-model="alertInfo.content"></el-input>
             </el-form-item>
             <el-form-item label="警报等级" :label-width="formLabelWidth">
-              <el-select v-model="alertInfo.alertLevel" placeholder="请选择">
+              <el-select clearable v-model="alertInfo.alertLevel" placeholder="请选择">
               <el-option
                     v-for="item in messageLevelOps"
                     :key="item.code"

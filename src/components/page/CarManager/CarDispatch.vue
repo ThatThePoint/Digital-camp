@@ -11,21 +11,31 @@
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="车辆申请" name="first">
           <div class="body">
-            <el-form :model="form">
+            <el-form :model="applyInfo">
               <div class="flex"></div>
               <el-form-item label="司机" :label-width="formLabelWidth">
-                <el-select v-model="formInline.region" placeholder="请选择">
+                <el-select clearable v-model="applyInfo.driverid" placeholder="请选择">
                   <el-option label="老张" value="shanghai"></el-option>
                   <el-option label="老李" value="beijing"></el-option>
                 </el-select>使用人
-                <el-select v-model="formInline.region" placeholder="请选择" style="margin-left:10px;">
+                <el-select clearable v-model="applyInfo.region" placeholder="请选择" style="margin-left:10px;">
                   <el-option label="老张" value="shanghai"></el-option>
                   <el-option label="老李" value="beijing"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="起始时间" :label-width="formLabelWidth">
-                <el-date-picker placeholder="选择时间"></el-date-picker>--
-                <el-date-picker placeholder="选择时间"></el-date-picker>
+                <el-date-picker
+                  v-model="starttime"
+                  type="datetime"
+                  placeholder="选择日期时间"
+                  default-time="12:00:00"
+                ></el-date-picker>
+                <el-date-picker
+                  v-model="endtime"
+                  type="datetime"
+                  placeholder="选择日期时间"
+                  default-time="12:00:00"
+                ></el-date-picker>
               </el-form-item>
 
               <el-form-item label="目的地" :label-width="formLabelWidth">
@@ -34,11 +44,11 @@
               </el-form-item>
 
               <el-form-item label="申请车辆" :label-width="formLabelWidth">
-                <el-select v-model="formInline.region" placeholder="请选择">
+                <el-select clearable v-model="formInline.region" placeholder="请选择">
                   <el-option label="冀JHSKDLL" value="shanghai"></el-option>
                   <el-option label="冀JHSKDLL" value="beijing"></el-option>
                 </el-select>调度员
-                <el-select v-model="formInline.region" placeholder="请选择" style="margin-left:10px;">
+                <el-select clearable v-model="formInline.region" placeholder="请选择" style="margin-left:10px;">
                   <el-option label="管理员" value="shanghai"></el-option>
                   <el-option label="李长官" value="beijing"></el-option>
                 </el-select>
@@ -60,13 +70,13 @@
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
-                <el-select v-model="formInline.region" placeholder="申请类型">
+                <el-select clearable v-model="formInline.region" placeholder="申请类型">
                   <el-option label="区域一" value="shanghai"></el-option>
                   <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label>
-                <el-select v-model="formInline.region" placeholder="申请状态">
+                <el-select clearable v-model="formInline.region" placeholder="申请状态">
                   <el-option label="区域一" value="shanghai"></el-option>
                   <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
@@ -106,13 +116,13 @@
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
-                <el-select v-model="formInline.region" placeholder="申请类型">
+                <el-select clearable v-model="formInline.region" placeholder="申请类型">
                   <el-option label="区域一" value="shanghai"></el-option>
                   <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label>
-                <el-select v-model="formInline.region" placeholder="申请状态">
+                <el-select clearable v-model="formInline.region" placeholder="申请状态">
                   <el-option label="区域一" value="shanghai"></el-option>
                   <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
@@ -151,13 +161,13 @@
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
-                <el-select v-model="formInline.region" placeholder="申请类型">
+                <el-select clearable v-model="formInline.region" placeholder="申请类型">
                   <el-option label="区域一" value="shanghai"></el-option>
                   <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label>
-                <el-select v-model="formInline.region" placeholder="申请状态">
+                <el-select clearable v-model="formInline.region" placeholder="申请状态">
                   <el-option label="区域一" value="shanghai"></el-option>
                   <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
@@ -194,11 +204,11 @@
               <el-form :model="form">
                 <div class="flex"></div>
                 <el-form-item label="申请车辆" :label-width="formLabelWidth">
-                  <el-select v-model="formInline.region" placeholder="申请类型">
+                  <el-select clearable v-model="formInline.region" placeholder="申请类型">
                     <el-option label="冀JHSKDLL" value="shanghai"></el-option>
                     <el-option label="冀JHSKDLL" value="beijing"></el-option>
                   </el-select>
-                  <el-select
+                  <el-select clearable
                     v-model="formInline.region"
                     placeholder="申请类型"
                     style="margin-left:10px;"
@@ -237,7 +247,7 @@
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
-                <el-select v-model="formInline.car" placeholder="车辆">
+                <el-select clearable v-model="formInline.car" placeholder="车辆">
                   <el-option label="粵A88888" value="SS"></el-option>
                   <el-option label="粵A88888" value="SSSS"></el-option>
                 </el-select>
@@ -274,11 +284,11 @@
               <el-form :model="useCarInfo">
                 <div class="flex"></div>
                 <el-form-item label="申请车辆" :label-width="formLabelWidth">
-                  <el-select v-model="useCarInfo.region" placeholder="申请类型">
+                  <el-select clearable v-model="useCarInfo.region" placeholder="申请类型">
                     <el-option label="冀JHSKDLL" value="shanghai"></el-option>
                     <el-option label="冀JHSKDLL" value="beijing"></el-option>
                   </el-select>
-                  <el-select v-model="useCarInfo.type" placeholder="申请类型" style="margin-left:10px;">
+                  <el-select clearable v-model="useCarInfo.type" placeholder="申请类型" style="margin-left:10px;">
                     <el-option label="外出" value="shanghai"></el-option>
                     <el-option label="因私" value="beijing"></el-option>
                   </el-select>
@@ -318,13 +328,13 @@
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
-                <el-select v-model="formInline.region" placeholder="申请类型">
+                <el-select clearable v-model="formInline.region" placeholder="申请类型">
                   <el-option label="区域一" value="shanghai"></el-option>
                   <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label>
-                <el-select v-model="formInline.region" placeholder="申请状态">
+                <el-select clearable v-model="formInline.region" placeholder="申请状态">
                   <el-option label="区域一" value="shanghai"></el-option>
                   <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
@@ -361,11 +371,11 @@
               <el-form :model="form">
                 <div class="flex"></div>
                 <el-form-item label="申请车辆" :label-width="formLabelWidth">
-                  <el-select v-model="formInline.region" placeholder="申请类型">
+                  <el-select clearable v-model="formInline.region" placeholder="申请类型">
                     <el-option label="冀JHSKDLL" value="shanghai"></el-option>
                     <el-option label="冀JHSKDLL" value="beijing"></el-option>
                   </el-select>
-                  <el-select
+                  <el-select clearable
                     v-model="formInline.region"
                     placeholder="申请类型"
                     style="margin-left:10px;"
@@ -446,11 +456,11 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="用车风险">
-                <!-- <el-select v-model="form.region" placeholder="请选择">
+                <!-- <el-select clearable v-model="form.region" placeholder="请选择">
                   <el-option label="一般" value="1"></el-option>
                   <el-option label="危险" value="2"></el-option>
                 </el-select>-->
-                <el-select v-model="form.region" vlaue="一般" placeholder="请选择">
+                <el-select clearable v-model="form.region" vlaue="一般" placeholder="请选择">
                   <el-option label="一般" value="1"></el-option>
                   <el-option label="危险" value="2"></el-option>
                 </el-select>
@@ -596,43 +606,12 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            }
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            }
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            }
-          }
-        ]
-      },
+      applyInfo:{},
       useCarInfo: {
         region: "shanghai",
         type: "shanghai",
         input2: "天津战备支援"
       },
-      value1: "",
-      value2: "",
-      input2: "",
       options: [
         {
           value: "1",
@@ -667,42 +646,8 @@ export default {
           disc: "接送亲戚",
           date: "2019-04-23",
           status: "待审批"
-        },
-        {
-          license: "冀A1231312",
-          carNo: "2323",
-          ofDept: "连队1",
-          applyPerson: "小张",
-          type: "内部车辆",
-          disc: "接送亲戚",
-          date: "2019-04-23",
-          status: "通过"
-        },
-        {
-          license: "冀A1231312",
-          carNo: "2323",
-          ofDept: "连队1",
-          applyPerson: "小张",
-          type: "内部车辆",
-          disc: "接送亲戚",
-          date: "2019-04-23",
-          status: "待审批"
-        },
-        {
-          license: "冀A1231312",
-          carNo: "2323",
-          ofDept: "连队1",
-          applyPerson: "小张",
-          type: "内部车辆",
-          disc: "接送亲戚",
-          date: "2019-04-23",
-          status: "待审批"
         }
       ],
-      formInline: {
-        user: "",
-        region: ""
-      },
       secondFormVisible: false,
       dialogTableVisible: false,
       dialogFormVisible: false,
@@ -718,6 +663,17 @@ export default {
       },
       formLabelWidth: "120px"
     };
+  },
+  created(){
+    let _this = this;
+this.postAxios("/OutApply/ApplyInfo",{})
+.then(res => {
+console.log(res)
+// _this.parentlist = _this.getTree(res.fromData);
+})
+.catch(err => {
+console.log(err);
+});
   },
   methods: {
     formatter(row, column) {

@@ -277,7 +277,7 @@ export default {
   computed: {
     title() {
       if (this.mode == "transfer") {
-        return ["人员", "收件人"];
+        return ["人员", "已选择"];
       } else {
         return ["通讯录", "收件人", "抄送人", "密送人"];
       }

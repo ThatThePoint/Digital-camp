@@ -10,7 +10,7 @@
         <el-tab-pane label="现役人员" name="first">
           <div class="messages">
             <span>部门</span>
-            <el-select class="input-width" v-model="deptValue" filterable placeholder="请选择">
+            <el-select clearable class="input-width" v-model="deptValue" filterable placeholder="请选择">
               <el-option
                 v-for="item in DeptOptions"
                 :key="item.tid"

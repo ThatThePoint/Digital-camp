@@ -36,7 +36,7 @@
           <el-form :model="rotaInfo">
             <div class="flex">
               <el-form-item label="岗位部门" :label-width="formLabelWidth">
-                <el-select
+                <el-select clearable
                   label="部门"
                   class="input-width"
                   v-model="gangwei"
@@ -53,7 +53,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="岗位" :label-width="formLabelWidth">
-                <el-select
+                <el-select clearable
                   class="input-width"
                   v-model="gangweidetail"
                   filterable
@@ -85,7 +85,7 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="值班人" :label-width="formLabelWidth">
-              <el-select
+              <el-select clearable
                 class="input-width"
                 v-model="persons"
                 filterable
@@ -109,7 +109,7 @@
         <el-tab-pane label="值班查询" name="third">
           <div class="messages">
             <span>所属部门</span>
-            <el-select class="input-width" v-model="dept" filterable placeholder="请选择">
+            <el-select clearable class="input-width" v-model="dept" filterable placeholder="请选择">
               <el-option
                 v-for="item in deptOptions"
                 :key="item.tid"
@@ -127,11 +127,11 @@
               style="width: 100%"
               :default-sort="{prop: 'job', order: 'descending'}"
             >
-              <el-table-column prop="job" label="岗位名称" sortable width="180"></el-table-column>
+              <el-table-column prop="posiName" label="岗位名称" sortable width="180"></el-table-column>
               <el-table-column prop="dept" label="单位" sortable width="180"></el-table-column>
               <el-table-column prop="dutyPerson" label="当前值班人"></el-table-column>
-              <el-table-column prop="dutyToday" label="当日值班安排"></el-table-column>
-              <el-table-column prop="remark" label="值班记录"></el-table-column>
+              <el-table-column prop="startTime" label="起始时间"></el-table-column>
+              <el-table-column prop="endTime" label="截至时间"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -244,6 +244,7 @@ export default {
             });
             this.rotaInfo={};
             this.persons="";
+            this.tid = row.tid;
           } else {
             this.$message({
               message: "保存失败",

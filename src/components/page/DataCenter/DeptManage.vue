@@ -28,7 +28,7 @@
           <el-form :model="deptInfo">
             <div class="flex"></div>
             <el-form-item label="上级部门" :label-width="formLabelWidth">
-              <el-select v-model="deptInfo.parentId" placeholder="请选择">
+              <el-select clearable v-model="deptInfo.parentId" placeholder="请选择">
                 <el-option
                     v-for="item in deptsOps"
                     :key="item.tid"

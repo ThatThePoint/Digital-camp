@@ -8,7 +8,7 @@
     <div class="container">
       <div class="messages">
         <span>所属部门</span>
-        <el-select class="input-width" v-model="deptId" filterable placeholder="请选择">
+        <el-select clearable class="input-width" v-model="deptId" filterable placeholder="请选择">
           <el-option
             v-for="item in deptOptions"
             :key="item.tid"

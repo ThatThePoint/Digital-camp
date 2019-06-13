@@ -41,7 +41,7 @@
           <div>维修保养信息：</div>
             <div class="itemDet">
               维护车辆：
-              <el-select style="width:200px;margin-right:20px;"  v-model="ruleForm.carId" placeholder="选择车辆">
+              <el-select clearable style="width:200px;margin-right:20px;"  v-model="ruleForm.carId" placeholder="选择车辆">
                 <el-option
                   v-for="item in selectCar"
                   :key="item.tid"
@@ -52,7 +52,7 @@
               <br/>
               <br/>
               维护类型：
-              <el-select style="width:200px; margin-right: 20px;" v-model="ruleForm.careTypeCode" placeholder="保养类型"  @change="getProvince" id="province">
+              <el-select clearable style="width:200px; margin-right: 20px;" v-model="ruleForm.careTypeCode" placeholder="保养类型"  @change="getProvince" id="province">
                 <el-option
                   v-for="item in careType"
                   :key="item.code"

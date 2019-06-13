@@ -45,7 +45,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="血型">
-          <el-select v-model="form.blood" placeholder="请选择血型">
+          <el-select clearable v-model="form.blood" placeholder="请选择血型">
             <el-option
               v-for="item in bloodOptions"
               :label="item.value"
@@ -83,7 +83,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="婚姻状况">
-          <el-select v-model="form.marry" placeholder="请选择">
+          <el-select clearable v-model="form.marry" placeholder="请选择">
             <el-option
               v-for="item in marryOptions"
               :label="item.value"
@@ -102,7 +102,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="与军人关系">
-          <el-select v-model="form.sodierRelation" placeholder="请选择">
+          <el-select clearable v-model="form.sodierRelation" placeholder="请选择">
             <el-option
               v-for="item in sodierRelationOptions"
               :label="item.value"
@@ -134,7 +134,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="家属身份类别">
-          <el-select v-model="form.familyStatus" placeholder="请选择">
+          <el-select clearable v-model="form.familyStatus" placeholder="请选择">
             <el-option
               v-for="item in familyStatusOptions"
               :label="item.value"
@@ -153,7 +153,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="经济状况">
-          <el-select v-model="form.EcoSituation" placeholder="请选择">
+          <el-select clearable v-model="form.EcoSituation" placeholder="请选择">
             <el-option
               v-for="item in EcoSituationOptions"
               :label="item.value"

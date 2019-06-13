@@ -11,7 +11,7 @@
       <div class="messages">
         <el-form :inline="true" :model="status" class="demo-form-inline">
           <el-form-item label="生效状态">
-            <el-select v-model="formInline.region" placeholder="请选择">
+            <el-select clearable v-model="formInline.region" placeholder="请选择">
               <el-option label="有效" value="shanghai"></el-option>
               <el-option label="失效" value="beijing"></el-option>
             </el-select>
@@ -56,7 +56,7 @@
               <el-input class="input-width" placeholder="警报内容" v-model="input2"></el-input>
             </el-form-item>
             <el-form-item label="警报等级" :label-width="formLabelWidth">
-              <el-select v-model="formInline.region" placeholder="请选择">
+              <el-select clearable v-model="formInline.region" placeholder="请选择">
                 <el-option label="区域一" value="shanghai"></el-option>
                 <el-option label="区域二" value="beijing"></el-option>
               </el-select>

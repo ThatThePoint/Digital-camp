@@ -11,7 +11,7 @@
       <div class="messages">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="归属部门" :label-width="formLabelWidth">
-            <el-select v-model="formInline.deptId" placeholder="请选择" style="width: 100px">
+            <el-select clearable v-model="formInline.deptId" placeholder="请选择" style="width: 100px">
               <el-option
                 v-for="item in deptOps"
                 :key="item.tid"
@@ -21,7 +21,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="设备类型" :label-width="formLabelWidth">
-            <el-select v-model="formInline.equipType" placeholder="请选择" style="width: 100px">
+            <el-select clearable v-model="formInline.equipType" placeholder="请选择" style="width: 100px">
               <el-option
                 v-for="item in typeOps"
                 :key="item.code"
@@ -66,7 +66,7 @@
               <el-input class="input-width" placeholder="请输入" v-model="form.code" type="input"></el-input>
             </el-form-item>
             <el-form-item label="设备类型" :label-width="formLabelWidth" required>
-              <el-select v-model="form.type" placeholder="请选择">
+              <el-select clearable v-model="form.type" placeholder="请选择">
                 <el-option
                 v-for="item in typeOps"
                 :key="item.code"
@@ -76,7 +76,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="所属部门" :label-width="formLabelWidth" required>
-              <el-select v-model="form.deptId" placeholder="请选择">
+              <el-select clearable v-model="form.deptId" placeholder="请选择">
                 <el-option
                 v-for="item in deptOps"
                 :key="item.tid"

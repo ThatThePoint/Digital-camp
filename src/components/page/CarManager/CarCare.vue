@@ -9,7 +9,7 @@
     </div>
     <div class="container">
       <div class="messages">
-        <el-select class="input-width" v-model="departmentValue" placeholder="所属部门">
+        <el-select clearable class="input-width" v-model="departmentValue" placeholder="所属部门">
           <el-option
             v-for="item in departmentOptions"
             :key="item.tid"
@@ -17,7 +17,7 @@
             :value="item.tid"
           ></el-option>
         </el-select>
-        <el-select class="input-width" v-model="careTypeValue" placeholder="保养类型">
+        <el-select clearable class="input-width" v-model="careTypeValue" placeholder="保养类型">
           <el-option
             v-for="item in careType"
             :key="item.code"
