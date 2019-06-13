@@ -1,3 +1,22 @@
+Skip to content
+ 
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@juiceeyoung 
+0
+0 0 ThatThePoint/Digital-camp
+ Code  Issues 0  Pull requests 1  Projects 0  Wiki  Security  Insights
+Digital-camp/src/components/page/DataCenter/DeptManage.vue
+ juiceeyoung ???
+272cd1a 13 days ago
+@invalid-email-address @juiceeyoung @xiaoyangerbiepao
+164 lines (162 sloc)  4.8 KB
+    
 <template>
   <div>
     <div class="crumbs">
@@ -15,28 +34,9 @@
       </div>
       <div class="body">
         <el-table :data="deptsTableData" style="width: 100%;margin-bottom: 20px;" row-key="tid">
-          <el-table-column type="expand">
-            <template>
-              <el-table :data="deptsTableData" :show-header="false" style="width: 100%">
-                <el-table-column type="expand">
-                  <template>
-                    <div>无下级部门</div>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="name" label="名称" sortable></el-table-column>
-                <el-table-column prop="code" label="编码" sortable></el-table-column>
-                <el-table-column label="操作">
-                  <template slot-scope="scope">
-                    <el-button size="mini" @click="handleEdit(scope.row.tid)">详情</el-button>
-                    <el-button size="mini" type="danger" @click="handleDelete(scope.row.tid)">删除</el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </template>
-          </el-table-column>
-          <el-table-column prop="name" label="名称" sortable></el-table-column>
-          <el-table-column prop="code" label="编码" sortable></el-table-column>
-          <el-table-column label="操作">
+          <el-table-column prop="name" label="名称" sortable ></el-table-column>
+          <el-table-column prop="code" label="编码" sortable ></el-table-column>
+          <el-table-column  label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.row.tid)">详情</el-button>
               <el-button size="mini" type="danger" @click="handleDelete(scope.row.tid)">删除</el-button>
@@ -47,30 +47,20 @@
           <el-form :model="deptInfo">
             <div class="flex"></div>
             <el-form-item label="上级部门" :label-width="formLabelWidth">
-              <el-select clearable v-model="deptInfo.parentId" placeholder="请选择">
+              <el-select v-model="deptInfo.parentId" placeholder="请选择">
                 <el-option
-                  v-for="item in deptsOps"
-                  :key="item.tid"
-                  :label="item.name"
-                  :value="item.tid"
-                ></el-option>
+                    v-for="item in deptsOps"
+                    :key="item.tid"
+                    :label="item.name"
+                    :value="item.tid"
+                  ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="部门名称" :label-width="formLabelWidth" required>
-              <el-input
-                class="input-width"
-                placeholder="请输入"
-                v-model="deptInfo.name"
-                type="textarea"
-              ></el-input>
+              <el-input class="input-width" placeholder="请输入" v-model="deptInfo.name" type="textarea"></el-input>
             </el-form-item>
             <el-form-item label="部门编码" :label-width="formLabelWidth" required>
-              <el-input
-                class="input-width"
-                placeholder="请输入"
-                v-model="deptInfo.code"
-                type="textarea"
-              ></el-input>
+              <el-input class="input-width" placeholder="请输入" v-model="deptInfo.code" type="textarea"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -86,27 +76,27 @@
 export default {
   data() {
     return {
-      formInline: {},
-      deptsOps: [],
-      deptInfo: {
-        tid: "",
-        name: "",
-        parentId: "",
-        parentName: "",
-        code: ""
+      formInline:{},
+      deptsOps:[],
+      deptInfo:{
+        tid:"",
+        name:"",
+        parentId:"",
+        parentName:"",
+        code:""
       },
-      dialogFormVisible: false,
+      dialogFormVisible : false,
       formLabelWidth: "120px",
-      deptsTableData: []
+      deptsTableData: [],
     };
   },
   methods: {
-    handleAdd() {
-      this.deptInfo = {};
+    handleAdd(){
+      this.deptInfo={};
       this.postAxios("DataCenter/InitForm")
         .then(res => {
           console.log(res);
-          this.deptsOps = res.deptsOps;
+          this.deptsOps=res.deptsOps;
         })
         .catch(err => {
           console.log(err);
@@ -114,11 +104,11 @@ export default {
       this.dialogFormVisible = true;
     },
     handleEdit(id) {
-      this.postAxios("DataCenter/InitForm", { tid: id })
+      this.postAxios("DataCenter/InitForm", {tid:id})
         .then(res => {
           console.log(res);
-          this.deptInfo = res.data;
-          this.deptsOps = res.deptsOps;
+          this.deptInfo=res.data;
+          this.deptsOps=res.deptsOps;
         })
         .catch(err => {
           console.log(err);
@@ -126,39 +116,37 @@ export default {
       this.dialogFormVisible = true;
     },
     handleDelete(tid) {
-      if (confirm("确定删除？")) {
-        this.postAxios("DataCenter/DeleteDept", { deptId: tid })
-          .then(res => {
-            console.log(res);
-            alert("删除成功");
-            this.getData();
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
+      this.postAxios("DataCenter/DeleteDept", {deptId:tid})
+        .then(res => {
+          console.log(res);
+          alert("删除成功");
+          this.getData();
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
-    handleCancel() {
+    handleCancel(){
       this.dialogFormVisible = false;
     },
-    handleSave() {
-      var nameFlag = this.$utils.isEmpty(this.deptInfo.name);
-      var codeFlag = this.$utils.isEmpty(this.deptInfo.code);
-      if (nameFlag || codeFlag) {
+    handleSave(){
+      var nameFlag= this.$utils.isEmpty(this.deptInfo.name);
+      var codeFlag= this.$utils.isEmpty(this.deptInfo.code);
+      if(nameFlag || codeFlag){
         alert("请先输入部门名称和编码");
         return false;
-      } else {
+      }else{
         this.postAxios("DataCenter/SaveDept", this.deptInfo)
-          .then(res => {
-            console.log(res);
-            alert("保存成功");
-            this.getData();
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        .then(res => {
+          console.log(res);
+          alert("保存成功");
+          this.getData();
+        })
+        .catch(err => {
+          console.log(err);
+        });
         this.getData();
-        this.dialogFormVisible = false;
+      this.dialogFormVisible = false;
       }
     },
     formatter(row, column) {
@@ -188,6 +176,16 @@ export default {
 }
 .messages {
 }
-.el-table__expanded-cell[class*=cell] {
-    padding: 0 40px;}
 </style>
+© 2019 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About

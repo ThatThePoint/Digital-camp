@@ -21,7 +21,7 @@
         <div class="login-btn">
           <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
         </div>
-        <p class="login-tips">Tips : 用户名：admin 密码：123456。</p>
+        <p class="login-tips">Tips : 用户名：zhanglver 密码：123456。</p>
       </el-form>
     </div>
   </div>
@@ -33,7 +33,7 @@ export default {
     return {
       ruleForm: {
         username: "zhanglver",
-        password: "123123"
+        password: "123456"
       },
       rules: {
         username: [

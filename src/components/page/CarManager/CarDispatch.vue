@@ -15,54 +15,70 @@
               <div class="flex"></div>
               <el-form-item label="司机" :label-width="formLabelWidth">
                 <el-select clearable v-model="applyInfo.driverid" placeholder="请选择">
-                  <el-option label="老张" value="shanghai"></el-option>
-                  <el-option label="老李" value="beijing"></el-option>
+                  <el-option
+                  v-for="item in applyInfo.driverList"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
                 </el-select>使用人
-                <el-select clearable v-model="applyInfo.region" placeholder="请选择" style="margin-left:10px;">
-                  <el-option label="老张" value="shanghai"></el-option>
-                  <el-option label="老李" value="beijing"></el-option>
+                <el-select clearable v-model="applyInfo.userid" placeholder="请选择" style="margin-left:10px;">
+                  <el-option
+                  v-for="item in applyInfo.userList"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="起始时间" :label-width="formLabelWidth">
                 <el-date-picker
-                  v-model="starttime"
                   type="datetime"
-                  placeholder="选择日期时间"
-                  default-time="12:00:00"
-                ></el-date-picker>
+                  placeholder="选择日期"
+                  v-model="applyInfo.startTime"
+                  style="width: 100%;"
+                ></el-date-picker>--
                 <el-date-picker
-                  v-model="endtime"
                   type="datetime"
-                  placeholder="选择日期时间"
-                  default-time="12:00:00"
+                  placeholder="选择日期"
+                  v-model="applyInfo.endtime"
+                  style="width: 100%;"
                 ></el-date-picker>
               </el-form-item>
 
               <el-form-item label="目的地" :label-width="formLabelWidth">
-                <el-input type="input" class="input-width"></el-input>里程
-                <el-input type="input" class="input-width"></el-input>
+                <el-input type="input" v-model="applyInfo.destination" class="input-width"></el-input>里程
+                <el-input type="input" v-model="applyInfo.mileage" class="input-width"></el-input>
               </el-form-item>
 
               <el-form-item label="申请车辆" :label-width="formLabelWidth">
-                <el-select clearable v-model="formInline.region" placeholder="请选择">
-                  <el-option label="冀JHSKDLL" value="shanghai"></el-option>
-                  <el-option label="冀JHSKDLL" value="beijing"></el-option>
+                <el-select clearable v-model="applyInfo.carid" placeholder="请选择">
+                  <el-option
+                  v-for="item in applyInfo.carList"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
                 </el-select>调度员
-                <el-select clearable v-model="formInline.region" placeholder="请选择" style="margin-left:10px;">
-                  <el-option label="管理员" value="shanghai"></el-option>
-                  <el-option label="李长官" value="beijing"></el-option>
+                <el-select clearable v-model="applyInfo.dispatcherid" placeholder="请选择" style="margin-left:10px;">
+                  <el-option
+                  v-for="item in applyInfo.dispatcherList"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="事由" :label-width="formLabelWidth">
-                <el-input class="input-width" placeholder v-model="input2" type="textarea"></el-input>
+                <el-input class="input-width" placeholder v-model="applyInfo.reason" type="textarea"></el-input>
               </el-form-item>
               <el-form-item label="备注" :label-width="formLabelWidth">
-                <el-input class="input-width" placeholder v-model="input2" type="textarea"></el-input>
+                <el-input class="input-width" placeholder v-model="applyInfo.remark" type="textarea"></el-input>
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button @click="dialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+              <el-button @click="cancelApply">取 消</el-button>
+              <el-button type="primary" @click="onSubmit">确 定</el-button>
             </div>
           </div>
         </el-tab-pane>
@@ -112,7 +128,6 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="待审批车辆" name="fourth">
-          待审批车辆
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
@@ -243,7 +258,6 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="进行中车辆" name="sixth">
-          进行中车辆
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
@@ -324,7 +338,6 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="未批车辆" name="seventh">
-          未批车辆
           <div class="messages">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label>
@@ -606,12 +619,20 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      ///新数据-----------
       applyInfo:{},
+      ///新数据-----------
+
+
+
       useCarInfo: {
         region: "shanghai",
         type: "shanghai",
         input2: "天津战备支援"
       },
+      value1: "",
+      value2: "",
+      input2: "",
       options: [
         {
           value: "1",
@@ -648,6 +669,10 @@ export default {
           status: "待审批"
         }
       ],
+      formInline: {
+        user: "",
+        region: ""
+      },
       secondFormVisible: false,
       dialogTableVisible: false,
       dialogFormVisible: false,
@@ -665,17 +690,37 @@ export default {
     };
   },
   created(){
-    let _this = this;
-this.postAxios("/OutApply/ApplyInfo",{})
-.then(res => {
-console.log(res)
-// _this.parentlist = _this.getTree(res.fromData);
-})
-.catch(err => {
-console.log(err);
-});
+    this.getApplyInfo();
   },
   methods: {
+    getApplyInfo(){
+      var params={
+        id:this.$route.query.id
+      };
+      this.postAxios("/CarApply/ApplyInfo",params)
+        .then(res => {
+          this.applyInfo=res;
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
+    onSubmit() {
+      var params={
+        info:this.applyInfo
+      };
+      this.postAxios("/CarApply/SaveApplyInfo",params)
+        .then(res => {
+          this.applyInfo={};
+          alert("保存成功");
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
+    cancelApply(){
+      this.applyInfo={};
+    },
     formatter(row, column) {
       return row.address;
     },
@@ -688,9 +733,6 @@ console.log(err);
     },
     handleDelete(index, row) {
       console.log(index, row);
-    },
-    onSubmit() {
-      console.log("submit!");
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);

@@ -121,7 +121,7 @@ export default {
           value : 1
         },
         {
-          label:"有效",
+          label:"失效",
           value : 0
         }
       ],
