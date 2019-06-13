@@ -113,6 +113,7 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      downloadUrl:"",
       pername: "",
       fileList: [],
       driverId: "", //tid 用于编辑时上传
@@ -263,6 +264,10 @@ export default {
       console.log(file, fileList);
     },
     handlePreview(file) {
+      var a = document.createElement('a');
+      a.href = this.downloadUrl;
+      a.download = 'dname';
+      a.click();
       console.log(file);
     },
     handleExceed(files, fileList) {
@@ -280,6 +285,7 @@ export default {
     },
     successHandle(file, fileList){
       this.licensePath1 = file.path
+      this.downloadUrl = "http://digitalcamp.oicp.io:54373/here/"+file.path
       console.log(this.licensePath1,file)
     },
   }
