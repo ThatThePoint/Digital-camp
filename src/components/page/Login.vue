@@ -57,9 +57,9 @@ export default {
             .then(res => {
               console.log(res);
               if(res.status==1){
-                localStorage.setItem("ms_username", this.ruleForm.username);
-                sessionStorage.setItem("token",res.token)
-              this.$router.push("/");
+                localStorage.setItem("admin", this.ruleForm.username);
+                sessionStorage.setItem("token",res.currentUser.token)
+                this.$router.push("/");
               }else{
                   this.$message.warning(res.msg);
               }
