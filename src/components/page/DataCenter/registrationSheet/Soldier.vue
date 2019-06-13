@@ -26,9 +26,14 @@
           <el-input v-model="form.origin"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="6">
         <el-form-item label="民族">
           <el-input v-model="form.national"></el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="登陆账号" required>
+          <el-input v-model="form.loginName"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
@@ -38,7 +43,7 @@
           <el-input v-model="form.bornArea"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="6">
         <el-form-item label="血型">
           <el-select v-model="form.blood" placeholder="请选择血型">
             <el-option
@@ -48,6 +53,11 @@
               :key="item.key"
             ></el-option>
           </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="登陆密码" required>
+          <el-input v-model="form.password"></el-input>
         </el-form-item>
       </el-col>
     </el-row>

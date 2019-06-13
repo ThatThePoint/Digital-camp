@@ -36,6 +36,11 @@
           <el-input v-model="form.national"></el-input>
         </el-form-item>
       </el-col>
+      <el-col :span="6">
+        <el-form-item label="登陆账号" required>
+          <el-input v-model="form.loginName"></el-input>
+        </el-form-item>
+      </el-col>
     </el-row>
     <el-row>
       <el-col :span="6">
@@ -53,6 +58,11 @@
               :key="item.key"
             ></el-option>
           </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="登陆密码" required>
+          <el-input v-model="form.password"></el-input>
         </el-form-item>
       </el-col>
     </el-row>

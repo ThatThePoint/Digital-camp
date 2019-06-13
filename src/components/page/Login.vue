@@ -32,7 +32,7 @@ export default {
   data: function() {
     return {
       ruleForm: {
-        username: "admin",
+        username: "zhanglver",
         password: "123123"
       },
       rules: {
