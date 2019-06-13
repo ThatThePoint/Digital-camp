@@ -100,16 +100,23 @@
         </div>
       </div>
     </div>
+<!-- 窗锁狂 -->
+
+
 
     <el-dialog :visible.sync="dialogVisible" width="50%" :before-close="handleClose">
       <span>
-        <postemail v-on:confirm="confirms"/>
+        <postemail v-on:confirm="confirms" :parentlist="parentlist"/>
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
         <el-button type="primary" @click="confirm">确 定</el-button>
       </span>
     </el-dialog>
+
+
+
+
     <!-- {{starttime}}{{endtime}} -->
   </div>
 </template>
@@ -119,6 +126,8 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      perid:"",//接受父组件传过来的id
+      parentlist:[],
       starttime: 0, //请假开始时间
       endtime: 0,
       postname: "", //请假人名字
@@ -235,10 +244,46 @@ export default {
       );
     }
   },
+  created(){
+    this.getdata()
+  },
   methods: {
+    getTree(data){
+
+      let map = {};
+      let val = [];
+      //生成数据对象集合
+      data.forEach(it=>{
+        delete it.children;
+        map[it.id] = it;
+      })
+      //生成结果集
+      data.forEach(it=>{
+          const parent = map[it.pid];
+          if(parent){
+              if(!Array.isArray(parent.children)) parent.children = [];
+              parent.children.push(it);
+          }else{
+              val.push(it);
+          }
+      })
+      return val;
+    },
+    getdata(){
+      let _this = this;
+      this.postAxios("/OutApply/ApplyInfo",{})
+      .then(res => {
+        console.log(res)
+        _this.parentlist = _this.getTree(res.staffList);
+        console.log(_this.parentlist)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    },
     confirms(a) {
-      this.postname = a;
-      console.log(a);
+      this.postname = a[0]
+      this.perid = a[1]
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -269,6 +314,8 @@ export default {
       console.log(index, row);
     },
     onSubmit() {
+
+      // docReceiversId : this.perid,请假人的id
       console.log("submit!");
     }
   }
