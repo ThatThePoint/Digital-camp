@@ -34,29 +34,21 @@
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="部队车辆" name="first">
           <div class="messages">
-            <el-select class="input-width" v-model="departmentValue" placeholder="所属部门">
+            <el-select clearable  class="input-width" v-model="departmentValue1" placeholder="所属部门">
               <el-option
                 v-for="item in departmentOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <el-select class="input-width" v-model="inoutValue" placeholder="出入状态">
-              <el-option
-                v-for="item in inoutOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.tid"
+                :label="item.name"
+                :value="item.tid"
               ></el-option>
             </el-select>
             <el-input
               class="input-width"
               placeholder="车牌号"
               prefix-icon="el-icon-search"
-              v-model="input2"
+              v-model="licensePlate1"
             ></el-input>
-            <el-button>搜索</el-button>
+            <el-button @click="search">搜索</el-button>
             <el-button type="success" @click="addCar()" class="right">新增</el-button>
           </div>
           <div class="body">
@@ -87,29 +79,13 @@
         </el-tab-pane>
         <el-tab-pane label="私家车辆" name="second">
           <div class="messages">
-            <el-select class="input-width" v-model="departmentValue" placeholder="所属部门">
-              <el-option
-                v-for="item in departmentOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <el-select class="input-width" v-model="inoutValue" placeholder="出入状态">
-              <el-option
-                v-for="item in inoutOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
             <el-input
               class="input-width"
               placeholder="车牌号"
               prefix-icon="el-icon-search"
-              v-model="input2"
+              v-model="licensePlate2"
             ></el-input>
-            <el-button>搜索</el-button>
+            <el-button @click="search">搜索</el-button>
             <el-button type="success" @click="addCar()" class="right">新增</el-button>
           </div>
           <div class="body">
@@ -139,29 +115,13 @@
         </el-tab-pane>
         <el-tab-pane label="临时车辆" name="third">
           <div class="messages">
-            <el-select class="input-width" v-model="departmentValue" placeholder="所属部门">
-              <el-option
-                v-for="item in departmentOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <el-select class="input-width" v-model="inoutValue" placeholder="出入状态">
-              <el-option
-                v-for="item in inoutOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
             <el-input
               class="input-width"
               placeholder="车牌号"
               prefix-icon="el-icon-search"
-              v-model="input2"
+              v-model="licensePlate3"
             ></el-input>
-            <el-button>搜索</el-button>
+            <el-button @click="search">搜索</el-button>
             <el-button type="success" @click="addCar()" class="right">新增</el-button>
           </div>
           <div class="body">
@@ -202,117 +162,61 @@ export default {
         restaurants: [],
         state1: '',
         state2p: '',
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            }
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            }
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            }
-          }
-        ]
-      },
-      value1: "",
-      value2: "",
-      input2: "",
+
       activeName: "first",
-      departmentOptions: [
-        {
-          value: "1",
-          label: "连队1"
-        },
-        {
-          value: "2",
-          label: "连队2"
-        },
-        {
-          value: "3",
-          label: "连队3"
-        },
-        {
-          value: "4",
-          label: "连队4"
-        }
-      ],
-      propertyOptions: [
-        {
-          value: "1",
-          label: "内部车辆"
-        },
-        {
-          value: "2",
-          label: "外部车辆"
-        },
-        {
-          value: "3",
-          label: "临时车辆"
-        }
-      ],
-      inoutOptions: [
-        {
-          value: "1",
-          label: "在库"
-        },
-        {
-          value: "2",
-          label: "出库"
-        }
-      ],
-      propertyValue: "",
-      departmentValue: "",
-      inoutValue: "",
+      departmentOptions: [],
+      departmentValue1: "",//内部车辆
+      licensePlate1:"",//内部车辆车票搜索
+      licensePlate2:"",//私家车辆车票搜索
+      licensePlate3:"",//临时车辆车票搜索
       tableDataone : [],
       tableDatatwo : [],
-      tableDatathree : [],
-      tableData: []
+      tableDatathree : []
     };
   },
   created(){
     this.getdataone()
   },
   methods: {
+    search(){
+      var car=this.activeName;
+      if(car=="first"){
+        this.getdataone();
+      }else if(car=="second"){
+        this.getdatatwo();
+      }else{
+        this.getdatathree();
+      }
+    },
     carnum(row,index){
       return row.carType == '1' ? "内部车辆" : row.carType == '2' ? "外部车辆" : "临时车辆"
       console.log(row)
     },
     //获取部队车辆列表
     getdataone(){
+      var params={
+        carType:1,
+        ofDept:this.departmentValue1,
+        LicensePlate:this.licensePlate1
+      };
       let _this = this;
-      this.postAxios("/CarInfo/GetCarList",{
-        carType : 1
-      })
+      this.postAxios("/CarInfo/GetCarList",params)
         .then(res => {
-          _this.tableDataone = res.carList
-          _this.count = res.count
+          _this.tableDataone = res.carList;
+          _this.count = res.count;
+          _this.departmentOptions=res.deptOptions;
         })
         .catch(err => {
           console.log(err);
       });
     },
     getdatatwo(){
+      var params={
+        carType:2,
+        LicensePlate:this.licensePlate2
+      };
       let _this = this;
-      this.postAxios("/CarInfo/GetCarList",{
-        carType : 2
-      })
+      this.postAxios("/CarInfo/GetCarList",params)
         .then(res => {
           _this.tableDatatwo = res.carList
           _this.count = res.count
@@ -322,10 +226,12 @@ export default {
       });
     },
     getdatathree(){
+      var params={
+        carType:3,
+        LicensePlate:this.licensePlate3
+      };
       let _this = this;
-      this.postAxios("/CarInfo/GetCarList",{
-        carType : 3
-      })
+      this.postAxios("/CarInfo/GetCarList",params)
         .then(res => {
           _this.tableDatathree = res.carList
           _this.count = res.count

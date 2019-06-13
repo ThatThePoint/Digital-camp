@@ -32,7 +32,7 @@ export default {
   data: function() {
     return {
       ruleForm: {
-        username: "admin",
+        username: "zhanglver",
         password: "123123"
       },
       rules: {
@@ -55,7 +55,7 @@ export default {
             .then(res => {
               console.log(res);
               if(res.status==1){
-                localStorage.setItem("ms_username", this.ruleForm.username);
+                localStorage.setItem("ms_username", "admin");
               this.$router.push("/");
               }else{
                   this.$message.warning(res.msg);

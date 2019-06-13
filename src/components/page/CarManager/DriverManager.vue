@@ -29,39 +29,37 @@
           class="input-width"
           placeholder="姓名"
           prefix-icon="el-icon-search"
-          v-model="input2"
+          v-model="driverName"
         ></el-input>
-        <el-button>搜索</el-button>
+        <el-button @click="search">搜索</el-button>
         <el-button size="mini" @click="addDriver" type="success">新增</el-button>
         <!-- 新增框 -->
         <div class="messages">
           <el-dialog
-            title="新增司机"
+            title="司机信息"
             :visible.sync="dialogVisible"
             width="30%"
-            :before-close="handleClose">
+            :before-close="handleClose"
+          >
             <div class="role">
+              <el-input v-model="driverId" style="display:none;"></el-input>
               <span class="widths">驾驶证号：</span>
               <el-input v-model="carcode" placeholder="请输入内容"></el-input>
             </div>
             <div class="role">
               <span class="widths">姓名：</span>
-                <el-select v-model="pername" placeholder="请选择">
-                  <el-option
-                    v-for="item in carnames"
-                    :key="item.tid"
-                    :label="item.name"
-                    :value="item.tid">
-                  </el-option>
-                </el-select>
+              <el-select v-model="pername" placeholder="请选择">
+                <el-option
+                  v-for="item in carnames"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
+              </el-select>
             </div>
             <div class="role">
               <span class="widths">有效期：</span>
-                <el-date-picker
-                  v-model="dateend"
-                  type="date"
-                  placeholder="选择日期">
-                </el-date-picker>
+              <el-date-picker v-model="dateend" type="date" placeholder="选择日期"></el-date-picker>
             </div>
             <div class="role">
               <span class="widths">驾驶证附件：</span>
@@ -115,58 +113,21 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      pername:"",
-      fileList:[],
-      licensePath1 :"",//图片上传路径
-      dateend : "",//驾驶证有效期
-      carcode:"",//驾驶证号
-      dialogVisible: false,//控制新增弹框
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            }
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            }
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            }
-          }
-        ]
-      },
-      value1: "",
-      value2: "",
-      input2: "",
-      departmentValue:"",//所属部门
-      departmentOptions: [],//部门下拉框
+      pername: "",
+      fileList: [],
+      driverId: "", //tid 用于编辑时上传
+      fileId: "", //图片上传id
+      path: "", //图片上传路径
+      dateend: "", //驾驶证有效期
+      carcode: "", //驾驶证号
+      dialogVisible: false, //控制新增弹框
+      driverName:"", //姓名搜索
+      departmentValue: "", //所属部门
+      departmentOptions: [], //部门下拉框
       dutyOptions: [
         {
           value: "1",
           label: "在岗"
-        },
-        {
-          value: "2",
-          label: "请假"
-        },
-        {
-          value: "3",
-          label: "外出"
         }
       ],
       propertyValue: "",
@@ -178,131 +139,82 @@ export default {
           date: "2018-9-2",
           licenseDate: "2019-06-06",
           duty: "在岗"
-        },
-        {
-          name: "小明",
-          department: "连队1",
-          date: "2018-9-2",
-          licenseDate: "2019-06-06",
-          duty: "在岗"
-        },
-        {
-          name: "小明",
-          department: "连队1",
-          date: "2018-9-2",
-          licenseDate: "2019-06-06",
-          duty: "在岗"
-        },
-        {
-          name: "小明",
-          department: "连队1",
-          date: "2018-9-2",
-          licenseDate: "2019-06-06",
-          duty: "在岗"
-        },
-        {
-          name: "小明",
-          department: "连队1",
-          date: "2018-9-2",
-          licenseDate: "2019-06-06",
-          duty: "在岗"
-        },
-        {
-          name: "小明",
-          department: "连队1",
-          date: "2018-9-2",
-          licenseDate: "2019-06-06",
-          duty: "在岗"
-        },
-        {
-          name: "小明",
-          department: "连队1",
-          date: "2018-9-2",
-          licenseDate: "2019-06-06",
-          duty: "在岗"
-        },
-        {
-          name: "小明",
-          department: "连队1",
-          date: "2018-9-2",
-          licenseDate: "2019-06-06",
-          duty: "在岗"
         }
       ],
-      carnames: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
+      carnames: []
     };
   },
-  created(){
-    this.getTableData()
+  created() {
+    this.getTableData();
   },
   methods: {
     //新增确认
-    confirms(){
+    confirms() {
       let data = {
+        tid: this.driverId,
         licensePath1:this.licensePath1,
-        licensedate : this.dateend,//驾驶证号
-        licenseNo: this.carcode,//驾驶证号
-        staffid: this.pername,//姓名
-      }
+        licensedate: this.dateend, //驾驶证号
+        licenseNo: this.carcode, //驾驶证号
+        staffid: this.pername //姓名
+      };
       let _this = this;
-      this.postAxios("/Garage/SaveDriver",data)
+      this.postAxios("/Garage/SaveDriver", data)
         .then(res => {
-          _this.getTableData()
-          _this.dialogVisible = false
+          _this.getTableData();
+          _this.dialogVisible = false;
         })
         .catch(err => {
           console.log(err);
-      });
-// dialogVisible
+        });
+      // dialogVisible
     },
     //打开新增司机弹框
-    addDriver(){
-      this.dialogVisible = true
+    addDriver() {
+      this.dialogVisible = true;
       let _this = this;
-      this.postAxios("/Garage/GetDriver",{})
+      this.postAxios("/Garage/GetDriver", {})
         .then(res => {
-          _this.carnames = res.staffOptions
+          _this.carnames = res.staffOptions;
         })
         .catch(err => {
           console.log(err);
-      });
+        });
     },
     // perlicensedate(row,index){
     //   return row.licensedate.slice(0,10)
     // },
     //在岗状态
-    state(row,index){
-      return row.staffStatus == 1 ? "在岗" : row.staffStatus == 0 ? "外出" : "请假"
+    state(row, index) {
+      return row.staffStatus == 1
+        ? "在岗"
+        : row.staffStatus == 0
+        ? "外出"
+        : "请假";
     },
     //获取table数据
-    getTableData(){
+    getTableData() {
+      var pa={
+        param:{
+          deptId:this.departmentValue,
+          staffStatus:this.dutyValue,
+          name:this.driverName
+        }
+      };
       let _this = this;
-      this.postAxios("/Garage/GetDriverList",{})
+      this.postAxios("/Garage/GetDriverList", pa)
         .then(res => {
-          _this.tableData = res.list
-          _this.departmentOptions = res.deptOptions
+          _this.tableData = res.list;
+          _this.departmentOptions = res.deptOptions;
         })
         .catch(err => {
           console.log(err);
-      });
+        });
+    },
+    search(){
+      this.getTableData();
     },
     handleClose(done) {
-      this.$confirm('确认关闭？')
+      this.$confirm("确认关闭？")
         .then(_ => {
           done();
         })
@@ -312,12 +224,36 @@ export default {
       return row.address;
     },
     handleEdit(index, row) {
-      this.dialogVisible = true;
-      this.pername = row.name;
-      this.dateend = row.licenseDate
+      this.postAxios("/Garage/GetDriver", { id: row.driverid })
+        .then(res => {
+          this.carnames = res.staffOptions;
+          this.carcode=res.info.licenseNo;
+          this.pername = res.info.staffid;
+          this.dateend = res.info.licensedate;
+          this.path=res.info.licensePath1;
+          this.driverId = res.info.tid;
+          this.dialogVisible = true;
+        })
+        .catch(err => {
+          console.log(err);
+        });
       console.log(index, row);
     },
     handleDelete(index, row) {
+      if(confirm("确定删除吗？")){
+        this.postAxios("/Garage/DeleteDriver", { id: row.driverid })
+        .then(res => {
+          if(res.status==1){
+          alert("删除成功");
+          this.getTableData();
+          }else{
+            alert("删除失败");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      }
       console.log(index, row);
     },
     //上传文件三个函数
@@ -350,8 +286,8 @@ export default {
 };
 </script>
 <style scoped lang='scss'>
-.messages{
-  .el-dialog__body{
+.messages {
+  .el-dialog__body {
     height: 350px;
   }
 }
@@ -369,12 +305,12 @@ export default {
 .el-input {
   width: 200px;
 }
-.role{
+.role {
   display: flex;
   height: 40px;
   line-height: 40px;
 }
-.widths{
+.widths {
   display: inline-block;
   width: 100px;
 }
