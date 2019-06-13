@@ -106,16 +106,23 @@
         </div>
       </div>
     </div>
+<!-- 窗锁狂 -->
+
+
 
     <el-dialog :visible.sync="dialogVisible" width="50%" :before-close="handleClose">
       <span>
-        <postemail v-on:confirm="confirms"/>
+        <postemail v-on:confirm="confirms" :parentlist="parentlist"/>
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
         <el-button type="primary" @click="confirm">确 定</el-button>
       </span>
     </el-dialog>
+
+
+
+
     <!-- {{starttime}}{{endtime}} -->
   </div>
 </template>
@@ -126,7 +133,7 @@ export default {
   data() {
     return {
       form:{},//表单
-
+      parentlist:"",
       postname: "", //请假人名字
       dialogVisible: false, //控制穿梭框显示
       formLabelWidth: "120px"
@@ -187,8 +194,8 @@ export default {
       this.dialogVisible = true;
     },
     confirms(a) {
-      this.postname = a;
-      console.log(a);
+      this.postname = a[0]
+      this.perid = a[1]
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -208,6 +215,8 @@ export default {
       return row.address;
     },
     onSubmit() {
+
+      // docReceiversId : this.perid,请假人的id
       console.log("submit!");
     }
   }

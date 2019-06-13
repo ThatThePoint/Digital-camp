@@ -45,8 +45,6 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      
-      debugger
       this.$refs[formName].validate(valid => {
         if (valid) {
           var params = {
