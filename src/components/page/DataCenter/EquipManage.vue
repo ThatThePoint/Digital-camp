@@ -85,7 +85,7 @@
               ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="设备备注" :label-width="formLabelWidth">
+            <el-form-item label="设备备注" >
               <el-input class="input-width" placeholder="请输入" v-model="form.note" type="textarea"></el-input>
             </el-form-item>
           </el-form>
@@ -121,7 +121,7 @@ export default {
         deptName: "",
         note: ""
       },
-      formLabelWidth: "75px"
+      formLabelWidth: "90px"
     };
   },
   methods: {
