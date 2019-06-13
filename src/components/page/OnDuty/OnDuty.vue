@@ -337,17 +337,14 @@ export default {
     },
     //值班查询编辑
     handleEdit(index, row) {
+      console.log(row)
       this.activeName = "second";
       this.gangwei = row.dept;
       this.persons = row.dutyPerson;
-      // this.gangweidetail = row.
-      this.rotaInfo.start = new Date(
-        Date.parse(row.startTime.replace(/-/g, "/"))
-      );
+      this.rotaInfo.start = new Date(Date.parse(row.startTime.replace(/-/g, "/")));
       this.rotaInfo.end = new Date(Date.parse(row.endTime.replace(/-/g, "/")));
-      console.log(this.rotaInfo.start, this.rotaInfo.end);
       this.tid = row.tid;
-      this.confirm();
+      this.getdatathree()
     },
     cancelPlan(){
       this.activeName="first";
@@ -375,6 +372,26 @@ export default {
           console.log(err);
         });
     },
+    getdatathree(){
+        let data = {
+          pageNum: 1,
+          pageSize: 10
+        };
+        let _this = this;
+        this.postAxios("/DailyOffice/RotaInfo", data)
+          .then(res => {
+            _this.jobDatalist = res.jobData;
+            _this.personlist = res.dutyStaff;
+            for (let i = 0; i < res.jobData.length; i++) {
+              if ( res.jobData[i].parentId == "" || res.jobData[i].parentId == null ) {
+                _this.depts.push(res.jobData[i]);
+              }
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    },
     handleClick(tab, event) {
       console.log(tab, event);
       this.jobDatalist = [];
@@ -388,27 +405,7 @@ export default {
       if (index == 0) {
         this.getdataone();
       } else if (index == 1) {
-        let data = {
-          pageNum: 1,
-          pageSize: 10
-        };
-        let _this = this;
-        this.postAxios("/DailyOffice/RotaInfo", data)
-          .then(res => {
-            _this.jobDatalist = res.jobData;
-            _this.personlist = res.dutyStaff;
-            for (let i = 0; i < res.jobData.length; i++) {
-              if (
-                res.jobData[i].parentId == "" ||
-                res.jobData[i].parentId == null
-              ) {
-                _this.depts.push(res.jobData[i]);
-              }
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        this.getdatathree()
       } else if (index == 2) {
         this.getdatatwo();
       }
