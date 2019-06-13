@@ -34,7 +34,7 @@
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="部队车辆" name="first">
           <div class="messages">
-            <el-select clearable  class="input-width" v-model="departmentValue1" placeholder="所属部门">
+            <el-select clearable clearable  class="input-width" v-model="departmentValue1" placeholder="所属部门">
               <el-option
                 v-for="item in departmentOptions"
                 :key="item.tid"

@@ -36,7 +36,7 @@
           <el-form :model="rotaInfo">
             <div class="flex">
               <el-form-item label="岗位部门" :label-width="formLabelWidth">
-                <el-select
+                <el-select clearable
                   label="部门"
                   class="input-width"
                   v-model="gangwei"
@@ -53,7 +53,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="岗位" :label-width="formLabelWidth">
-                <el-select
+                <el-select clearable
                   class="input-width"
                   v-model="gangweidetail"
                   filterable
@@ -85,7 +85,7 @@
               ></el-date-picker>
             </el-form-item>
             <el-form-item label="值班人" :label-width="formLabelWidth">
-              <el-select
+              <el-select clearable
                 class="input-width"
                 v-model="persons"
                 filterable
@@ -109,7 +109,7 @@
         <el-tab-pane label="值班查询" name="third">
           <div class="messages">
             <span>所属部门</span>
-            <el-select class="input-width" v-model="dept" filterable placeholder="请选择">
+            <el-select clearable class="input-width" v-model="dept" filterable placeholder="请选择">
               <el-option
                 v-for="item in deptOptions"
                 :key="item.tid"

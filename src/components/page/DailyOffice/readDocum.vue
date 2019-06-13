@@ -17,7 +17,7 @@
           v-model="input2"
         ></el-input>
         <span>公文等级</span>
-        <el-select class="input-width" v-model="value" placeholder="请选择">
+        <el-select clearable class="input-width" v-model="value" placeholder="请选择">
           <el-option
             v-for="item in options"
             :key="item.value"

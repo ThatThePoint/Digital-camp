@@ -11,7 +11,7 @@
       <div class="messages">
         <el-form :inline="true" :model="params" class="demo-form-inline">
           <el-form-item label="生效状态">
-            <el-select v-model="params.status" placeholder="请选择">
+            <el-select clearable v-model="params.status" placeholder="请选择">
               <el-option
                     v-for="item in statusOptions"
                     :key="item.value"

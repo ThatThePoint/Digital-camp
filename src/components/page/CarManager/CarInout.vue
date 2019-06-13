@@ -9,7 +9,7 @@
     </div>
     <div class="container">
       <div class="messages">
-        <el-select class="input-width" v-model="propertyValue" placeholder="车辆属性">
+        <el-select clearable class="input-width" v-model="propertyValue" placeholder="车辆属性">
           <el-option
             v-for="item in propertyOptions"
             :key="item.value"
@@ -17,7 +17,7 @@
             :value="item.value"
           ></el-option>
         </el-select>
-        <el-select class="input-width" v-model="cartypeValue" placeholder="所属部门">
+        <el-select clearable class="input-width" v-model="cartypeValue" placeholder="所属部门">
           <el-option
             v-for="item in cartypeOptions"
             :key="item.value"
@@ -25,7 +25,7 @@
             :value="item.value"
           ></el-option>
         </el-select>
-        <el-select class="input-width" v-model="statuValue" placeholder="进出库">
+        <el-select clearable class="input-width" v-model="statuValue" placeholder="进出库">
           <el-option
             v-for="item in statuOptions"
             :key="item.value"

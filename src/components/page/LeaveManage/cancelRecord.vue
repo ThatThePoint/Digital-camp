@@ -9,19 +9,19 @@
       <div class="messages">
         <el-form :inline="true" :model="filterModel" class="demo-form-inline">
           <el-form-item label="申请人部门">
-            <el-select v-model="filterModel.depts" placeholder="请选择">
+            <el-select clearable v-model="filterModel.depts" placeholder="请选择">
               <el-option label="组织部" value="shanghai"></el-option>
               <el-option label="一连" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="申请状态">
-            <el-select v-model="filterModel.status" placeholder="请选择">
+            <el-select clearable v-model="filterModel.status" placeholder="请选择">
               <el-option label="归档" value="shanghai"></el-option>
               <el-option label="待审批" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="申请类型">
-            <el-select v-model="filterModel.types" placeholder="请选择">
+            <el-select clearable v-model="filterModel.types" placeholder="请选择">
               <el-option label="请假" value="shanghai"></el-option>
               <el-option label="出差" value="beijing"></el-option>
               <el-option label="学习" value="beijing"></el-option>
@@ -69,7 +69,7 @@
             </div>
             <div class="flex">
               <el-form-item label="外出类型" :label-width="formLabelWidth">
-                <el-select placeholder="请选择">
+                <el-select clearable placeholder="请选择">
                   <el-option label="学习" value="shanghai"></el-option>
                   <el-option label="出差" value="beijing"></el-option>
                   <el-option label="事假" value="shanghai"></el-option>

@@ -24,7 +24,7 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="请假事由">
-                <el-select v-model="form.leave" placeholder="请选择">
+                <el-select clearable v-model="form.leave" placeholder="请选择">
                   <el-option
                     v-for="item in leaveOptions"
                     :label="item.value"
@@ -82,7 +82,7 @@
           <el-row>
             <el-col :span="6">
               <el-form-item label="一级审批人">
-                <el-select v-model="form.leave" placeholder="请选择">
+                <el-select clearable v-model="form.leave" placeholder="请选择">
                   <el-option
                     v-for="item in leaveOptions"
                     :label="item.value"

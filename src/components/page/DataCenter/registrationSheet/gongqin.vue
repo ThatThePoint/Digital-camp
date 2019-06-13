@@ -50,7 +50,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="血型">
-          <el-select v-model="form.blood" placeholder="请选择血型">
+          <el-select clearable v-model="form.blood" placeholder="请选择血型">
             <el-option
               v-for="item in bloodOptions"
               :label="item.value"
@@ -69,7 +69,7 @@
     <el-row>
       <el-col :span="6">
        <el-form-item label="部职别">
-          <el-select v-model="form.deptId" placeholder="请选择部门">
+          <el-select clearable v-model="form.deptId" placeholder="请选择部门">
              <el-option
               v-for="item in deptOptions"
               :label="item.name"
@@ -99,7 +99,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="政治面貌">
-          <el-select v-model="form.politicsType" placeholder="请选择">
+          <el-select clearable v-model="form.politicsType" placeholder="请选择">
             <el-option
               v-for="item in politicsTypeOptions"
               :label="item.value"
@@ -113,7 +113,7 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="人员类别">
-          <el-select v-model="form.staffType" placeholder="请选择">
+          <el-select clearable v-model="form.staffType" placeholder="请选择">
             <el-option
               v-for="item in staffTypeOptions"
               :label="item.value"
@@ -125,7 +125,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="婚姻状况">
-          <el-select v-model="form.marry" placeholder="请选择">
+          <el-select clearable v-model="form.marry" placeholder="请选择">
             <el-option
               v-for="item in marryOptions"
               :label="item.value"
@@ -149,7 +149,7 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="职工身份类别">
-          <el-select v-model="form.employeeStatus" placeholder="请选择证件类型">
+          <el-select clearable v-model="form.employeeStatus" placeholder="请选择证件类型">
             <el-option
               v-for="item in employeeStatusOptions"
               :label="item.value"
@@ -161,7 +161,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="岗位情况">
-          <el-select v-model="form.dutySituation" placeholder="请选择">
+          <el-select clearable v-model="form.dutySituation" placeholder="请选择">
             <el-option
               v-for="item in dutySituationOptions"
               :label="item.value"
@@ -175,7 +175,7 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="文化程度">
-          <el-select v-model="form.educatLevel" placeholder="请选择">
+          <el-select clearable v-model="form.educatLevel" placeholder="请选择">
             <el-option
               v-for="item in educatLevelOptions"
               :label="item.value"
@@ -204,7 +204,7 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="学位">
-          <el-select v-model="form.graduateType" placeholder="请选择">
+          <el-select clearable v-model="form.graduateType" placeholder="请选择">
             <el-option
               v-for="item in graduateTypeOptions"
               :label="item.value"
@@ -246,7 +246,7 @@
       </el-col>
       <el-col :span="8">
         <el-form-item label="行政职务（管理岗位）等级及日期">
-          <el-select v-model="form.chiefPosition" placeholder="请选择">
+          <el-select clearable v-model="form.chiefPosition" placeholder="请选择">
             <el-option
               v-for="item in chiefPositionOptions"
               :label="item.value"
@@ -277,7 +277,7 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="岗位等级及日期">
-          <el-select v-model="form.professionTechLevel" placeholder="请选择">
+          <el-select clearable v-model="form.professionTechLevel" placeholder="请选择">
             <el-option
               v-for="item in professionTechLevelOptions"
               :label="item.value"

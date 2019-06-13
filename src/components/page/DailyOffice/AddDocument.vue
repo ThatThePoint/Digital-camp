@@ -25,7 +25,7 @@
         </div>
         <div class="container-header-left">    
         <span>公文等级：</span>
-          <el-select class="input-width" v-model="level" placeholder="请选择">
+          <el-select clearable class="input-width" v-model="level" placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.code"

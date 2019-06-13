@@ -8,7 +8,7 @@
     <div class="container">
       <div class="messages">
         <span>所属部门</span>
-        <el-select class="input-width" v-model="value" filterable placeholder="请选择">
+        <el-select clearable class="input-width" v-model="value" filterable placeholder="请选择">
           <el-option
             v-for="item in depts"
             :key="item.value"
@@ -22,7 +22,7 @@
           <el-form :model="form">
             <div class="flex">
               <el-form-item label="岗位部门" :label-width="formLabelWidth">
-                <el-select
+                <el-select clearable
                   label="部门"
                   class="input-width"
                   v-model="value"
@@ -38,7 +38,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="岗位" :label-width="formLabelWidth">
-                <el-select class="input-width" v-model="value" filterable placeholder="岗位">
+                <el-select clearable class="input-width" v-model="value" filterable placeholder="岗位">
                   <el-option
                     v-for="item in jobs"
                     :key="item.value"
@@ -53,7 +53,7 @@
               <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
             </el-form-item>
              <el-form-item label="值班人" :label-width="formLabelWidth">
-                <el-select class="input-width" v-model="value" filterable placeholder="值班人">
+                <el-select clearable class="input-width" v-model="value" filterable placeholder="值班人">
                   <el-option
                     v-for="item in person"
                     :key="item.value"

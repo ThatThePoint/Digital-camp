@@ -9,7 +9,7 @@
     </div>
     <div class="container">
       <div class="messages">
-        <el-select class="input-width" v-model="departmentValue" placeholder="所属部门">
+        <el-select clearable class="input-width" v-model="departmentValue" placeholder="所属部门">
           <el-option
             v-for="item in departmentOptions"
             :key="item.tid"
@@ -17,7 +17,7 @@
             :value="item.tid"
           ></el-option>
         </el-select>
-        <el-select class="input-width" v-model="dutyValue" placeholder="在岗状态">
+        <el-select clearable class="input-width" v-model="dutyValue" placeholder="在岗状态">
           <el-option
             v-for="item in dutyOptions"
             :key="item.value"
@@ -48,7 +48,7 @@
             </div>
             <div class="role">
               <span class="widths">姓名：</span>
-              <el-select v-model="pername" placeholder="请选择">
+              <el-select clearable v-model="pername" placeholder="请选择">
                 <el-option
                   v-for="item in carnames"
                   :key="item.tid"

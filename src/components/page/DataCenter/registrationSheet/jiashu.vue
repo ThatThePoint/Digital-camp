@@ -70,7 +70,7 @@
       </el-col>
       <el-col :span="6">
         <el-form-item label="婚姻状况">
-          <el-select v-model="form.marry" placeholder="请选择">
+          <el-select clearable v-model="form.marry" placeholder="请选择">
             <el-option
               v-for="item in marryOptions"
               :label="item.value"

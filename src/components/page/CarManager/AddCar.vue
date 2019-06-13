@@ -29,7 +29,7 @@
               </div>
               <div>
                 <span class="starred">*</span>车辆类型
-                <el-select class="input-width" v-model="carInfo.carType" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.carType" placeholder="请选择">
                   <el-option
                     v-for="item in carTypeOptionsone"
                     :key="item.value"
@@ -45,7 +45,7 @@
               <p>车辆基本信息：<span class="starred">*</span>车牌号：<el-input class="input-width" placeholder="请输入" v-model="carInfo.licensePlate"></el-input></p>
               <div class="itemDet">
                 <span class="starred">*</span>车辆品牌：
-                <el-select class="input-width" v-model="carInfo.brand" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.brand" placeholder="请选择">
                   <el-option
                     v-for="item in brandOptions"
                     :key="item.code"
@@ -54,7 +54,7 @@
                   ></el-option>
                 </el-select>
                 <span class="starred">*</span>车辆型号：
-                <el-select class="input-width" v-model="carInfo.model" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.model" placeholder="请选择">
                   <el-option
                     v-for="item in modelOptions"
                     :key="item.code"
@@ -64,7 +64,7 @@
                 </el-select>
                 <br/>
                 <span class="color"><span class="starred">*</span>颜色：</span>
-                <el-select class="input-width" v-model="carInfo.color" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.color" placeholder="请选择">
                   <el-option
                     v-for="item in colorOptions"
                     :key="item.code"
@@ -79,7 +79,7 @@
               </div>
               <div class="itemDet">
                 <span class="starred">*</span>车辆座位：
-                <el-select class="input-width" v-model="carInfo.loadNumber" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.loadNumber" placeholder="请选择">
                   <el-option
                     v-for="item in seatOptions"
                     :key="item.value"
@@ -88,7 +88,7 @@
                   ></el-option>
                 </el-select>
                 <span class="starred">*</span>车辆载重：
-                <el-select class="input-width" v-model="carInfo.load" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.load" placeholder="请选择">
                   <el-option v-for="item in countCar" :key="item.value" :value="item.value"></el-option>
                 </el-select><br/>
                 <span class="starred">*</span><span class="chejia">车架号：</span>
@@ -120,7 +120,7 @@
               <p>内部车辆附加：</p>
               <div class="itemDet">
                 <span class="starred">*</span>所属单位：
-                <el-select class="input-width" v-model="carInfo.ofDept" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.ofDept" placeholder="请选择">
                   <el-option
                     v-for="item in departmentOptions"
                     :key="item.tid"
@@ -128,7 +128,7 @@
                     :value="item.tid"
                   ></el-option>
                 </el-select>车辆类别1：
-                <el-select class="input-width" v-model="carInfo.carType1" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.carType1" placeholder="请选择">
                   <el-option
                     v-for="item in carType1Options"
                     :key="item.code"
@@ -137,7 +137,7 @@
                   ></el-option>
                 </el-select>
                 <span class="carstwo">类别2：</span>
-                <el-select class="input-width" v-model="carInfo.carType2" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.carType2" placeholder="请选择">
                   <el-option
                     v-for="item in carType2Options"
                     :key="item.code"
@@ -148,7 +148,7 @@
               </div>
               <div class="itemDet">
                 <span class="starred">*</span>车辆权限：
-                <el-select class="input-width" v-model="carInfo.carRight" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.carRight" placeholder="请选择">
                   <el-option
                     v-for="item in carRightOptions"
                     :key="item.code"
@@ -181,7 +181,7 @@
               </div>
               <div>
                 车辆类型
-                <el-select class="input-width" v-model="carInfo.carType" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.carType" placeholder="请选择">
                   <el-option
                     v-for="item in carTypeOptionstwo"
                     :key="item.value"
@@ -196,7 +196,7 @@
               <p>车辆基本信息：<span class="starred">*</span>车牌号：<el-input class="input-width" placeholder="请输入" v-model="carInfo.licensePlate"></el-input></p>
               <div class="itemDet">
                 <span class="starred">*</span>车辆品牌：
-                <el-select class="input-width" v-model="carInfo.brand" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.brand" placeholder="请选择">
                   <el-option
                     v-for="item in brandOptions"
                     :key="item.code"
@@ -204,7 +204,7 @@
                     :value="item.code"
                   ></el-option>
                 </el-select><span class="starred">*</span>车辆型号：
-                <el-select class="input-width" v-model="carInfo.model" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.model" placeholder="请选择">
                   <el-option
                     v-for="item in modelOptions"
                     :key="item.code"
@@ -214,7 +214,7 @@
                 </el-select>
                 <br/>
                 <span class="color"><span class="starred">*</span>颜色：</span>
-                <el-select class="input-width" v-model="carInfo.color" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.color" placeholder="请选择">
                   <el-option
                     v-for="item in colorOptions"
                     :key="item.code"
@@ -226,7 +226,7 @@
               </div>
               <div class="itemDet">
                 <span class="starred">*</span>车辆座位：
-                <el-select class="input-width" v-model="carInfo.loadNumber" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.loadNumber" placeholder="请选择">
                   <el-option
                     v-for="item in seatOptions"
                     :key="item.value"
@@ -234,7 +234,7 @@
                     :value="item.value"
                   ></el-option>
                 </el-select><span class="starred">*</span>车辆载重：
-                <el-select class="input-width" v-model="carInfo.load" placeholder="请选择">
+                <el-select clearable class="input-width" v-model="carInfo.load" placeholder="请选择">
                   <el-option v-for="item in seatOptions" :key="item.value" :value="item.value"></el-option>
                 </el-select><br/>
                  <span class="starred">*</span><span class="chejia">车架号：</span>
@@ -276,7 +276,7 @@
               <el-input class="input-width" placeholder="请输入" v-model="carInfo.relater"></el-input>
               <span class="starred">*</span>
               <span class="ddd">联系人部门：</span>
-              <el-select class="input-width" v-model="carInfo.relaterDept" placeholder="请选择">
+              <el-select clearable class="input-width" v-model="carInfo.relaterDept" placeholder="请选择">
                 <el-option
                   v-for="item in departmentOptions"
                   :key="item.tid"
@@ -287,7 +287,7 @@
             </div>
             <div class="itemDet">
               <span class="dddd">车辆权限：</span>
-              <el-select class="input-width" v-model="carInfo.carRight" placeholder="请选择">
+              <el-select clearable class="input-width" v-model="carInfo.carRight" placeholder="请选择">
                 <el-option
                   v-for="item in carRightOptions"
                   :key="item.code"
