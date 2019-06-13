@@ -19,7 +19,7 @@
               v-model="title"
             ></el-input>
             <span>公文等级</span>
-            <el-select clearable class="input-width" v-model="level" placeholder="请选择">
+            <el-select clearable clearable class="input-width" v-model="level" placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.code"
@@ -66,7 +66,7 @@
               v-model="title"
             ></el-input>
             <span>公文等级</span>
-            <el-select clearable  class="input-width" v-model="level" placeholder="请选择">
+            <el-select clearable clearable  class="input-width" v-model="level" placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.code"
@@ -112,7 +112,7 @@
               v-model="title"
             ></el-input>
             <span>公文等级</span>
-            <el-select clearable class="input-width" v-model="level" placeholder="请选择">
+            <el-select clearable clearable class="input-width" v-model="level" placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.code"

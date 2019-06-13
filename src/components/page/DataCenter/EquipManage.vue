@@ -56,17 +56,21 @@
             </template>
           </el-table-column>
         </el-table>
+
+
+
+
         <el-dialog title="设备信息" :visible.sync="dialogFormVisible">
           <el-form :model="form">
             <div class="flex"></div>
             <el-form-item label="设备名称" :label-width="formLabelWidth" required>
-              <el-input class="input-width" placeholder="请输入" v-model="form.name" type="input"></el-input>
+              <el-input class="input-width" placeholder="请输入" v-model="form.name" type="input" style="width: 200px"></el-input>
             </el-form-item>
             <el-form-item label="设备编号" :label-width="formLabelWidth" required>
-              <el-input class="input-width" placeholder="请输入" v-model="form.code" type="input"></el-input>
+              <el-input class="input-width" placeholder="请输入" v-model="form.code" type="input" style="width: 200px"></el-input>
             </el-form-item>
             <el-form-item label="设备类型" :label-width="formLabelWidth" required>
-              <el-select clearable v-model="form.type" placeholder="请选择">
+              <el-select clearable v-model="form.type" placeholder="请选择" style="width: 200px;margin-left:10px">
                 <el-option
                 v-for="item in typeOps"
                 :key="item.code"
@@ -76,7 +80,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="所属部门" :label-width="formLabelWidth" required>
-              <el-select clearable v-model="form.deptId" placeholder="请选择">
+              <el-select clearable v-model="form.deptId" placeholder="请选择" style="width: 200px;margin-left:10px">
                 <el-option
                 v-for="item in deptOps"
                 :key="item.tid"
@@ -85,8 +89,8 @@
               ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="设备备注" >
-              <el-input class="input-width" placeholder="请输入" v-model="form.note" type="textarea"></el-input>
+            <el-form-item label="设备备注" :label-width="formLabelWidth">
+              <el-input class="input-width" placeholder="请输入" v-model="form.note" type="textarea" style="width: 200px"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -94,6 +98,10 @@
             <el-button type="primary" @click="handleSave">确 定</el-button>
           </div>
         </el-dialog>
+
+
+
+
       </div>
     </div>
   </div>
@@ -121,7 +129,7 @@ export default {
         deptName: "",
         note: ""
       },
-      formLabelWidth: "90px"
+      formLabelWidth: "90px",
     };
   },
   methods: {
@@ -223,6 +231,7 @@ export default {
 .el-form-item__content{
   width: 100px;
 }
-.messages {
+.el-input.el-input--small.el-input--suffix:nth-of-type(3),.el-input.el-input--small.el-input--suffix:nth-of-type(4){
+  margin-left: 10px;
 }
 </style>

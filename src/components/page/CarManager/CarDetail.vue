@@ -34,7 +34,7 @@
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="部队车辆" name="first">
           <div class="messages">
-            <el-select clearable  class="input-width" v-model="departmentValue1" placeholder="所属部门">
+            <el-select clearable clearable  class="input-width" v-model="departmentValue1" placeholder="所属部门">
               <el-option
                 v-for="item in departmentOptions"
                 :key="item.tid"
@@ -252,7 +252,6 @@ export default {
     },
     //删除
     handleDelete(index, row){
-      debugger
       let _this = this;
       this.postAxios("/CarInfo/DeleteCar",{id : row.tid})
         .then(res => {
@@ -278,7 +277,6 @@ export default {
       console.log(tab.index, event);
     },
       querySearch(queryString, cb) {
-        debugger
         var restaurants = this.restaurants;
         var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
         console.log(results,queryString,restaurants)
