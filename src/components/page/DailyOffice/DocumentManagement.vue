@@ -19,7 +19,7 @@
               v-model="title"
             ></el-input>
             <span>公文等级</span>
-            <el-select class="input-width" v-model="level" placeholder="请选择">
+            <el-select clearable class="input-width" v-model="level" placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.code"
@@ -66,7 +66,7 @@
               v-model="title"
             ></el-input>
             <span>公文等级</span>
-            <el-select class="input-width" v-model="level" placeholder="请选择">
+            <el-select clearable  class="input-width" v-model="level" placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.code"
@@ -112,7 +112,7 @@
               v-model="title"
             ></el-input>
             <span>公文等级</span>
-            <el-select class="input-width" v-model="level" placeholder="请选择">
+            <el-select clearable class="input-width" v-model="level" placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.code"
@@ -245,13 +245,13 @@ export default {
       return row.status == 1 ? "发布" : "草稿";
     },
     formatterLever(row, column) {
-      return row.docLevel == 1
+      return row.messageLevel == "Regular"
         ? "普通"
-        : row.docLever == 2
+        : row.messageLevel == ""
         ? "提醒"
-        : row.docLever == 3
+        : row.messageLevel == "Serious"
         ? "严重"
-        : row.docLever == 4
+        : row.messageLevel == 4
         ? "警告"
         : "紧急";
         
@@ -283,6 +283,14 @@ export default {
         .then(res => {
           console.log(res);
           this.options=res.levelOps;
+          if(this.activeName=="first"){
+              this.tableDataone = res.data
+          }else if(this.activeName=="second"){
+            this.tableDatatwo = res.data
+          }else{
+            this.tableDatathree = res.data
+          }
+          
         })
         .catch(err => {
           console.log(err);
