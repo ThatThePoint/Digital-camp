@@ -252,7 +252,6 @@ export default {
     },
     //删除
     handleDelete(index, row){
-      debugger
       let _this = this;
       this.postAxios("/CarInfo/DeleteCar",{id : row.tid})
         .then(res => {
@@ -278,7 +277,6 @@ export default {
       console.log(tab.index, event);
     },
       querySearch(queryString, cb) {
-        debugger
         var restaurants = this.restaurants;
         var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
         console.log(results,queryString,restaurants)
