@@ -1,22 +1,3 @@
-Skip to content
- 
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@juiceeyoung 
-0
-0 0 ThatThePoint/Digital-camp
- Code  Issues 0  Pull requests 1  Projects 0  Wiki  Security  Insights
-Digital-camp/src/components/page/DataCenter/DeptManage.vue
- juiceeyoung ???
-272cd1a 13 days ago
-@invalid-email-address @juiceeyoung @xiaoyangerbiepao
-164 lines (162 sloc)  4.8 KB
-    
 <template>
   <div>
     <div class="crumbs">
@@ -33,16 +14,6 @@ Digital-camp/src/components/page/DataCenter/DeptManage.vue
         </el-form>
       </div>
       <div class="body">
-        <el-table :data="deptsTableData" style="width: 100%;margin-bottom: 20px;" row-key="tid">
-          <el-table-column prop="name" label="名称" sortable ></el-table-column>
-          <el-table-column prop="code" label="编码" sortable ></el-table-column>
-          <el-table-column  label="操作">
-            <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.row.tid)">详情</el-button>
-              <el-button size="mini" type="danger" @click="handleDelete(scope.row.tid)">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
         <el-dialog title="部门信息" :visible.sync="dialogFormVisible">
           <el-form :model="deptInfo">
             <div class="flex"></div>
@@ -70,6 +41,30 @@ Digital-camp/src/components/page/DataCenter/DeptManage.vue
         </el-dialog>
       </div>
     </div>
+    <el-tree
+      :data="treedata"
+      show-checkbox
+      node-key="id"
+      default-expand-all
+      :expand-on-click-node="false">
+      <span class="custom-tree-node" slot-scope="{ node, data }">
+        <span>{{ node.label }}</span>
+        <span class="detail">
+          <el-button
+            type="text"
+            size="mini"
+            @click="() => append(node, data)">
+            详情
+          </el-button>
+          <el-button
+            type="text"
+            size="mini"
+            @click="() => remove(node, data)">
+            删除
+          </el-button>
+        </span>
+      </span>
+    </el-tree>
   </div>
 </template>
 <script>
@@ -88,9 +83,36 @@ export default {
       dialogFormVisible : false,
       formLabelWidth: "120px",
       deptsTableData: [],
+      treedata : []
     };
   },
   methods: {
+    //详情
+    append(node, data) {
+      console.log(node, data)
+
+      this.dialogFormVisible = true;
+      this.deptInfo.name = data.label
+      this.deptInfo.code = data.id
+    },
+    //删除  
+    remove(node, data) {
+      console.log(node, data)
+      this.postAxios("DataCenter/DeleteDept", {deptId:data.id})
+        .then(res => {
+          console.log(res);
+          alert("删除成功");
+          this.getData();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+      const parent = node.parent;
+      const children = parent.data.children || parent.data;
+      const index = children.findIndex(d => d.id === data.id);
+      children.splice(index, 1);
+    },
     handleAdd(){
       this.deptInfo={};
       this.postAxios("DataCenter/InitForm")
@@ -115,20 +137,10 @@ export default {
         });
       this.dialogFormVisible = true;
     },
-    handleDelete(tid) {
-      this.postAxios("DataCenter/DeleteDept", {deptId:tid})
-        .then(res => {
-          console.log(res);
-          alert("删除成功");
-          this.getData();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
     handleCancel(){
       this.dialogFormVisible = false;
     },
+    //保存
     handleSave(){
       var nameFlag= this.$utils.isEmpty(this.deptInfo.name);
       var codeFlag= this.$utils.isEmpty(this.deptInfo.code);
@@ -149,15 +161,48 @@ export default {
       this.dialogFormVisible = false;
       }
     },
-    formatter(row, column) {
-      return row.address;
+    getTree(data){
+      let map = {};
+      let val = [];
+      //生成数据对象集合
+      data.forEach(it=>{
+        delete it.children;
+        map[it.id] = it;
+      })
+      //生成结果集
+      data.forEach(it=>{
+          const parent = map[it.parentId];
+          if(parent){
+              if(!Array.isArray(parent.children)) parent.children = [];
+              parent.children.push(it);
+          }else{
+              val.push(it);
+          }
+      })
+      return val;
     },
+    //拿接口数据
     getData(name, pageNum = 1, pageSize = 10) {
       this.postAxios("DataCenter/GetDepts", { name, pageNum, pageSize })
         .then(res => {
           console.log(res);
           this.count = res.count;
           this.deptsTableData = [...res.depts];
+          var keyMap = {
+              "tid" : "id",
+              "name" : "label"
+          };
+          for(let i = 0; i < this.deptsTableData.length; i++){
+            let obj = this.deptsTableData[i];
+            for(let key in obj){
+              var newKey = keyMap[key];
+              if(newKey){
+                obj[newKey] = obj[key];
+                delete obj[key];
+              }
+            }
+          }
+          this.treedata=this.getTree(this.deptsTableData)
         })
         .catch(err => {
           console.log(err);
@@ -175,6 +220,11 @@ export default {
   margin: 0 10px;
 }
 .messages {
+}
+.detail{
+  width: 150px;
+  display: inline-block;
+  text-align: right;
 }
 </style>
 © 2019 GitHub, Inc.
