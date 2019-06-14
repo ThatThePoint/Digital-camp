@@ -295,6 +295,7 @@
 </template>
 <script>
 export default {
+  props:["data"],
   data() {
     return {
       form: {
@@ -569,6 +570,7 @@ export default {
     };
   },
   created(){
+    this.form = this.data ? this.data : this.form
     this.postAxios("DataCenter/StaffInfo")
         .then(res => {
           console.log(res);

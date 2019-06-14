@@ -24,7 +24,7 @@
               prefix-icon="el-icon-search"
               v-model="name"
             ></el-input>
-            <el-button type="primary">查询</el-button>
+            <el-button type="primary" @click="searchdata">查询</el-button>
             <el-button type="success" @click="addPeople" class="right">新增</el-button>
           </div>
           <div class="body">
@@ -50,6 +50,8 @@
             </el-table>
           </div>
         </el-tab-pane>
+
+
         <el-tab-pane label="部队家属" name="secend">
           <div class="messages">
             <el-input
@@ -58,7 +60,7 @@
               prefix-icon="el-icon-search"
               v-model="name"
             ></el-input>
-            <el-button type="primary">查询</el-button>
+            <el-button type="primary" @click="searchdata">查询</el-button>
             <el-button type="success" @click="addPeople" class="right">新增</el-button>
           </div>
           <div class="body">
@@ -77,13 +79,15 @@
                   <el-button
                     size="mini"
                     type="danger"
-                    @click="handleEdit(scope.$index, scope.row)"
+                    @click="handleDelete(scope.$index, scope.row)"
                   >删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </div>
         </el-tab-pane>
+
+
         <el-tab-pane label="部队职工" name="third">
           <div class="messages">
             <el-input
@@ -92,7 +96,7 @@
               prefix-icon="el-icon-search"
               v-model="name"
             ></el-input>
-            <el-button type="primary">查询</el-button>
+            <el-button type="primary" @click="searchdata">查询</el-button>
             <el-button type="success" @click="addPeople" class="right">新增</el-button>
           </div>
           <div class="body">
@@ -112,13 +116,15 @@
                   <el-button
                     size="mini"
                     type="danger"
-                    @click="handleEdit(scope.$index, scope.row)"
+                    @click="handleDelete(scope.$index, scope.row)"
                   >删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </div>
         </el-tab-pane>
+
+
         <el-tab-pane label="临时人员" name="fouth">
           <div class="messages">
             <el-input
@@ -127,7 +133,7 @@
               prefix-icon="el-icon-search"
               v-model="name"
             ></el-input>
-            <el-button type="primary">查询</el-button>
+            <el-button type="primary" @click="searchdata">查询</el-button>
             <el-button type="success" @click="addPeople" class="right">新增</el-button>
           </div>
           <div class="body">
@@ -183,6 +189,9 @@ export default {
     this.getdata("1", "10");
   },
   methods: {
+    searchdata(){
+      this.getdata("1","10")
+    },
     getdata(num, size) {
       if (this.activeName !== "first") {
         this.deptValue = "";
@@ -216,7 +225,14 @@ export default {
       return row.address;
     },
     handleEdit(index, row) {
-      this.$router.push({ path: "/addpeople", query: { id: row.tid } });
+      this.$router.push({ 
+        path: "/addpeople",
+         query: { 
+           id: row.tid,
+           index : row.personType,
+           row : row
+          } 
+      });
     },
     handleDelete(index, row) {
       console.log(index, row);

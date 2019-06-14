@@ -296,6 +296,7 @@
 </template>
 <script>
 export default {
+  props:["data"],
   data() {
     return {
       activeName: "first",
@@ -661,6 +662,8 @@ export default {
     };
   },
   created(){
+    console.log("父组件传来的",this)
+    this.form = this.data ? this.data : this.form
     this.postAxios("DataCenter/StaffInfo")
         .then(res => {
           console.log(res);

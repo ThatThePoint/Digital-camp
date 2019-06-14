@@ -89,6 +89,7 @@
 </template>
 <script>
 export default {
+  props:["data"],
   data() {
     return {
       form: {
@@ -698,6 +699,9 @@ export default {
         }
       ]
     };
+  },
+  created(){
+    this.form = this.data ? this.data : this.form
   },
   methods: {
     cancel(){ history.go(-1);},
