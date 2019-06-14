@@ -7,12 +7,9 @@
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
+<div class="box">
     <div class="container">
-      <div class="messages">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-button type="success" @click="handleAdd" class="right">新增</el-button>
-        </el-form>
-      </div>
+      <el-button type="success" @click="handleAdd" class="right">新增</el-button>
       <div class="body">
         <el-dialog title="部门信息" :visible.sync="dialogFormVisible">
           <el-form :model="deptInfo">
@@ -41,14 +38,15 @@
         </el-dialog>
       </div>
     </div>
+</div>
     <el-tree
+      class="trees"
       :data="treedata"
-      show-checkbox
       node-key="id"
       default-expand-all
       :expand-on-click-node="false">
       <span class="custom-tree-node" slot-scope="{ node, data }">
-        <span>{{ node.label }}</span>
+        <span class="twos">{{ node.label }}</span>
         <span class="detail">
           <el-button
             type="text"
@@ -93,7 +91,7 @@ export default {
 
       this.dialogFormVisible = true;
       this.deptInfo.name = data.label
-      this.deptInfo.code = data.id
+      this.deptInfo.code = data.code
     },
     //删除  
     remove(node, data) {
@@ -219,23 +217,24 @@ export default {
   width: 180px;
   margin: 0 10px;
 }
-.messages {
+.box{
+  background: white;
+}
+.container{
+  border: none !important;
+  width: 400px;
 }
 .detail{
   width: 150px;
   display: inline-block;
   text-align: right;
 }
+.el-tree-node__content{
+  margin-bottom: 10px!important;
+}
+.custom-tree-node{
+  display: inline-block;
+  /* margin-bottom: 10px; */
+}
+
 </style>
-© 2019 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
