@@ -267,6 +267,7 @@ export default {
       var a = document.createElement('a');
       a.href = this.downloadUrl;
       a.download = 'dname';
+      a.target = "_block"
       a.click();
       console.log(file);
     },

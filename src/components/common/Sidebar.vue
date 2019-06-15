@@ -323,10 +323,10 @@ export default {
               index: "UserRight",
               title: "用户权限"
             },
-            // {
-            //   index: "approveRules",
-            //   title: "审批权限"
-            // },
+            {
+              index: "approveRules",
+              title: "审批权限"
+            },
             {
               index: "doorApproveSetting",
               title: "*门禁权限"

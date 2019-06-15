@@ -385,7 +385,7 @@
           <el-row>
             <el-col :span="8">
               <el-form-item label="调度结果">
-                <el-radio-group v-model="dispatchResult">
+                <el-radio-group :disabled="dispatchDetailDisabled" v-model="dispatchResult">
                             <el-radio :label=1>同意</el-radio>
                             <el-radio :label=0>退回</el-radio>
                         </el-radio-group>
@@ -405,7 +405,7 @@
           <el-row>
             <el-col :span="8">
               <el-form-item label="调度车辆">
-                <el-select clearable v-model="applyInfo.carid" placeholder="调度车辆">
+                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.carid" placeholder="调度车辆">
                   <el-option
                   v-for="item in carOptions"
                   :key="item.tid"
@@ -417,7 +417,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="调度司机">
-                <el-select clearable v-model="applyInfo.driverid" placeholder="调度司机">
+                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.driverid" placeholder="调度司机">
                   <el-option
                   v-for="item in applyInfo.driverList"
                   :key="item.tid"
@@ -429,7 +429,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="审批人">
-                <el-select clearable v-model="applyInfo.approverid" placeholder="审批人">
+                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.approverid" placeholder="审批人">
                   <el-option
                   v-for="item in applyInfo.approverList"
                   :key="item.tid"
@@ -445,17 +445,17 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="审批人">
-                  <label>{{applyInfo.reason}}</label>
+                  <label>{{applyInfo.approver}}</label>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <label>{{applyInfo.reason}}</label>
+                <label>{{applyInfo.approverRemark}}</label>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="12">
                 <el-form-item label="审批意见">
-                  <el-input :disabled="approvalDetailDisabled" v-model="applyInfo.approverRemark"></el-input>
+                  <el-input :disabled=approvalDetailDisabled v-model="applyInfo.approverRemark"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -489,7 +489,7 @@ export default {
       approvalDetail:true, //审批详情
       dispatchResult:1, //调度结果
       dispatchDetailDisabled:false,
-      approvalDetailDisabled:true,
+      approvalDetailDisabled:false,
 
       ///新数据-----------
 
@@ -567,14 +567,22 @@ export default {
       //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回
       if(this.applyInfo.applystatus==0){//0-待调度
         this.approvalDetail=false;
+        this.dispatchDetailDisabled=false;
       }else if(this.applyInfo.applystatus==1){//1-调度退回
         this.approvalDetail=false;
+        this.dispatchDetailDisabled=true;
       }else if(this.applyInfo.applystatus==2){//2-待审批
         this.approvalDetail=true;
+        this.dispatchDetailDisabled=true;
+        this.approvalDetailDisabled=false;
       }else if(this.applyInfo.applystatus==3){//3-已批准
         this.approvalDetail=true;
+        this.dispatchDetailDisabled=true;
+        this.approvalDetailDisabled=true;
       }else{//4-审批退回
         this.approvalDetail=true;
+        this.dispatchDetailDisabled=true;
+        this.approvalDetailDisabled=true;
       }
       this.applyDialogFormVisible=true;
     },

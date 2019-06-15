@@ -6,9 +6,7 @@
       </el-breadcrumb>
     </div>
     <div class="container">
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="请假审批" name="first">
-           <div class="messages">
+      <div class="messages">
             <el-button type="success" @click="addPeople" class="right">新增规则</el-button>
           </div>
           <div class="body">
@@ -28,79 +26,14 @@
               </el-table-column>
             </el-table>
           </div>
-        </el-tab-pane>
-        <el-tab-pane label="车辆审批" name="second">
-          <div class="messages">
-            <el-button type="success" @click="addPeople" class="right">新增规则</el-button>
-          </div>
-          <div class="body">
-            <el-table
-              :data="tableData"
-              style="width: 100%"
-              :default-sort="{prop: 'date', order: 'descending'}"
-            >
-              <el-table-column prop="name" label="名称"></el-table-column>
-              <el-table-column prop="remark" label="描述"></el-table-column>
-              <el-table-column prop="status" label="状态"></el-table-column>
-              <el-table-column label="操作">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-        </el-tab-pane>
-      </el-tabs>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: "documentManagement",
+  name: "approvalRule",
   data() {
-    return {
-         activeName: 'first',
-      outerVisible: false,
-      value1: "",
-      value2: "",
-      input2: "",
-      typeValue: "",
-      typeOptions: [
-        {
-          value: "1",
-          label: "现役"
-        },
-        {
-          value: "2",
-          label: "职工"
-        },
-        {
-          value: "3",
-          label: "家属"
-        }
-      ],
-
-      deptValue: "",
-      deptOptions: [
-        {
-          value: "1",
-          label: "连队1"
-        },
-        {
-          value: "2",
-          label: "连队2"
-        },
-        {
-          value: "3",
-          label: "连队3"
-        },
-        {
-          value: "4",
-          label: "连队4"
-        }
-      ],
-      value: "",
+    return {      
       tableData: [
         {
           name: "一级审批",
@@ -117,78 +50,8 @@ export default {
           remark: "三级审批",
           status: "禁用"
         }
-      ],
-      formInline: {
-        user: "",
-        region: ""
-      },
-      dialogTableVisible: false,
-      dialogFormVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      formLabelWidth: "120px",
-      data: [
-        {
-          id: 1,
-          label: "一级 1",
-          children: [
-            {
-              id: 4,
-              label: "二级 1-1",
-              children: [
-                {
-                  id: 9,
-                  label: "三级 1-1-1"
-                },
-                {
-                  id: 10,
-                  label: "三级 1-1-2"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: 2,
-          label: "一级 2",
-          children: [
-            {
-              id: 5,
-              label: "二级 2-1"
-            },
-            {
-              id: 6,
-              label: "二级 2-2"
-            }
-          ]
-        },
-        {
-          id: 3,
-          label: "一级 3",
-          children: [
-            {
-              id: 7,
-              label: "二级 3-1"
-            },
-            {
-              id: 8,
-              label: "二级 3-2"
-            }
-          ]
-        }
-      ],
-      defaultProps: {
-        children: "children",
-        label: "label"
-      }
+      ]
+      
     };
   },
   methods: {
