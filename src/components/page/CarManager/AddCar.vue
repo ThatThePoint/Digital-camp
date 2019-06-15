@@ -558,6 +558,10 @@ export default {
     //编辑时进入页面
     if( this.$route.query.row ){
       this.imageUrl = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.carPhoto
+      this.cardimg1 = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.ownerIdCardPhoto1
+      this.cardimg2 = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.ownerIdCardPhoto2
+      this.liceimg1 = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.relaterLicensePhoto1
+      this.liceimg2 = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.relaterLicensePhoto2
       this.fileList = [{"url":"http://digitalcamp.oicp.io:54373/here/"+this.$route.query.row.driveLicensephoto,"name":"行驶证照片"}]
       this.carInfo = this.$route.query.row
       if(this.$route.query.row.carType == 1){
@@ -619,6 +623,7 @@ export default {
       console.log("!1111111111",)
       a.href = this.fileList[0].url;
       a.download = 'dname';
+      a.target = "_block"
       a.click();
       console.log(file);
     },
