@@ -232,7 +232,7 @@
               <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini"@click="handleDetail(scope.row.tid)">查看</el-button>
+                  <el-button size="mini" @click="handleDetail(scope.row.tid)">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -455,7 +455,7 @@
             <el-row>
               <el-col :span="12">
                 <el-form-item label="审批意见">
-                  <el-input disabled="approvalDetailDisabled" v-model="applyInfo.approverRemark"></el-input>
+                  <el-input :disabled="approvalDetailDisabled" v-model="applyInfo.approverRemark"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -488,7 +488,7 @@ export default {
       applyDialogFormVisible:false, //申请信息弹窗
       approvalDetail:true, //审批详情
       dispatchResult:1, //调度结果
-      dispatchDetailDisabled:fasle,
+      dispatchDetailDisabled:false,
       approvalDetailDisabled:true,
 
       ///新数据-----------
