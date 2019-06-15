@@ -19,22 +19,19 @@
           <el-row>
             <el-col :span="6">
               <el-form-item label="请假人">
-                <!-- <el-input type="text" v-model="postname" @focus="focus"></el-input> -->
-                <el-select clearable v-model="form.selectedStaffIdList" placeholder="请选择">
-                  <el-option
-                    v-for="item in form.staffList"
-                    :label="item.name"
-                    :value="item.id"
-                    :key="item.id"
-                  ></el-option>
-                </el-select>
+                <el-input class="input-width" 
+                  v-model="form.selectedStaffNameList"  
+                  placeholder="请输入关键词"            
+                  @focus="focus"                  
+                  >
+                </el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="请假事由">
                 <el-select clearable v-model="form.outingType" placeholder="请选择">
                   <el-option
-                    v-for="item in form.outingTypeOptions"
+                    v-for="item in outingTypeOptions"
                     :label="item.name"
                     :value="item.code"
                     :key="item.code"
@@ -90,7 +87,7 @@
               <el-form-item label="一级审批人">
                 <el-select clearable v-model="form.firstApprover" placeholder="请选择">
                   <el-option
-                    v-for="item in form.firstApproverList"
+                    v-for="item in firstApproverList"
                     :label="item.name"
                     :value="item.tid"
                     :key="item.tid"
@@ -132,8 +129,25 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      form:{},//表单
-      parentlist:"",
+      
+      firstApproverList: [],//一级审批人
+      outingTypeOptions: [],//外出事由数组
+      form:{
+        perid:"",//接受父组件传过来的id
+        applyer: '',// 操作人
+        applyerDept: '',// 部门
+        selectedStaffNameList: '',// 请假人
+        selectedStaffIdList: '', //请假人id
+        outingTypeOptions: '',//外出事由
+        startTime: '',
+        endTime: '',
+        dest: '',//到达地点
+        roadTime: '',//路途时间
+        transport: '',// 交通工具
+        firstApprover: '',//一级审批人
+        firstApproverList: []
+      },//表单
+      parentlist:[],
       postname: "", //请假人名字
       dialogVisible: false, //控制穿梭框显示
       formLabelWidth: "120px"
@@ -157,45 +171,88 @@ export default {
     this.getdata();
   },
   methods: {
+    getTree(data){
+      let map = {};
+      let val = [];
+      //生成数据对象集合
+      data.forEach(it=>{
+        delete it.children;
+        map[it.id] = it;
+      })
+      //生成结果集
+      data.forEach(it=>{
+          const parent = map[it.pid];
+          if(parent){
+              if(!Array.isArray(parent.children)) parent.children = [];
+              parent.children.push(it);
+          }else{
+              val.push(it);
+          }
+      })
+      return val;
+    },
     getdata(){
       var params={
        tid: this.$route.query.id
       };
       this.postAxios("/outApply/ApplyInfo",params)
         .then(res => {
-          this.form=res;
+          
+          console.log("11111111111111",this.form)
+          this.form.applyer = res.applyer
+          this.form.applyerDept = res.applyerDept
+          this.outingTypeOptions = res.outingTypeOptions
+          this.firstApproverList = res.firstApproverList
+          this.parentlist = this.getTree(res.staffList)
         })
         .catch(err => {
           console.log(err);
       });
     },
+    // handleSubmit(){
+    //   this.form.outingLength= (
+    //       (new Date(this.form.endtime).getTime() -
+    //         new Date(this.form.starttime).getTime()) /
+    //       (1000 * 3600)
+    //     ).toFixed(2) + "小时";
+    //     console.log("!111111111",this.form)
+    //   this.postAxios("/outApply/SaveOutApplyInfo",this.form)
+    //     .then(res => {
+    //       if(res.status==1){
+    //         alert("保存成功");
+    //         this.form={};
+    //         this.getdata();
+    //       }
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //   });
+    // },
     handleSubmit(){
       this.form.outingLength= (
-          (new Date(this.form.endtime).getTime() -
-            new Date(this.form.starttime).getTime()) /
-          (1000 * 3600)
+        (new Date(this.form.endtime).getTime() -
+        new Date(this.form.starttime).getTime()) /
+        (1000 * 3600)
         ).toFixed(2) + "小时";
-      var params={
-       applyForm: this.form
-      };
-      this.postAxios("/outApply/SaveOutApplyInfo",params)
-        .then(res => {
+        console.log("!111111111",this.form)
+        this.postAxios("/outApply/SaveOutApplyInfo",{applyForm:this.form})
+          .then(res => {
           if(res.status==1){
-            alert("保存成功");
-            this.form={};
-            this.getdata();
+          alert("保存成功");
+          this.form={};
+          this.getdata();
           }
         })
         .catch(err => {
-          console.log(err);
+        console.log(err);
       });
     },
     focus() {
       this.dialogVisible = true;
     },
     confirms(a) {
-      this.postname = a[0]
-      this.perid = a[1]
+      this.form.selectedStaffNameList = a[0]
+      this.form.perid = a[1]
     },
     handleClose(done) {
       this.$confirm("确认关闭？")

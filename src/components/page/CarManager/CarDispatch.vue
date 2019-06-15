@@ -306,7 +306,7 @@
               <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+                  <el-button size="mini" @click="handleDetail(scope.row.tid)">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -463,9 +463,9 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="cancelDetail">取消</el-button>
-          <el-button @click="dispatchApply">提交</el-button>
-          <el-button @click="passApproval">通过</el-button>
-          <el-button @click="rejectApproval">退回</el-button>
+          <el-button v-show="dispatchCommit" @click="dispatchApply">提交</el-button>
+          <el-button v-show="approvalPass" @click="passApproval">通过</el-button>
+          <el-button v-show="approvalPass" @click="rejectApproval">退回</el-button>
         </div>
       </el-dialog>
     </div>
@@ -490,14 +490,13 @@ export default {
       dispatchResult:1, //调度结果
       dispatchDetailDisabled:false,
       approvalDetailDisabled:false,
+      dispatchCommit:false, //调度提交按钮显示隐藏
+      approvalPass:false,//通过/退回 审核
 
-      ///新数据-----------
+      ///以上新数据-----------
 
       
       form:{},
-      secondFormVisible: false,
-      dialogTableVisible: false,
-      dialogFormVisible: false,
       formLabelWidth: "120px"
     };
   },
@@ -568,21 +567,32 @@ export default {
       if(this.applyInfo.applystatus==0){//0-待调度
         this.approvalDetail=false;
         this.dispatchDetailDisabled=false;
+        this.dispatchCommit=true; //显示提交按钮
+        this.approvalPass=false; //隐藏审批通过和退回按钮
       }else if(this.applyInfo.applystatus==1){//1-调度退回
         this.approvalDetail=false;
         this.dispatchDetailDisabled=true;
+        this.dispatchCommit=false;//隐藏提交
+        this.approvalPass=false;//隐藏审批通过和退回
       }else if(this.applyInfo.applystatus==2){//2-待审批
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=false;
+        this.dispatchCommit=false;//隐藏提交
+        this.approvalPass=true;//显示审批通过和退回
+        
       }else if(this.applyInfo.applystatus==3){//3-已批准
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=true;
+        this.dispatchCommit=false;//隐藏提交
+        this.approvalPass=false;//隐藏审批通过和退回
       }else{//4-审批退回
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=true;
+        this.dispatchCommit=false;//隐藏提交
+        this.approvalPass=false;//隐藏审批通过和退回
       }
       this.applyDialogFormVisible=true;
     },
@@ -605,7 +615,9 @@ export default {
       var da={
         tid:this.applyInfo.formId,
         approvalStatus:this.dispatchResult,
-        nexapproverid:this.applyInfo.approverid
+        nexapproverid:this.applyInfo.approverid,
+        driverid:this.applyInfo.driverid,
+        carid:this.applyInfo.carid
       };
       this.postAxios("/CarApply/SaveApproval", da)
         .then(res => {
@@ -622,11 +634,43 @@ export default {
     },
     //审批通过
     passApproval(){
-
+      var da={
+        tid:this.applyInfo.formId,
+        approvalStatus:1
+      };
+      this.postAxios("/CarApply/SaveApproval", da)
+        .then(res => {
+          console.log(res);
+          if(res.status){
+            alert("审批完成");
+            this.applyDialogFormVisible=false;
+          }else{
+            alert(res.msg);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     //审批退回
     rejectApproval(){
-
+      var da={
+        tid:this.applyInfo.formId,
+        approvalStatus:0
+      };
+      this.postAxios("/CarApply/SaveApproval", da)
+        .then(res => {
+          console.log(res);
+          if(res.status){
+            alert("审批完成");
+            this.applyDialogFormVisible=false;
+          }else{
+            alert(res.msg);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     //以上====新
 

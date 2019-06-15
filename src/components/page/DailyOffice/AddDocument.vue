@@ -178,7 +178,6 @@ export default {
         this.options=res.options;
         _this.parentlist = _this.getTree(res.fromData);
         if(res.document){
-          
         _this.docuId=res.document.tid;
         _this.title=res.document.title;
         _this.content=res.document.content;
@@ -186,9 +185,6 @@ export default {
         _this.level=res.document.messageLevel;
         _this.fileList=[{"url":"http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1,"name":res.document.fileName1}]
         _this.downloadUrl = "http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1
-
-
-
         }
       })
       .catch(err => {
