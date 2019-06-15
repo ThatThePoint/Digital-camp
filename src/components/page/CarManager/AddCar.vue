@@ -72,7 +72,7 @@
                     :value="item.code"
                   ></el-option>
                 </el-select>
-                <span class="starred">*</span>行驶证号：
+                <span class="starred">*</span>行驶证号： 
                 <el-input class="input-width" placeholder="行驶证号" v-model="carInfo.driveLicense"></el-input>
                 <!-- <el-button size="small" type="success">照片上传</el-button> -->
 
@@ -491,7 +491,7 @@ export default {
         driveLicense:"",
 
         // <summary>行驶证附件路径</summary>
-        DriveLicensephoto:"",
+        driveLicensephoto:"",
 
         // <summary>当前位置（在内/在外）</summary>
          inOrOut:"",
@@ -557,6 +557,8 @@ export default {
   created(){
     //编辑时进入页面
     if( this.$route.query.row ){
+      this.imageUrl = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.carPhoto
+      this.fileList = [{"url":"http://digitalcamp.oicp.io:54373/here/"+this.$route.query.row.driveLicensephoto,"name":"行驶证照片"}]
       this.carInfo = this.$route.query.row
       if(this.$route.query.row.carType == 1){
         this.activeName = 'first',
@@ -612,6 +614,12 @@ export default {
       console.log(file, fileList);
     },
     handlePreview(file) {
+      debugger
+      var a = document.createElement('a');
+      console.log("!1111111111",)
+      a.href = this.fileList[0].url;
+      a.download = 'dname';
+      a.click();
       console.log(file);
     },
     handleExceed(files, fileList) {
@@ -628,8 +636,8 @@ export default {
       console.log("error");
     },
     successHandle(file, fileList){
-      this.carInfo.DriveLicensephoto = file.path
-      console.log(this.carInfo.DriveLicensephoto)
+      this.carInfo.driveLicensephoto = file.path
+      console.log(this.carInfo.driveLicensephoto)
     },
 
 
