@@ -147,6 +147,9 @@ export default {
       this.getdata();
     },
     getdata(){
+  
+      this.currentPage = 1
+     
       var params={
         pageSize: this.pageSize,
         pageNum: this.pageNum,

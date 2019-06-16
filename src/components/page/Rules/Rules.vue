@@ -52,6 +52,7 @@
         </el-table>
         <div class="block">
           <el-pagination
+            background
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
             layout="total, prev, pager, next"
@@ -160,6 +161,9 @@ export default {
       this.getdata();
     },
     getdata(flag){
+      if(flag){
+        this.currentPage = 1
+      }
       var pa = {
         pageSize: this.pageSize,
         pageNum: flag ? 1 : this.pageNum,

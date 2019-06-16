@@ -16,7 +16,7 @@
             :value="item.tid"
           ></el-option>
         </el-select>
-        <el-button type="primary" @click="getdata">查询</el-button>
+        <el-button type="primary" @click="getdata(true)">查询</el-button>
         <span class="staffStatu" style="float:right">{{msg}}</span>
       </div>
       <div class="body">
@@ -77,10 +77,15 @@ export default {
         return "离岗";
       }
     },
-    getdata(){
+    getdata(flag){
+      if(flag == true){
+        this.currentPage = 1
+      }
+      
       var params={
+
         pageSize: this.pageSize,
-        pageNum: this.pageNum,
+        pageNum: 1,
         deptId: this.deptId
       };
       this.postAxios("DailyOffice/StaffDynamics",params)

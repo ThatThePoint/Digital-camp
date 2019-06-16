@@ -117,7 +117,7 @@
             </el-select>
             <span>值班日期</span>
             <el-date-picker class="input-width" v-model="dutyDate" type="date" placeholder="选择日期"></el-date-picker>
-            <el-button type="primary" @click="getdatatwo">查询</el-button>
+            <el-button type="primary" @click="getdatatwo(true)">查询</el-button>
           </div>
           <div class="body">
             <el-table
@@ -298,7 +298,11 @@ export default {
         });
     },
     //值班查询分页
-    getdatatwo() {
+    getdatatwo(flag) {
+      if(flag==true){
+        this.currentPage1 = 1
+      }
+
       let data = {
         currentPage: 1,
         pageNum: 1,

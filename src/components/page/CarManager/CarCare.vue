@@ -56,6 +56,16 @@
             </template>
           </el-table-column>
         </el-table>
+        <div class="block">
+          <el-pagination
+            background
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
+            layout="total, prev, pager, next"
+            :total="count"
+            :page-size="10"
+          ></el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -66,6 +76,10 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      pageSize: 10,
+      pageNum : 1,
+      count: 0,
+      currentPage: 1,
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -174,9 +188,20 @@ export default {
     };
   },
   created(){
-    this.getTableData({})
+    this.getTableData({
+      pageSize: this.pageSize,
+      pageNum: this.pageNum
+    })
   },
   methods: {
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.pageNum = val;
+      this.getTableData({
+        pageSize: this.pageSize,
+        pageNum: this.pageNum
+      });
+    },
     returnTime(row,index){
       if(row.operateDate){
         return row.operateDate.slice(0,10)
@@ -185,7 +210,10 @@ export default {
     },
     //搜索数据
     search(){
+      this.currentPage = 1
       let data = {
+        pageSize: this.pageSize,
+        pageNum: 1,
         deptName : this.departmentValue,
         careTypeName : this.careTypeValue,
         StartTime : this.value1,
@@ -199,6 +227,7 @@ export default {
       let _this = this;
       this.postAxios("/CarInfo/GetCareRecordList",data)
         .then(res => {
+          _this.count = res.count
           console.log(res)
           _this.tableData = res.careList;
           _this.departmentOptions = res.deptOptions
