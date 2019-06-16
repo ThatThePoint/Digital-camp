@@ -351,6 +351,7 @@ export default {
         .catch(err => {
           console.log(err);
       });
+      this.roleId = row.tid
       this.rolehandle = row.name
       this.roleperim = true
     },
