@@ -618,7 +618,7 @@ export default {
       console.log(file, fileList);
     },
     handlePreview(file) {
-      debugger
+      
       var a = document.createElement('a');
       console.log("!1111111111",)
       a.href = this.fileList[0].url;

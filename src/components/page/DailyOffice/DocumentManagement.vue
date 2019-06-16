@@ -254,7 +254,7 @@ export default {
       let _this = this
       this.postAxios("/DailyOffice/DocumentList",data)
       .then(res => {
-        debugger
+        
         _this.tableDataone = res.data
         _this.countone = res.count;
         console.log(res,_this);

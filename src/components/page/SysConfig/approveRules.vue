@@ -225,7 +225,7 @@ export default {
       this.handleSearch();
     },
     addDetailInfo() {
-      debugger
+      
       this.detailInfo = {
         parentId: this.ruleinfo.tid
       };

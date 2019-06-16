@@ -11,7 +11,7 @@ export default{
     //   }
 
     // handleEditcar(index, row,a){
-    //     debugger
+    //     
     //     console.log(index, row);
     //     // this.$router.push({
     //     //   path : '/addcare',
