@@ -61,7 +61,7 @@
                 layout="total, prev, pager, next"
                 :total="countone"
                 :current-page.sync="currentPage"
-                :page-size="1"
+                :page-size="10"
               >
               </el-pagination>
           </div>
@@ -116,7 +116,7 @@
             <div class="pagination">
               <el-pagination
                 background
-                :page-size="1"
+                :page-size="10"
                 @current-change="handleCurrentChange"
                 layout="total, prev, pager, next"
                 :total="counttwo"
@@ -179,7 +179,7 @@
                 background
                 @current-change="handleCurrentChange"
                 layout="total, prev, pager, next"
-                :page-size="1"
+                :page-size="10"
                 :total="countthree"
                 :current-page.sync="currentPage"
               >
@@ -196,7 +196,7 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      pageSize: 1,
+      pageSize: 10,
       pageNum : 1,
       countthree: 0,
       counttwo: 0,
@@ -337,8 +337,8 @@ export default {
     // 查询
     getdata(){
       var params={
-        pageNum: this.pageNum,
-        pageSize: this.pageSize,
+        pageNum: 1,
+        pageSize: 1,
         tab:this.activeName,
         title:this.title,
         level:this.level,

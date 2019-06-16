@@ -11,7 +11,7 @@
       <div class="messages">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="发布单位">
-            <el-select clearable v-model="formInline.dept" placeholder="请选择">
+            <el-select clearable v-model="formInline.dept" placeholder="请选择" style="width: 80px">
               <el-option
                     v-for="item in deptsOps"
                     :key="item.tid"
@@ -21,7 +21,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="警报等级">
-            <el-select clearable v-model="formInline.level" placeholder="请选择">
+            <el-select clearable v-model="formInline.level" placeholder="请选择" style="width: 80px">
               <el-option
                     v-for="item in messageLevelOps"
                     :key="item.code"
@@ -31,13 +31,13 @@
             </el-select>
           </el-form-item>
           <el-form-item label="警报状态">
-            <el-select clearable v-model="formInline.status" placeholder="请选择">
+            <el-select clearable v-model="formInline.status" placeholder="请选择" style="width: 80px">
               <el-option label="生效" value="1"></el-option>
               <el-option label="失效" value="0"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="警报内容">
-            <el-input v-model="formInline.content" placeholder="请输入"></el-input>
+            <el-input v-model="formInline.content" placeholder="请输入" style="width: 80px"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleSearch">查询</el-button>
@@ -62,6 +62,16 @@
             </template>
           </el-table-column>
         </el-table>
+
+        <div class="block">
+          <el-pagination
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
+            layout="total, prev, pager, next"
+            :total="count"
+            :page-size="10"
+          ></el-pagination>
+        </div>
         <el-dialog title="增加警报" :visible.sync="dialogFormVisible">
           <el-form :model="alertInfo">
             <div class="flex">
@@ -94,6 +104,10 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      pageSize: 10,
+      pageNum : 1,
+      count: 0,
+      currentPage: 1,
       deptsOps:[],
       messageLevelOps: [],
       value: "",
@@ -118,14 +132,24 @@ export default {
     this.getdata();
   },
   methods: {
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+      this.pageNum = val;
+      this.getdata();
+    },
     formatter(row, column) {
       return row.address;
     },
     handleSearch(){
+      this.currentPage = 1;
+      this.pageNum = 1;
       this.getdata();
     },
     getdata(){
       var params={
+        pageSize: this.pageSize,
+        pageNum: this.pageNum,
         deptId:this.formInline.dept,
         level:this.formInline.level,
         status:this.formInline.status, 

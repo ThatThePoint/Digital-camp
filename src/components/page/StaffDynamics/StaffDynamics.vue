@@ -31,6 +31,16 @@
           <el-table-column prop="jobPostion" label="职务"></el-table-column>
           <el-table-column prop="status" label="状态" :formatter="formatterStatus"></el-table-column>
         </el-table>
+
+        <div class="block">
+          <el-pagination
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
+            layout="total, prev, pager, next"
+            :total="count"
+            :page-size="10"
+          ></el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -40,6 +50,10 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      pageSize: 10,
+      pageNum : 1,
+      count: 0,
+      currentPage: 1,
       deptId:"",
       msg:"",
       deptOptions: [],
@@ -50,6 +64,12 @@ export default {
      this.getdata();
   },
   methods: {
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+      this.pageNum = val;
+      this.getdata();
+    },
     formatterStatus(row, column){
       if(row.status==1){
         return "在岗";
@@ -59,11 +79,14 @@ export default {
     },
     getdata(){
       var params={
+        pageSize: this.pageSize,
+        pageNum: this.pageNum,
         deptId: this.deptId
       };
       this.postAxios("DailyOffice/StaffDynamics",params)
         .then(res => {
           console.log(res);
+          this.count = res.count
           this.tableData=res.list;
           this.deptOptions=res.deptOptions;
           this.msg=res.msg;

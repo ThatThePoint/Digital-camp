@@ -24,7 +24,7 @@
             <el-input v-model="params.name" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="getdata">查询</el-button>
+            <el-button type="primary" @click="getdata(true)">查询</el-button>
           </el-form-item>
           <el-button type="success" @click="addrules" class="right">新增</el-button>
         </el-form>
@@ -50,6 +50,16 @@
             </template>
           </el-table-column>
         </el-table>
+        <div class="block">
+          <el-pagination
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
+            layout="total, prev, pager, next"
+            :total="count"
+            :page-size="10"
+          ></el-pagination>
+        </div>
+
         <el-dialog title="新增规章制度" :visible.sync="dialogFormVisible">
           <el-form :rules="checkRules" ref="ruleInfo" :model="form.ruleInfo">
             <div class="flex"></div>
@@ -99,6 +109,10 @@ export default {
   name: "rule",
   data() {
     return {
+      pageSize: 10,
+      pageNum : 1,
+      count: 0,
+      currentPage: 1,
       fileList:[],
       fileId:"",//图片上传id
       filePath1 :"",//图片上传路径
@@ -137,18 +151,24 @@ export default {
     };
   },
   created() {
-    this.getdata("1","10");
+    this.getdata();
   },
   methods: {
-    getdata(num,size){
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.pageNum = val;
+      this.getdata();
+    },
+    getdata(flag){
       var pa = {
-      status: this.params.status,
-      name: this.params.name,
-      pageNum:num,
-      pageSize:size
-    };
+        pageSize: this.pageSize,
+        pageNum: flag ? 1 : this.pageNum,
+        status: this.params.status,
+        name: this.params.name,
+      };
     this.postAxios("/DailyOffice/GetRules", pa).then(res => {
       console.log(res);
+      this.count = res.count
       this.tableData = res.data;
       this.totalPage = res.count;
     });
@@ -212,7 +232,7 @@ export default {
           .then(res => {
             console.log(res);
             _this.dialogFormVisible = false;
-            _this.getdata("1","10");
+            _this.getdata();
           })
           .catch(err => {
             console.log(err);
