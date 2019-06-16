@@ -225,19 +225,18 @@ export default {
       this.handleSearch();
     },
     addDetailInfo() {
-      debugger
       this.detailInfo = {
         parentId: this.ruleinfo.tid
       };
       if (this.detailList.length == 0) {
         //没有明细时
-        this.detailInfo.name = "一级审批";
+        this.detailInfo.name = "1级审批";
       } else if (detailList.length == 1) {
         //有一条明细时
-        this.detailInfo.name = "二级审批";
+        this.detailInfo.name = "2级审批";
       } else if (detailList.length == 2) {
         //有2条明细时
-        this.detailInfo.name = "三级审批";
+        this.detailInfo.name = "3级审批";
       } else {
         //有三级审批
         this.$message({
@@ -269,6 +268,7 @@ export default {
         this.postAxios("Sysconfig/SaveApprovalRule", {
           ruleInfo: {
             parentId : this.detailInfo.parentId,
+            name:this.detailInfo.name,
             startTimeLength : this.startTimeLength,
             endTimeLength : this.endTimeLength
           }
