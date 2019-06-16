@@ -562,7 +562,6 @@ export default {
       }
     },
     handleDetail(tid){
-      debugger
       this.getApplyInfo(tid);
       //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回
       if(this.activeName=='first'){//0-待调度
