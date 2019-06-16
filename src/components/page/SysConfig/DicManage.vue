@@ -88,11 +88,11 @@
       </div>
       <div class="body">
         <el-table :data="dicTableData" style="width: 100%">
-          <el-table-column prop="name" label="字典名称" sortable width="120"></el-table-column>
-          <el-table-column prop="code" label="字典编码" sortable width="120"></el-table-column>
-          <el-table-column prop="note" label="描述" sortable width="120"></el-table-column>
+          <el-table-column prop="name" label="字典名称" sortable width="160"></el-table-column>
+          <el-table-column prop="code" label="字典编码" sortable width="160"></el-table-column>
+          <el-table-column prop="note" label="描述" sortable width="200"></el-table-column>
           <el-table-column prop="status" label="使用状态" :formatter="formatter" width="100"></el-table-column>
-          <el-table-column prop="modifyTime" label="修改时间" sortable width="120"></el-table-column>
+          <el-table-column prop="modifyTime" label="修改时间" sortable width="160"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>

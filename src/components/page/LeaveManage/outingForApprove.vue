@@ -40,33 +40,33 @@
           <el-form :model="form" label-width="100px" ref="form">
             <div class="second-title">申请信息</div>
             <el-row>
-              <el-col :span="6">
+              <el-col :span="8">
                 <el-form-item label="申请人">
-                  <label>{{form.applyerName}}</label>
+                  <label>{{form.applyer}}</label>
                 </el-form-item>
               </el-col>
-              <el-col :span="6">
+              <el-col :span="8">
                 <el-form-item label="部门">
-                  <label>{{form.applyDeptName}}</label>
+                  <label>{{form.applyerDept}}</label>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="6">
+              <el-col :span="8">
                 <el-form-item label="请假人">
-                  <label>{{form.outingStaffName}}</label>
+                  <label>{{form.selectedStaffNameList}}</label>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="6">
+              <el-col :span="8">
                 <el-form-item label="外出类型">
-                  <label>{{form.outingType}}</label>
+                  <label>{{form.outingTypeName}}</label>
                 </el-form-item>
               </el-col>
-              <el-col :span="6">
-                <el-form-item label="外出原因">
-                  <label>{{form.outingContent}}</label>
+               <el-col :span="8">
+                <el-form-item label="请假时间">
+                  <label>{{form.timeLength}}小时</label>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -79,11 +79,6 @@
               <el-col :span="8">
                 <el-form-item label="结束日期">
                   <label>{{form.endTime}}</label>
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="请假时间">
-                  <label>{{form.timeLength}}小时</label>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -110,9 +105,9 @@
                 </el-col>
               </el-row>
               <el-row>
-                <el-col :span="12">
+                <el-col :span="16">
                   <el-form-item label="审批意见">
-                    <el-input  v-model="form.firstRemark"></el-input>
+                    <el-input v-model="form.firstRemark"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -128,7 +123,7 @@
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="下一级审批人">
-                  <el-select clearable v-model="form.thdApprover" placeholder="审批人">
+                  <el-select clearable  v-model="form.thdApprover" placeholder="审批人">
                     <el-option
                     v-for="item in form.thdApproverList"
                     :key="item.tid"
@@ -140,7 +135,7 @@
                 </el-col>
               </el-row>
               <el-row>
-                <el-col :span="12">
+                <el-col :span="16">
                   <el-form-item label="审批意见">
                     <el-input  v-model="form.secRemark"></el-input>
                   </el-form-item>
@@ -153,12 +148,12 @@
               <el-row>
                 <el-col :span="8">
                   <el-form-item label="审批人">
-                    <label>{{form.firstApproverName}}</label>
+                    <label>{{form.thdApproverName}}</label>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
-                <el-col :span="12">
+                <el-col :span="16">
                   <el-form-item label="审批意见">
                     <el-input  v-model="form.thdRemark"></el-input>
                   </el-form-item>
@@ -170,8 +165,9 @@
 
 
           <div slot="footer" class="dialog-footer">
-            <el-button @click="confirmFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="confirmFormVisible = false">确 定</el-button>
+            <el-button @click="handleCancelDetail">取 消</el-button>
+            <el-button @click="handlePass">通 过</el-button>
+            <el-button @click="handleReject">退 回</el-button>
           </div>
         </el-dialog>
       </div>
@@ -289,7 +285,10 @@ export default {
       //查看时显隐内容
       firstApprovalInfo:true,
       secondApprovalInfo:true,
-      thirdApprovalInfo:true
+      thirdApprovalInfo:true,
+      //禁用内容
+      firstAppDisabled:false,
+      secondAppDisabled:false
     };
   },
   methods: {
@@ -348,6 +347,37 @@ export default {
         .then(res => {
           this.form = res;
           console.log(res);
+          //判断显隐和禁用
+          if(this.form.curNode==2 ){//一级审批 有二级审批
+          this.firstAppDisabled=false;
+          this.firstApprovalInfo=true;
+          this.secondApprovalInfo=false;
+          this.thirdApprovalInfo=false;
+      }else if(this.form.curNode==3){//一级审批 无二级审批
+          this.firstAppDisabled=true;
+          this.firstApprovalInfo=true;
+          this.secondApprovalInfo=false;
+          this.thirdApprovalInfo=false;
+      }else if(this.form.curNode==4 ){//二级审批 有三级审批
+          this.firstAppDisabled=true;
+          this.secondAppDisabled=false;
+          this.firstApprovalInfo=true;
+          this.secondApprovalInfo=true;
+          this.thirdApprovalInfo=false;
+      }else if(this.form.curNode==5){//二级审批 无三级审批
+          this.firstAppDisabled=true;
+          this.secondAppDisabled=true;
+          this.firstApprovalInfo=true;
+          this.secondApprovalInfo=true;
+          this.thirdApprovalInfo=false;
+      }
+      else{ //三级审批
+          this.firstAppDisabled=true;
+          this.secondAppDisabled=true;
+          this.firstApprovalInfo=true;
+          this.secondApprovalInfo=true;
+          this.thirdApprovalInfo=true;
+      }
           this.loading = false;
         })
         .catch(err => {
@@ -375,6 +405,97 @@ export default {
       this.getFormData(row.tid);
       this.confirmFormVisible = true;
       
+    },
+    handleCancelDetail(){
+      this.confirmFormVisible = false;
+      this.form={};
+    },
+    //审批通过
+    handlePass(){
+      let remark="";
+      let nextApp="";
+      let msg="";
+      if(this.form.curNode==2 ){//一级审批 有二级审批
+          remark=this.form.firstRemark;
+          nextApp=this.form.secApprover;
+          let secAppFlag = this.$utils.isEmpty(nextApp);
+          if(secAppFlag){
+            this.$message({
+                type: "warning",
+                message: "请选择下级审批人!"
+              });
+              return false;
+          }
+      }else if(this.form.curNode==3){//一级审批 无二级审批
+          remark=this.form.firstRemark;
+      }else if(this.form.curNode==4 ){//二级审批 有三级审批
+          remark=this.form.secRemark;
+          nextApp=this.form.thdApprover;
+          let secAppFlag = this.$utils.isEmpty(nextApp);
+          if(secAppFlag){
+            this.$message({
+                type: "warning",
+                message: "请选择下级审批人!"
+              });
+              return false;
+          }
+      }else if(this.form.curNode==5){//二级审批 无三级审批
+          remark=this.form.secRemark;
+      }
+      else{ //三级审批
+          remark=this.form.thdRemark;
+      }
+      //审批信息
+      let params={
+        tid : this.form.tid,
+        curNode :this.form.curNode,
+        approvalStatus : 1,
+        approvalRemark : remark,
+        nextAppId : nextApp
+      };
+      this.postAxios("OutApply/SaveApproveInfo", params)
+        .then(res => {
+          console.log(res);
+          if(res.status){
+            this.$message({
+                type: "success",
+                message: "保存审批成功!"
+              });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    //审批退回
+    handleReject(){
+      let remark="";
+      if(this.form.curNode==2 ){//一级审批 有二级审批
+          remark=this.form.firstRemark;
+      }else if(this.form.curNode==3){//一级审批 无二级审批
+          remark=this.form.firstRemark;
+      }else if(this.form.curNode==4 ){//二级审批 有三级审批
+          remark=this.form.secRemark;
+      }else if(this.form.curNode==5){//二级审批 无三级审批
+          remark=this.form.secRemark;
+      }
+      else{ //三级审批
+          remark=this.form.thdRemark;
+      }
+      //审批信息
+      let params={
+        tid : this.form.tid,
+        curNode :this.form.curNode,
+        approvalStatus : 0,
+        approvalRemark : remark,
+      };
+      this.postAxios("OutApply/SaveApproveInfo", params)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   created() {
