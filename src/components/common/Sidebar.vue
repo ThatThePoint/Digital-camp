@@ -338,11 +338,12 @@ export default {
             {
               index: "DicManage",
               title: "字典管理"
-            },
-            {
-              index: "email",
-              title: "test"
             }
+            // ,
+            // {
+            //   index: "email",
+            //   title: "test"
+            // }
           ]
         }
       ]

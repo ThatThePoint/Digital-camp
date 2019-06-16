@@ -10,121 +10,43 @@
     <div class="container">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="车辆申请" name="first">
-          <div class="body">
-            <el-form :model="applyInfo">
-              <div class="flex"></div>
-              <el-row>
-                <el-col :span="6">
-                  <el-form-item label="使用人" :label-width="formLabelWidth">
-                    <el-input disabled type="input" v-model="applyInfo.applyer" class="input-width"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="司机" :label-width="formLabelWidth">
-                    <el-select clearable filterable v-model="applyInfo.driverid" placeholder="请选择">
-                      <el-option
-                        v-for="item in applyInfo.driverList"
-                        :key="item.tid"
-                        :label="item.name"
-                        :value="item.tid"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="6">
-                  <el-form-item label="起始时间" :label-width="formLabelWidth">
-                    <el-date-picker
-                      type="datetime"
-                      placeholder="选择日期"
-                      v-model="applyInfo.starttime"
-                      style="width: 100%;"
-                    ></el-date-picker>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="截至时间" :label-width="formLabelWidth">
-                    <el-date-picker
-                      type="datetime"
-                      placeholder="选择日期"
-                      v-model="applyInfo.endtime"
-                      style="width: 100%;"
-                    ></el-date-picker>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :span="6">
-                  <el-form-item label="目的地" :label-width="formLabelWidth">
-                    <el-input type="input" v-model="applyInfo.destination" class="input-width"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="里程" :label-width="formLabelWidth">
-                    <el-input type="input" v-model="applyInfo.mileage" class="input-width"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="6">
-                  <el-form-item label="申请车辆" :label-width="formLabelWidth">
-                    <el-select clearable v-model="applyInfo.carid" placeholder="请选择">
-                      <el-option
-                        v-for="item in applyInfo.carList"
-                        :key="item.tid"
-                        :label="item.name"
-                        :value="item.tid"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="调度员" :label-width="formLabelWidth">
-                    <el-select
-                      clearable
-                      v-model="applyInfo.dispatcherid"
-                      placeholder="请选择"
-                      style="margin-left:10px;"
-                    >
-                      <el-option
-                        v-for="item in applyInfo.dispatcherList"
-                        :key="item.tid"
-                        :label="item.name"
-                        :value="item.tid"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="6">
-                  <el-form-item label="事由" :label-width="formLabelWidth">
-                    <el-input
-                      class="input-width"
-                      placeholder
-                      v-model="applyInfo.reason"
-                      type="textarea"
-                    ></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="备注" :label-width="formLabelWidth">
-                    <el-input
-                      class="input-width"
-                      placeholder
-                      v-model="applyInfo.remark"
-                      type="textarea"
-                    ></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
+          <div class="messages">
+            <el-form :inline="true" :model="param" class="demo-form-inline">
+              <el-form-item label>
+                <el-select clearable v-model="param.carId" placeholder="我的申请">
+                  <el-option
+                  v-for="item in carOptions"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="search">查询</el-button>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" >新增</el-button>
+              </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="cancelApply">取 消</el-button>
-              <el-button type="primary" @click="onSubmit">确 定</el-button>
-            </div>
+          </div>
+          <div class="body">
+            <el-table
+              :data="tableData"
+              style="width: 100%"
+              :default-sort="{prop: 'applytime', order: 'descending'}"
+            >
+              <el-table-column prop="licensePlate" label="车牌号" sortable width="100"></el-table-column>
+              <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
+              <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
+              <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="handleApply(scope.row.tid)">查看</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
         </el-tab-pane>
         <el-tab-pane label="车辆调度" name="second">
@@ -151,6 +73,7 @@
               style="width: 100%"
               :default-sort="{prop: 'applytime', order: 'descending'}"
             >
+              <el-table-column prop="formcode" label="申请单号" sortable width="100"></el-table-column>
               <el-table-column prop="licensePlate" label="车牌号" sortable width="100"></el-table-column>
               <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
               <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
@@ -313,6 +236,105 @@
           </div>
         </el-tab-pane>
       </el-tabs>
+      <el-dialog :visible.sync="carApplyInfoVisible">
+        <el-form :model="applyInfo">
+              <div class="flex">用车申请</div>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="用车人" :label-width="formLabelWidth">
+                    <el-input disabled type="input" v-model="applyInfo.applyer" class="input-width"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="用车部门" :label-width="formLabelWidth">
+                    <el-input disabled type="input" v-model="applyInfo.applyerDeptName" class="input-width"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="起始时间" :label-width="formLabelWidth">
+                    <el-date-picker
+                      type="datetime"
+                      placeholder="选择日期"
+                      v-model="applyInfo.starttime"
+                      style="width: 100%;"
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="截至时间" :label-width="formLabelWidth">
+                    <el-date-picker
+                      type="datetime"
+                      placeholder="选择日期"
+                      v-model="applyInfo.endtime"
+                      style="width: 100%;"
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="目的地" :label-width="formLabelWidth">
+                    <el-input type="input" v-model="applyInfo.destination" class="input-width"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="用车风险" :label-width="formLabelWidth">
+                    <el-select clearable v-model="applyInfo.risk" placeholder="请选择">
+                      <el-option
+                        v-for="item in riskOptions"
+                        :key="item.code"
+                        :value="item"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="随车人" :label-width="formLabelWidth">
+                    <el-input v-show="false" v-model="applyInfo.followersNames" type="input"></el-input>
+                    <el-input class="input-width" v-model="applyInfo.followersNames" type="input"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="调度员" :label-width="formLabelWidth">
+                    <el-select
+                      clearable
+                      v-model="applyInfo.dispatcherid"
+                      placeholder="请选择"
+                      style="margin-left:10px;"
+                    >
+                      <el-option
+                        v-for="item in applyInfo.dispatcherList"
+                        :key="item.tid"
+                        :label="item.name"
+                        :value="item.tid"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="事由" :label-width="formLabelWidth">
+                    <el-input
+                      class="input-width"
+                      placeholder
+                      v-model="applyInfo.reason"
+                      type="textarea"
+                    ></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="cancelApply">取 消</el-button>
+              <el-button type="primary" @click="onSubmit">确 定</el-button>
+            </div>
+      </el-dialog>
       <el-dialog :visible.sync="applyDialogFormVisible">
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
           <div class="second-title">申请信息</div>
@@ -493,6 +515,12 @@ export default {
       dispatchCommit:false, //调度提交按钮显示隐藏
       approvalPass:false,//通过/退回 审核
 
+      carApplyInfoVisible : false ,
+      riskOptions:[
+        "一般风险",
+        "较高风险",
+        "高风险"
+      ],
       ///以上新数据-----------
 
       
@@ -501,11 +529,15 @@ export default {
     };
   },
   created() {
-    this.getApplyInfo();
+    this.getTableData();
   },
   methods: {
     //以下====新
     search(){},
+    handleApply(id){
+      this.getApplyInfo(id);
+      this.carApplyInfoVisible=true;
+    },
     getApplyInfo(id) {
       this.postAxios("/CarApply/ApplyInfo", {tid:id})
         .then(res => {
@@ -556,10 +588,7 @@ export default {
     //tab切换事件
     handleClick(tab, event) {
       console.log(tab, event);
-      if(this.activeName!="first")
-      {
-        this.getTableData();
-      }
+      this.getTableData();
     },
     handleDetail(tid){
       this.getApplyInfo(tid);
