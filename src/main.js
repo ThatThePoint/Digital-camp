@@ -29,6 +29,12 @@ Vue.prototype.$utils = utils;
 //使用钩子函数对路由进行权限跳转
 router.beforeEach((to, from, next) => {
     const role = localStorage.getItem('admin');
+    //debugger;
+    //验证是否登陆
+    const tok = sessionStorage.getItem('token');
+    if(tok==null && to.fullPath!== '/login'){
+        next('/login');
+    }
     if (!role && to.path !== '/login') {
         next('/login');
     } else if (to.meta.permission) {
