@@ -562,32 +562,33 @@ export default {
       }
     },
     handleDetail(tid){
+      debugger
       this.getApplyInfo(tid);
       //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回
-      if(this.applyInfo.applystatus==0){//0-待调度
+      if(this.activeName=='first'){//0-待调度
         this.approvalDetail=false;
         this.dispatchDetailDisabled=false;
         this.dispatchCommit=true; //显示提交按钮
         this.approvalPass=false; //隐藏审批通过和退回按钮
-      }else if(this.applyInfo.applystatus==1){//1-调度退回
+      }else if(this.activeName=='second'){//1-调度退回
         this.approvalDetail=false;
-        this.dispatchDetailDisabled=true;
-        this.dispatchCommit=false;//隐藏提交
+        this.dispatchDetailDisabled=false;
+        this.dispatchCommit=true;//隐藏提交
         this.approvalPass=false;//隐藏审批通过和退回
-      }else if(this.applyInfo.applystatus==2){//2-待审批
+      }else if(this.activeName=='fourth'){//2-待审批
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=false;
         this.dispatchCommit=false;//隐藏提交
         this.approvalPass=true;//显示审批通过和退回
         
-      }else if(this.applyInfo.applystatus==3){//3-已批准
+      }else if(this.activeName=='fifth'){//3-已批准
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=true;
         this.dispatchCommit=false;//隐藏提交
         this.approvalPass=false;//隐藏审批通过和退回
-      }else{//4-审批退回
+      }else if(this.activeName=='sixth'){//4-审批退回
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=true;
