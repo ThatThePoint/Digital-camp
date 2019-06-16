@@ -31,14 +31,14 @@
                   <el-row>
                     <el-col :span="24">
                       <el-form-item label="起始时长">
-                        <el-input v-model="detailInfo.startTimeLength" placeholder="请输入"></el-input>
+                        <el-input v-model="startTimeLength" placeholder="请输入"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <el-row>
                     <el-col :span="24">
                       <el-form-item label="终止时长">
-                        <el-input v-model="detailInfo.endTimeLength" placeholder="请输入"></el-input>
+                        <el-input v-model="endTimeLength" placeholder="请输入"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -72,7 +72,7 @@
                   style="width: 100%"
                   :default-sort="{prop: 'name', order: 'descending'}"
                 >
-                  <el-table-column prop="name" label="名称" sortable></el-table-column>
+                  <el-table-column prop="name" label="名称" sortable width="100px"></el-table-column>
                   <el-table-column prop="startTimeLength" label="起始时长" sortable></el-table-column>
                   <el-table-column prop="endTimeLength" label="结束时长" sortable></el-table-column>
                   <el-table-column prop="modifyTime" label="修改日期" sortable></el-table-column>
@@ -98,11 +98,11 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="name" label="名称"></el-table-column>
-          <el-table-column prop="remark" label="描述"></el-table-column>
-          <el-table-column prop="status" label="状态"></el-table-column>
-          <el-table-column prop="modifyTime" label="修改时间"></el-table-column>
-          <el-table-column label="操作">
+          <el-table-column prop="name" label="名称" width="100px"></el-table-column>
+          <el-table-column prop="remark" label="描述" width="180px"></el-table-column>
+          <el-table-column prop="status" label="状态" width="100px"></el-table-column>
+          <el-table-column prop="modifyTime" label="修改时间" width="100px"></el-table-column>
+          <el-table-column label="操作" width="260px">
             <template slot-scope="scope">
               <el-button size="mini" @click="getRuleInfo(scope.row.tid)">编辑</el-button>
               <el-button size="mini" @click="handleOn(scope.row.tid)">启用</el-button>
@@ -131,7 +131,11 @@ export default {
         note: "",
         status: 0
       },
-      detailInfo: {},
+      startTimeLength: '0',
+      endTimeLength : '',
+      detailInfo: {
+        
+      },
       tableData: [{}],
       count: 0,
       detailList: []
@@ -221,13 +225,13 @@ export default {
       this.handleSearch();
     },
     addDetailInfo() {
+      debugger
       this.detailInfo = {
         parentId: this.ruleinfo.tid
       };
       if (this.detailList.length == 0) {
         //没有明细时
         this.detailInfo.name = "一级审批";
-        this.detailInfo.startTimeLength = 0;
       } else if (detailList.length == 1) {
         //有一条明细时
         this.detailInfo.name = "二级审批";
@@ -257,13 +261,17 @@ export default {
     handledetailsave() {
       console.log(this.detailInfo);
       let pFlag = this.$utils.isEmpty(this.detailInfo.parentId);
-      let nameFlag = this.$utils.isEmpty(this.detailInfo.startTimeLength);
-      let statusFlag = this.$utils.isEmpty(this.ruleinfo.endTimeLength);
+      let nameFlag = this.$utils.isEmpty(this.startTimeLength);
+      let statusFlag = this.$utils.isEmpty(this.endTimeLength);
       console.log(nameFlag, statusFlag);
       console.log(this.ruleinfo);
       if (!nameFlag && !statusFlag) {
         this.postAxios("Sysconfig/SaveApprovalRule", {
-          ruleInfo: this.detailInfo
+          ruleInfo: {
+            parentId : this.detailInfo.parentId,
+            startTimeLength : this.startTimeLength,
+            endTimeLength : this.endTimeLength
+          }
         })
           .then(res => {
             this.$message({
