@@ -87,82 +87,88 @@
                 </el-form-item>
               </el-col>
             </el-row>
+
+            <div v-show="firstApprovalInfo">
+              <div class="second-title">一级审批信息</div>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="审批人">
+                    <label>{{form.firstApproverName}}</label>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="下一级审批人">
+                  <el-select clearable v-model="form.secApprover" placeholder="审批人">
+                    <el-option
+                    v-for="item in form.secApproverList"
+                    :key="item.tid"
+                    :label="item.name"
+                    :value="item.tid"
+                  ></el-option>
+                  </el-select>
+                </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="审批意见">
+                    <el-input  v-model="form.firstRemark"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </div>
+
+            <div v-show="secondApprovalInfo">
+              <div class="second-title">二级审批信息</div>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="审批人">
+                    <label>{{form.secApproverName}}</label>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="下一级审批人">
+                  <el-select clearable v-model="form.thdApprover" placeholder="审批人">
+                    <el-option
+                    v-for="item in form.thdApproverList"
+                    :key="item.tid"
+                    :label="item.name"
+                    :value="item.tid"
+                  ></el-option>
+                  </el-select>
+                </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="审批意见">
+                    <el-input  v-model="form.secRemark"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </div>
+
+            <div v-show="thirdApprovalInfo">
+              <div class="second-title">三级审批信息</div>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="审批人">
+                    <label>{{form.firstApproverName}}</label>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="审批意见">
+                    <el-input  v-model="form.thdRemark"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </div>
           </el-form>
-          <div v-show="firstApprovalInfo">
-            <div class="second-title">一级审批信息</div>
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="审批人">
-                  <label>{{form.firstApproverName}}</label>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="下一级审批人">
-                <el-select clearable v-model="form.secApprover" placeholder="审批人">
-                  <el-option
-                  v-for="item in form.secApproverList"
-                  :key="item.tid"
-                  :label="item.name"
-                  :value="item.tid"
-                ></el-option>
-                </el-select>
-              </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="审批意见">
-                  <el-input  v-model="form.firstRemark"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </div>
-          <div v-show="secondApprovalInfo">
-            <div class="second-title">二级审批信息</div>
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="审批人">
-                  <label>{{form.secApproverName}}</label>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="下一级审批人">
-                <el-select clearable v-model="form.thdApprover" placeholder="审批人">
-                  <el-option
-                  v-for="item in form.thdApproverList"
-                  :key="item.tid"
-                  :label="item.name"
-                  :value="item.tid"
-                ></el-option>
-                </el-select>
-              </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="审批意见">
-                  <el-input  v-model="form.secRemark"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </div>
-          <div v-show="thirdApprovalInfo">
-            <div class="second-title">三级审批信息</div>
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="审批人">
-                  <label>{{form.firstApproverName}}</label>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="审批意见">
-                  <el-input  v-model="form.thdRemark"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </div>
+
+
+
           <div slot="footer" class="dialog-footer">
             <el-button @click="confirmFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="confirmFormVisible = false">确 定</el-button>

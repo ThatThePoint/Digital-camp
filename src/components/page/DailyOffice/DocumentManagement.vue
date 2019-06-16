@@ -59,7 +59,7 @@
                 background
                 @current-change="handleCurrentChange"
                 layout="prev, pager, next"
-                :total="countone1"
+                :total="countone"
                 :current-page.sync="currentPage"
               >
               </el-pagination>
@@ -195,9 +195,9 @@ export default {
     return {
       pageSize: 1,
       pageNum : 1,
-      countthree: 14,
-      counttwo: 14,
-      countone1: 14,
+      countthree: 0,
+      counttwo: 0,
+      countone: 0,
       currentPage: 1,
       tableDataone: [],//未读公文列表
       tableDatatwo: [],//已读公文列表
