@@ -54,8 +54,20 @@
                 </template>
               </el-table-column>
             </el-table>
+            <div class="pagination">
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="prev, pager, next"
+                :total="countone"
+                :current-page.sync="currentPage"
+              >
+              </el-pagination>
+          </div>
           </div>
         </el-tab-pane>
+
+
         <el-tab-pane label="已读消息" name="second">
           <div class="messages">
             <span>公文标题</span>
@@ -100,6 +112,19 @@
                 </template>
               </el-table-column>
             </el-table>
+            <div class="pagination">
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="prev, pager, next"
+                :total="counttwo"
+                :current-page.sync="currentPage"
+              >
+              </el-pagination>
+            </div>
+
+
+
           </div>
         </el-tab-pane>
         <el-tab-pane label="已发送消息" name="third">
@@ -146,6 +171,17 @@
                 </template>
               </el-table-column>
             </el-table>
+
+            <div class="pagination">
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="prev, pager, next"
+                :total="countthree"
+                :current-page.sync="currentPage"
+              >
+              </el-pagination>
+          </div>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -157,6 +193,12 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      pageSize: 1,
+      pageNum : 1,
+      countthree: 0,
+      counttwo: 0,
+      countone: 0,
+      currentPage: 1,
       tableDataone: [],//未读公文列表
       tableDatatwo: [],//已读公文列表
       tableDatathree: [],//已发送公文列表
@@ -188,19 +230,31 @@ export default {
     this.getTableDatathree()
   },
   methods: {
+    // 点击分页
+    handleCurrentChange(val) {
+      console.log(val);
+      this.currentPage = val;
+      this.pageNum = val;
+      this.getdata()
+    },
     //未读
     getTableDataone(){
       let data = {
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
         tab : "first",
         title : this.title,//标题
         level : this.level,//等级
         start	: this.start,
         end : this.end
       }
+      let _this = this
       this.postAxios("/DailyOffice/DocumentList",data)
       .then(res => {
-        this.tableDataone = res.data
-        console.log(res);
+        debugger
+        _this.tableDataone = res.data
+        _this.countone = res.count;
+        console.log(res,_this);
       })
       .catch(err => {
         console.log(err);
@@ -209,6 +263,8 @@ export default {
     //已读
     getTableDatatwo(){
       let data = {
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
         tab : "secend",
         title : this.title,//标题
         level : this.level,//等级
@@ -217,6 +273,7 @@ export default {
       }
       this.postAxios("/DailyOffice/DocumentList",data)
       .then(res => {
+        this.counttwo = res.count
         this.tableDatatwo = res.data
         console.log(res);
       })
@@ -227,6 +284,8 @@ export default {
     //已发送
     getTableDatathree(){
       let data = {
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
         tab : "third",
         title : this.title,//标题
         level : this.level,//等级
@@ -235,6 +294,7 @@ export default {
       }
       this.postAxios("/DailyOffice/DocumentList",data)
       .then(res => {
+        this.countthree = res.count
         this.tableDatathree = res.data
       })
       .catch(err => {
@@ -271,8 +331,11 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     },
+    // 查询
     getdata(){
       var params={
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
         tab:this.activeName,
         title:this.title,
         level:this.level,
@@ -284,10 +347,13 @@ export default {
           console.log(res);
           this.options=res.levelOps;
           if(this.activeName=="first"){
-              this.tableDataone = res.data
+            this.countone = res.count;
+            this.tableDataone = res.data
           }else if(this.activeName=="second"){
+            this.counttwo = res.count;
             this.tableDatatwo = res.data
           }else{
+            this.countthree = res.count;
             this.tableDatathree = res.data
           }
           

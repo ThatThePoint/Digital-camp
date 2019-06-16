@@ -263,7 +263,6 @@ export default {
     // 分页导航
     handleCurrentChange(val) {
       console.log(val);
-      // this.tableData1.cur_page = val;
       this.currentPage = val;
       this.getData("", val);
     },
