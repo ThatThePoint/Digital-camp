@@ -75,8 +75,21 @@
                 </template>
               </el-table-column>
             </el-table>
+            <div class="pagination">
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="total, prev, pager, next"
+                :total="countone"
+                :current-page.sync="currentPage"
+                :page-size="10"
+              >
+              </el-pagination>
+          </div>
           </div>
         </el-tab-pane>
+
+
         <el-tab-pane label="私家车辆" name="second">
           <div class="messages">
             <el-input
@@ -111,6 +124,17 @@
                 </template>
               </el-table-column>
             </el-table>
+            <div class="pagination">
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="total, prev, pager, next"
+                :total="counttwo"
+                :current-page.sync="currentPage"
+                :page-size="10"
+              >
+              </el-pagination>
+          </div>
           </div>
         </el-tab-pane>
         <el-tab-pane label="临时车辆" name="third">
@@ -146,6 +170,17 @@
                 </template>
               </el-table-column>
             </el-table>
+            <div class="pagination">
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="total, prev, pager, next"
+                :total="countthree"
+                :current-page.sync="currentPage"
+                :page-size="10"
+              >
+              </el-pagination>
+          </div>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -158,6 +193,12 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      pageSize: 10,
+      pageNum : 1,
+      countthree: 0,
+      counttwo: 0,
+      countone: 0,
+      currentPage: 1,
       carList:[],
         restaurants: [],
         state1: '',
@@ -178,12 +219,27 @@ export default {
     this.getdataone()
   },
   methods: {
+        // 点击分页
+    handleCurrentChange(val) {
+      console.log(val);
+      this.currentPage = val;
+      this.pageNum = val;
+      if( this.activeName== 'first'){
+        this.getdataone();
+      }else if(this.activeName== 'second'){
+        this.getdatatwo();
+      }else{
+        this.getdatathree();
+      }
+    },
     search(){
+      this.pageNum = 1
+      this.currentPage = 1
       var car=this.activeName;
       if(car=="first"){
         this.getdataone();
       }else if(car=="second"){
-        this.getdatatwo();
+        
       }else{
         this.getdatathree();
       }
@@ -195,6 +251,8 @@ export default {
     //获取部队车辆列表
     getdataone(){
       var params={
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
         carType:1,
         ofDept:this.departmentValue1,
         LicensePlate:this.licensePlate1
@@ -202,6 +260,7 @@ export default {
       let _this = this;
       this.postAxios("/CarInfo/GetCarList",params)
         .then(res => {
+          _this.countone = res.count
           _this.tableDataone = res.carList;
           _this.count = res.count;
           _this.departmentOptions=res.deptOptions;
@@ -212,12 +271,15 @@ export default {
     },
     getdatatwo(){
       var params={
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
         carType:2,
         LicensePlate:this.licensePlate2
       };
       let _this = this;
       this.postAxios("/CarInfo/GetCarList",params)
         .then(res => {
+          _this.counttwo = res.count
           _this.tableDatatwo = res.carList
           _this.count = res.count
         })
@@ -227,12 +289,15 @@ export default {
     },
     getdatathree(){
       var params={
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
         carType:3,
         LicensePlate:this.licensePlate3
       };
       let _this = this;
       this.postAxios("/CarInfo/GetCarList",params)
         .then(res => {
+          _this.countthree = res.count
           _this.tableDatathree = res.carList
           _this.count = res.count
         })

@@ -55,7 +55,7 @@ export default {
             .then(res => {
               console.log(res);
               if(res.status==1){
-                localStorage.setItem("admin", "admin");
+                localStorage.setItem("admin", res.currentUser.name);
                 sessionStorage.setItem("token",res.currentUser.token)
                 this.$router.push("/");
               }else{

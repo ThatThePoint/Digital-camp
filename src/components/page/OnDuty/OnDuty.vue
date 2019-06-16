@@ -20,14 +20,12 @@
             </el-table>
           </div>
           <div class="block">
-            <!-- <span class="demonstration">显示总数</span> -->
             <el-pagination
-              @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
               :current-page.sync="currentPage1"
+              layout="total, prev, pager, next"
+              :total="countone"
               :page-size="10"
-              layout="prev, pager, next"
-              :total="count"
             ></el-pagination>
           </div>
         </el-tab-pane>
@@ -119,7 +117,7 @@
             </el-select>
             <span>值班日期</span>
             <el-date-picker class="input-width" v-model="dutyDate" type="date" placeholder="选择日期"></el-date-picker>
-            <el-button type="primary" @click="getdatatwo">查询</el-button>
+            <el-button type="primary" @click="getdatatwo(true)">查询</el-button>
           </div>
           <div class="body">
             <el-table
@@ -140,12 +138,11 @@
             </el-table>
             <div class="block">
               <el-pagination
-                @size-change="handleSizeChange"
                 @current-change="handleCurrentChangetwo"
                 :current-page.sync="currentPage1"
+                layout="total, prev, pager, next"
+                :total="counttwo"
                 :page-size="10"
-                layout="prev, pager, next"
-                :total="count"
               ></el-pagination>
             </div>
           </div>
@@ -160,7 +157,8 @@ export default {
   data() {
     return {
       deptOptions: [], //部门下拉框数据源
-      count: 0, //数据总条数
+      countone: 0, //数据总条数
+      counttwo: 0,
       pageNum: 1, //值班执勤分页页数
       search_page: 1, //值班查询页数
       currentPage1: 1, //分页选中当前页，感觉这个参数没意义，先别删
@@ -210,7 +208,7 @@ export default {
     this.postAxios("/DailyOffice/JobRota", data)
       .then(res => {
         _this.tableData = res.list;
-        _this.count = res.count;
+        _this.countone = res.count;
       })
       .catch(err => {
         console.log(err);
@@ -293,15 +291,21 @@ export default {
       this.postAxios("/DailyOffice/JobRota", data)
         .then(res => {
           _this.tableData = res.list;
-          _this.count = res.count;
+          _this.countone = res.count;
         })
         .catch(err => {
           console.log(err);
         });
     },
     //值班查询分页
-    getdatatwo() {
+    getdatatwo(flag) {
+      if(flag==true){
+        this.currentPage1 = 1
+      }
+
       let data = {
+        currentPage: 1,
+        pageNum: 1,
         where: this.dept,
         pageNum: this.search_page,
         pageSize: 10
@@ -309,6 +313,7 @@ export default {
       let _this = this;
       this.postAxios("/DailyOffice/RotaList", data)
         .then(res => {
+          _this.counttwo = res.count
           _this.searchtableData = res.list;
           _this.deptOptions = res.deptOptions;
         })

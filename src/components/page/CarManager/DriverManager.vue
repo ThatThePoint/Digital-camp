@@ -104,6 +104,16 @@
             </template>
           </el-table-column>
         </el-table>
+        <div class="block">
+          <el-pagination
+            background
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
+            layout="total, prev, pager, next"
+            :total="count"
+            :page-size="10"
+          ></el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -113,6 +123,10 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      pageSize: 10,
+      pageNum : 1,
+      count: 0,
+      currentPage: 1,
       downloadUrl:"",
       pername: "",
       fileList: [],
@@ -149,6 +163,11 @@ export default {
     this.getTableData();
   },
   methods: {
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.pageNum = val;
+      this.getTableData();
+    },
     //新增确认
     confirms() {
       let data = {
@@ -161,6 +180,7 @@ export default {
       let _this = this;
       this.postAxios("/Garage/SaveDriver", data)
         .then(res => {
+         
           _this.getTableData();
           _this.dialogVisible = false;
         })
@@ -173,7 +193,8 @@ export default {
     addDriver() {
       this.dialogVisible = true;
       let _this = this;
-      this.postAxios("/Garage/GetDriver", {})
+      this.postAxios("/Garage/GetDriver", {
+      })
         .then(res => {
           _this.carnames = res.staffOptions;
         })
@@ -181,9 +202,6 @@ export default {
           console.log(err);
         });
     },
-    // perlicensedate(row,index){
-    //   return row.licensedate.slice(0,10)
-    // },
     //在岗状态
     state(row, index) {
       return row.staffStatus == 1
@@ -196,6 +214,8 @@ export default {
     getTableData() {
       var pa={
         param:{
+          pageSize: this.pageSize,
+          pageNum: this.pageNum,
           deptId:this.departmentValue,
           staffStatus:this.dutyValue,
           name:this.driverName
@@ -204,6 +224,7 @@ export default {
       let _this = this;
       this.postAxios("/Garage/GetDriverList", pa)
         .then(res => {
+          _this.count = res.count
           _this.tableData = res.list;
           _this.departmentOptions = res.deptOptions;
         })
@@ -212,6 +233,8 @@ export default {
         });
     },
     search(){
+      this.currentPage = 1
+      this.pageNum = 1
       this.getTableData();
     },
     handleClose(done) {

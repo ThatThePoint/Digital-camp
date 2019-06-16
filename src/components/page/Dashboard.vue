@@ -134,7 +134,7 @@
         name: 'dashboard',
         data() {
             return {
-                name: localStorage.getItem('ms_username'),
+                name: localStorage.getItem('admin'),
                 todoList: [{
                         title: '小王请假待审批',
                         status: false
