@@ -10,20 +10,20 @@
         <el-table
           :data="tableData"
           style="width: 100%"
-          :default-sort="{prop: 'date', order: 'descending'}"
+          :default-sort="{prop: 'formcode', order: 'descending'}"
         >
+          <el-table-column prop="formcode" label="请假单号"></el-table-column>
           <el-table-column prop="applyerName" label="申请人" sortable></el-table-column>
-          <el-table-column prop="applyDeptName" label="申请人部门" sortable width="120px"></el-table-column>
+          <el-table-column prop="applyDeptName" label="申请人部门" sortable></el-table-column>
           <el-table-column prop="outingType" label="外出类型"></el-table-column>
-          <el-table-column prop="outingContent" label="外出内容"></el-table-column>
-          <el-table-column prop="startTime" label="外出时间" :formatter="starttimeFormatter" width="160px"></el-table-column>
-          <el-table-column prop="endTime" label="返岗时间" :formatter="endtimeFormatter" width="160px"></el-table-column>
-          <el-table-column prop="timeLength" label="申请时长" width="80px"></el-table-column>
+          <el-table-column prop="startTime" label="外出时间" :formatter="starttimeFormatter"></el-table-column>
+          <el-table-column prop="endTime" label="返岗时间" :formatter="endtimeFormatter"></el-table-column>
+          <el-table-column prop="timeLength" label="申请时长"></el-table-column>
           <el-table-column prop="curApprovalName" label="当前审批人"></el-table-column>
           <el-table-column prop="status" label="审批状态" :formatter="statusFormatter"></el-table-column>
           <el-table-column label="操作" sortable width="300px">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+              <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">查看</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -38,96 +38,130 @@
         </div>
         <el-dialog title="外出申请" :visible.sync="confirmFormVisible">
           <el-form :model="form" label-width="100px" ref="form">
+            <div class="second-title">申请信息</div>
             <el-row>
               <el-col :span="6">
-                <el-form-item label="申请人">{{form.applyerName}}</el-form-item>
+                <el-form-item label="申请人">
+                  <label>{{form.applyerName}}</label>
+                </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="部门">{{form.applyDeptName}}</el-form-item>
+                <el-form-item label="部门">
+                  <label>{{form.applyDeptName}}</label>
+                </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="6">
-                <el-form-item label="请假人">{{form.outingStaffName}}</el-form-item>
+                <el-form-item label="请假人">
+                  <label>{{form.outingStaffName}}</label>
+                </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="6">
-                <el-form-item label="外出类型">{{form.outingType}}</el-form-item>
+                <el-form-item label="外出类型">
+                  <label>{{form.outingType}}</label>
+                </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="外出原因">{{form.outingContent}}</el-form-item>
+                <el-form-item label="外出原因">
+                  <label>{{form.outingContent}}</label>
+                </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item label="开始日期">{{form.startTime}}</el-form-item>
+                <el-form-item label="开始日期">
+                  <label>{{form.startTime}}</label>
+                </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="结束日期">{{form.endTime}}</el-form-item>
+                <el-form-item label="结束日期">
+                  <label>{{form.endTime}}</label>
+                </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="请假时间">{{form.timeLength}}小时</el-form-item>
+                <el-form-item label="请假时间">
+                  <label>{{form.timeLength}}小时</label>
+                </el-form-item>
               </el-col>
             </el-row>
           </el-form>
-          <div class="block">
-            <el-timeline>
-              <el-timeline-item
-                timestamp="2018/4/2"
-                placement="top"
-                v-if="!activities.secApproverList"
-              >
-                <el-card>
-                  <h4>张主任</h4>
-                  <p>同意</p>
-                  <div>
-                    <el-radio-group v-model="resource">
-                      <el-radio label="同意" value="1"></el-radio>
-                      <el-radio label="退回" value="2"></el-radio>
-                    </el-radio-group>
-                    <el-row>
-                      <el-col :span="18" class="flex">
-                        <div style="width:80px;">意见</div>
-                        <el-input v-model="name"></el-input>
-                      </el-col>
-                    </el-row>
-                  </div>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item
-                timestamp="2018/4/2"
-                placement="top"
-                v-if="activities.secApproverList"
-              >
-                <el-card>
-                  <h4>张主任</h4>
-                  <p>同意</p>
-                  <div>
-                    <el-radio-group v-model="resource">
-                      <el-radio label="同意" value="1"></el-radio>
-                      <el-radio label="退回" value="2"></el-radio>
-                    </el-radio-group>
-                    <el-row>
-                      <el-col :span="18" class="flex">
-                        <div style="width:80px;">意见</div>
-                        <el-input v-model="name"></el-input>
-                      </el-col>
-                    </el-row>
-                  </div>
-                </el-card>
-              </el-timeline-item>
-              <el-timeline-item
-                timestamp="2018/4/3"
-                placement="top"
-                v-if="activities.thdApproverList"
-              >
-                <el-card>
-                  <h4>王主任</h4>
-                  <p>同意</p>
-                </el-card>
-              </el-timeline-item>
-            </el-timeline>
+          <div v-show="firstApprovalInfo">
+            <div class="second-title">一级审批信息</div>
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="审批人">
+                  <label>{{form.firstApproverName}}</label>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="下一级审批人">
+                <el-select clearable v-model="form.secApprover" placeholder="审批人">
+                  <el-option
+                  v-for="item in form.secApproverList"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
+                </el-select>
+              </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="审批意见">
+                  <el-input  v-model="form.firstRemark"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </div>
+          <div v-show="secondApprovalInfo">
+            <div class="second-title">二级审批信息</div>
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="审批人">
+                  <label>{{form.secApproverName}}</label>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="下一级审批人">
+                <el-select clearable v-model="form.thdApprover" placeholder="审批人">
+                  <el-option
+                  v-for="item in form.thdApproverList"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
+                </el-select>
+              </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="审批意见">
+                  <el-input  v-model="form.secRemark"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </div>
+          <div v-show="thirdApprovalInfo">
+            <div class="second-title">三级审批信息</div>
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="审批人">
+                  <label>{{form.firstApproverName}}</label>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="审批意见">
+                  <el-input  v-model="form.thdRemark"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </div>
           <div slot="footer" class="dialog-footer">
             <el-button @click="confirmFormVisible = false">取 消</el-button>
@@ -140,22 +174,116 @@
 </template>
 <script>
 export default {
-  name: "documentManagement",
+  name: "outingForApproval",
   data() {
     return {
       name: "",
-      form: {},
-      curNode: 1,
-      seletOptions: {},
-      resource: 1,
+      form: {
+        //申请单id
+        tid :"",
+
+        //申请人姓名
+        applyer :"",
+
+        //申请人部门名称
+        applyerDept :"",
+
+        //可请假人列表list
+        staffList : [], 
+
+
+        //已选择请假人idlist
+        selectedStaffIdList :"",
+
+        //已选择请假人名字,用小写分号';'分隔
+        selectedStaffNameList :"",
+
+        //外出事由字典
+        outingTypeOptions : [], 
+
+        //当前选择外出事由
+        outingType :"",
+
+        outingTypeName:"",
+
+        //开始时间
+        startTime :"",
+
+        //结束时间
+        endTime :"",
+
+        //请假时长
+        outingLength :"",
+
+        //到达地点
+        dest :"",
+
+        //路途时间
+        roadTime :"",
+
+        //交通工具
+        transport :"",
+
+        //一级审批人列表
+        firstApproverList : [], 
+
+        //当前一级审批人
+        firstApprover :"",
+
+        //当前一级审批人姓名
+        firstApproverName :"",
+
+        //一级审批状态1-通过 2-退回 0-待审批
+        firstStatus :0,
+
+        //一级审批意见
+        firstRemark :"",
+
+        //二级审批人列表
+        secApproverList : [],
+
+        //当前二级审批人
+        secApprover :"",
+
+        //当前二级审批人姓名
+        secApproverName :"",
+
+        //二级审批状态 1-通过 2-退回 0-待审
+        secStatus :0,
+
+        //二级审批意见
+        secRemark :"",
+
+        //三级审批人列表
+        thdApproverList :[],
+
+        //当前三级审批人
+        thdApprover :"",
+
+        //三级审批人姓名
+        thdApproverName :"",
+
+        //三级审批状态 1-通过 2-退回 0-待审
+        thdStatus :0,
+
+        //三级审批意见
+        thdRemark :"",
+
+        //总共审批等级
+        totalAppLevel :0,
+
+        //当前节点 1-建单 2-一级审批（有二级审批） 3-一级审批（无二级审批） 4-二级审批（有三级审批）5-二级审批（无三级审批） 6-三级审批  7-归档：此时只能查看不能修改（表单退回即为归档）
+        curNode :0
+      },
       count: 1,
       currentPage: 1,
       confirmLeave: {},
       confirmFormVisible: false,
-      checked: "",
-      value: "",
       tableData: [],
-      activities: {}
+      //查看时显隐内容
+      firstApprovalInfo:true,
+      secondApprovalInfo:true,
+      thirdApprovalInfo:true
     };
   },
   methods: {
@@ -209,57 +337,17 @@ export default {
       this.getData(this.formInline.user);
       this.currentPage = 1;
     },
-    initBaseinfo() {
-      this.baseinfo = {
-        code: "",
-        name: "",
-        status: 1,
-        note: ""
-      };
-      this.currentPage = 1;
-      this.title = "添加字典";
-      this.detailInfo = {};
-      this.getData();
-    },
-    getFormData(tid) {
-      this.postAxios("OutApply/ApplyInfo", { tid })
+    getFormData(id) {
+      this.postAxios("OutApply/ApplyInfo", { tid:id })
         .then(res => {
-          this.activities = { ...res };
-          console.log(111111111111);
-          console.log(this.activities);
+          this.form = res;
+          console.log(res);
           this.loading = false;
         })
         .catch(err => {
           console.log(err);
         });
     },
-    // handleSave() {
-    //   console.log(this.baseinfo);
-    //   let codeFlag = this.$utils.isEmpty(this.baseinfo.code);
-    //   let nameFlag = this.$utils.isEmpty(this.baseinfo.name);
-    //   let noteFlag = this.$utils.isEmpty(this.baseinfo.note);
-    //   console.log(codeFlag, nameFlag, noteFlag);
-    //   console.log(this.baseinfo);
-    //   if (!codeFlag && !nameFlag && !noteFlag) {
-    //     this.postAxios("Sysconfig/SaveBasedata", { baseinfo: this.baseinfo })
-    //       .then(res => {
-    //         this.$message({
-    //           message: "保存成功",
-    //           type: "success"
-    //         });
-    //         this.initBaseinfo();
-    //       })
-    //       .catch(err => {
-    //         console.log(err);
-    //       });
-    //   } else {
-    //     this.$message({
-    //       message: "请填写完整信息",
-    //       type: "warning"
-    //     });
-    //   }
-    //   this.innerVisible = false;
-    // },
     getData(approvalStatus = "0", pageNum = "1", pageSize = "10") {
       var params = {
         approvalStatus: "0",
@@ -277,16 +365,10 @@ export default {
           console.log(err);
         });
     },
-    handleEdit(index, row) {
-      this.confirmFormVisible = true;
-      this.form = this.tableData[index];
+    handleDetail(index, row) {
       this.getFormData(row.tid);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
-    },
-    onSubmit() {
-      console.log("submit!");
+      this.confirmFormVisible = true;
+      
     }
   },
   created() {
