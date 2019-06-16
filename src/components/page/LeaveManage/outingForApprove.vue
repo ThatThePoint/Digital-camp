@@ -13,12 +13,12 @@
           :default-sort="{prop: 'date', order: 'descending'}"
         >
           <el-table-column prop="applyerName" label="申请人" sortable></el-table-column>
-          <el-table-column prop="applyDeptName" label="申请人部门" sortable></el-table-column>
+          <el-table-column prop="applyDeptName" label="申请人部门" sortable width="120px"></el-table-column>
           <el-table-column prop="outingType" label="外出类型"></el-table-column>
           <el-table-column prop="outingContent" label="外出内容"></el-table-column>
-          <el-table-column prop="startTime" label="外出时间" :formatter="starttimeFormatter"></el-table-column>
-          <el-table-column prop="endTime" label="返岗时间" :formatter="endtimeFormatter"></el-table-column>
-          <el-table-column prop="timeLength" label="申请时长"></el-table-column>
+          <el-table-column prop="startTime" label="外出时间" :formatter="starttimeFormatter" width="160px"></el-table-column>
+          <el-table-column prop="endTime" label="返岗时间" :formatter="endtimeFormatter" width="160px"></el-table-column>
+          <el-table-column prop="timeLength" label="申请时长" width="80px"></el-table-column>
           <el-table-column prop="curApprovalName" label="当前审批人"></el-table-column>
           <el-table-column prop="status" label="审批状态" :formatter="statusFormatter"></el-table-column>
           <el-table-column label="操作" sortable width="300px">

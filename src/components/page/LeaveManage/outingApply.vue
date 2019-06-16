@@ -59,11 +59,6 @@
                 ></el-date-picker>
               </el-form-item>
             </el-col>
-            <!-- <el-col :span="6">
-              <el-form-item label="请假时长：">
-                {{timenum}}
-              </el-form-item>
-            </el-col> -->
           </el-row>
           <el-row>
             <el-col :span="6">
@@ -98,7 +93,7 @@
           </el-row>
         </el-form>
         <div slot="footer" class="flex foot">
-          <el-button style="margin-right:100px">取 消</el-button>
+          <el-button style="margin-right:100px" @click="cancel">取 消</el-button>
           <el-button type="primary" @click="handleSubmit">申 请</el-button>
         </div>
       </div>
@@ -228,6 +223,9 @@ export default {
     //       console.log(err);
     //   });
     // },
+    cancel(){
+
+    },
     handleSubmit(){
       this.form.outingLength= (
         (new Date(this.form.endtime).getTime() -
@@ -252,7 +250,7 @@ export default {
     },
     confirms(a) {
       this.form.selectedStaffNameList = a[0]
-      this.form.perid = a[1]
+      this.form.selectedStaffIdList = a[1]
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
