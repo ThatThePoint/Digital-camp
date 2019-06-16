@@ -58,9 +58,10 @@
               <el-pagination
                 background
                 @current-change="handleCurrentChange"
-                layout="prev, pager, next"
+                layout="total, prev, pager, next"
                 :total="countone"
                 :current-page.sync="currentPage"
+                :page-size="1"
               >
               </el-pagination>
           </div>
@@ -115,8 +116,9 @@
             <div class="pagination">
               <el-pagination
                 background
+                :page-size="1"
                 @current-change="handleCurrentChange"
-                layout="prev, pager, next"
+                layout="total, prev, pager, next"
                 :total="counttwo"
                 :current-page.sync="currentPage"
               >
@@ -176,7 +178,8 @@
               <el-pagination
                 background
                 @current-change="handleCurrentChange"
-                layout="prev, pager, next"
+                layout="total, prev, pager, next"
+                :page-size="1"
                 :total="countthree"
                 :current-page.sync="currentPage"
               >
