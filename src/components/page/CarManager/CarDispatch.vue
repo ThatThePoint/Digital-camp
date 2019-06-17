@@ -521,6 +521,7 @@ export default {
         "较高风险",
         "高风险"
       ],
+      curNode:1,
       ///以上新数据-----------
 
       
@@ -536,13 +537,22 @@ export default {
     search(){},
     handleApply(id){
       this.getApplyInfo(id);
-      this.carApplyInfoVisible=true;
+      //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回
+      if(this.curNode==1){
+        this.carApplyInfoVisible=true;
+      }else{
+        this.handleDetail(id);
+        this.dispatchDetailDisabled=false;
+        this.dispatchCommit=true; //显示提交按钮
+        this.approvalPass=false; //隐藏审批通过和退回按钮
+      }      
     },
     getApplyInfo(id) {
       this.postAxios("/CarApply/ApplyInfo", {tid:id})
         .then(res => {
           console.log(res);
           this.applyInfo = res;
+          this.curNode=res.applystatus;
         })
         .catch(err => {
           console.log(err);
@@ -564,7 +574,7 @@ export default {
     },
     //取消申请
     cancelApply() {
-      this.getApplyInfo();
+      this.carApplyInfoVisible=false;
     },
     //获取列表数据
     getTableData(num,size){
@@ -593,35 +603,35 @@ export default {
     handleDetail(tid){
       this.getApplyInfo(tid);
       //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回
-      if(this.activeName=='first'){//0-待调度
+      if(this.curNode==0){//0-待调度
         this.approvalDetail=false;
         this.dispatchDetailDisabled=false;
         this.dispatchCommit=true; //显示提交按钮
         this.approvalPass=false; //隐藏审批通过和退回按钮
-      }else if(this.activeName=='second'){//1-调度退回
+      }else if(this.curNode==1){//1-调度退回
         this.approvalDetail=false;
         this.dispatchDetailDisabled=false;
         this.dispatchCommit=true;//隐藏提交
         this.approvalPass=false;//隐藏审批通过和退回
-      }else if(this.activeName=='fourth'){//2-待审批
+      }else if(this.curNode==2){//2-待审批
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=false;
         this.dispatchCommit=false;//隐藏提交
         this.approvalPass=true;//显示审批通过和退回
         
-      }else if(this.activeName=='fifth'){//3-已批准
+      }else if(this.curNode==3){//3-已批准
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=true;
         this.dispatchCommit=false;//隐藏提交
         this.approvalPass=false;//隐藏审批通过和退回
-      }else if(this.activeName=='sixth'){//4-审批退回
+      }else if(this.curNode==4){//4-审批退回
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
-        this.approvalDetailDisabled=true;
+        this.approvalDetailDisabled=false;
         this.dispatchCommit=false;//隐藏提交
-        this.approvalPass=false;//隐藏审批通过和退回
+        this.approvalPass=true;//显示审批通过和退回
       }
       this.applyDialogFormVisible=true;
     },
