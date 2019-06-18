@@ -187,6 +187,22 @@ export default {
   },
   created() {
     this.getdata("1", "10");
+    let personTypes = this.$route.query&&this.$route.query.personType
+    if(personTypes == 1){
+      this.activeName = 'first'
+    }else if(personTypes == 2){
+      this.activeName = 'secend'
+    }else if(personTypes == 3){
+      this.activeName = 'third'
+    }else if(personTypes == 4){
+      this.activeName = 'fouth'
+    }else if(personTypes == 5){
+      this.activeName = 'secend'
+    }else if(personTypes == 6){
+      this.activeName = 'secend'
+    }else if(personTypes == 7){
+      this.activeName = 'secend'
+    }
   },
   methods: {
     searchdata(){

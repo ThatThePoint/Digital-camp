@@ -5,9 +5,87 @@
         <el-breadcrumb-item>值班执勤</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <el-form :model="rotaInfo">
+        <div class="flex">
+          <el-form-item label="岗位部门" :label-width="formLabelWidth">
+            <el-select clearable
+              label="部门"
+              class="input-width"
+              v-model="gangwei"
+              filterable
+              placeholder="所属部门"
+              @change="selected"
+            >
+              <el-option
+                v-for="item in depts"
+                :key="item.tid"
+                :label="item.name"
+                :value="item.tid"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="岗位" :label-width="formLabelWidth">
+            <el-select clearable
+              class="input-width"
+              v-model="gangweidetail"
+              filterable
+              placeholder="岗位"
+              @change="selectedgangwei"
+            >
+              <el-option
+                v-for="item in jobs"
+                :key="item.tid"
+                :label="item.name"
+                :value="item.tid"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </div>
+        <el-form-item label="值班时间" :label-width="formLabelWidth">
+          <el-date-picker
+            v-model="rotaInfo.start"
+            type="datetime"
+            placeholder="选择日期时间"
+            default-time="12:00:00"
+          ></el-date-picker>--
+          <el-date-picker
+            v-model="rotaInfo.end"
+            type="datetime"
+            placeholder="选择日期时间"
+            default-time="12:00:00"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="值班人" :label-width="formLabelWidth">
+          <el-select clearable
+            class="input-width"
+            v-model="persons"
+            filterable
+            placeholder="值班人"
+            @change="selectperson"
+          >
+            <el-option
+              v-for="item in person"
+              :key="item.tid"
+              :label="item.name"
+              :value="item.tid"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="cancelPlan">取 消</el-button>
+        <el-button type="primary" @click="confirm">确 定</el-button>
+      </span>
+    </el-dialog>
     <div class="container">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="值班执勤" name="first">
+          <el-button class="addduty" @click="addduty">增加值班</el-button>
           <div class="body">
             <el-table
               :data="tableData"
@@ -30,80 +108,7 @@
           </div>
         </el-tab-pane>
 
-        <el-tab-pane label="值班计划" name="second">
-          <el-form :model="rotaInfo">
-            <div class="flex">
-              <el-form-item label="岗位部门" :label-width="formLabelWidth">
-                <el-select clearable
-                  label="部门"
-                  class="input-width"
-                  v-model="gangwei"
-                  filterable
-                  placeholder="所属部门"
-                  @change="selected"
-                >
-                  <el-option
-                    v-for="item in depts"
-                    :key="item.tid"
-                    :label="item.name"
-                    :value="item.tid"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="岗位" :label-width="formLabelWidth">
-                <el-select clearable
-                  class="input-width"
-                  v-model="gangweidetail"
-                  filterable
-                  placeholder="岗位"
-                  @change="selectedgangwei"
-                >
-                  <el-option
-                    v-for="item in jobs"
-                    :key="item.tid"
-                    :label="item.name"
-                    :value="item.tid"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-
-            <el-form-item label="值班时间" :label-width="formLabelWidth">
-              <el-date-picker
-                v-model="rotaInfo.start"
-                type="datetime"
-                placeholder="选择日期时间"
-                default-time="12:00:00"
-              ></el-date-picker>--
-              <el-date-picker
-                v-model="rotaInfo.end"
-                type="datetime"
-                placeholder="选择日期时间"
-                default-time="12:00:00"
-              ></el-date-picker>
-            </el-form-item>
-            <el-form-item label="值班人" :label-width="formLabelWidth">
-              <el-select clearable
-                class="input-width"
-                v-model="persons"
-                filterable
-                placeholder="值班人"
-                @change="selectperson"
-              >
-                <el-option
-                  v-for="item in person"
-                  :key="item.tid"
-                  :label="item.name"
-                  :value="item.tid"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
-          <div class="footer">
-            <el-button @click="cancelPlan">取 消</el-button>
-            <el-button type="primary" @click="confirm">确 定</el-button>
-          </div>
-        </el-tab-pane>
+        
         <el-tab-pane label="值班查询" name="third">
           <div class="messages">
             <span>所属部门</span>
@@ -156,6 +161,7 @@ export default {
   name: "rota",
   data() {
     return {
+      dialogVisible: false,
       deptOptions: [], //部门下拉框数据源
       countone: 0, //数据总条数
       counttwo: 0,
@@ -215,6 +221,23 @@ export default {
       });
   },
   methods: {
+    addduty(){
+      this.dialogVisible = true
+      this.gangwei = '';
+      this.gangweidetail = '';
+      this.jobDatalist = [];
+      this.personlist = [];
+      this.depts = [];
+      this.getdatathree()
+    },
+    handleClose(done){
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      },
+
     //获取值班人id
     selectperson() {
       this.staffId = this.persons;
@@ -226,6 +249,7 @@ export default {
     //保存值班计划
     confirm() {
       let data = {
+        dialogVisible: false,
         tid: this.tid,
         posiId: this.posiId,
         staffId: this.staffId,
@@ -242,7 +266,8 @@ export default {
             });
             this.rotaInfo={};
             this.persons="";
-            this.tid = row.tid;
+            // this.tid = row.tid;
+            
           } else {
             this.$message({
               message: "保存失败",
@@ -253,6 +278,7 @@ export default {
         .catch(err => {
           console.log(err);
         });
+        this.dialogVisible = false
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -353,6 +379,7 @@ export default {
       this.getdatathree()
     },
     cancelPlan(){
+      this.dialogVisible = false
       this.activeName="first";
       this.getdataone();
       this.rotaInfo={};
@@ -411,15 +438,18 @@ export default {
       if (index == 0) {
         this.getdataone();
       } else if (index == 1) {
-        this.getdatathree()
-      } else if (index == 2) {
+        
         this.getdatatwo();
-      }
+      } 
     }
   }
 };
 </script>
 <style scoped>
+.addduty{
+  margin-right: 20px;
+  float: right;
+}
 .input-width {
   width: 180px;
   margin: 0 10px;
