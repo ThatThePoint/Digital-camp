@@ -31,14 +31,14 @@
                   <el-row>
                     <el-col :span="24">
                       <el-form-item label="起始时长">
-                        <el-input v-model="startTimeLength" placeholder="请输入"></el-input>
+                        <el-input disabled v-model="detailInfo.startTimeLength" placeholder="请输入"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
                   <el-row>
                     <el-col :span="24">
                       <el-form-item label="终止时长">
-                        <el-input v-model="endTimeLength" placeholder="请输入"></el-input>
+                        <el-input v-model="detailInfo.endTimeLength" placeholder="请输入"></el-input>
                       </el-form-item>
                     </el-col>
                   </el-row>
@@ -70,12 +70,12 @@
                 <el-table
                   :data="detailList"
                   style="width: 100%"
-                  :default-sort="{prop: 'name', order: 'descending'}"
+                  :default-sort="{prop: 'name', order: 'ascending'}"
                 >
-                  <el-table-column prop="name" label="名称" sortable width="100px"></el-table-column>
-                  <el-table-column prop="startTimeLength" label="起始时长" sortable></el-table-column>
-                  <el-table-column prop="endTimeLength" label="结束时长" sortable></el-table-column>
-                  <el-table-column prop="modifyTime" label="修改日期" sortable></el-table-column>
+                  <el-table-column prop="name" label="名称" width="100px"></el-table-column>
+                  <el-table-column prop="startTimeLength" label="起始时长"></el-table-column>
+                  <el-table-column prop="endTimeLength" label="结束时长" ></el-table-column>
+                  <el-table-column prop="modifyTime" label="修改日期" ></el-table-column>
                   <el-table-column label="操作">
                     <template slot-scope="scope">
                       <el-button size="mini" @click="editDetail(scope.$index, scope.row)">编辑</el-button>
@@ -98,15 +98,15 @@
           style="width: 100%"
           :default-sort="{prop: 'date', order: 'descending'}"
         >
-          <el-table-column prop="name" label="名称" width="100px"></el-table-column>
-          <el-table-column prop="remark" label="描述" width="180px"></el-table-column>
-          <el-table-column prop="status" label="状态" width="100px"></el-table-column>
-          <el-table-column prop="modifyTime" label="修改时间" width="100px"></el-table-column>
-          <el-table-column label="操作" width="260px">
+          <el-table-column prop="name" label="名称" ></el-table-column>
+          <el-table-column prop="remark" label="描述" ></el-table-column>
+          <el-table-column prop="status" label="状态" :formatter="formatterStatus"></el-table-column>
+          <el-table-column prop="modifyTime" label="修改时间" ></el-table-column>
+          <el-table-column label="操作" min-width="160px">
             <template slot-scope="scope">
               <el-button size="mini" @click="getRuleInfo(scope.row.tid)">编辑</el-button>
-              <el-button size="mini" @click="handleOn(scope.row.tid)">启用</el-button>
-              <el-button size="mini" @click="handleDelete(scope.row.tid)">删除</el-button>
+              <el-button size="mini" @click="handleOn(scope.$index, scope.row)">启用</el-button>
+              <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -127,15 +127,14 @@ export default {
       innerVisible: false,
       addDetailVisible: false, //添加明细按钮 显示隐藏
       ruleinfo: {
+        tid:"",
         name: "",
         note: "",
         status: 0
       },
-      startTimeLength: '0',
-      endTimeLength : '',
-      detailInfo: {
-        
-      },
+      startTimeLength: "0",
+      endTimeLength: "",
+      detailInfo: {},
       tableData: [{}],
       count: 0,
       detailList: []
@@ -186,22 +185,25 @@ export default {
           console.log(err);
         });
     },
+    //保存规则
     handleSave() {
       console.log(this.ruleinfo);
-       let nameFlag = this.$utils.isEmpty(this.ruleinfo.name);
+      let nameFlag = this.$utils.isEmpty(this.ruleinfo.name);
       console.log(this.ruleinfo);
       if (!nameFlag) {
-      this.postAxios("Sysconfig/SaveApprovalRule", { ruleInfo: this.ruleinfo })
-        .then(res => {
-          this.$message({
-            message: "保存成功",
-            type: "success"
-          });
-          this.initRuleinfo();
+        this.postAxios("Sysconfig/SaveApprovalRule", {
+          ruleInfo: this.ruleinfo
         })
-        .catch(err => {
-          console.log(err);
-        });
+          .then(res => {
+            this.$message({
+              message: "保存成功",
+              type: "success"
+            });
+            this.initRuleinfo();
+          })
+          .catch(err => {
+            console.log(err);
+          });
       } else {
         this.$message({
           message: "请填写完整信息",
@@ -231,12 +233,14 @@ export default {
       if (this.detailList.length == 0) {
         //没有明细时
         this.detailInfo.name = "1级审批";
-      } else if (detailList.length == 1) {
+      } else if (this.detailList.length == 1) {
         //有一条明细时
         this.detailInfo.name = "2级审批";
-      } else if (detailList.length == 2) {
+        this.detailInfo.startTimeLength=this.detailList[0].endTimeLength;
+      } else if (this.detailList.length == 2) {
         //有2条明细时
         this.detailInfo.name = "3级审批";
+        this.detailInfo.startTimeLength=this.detailList[1].endTimeLength;
       } else {
         //有三级审批
         this.$message({
@@ -260,17 +264,16 @@ export default {
     handledetailsave() {
       console.log(this.detailInfo);
       let pFlag = this.$utils.isEmpty(this.detailInfo.parentId);
-      let nameFlag = this.$utils.isEmpty(this.startTimeLength);
-      let statusFlag = this.$utils.isEmpty(this.endTimeLength);
-      console.log(nameFlag, statusFlag);
+      let statusFlag = this.$utils.isEmpty(this.detailInfo.endTimeLength);
+      console.log(pFlag, );
       console.log(this.ruleinfo);
-      if (!nameFlag && !statusFlag) {
+      if (!pFlag && !statusFlag) {
         this.postAxios("Sysconfig/SaveApprovalRule", {
           ruleInfo: {
-            parentId : this.detailInfo.parentId,
-            name:this.detailInfo.name,
-            startTimeLength : this.startTimeLength,
-            endTimeLength : this.endTimeLength
+            parentId: this.detailInfo.parentId,
+            name: this.detailInfo.name,
+            startTimeLength: this.detailInfo.startTimeLength,
+            endTimeLength: this.detailInfo.endTimeLength
           }
         })
           .then(res => {
@@ -278,7 +281,7 @@ export default {
               message: "保存成功",
               type: "success"
             });
-            detailInfo = {};
+            this.getRuleInfo(this.ruleinfo.tid);
           })
           .catch(err => {
             console.log(err);
@@ -293,18 +296,88 @@ export default {
       this.innerVisible = false;
     },
     ///以上-----新
-    formatter(row, column) {
-      return row.address;
+    formatterStatus(row, column) {
+      if(row.status){
+        return "启用";
+      }else{
+        return "禁用";
+      }      
     },
     handleEdit(index, row) {
       console.log(index, row);
       this.outerVisible = true;
     },
     handleDelete(index, row) {
-      console.log(index, row);
-    }
+      if (row.status == 1) {
+        alert("请先启用其他审批规则，再删除此审批规则。");
+        return false;
+      }
+      this.$confirm("此操作将永久删除该审批规则, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        center: true
+      })
+        .then(() => {
+          this.postAxios("Sysconfig/DeleteApprovalRule", { tid: row.tid })
+            .then(res => {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              if (this.outerVisible) {
+                this.postAxios("Sysconfig/GetRuleinfo", {
+                  tid: this.ruleinfo.tid
+                })
+                  .then(res => {
+                    this.detailList = res.detailList;
+                  })
+                  .catch(err => {
+                    console.log(err);
+                  });
+              } else {
+                this.handleSearch();
+              }
+            })
+            .catch(err => {
+              this.$message({
+                type: "success",
+                message: err.message
+              });
+            });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+      console.log(row);
+    },
+    handleOn(index, row){
+      this.$confirm("启用此规则时其他其他审批规则将禁用, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        center: true
+      }).then(() => {
+          this.postAxios("Sysconfig/HandleOnRule", { tid: row.tid })
+            .then(res => {
+              this.$message({
+                type: "success",
+                message: "启用成功!"
+              });
+        }).catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消启用"
+          });
+        });
+      console.log(row);
+    })
   }
-};
+  }   
+}
 </script>
 <style scoped>
 .input-width {

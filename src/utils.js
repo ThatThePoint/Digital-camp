@@ -151,6 +151,9 @@ const utils = {
      * @return true或者false
      **/
     isEmpty: function (source) {
+        if(!source){
+            return true;
+        }
         var str = source.replace(/(^\s*)|(\s*$)/g, "");
         if (str == "" || str.toLowerCase() == "null" || str.length <= 0) {
             return true;

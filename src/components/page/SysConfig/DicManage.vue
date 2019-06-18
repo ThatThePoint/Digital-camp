@@ -31,8 +31,8 @@
                   </el-form-item>
                 </div>
                 <el-form-item label="明细状态">
-                  <el-radio v-model="detailInfo.status" :label=1>启用</el-radio>
-                  <el-radio v-model="detailInfo.status" :label=0>禁用</el-radio>
+                  <el-radio v-model="detailInfo.status" :label="1">启用</el-radio>
+                  <el-radio v-model="detailInfo.status" :label="0">禁用</el-radio>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
@@ -52,8 +52,8 @@
                 <el-input v-model="baseinfo.note" placeholder="请输入" type="textarea"></el-input>
               </el-form-item>
               <el-form-item label="字典状态">
-                <el-radio v-model="baseinfo.status" :label=1>启用</el-radio>
-                <el-radio v-model="baseinfo.status" :label=0>禁用</el-radio>
+                <el-radio v-model="baseinfo.status" :label="1">启用</el-radio>
+                <el-radio v-model="baseinfo.status" :label="0">禁用</el-radio>
               </el-form-item>
               <div>
                 <el-form-item>
@@ -70,7 +70,7 @@
                   <el-table-column prop="name" label="显示值" sortable></el-table-column>
                   <el-table-column prop="status" label="状态" sortable :formatter="formatter"></el-table-column>
                   <el-table-column prop="modifyTime" label="修改日期" sortable></el-table-column>
-                  <el-table-column label="操作" >
+                  <el-table-column label="操作">
                     <template slot-scope="scope">
                       <el-button size="mini" @click="editDetail(scope.$index, scope.row)">编辑</el-button>
                       <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -129,7 +129,7 @@ export default {
         name: "",
         status: 1,
         note: "",
-        tid: "",
+        tid: ""
       },
       innerVisible: false,
       dicTableData: [],
@@ -150,53 +150,54 @@ export default {
         return "未启用";
       }
     },
-    AddBaseinfo(){
-      this.baseinfo={status:1};
-      this.detailList= [];
+    AddBaseinfo() {
+      this.baseinfo = { status: 1 };
+      this.detailList = [];
       this.outerVisible = true;
     },
-    addDetail(){
-      this.innerVisible=true;
-      this.detailInfo={
-        status:1,
-        parentId:this.baseinfo.tid
-      }
+    addDetail() {
+      this.innerVisible = true;
+      this.detailInfo = {
+        status: 1,
+        parentId: this.baseinfo.tid
+      };
     },
-    handledetailsave(){
+    handledetailsave() {
       let codeFlag = this.$utils.isEmpty(this.detailInfo.code);
       let nameFlag = this.$utils.isEmpty(this.detailInfo.name);
       console.log(codeFlag, nameFlag);
       if (!codeFlag && !nameFlag) {
-      this.postAxios("Sysconfig/SaveBasedata",{baseinfo:this.detailInfo})
-        .then(res=>{
-          console.log(res);
-          this.detailInfo={};
-          alert("保存成功");
-          this.innerVisible=false;
-          this.postAxios("Sysconfig/GetBaseinfo",{tid:this.baseinfo.tid})
-        .then(res => {
-          this.detailList=res.detailList;
-          this.baseinfo = [...res.baseinfo];
-        })
-        .catch(err => {
-          console.log(err);
-        });
-        }).catch(err=>{
-          console.log(err);
-        });
+        this.postAxios("Sysconfig/SaveBasedata", { baseinfo: this.detailInfo })
+          .then(res => {
+            console.log(res);
+            this.detailInfo = {};
+            alert("保存成功");
+            this.innerVisible = false;
+            this.postAxios("Sysconfig/GetBaseinfo", { tid: this.baseinfo.tid })
+              .then(res => {
+                this.detailList = res.detailList;
+                this.baseinfo = [...res.baseinfo];
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     },
-    editDetail(index,row) {
-      Object.assign(this.detailInfo,row);
-      this.detailInfo.parentId=this.baseinfo.tid;
-      this.innerVisible=true;
+    editDetail(index, row) {
+      Object.assign(this.detailInfo, row);
+      this.detailInfo.parentId = this.baseinfo.tid;
+      this.innerVisible = true;
     },
     handleEdit(index, row) {
-      this.postAxios("Sysconfig/GetBaseinfo",{tid:row.tid})
+      this.postAxios("Sysconfig/GetBaseinfo", { tid: row.tid })
         .then(res => {
           console.log(res);
           //Object.assign(this.detailList,res.detailList);
-          this.detailList=res.detailList;
+          this.detailList = res.detailList;
           this.baseinfo = [...res.baseinfo];
         })
         .catch(err => {
@@ -220,15 +221,20 @@ export default {
                 type: "success",
                 message: "删除成功!"
               });
-              this.initBaseinfo();
-              this.postAxios("Sysconfig/GetBaseinfo",{tid:this.baseinfo.tid})
-        .then(res => {
-          this.detailList=res.detailList;
-          this.baseinfo = [...res.baseinfo];
-        })
-        .catch(err => {
-          console.log(err);
-        });
+              if (this.outerVisible) {
+                this.postAxios("Sysconfig/GetBaseinfo", {
+                  tid: this.baseinfo.tid
+                })
+                  .then(res => {
+                    this.detailList = res.detailList;
+                    this.baseinfo = [...res.baseinfo];
+                  })
+                  .catch(err => {
+                    console.log(err);
+                  });
+              } else {
+                getData();
+              }
             })
             .catch(err => {
               this.$message({
@@ -279,15 +285,15 @@ export default {
       };
       this.currentPage = 1;
       this.title = "添加字典";
-      this.detailInfo={};
+      this.detailInfo = {};
       this.getData();
     },
     handleSave() {
       console.log(this.baseinfo);
       let codeFlag = this.$utils.isEmpty(this.baseinfo.code);
       let nameFlag = this.$utils.isEmpty(this.baseinfo.name);
-      let noteFlag = this.$utils.isEmpty(this.baseinfo.note);
-      console.log(codeFlag, nameFlag, noteFlag);
+      //let noteFlag = this.$utils.isEmpty(this.baseinfo.note);
+      console.log(codeFlag, nameFlag);
       console.log(this.baseinfo);
       if (!codeFlag && !nameFlag && !noteFlag) {
         this.postAxios("Sysconfig/SaveBasedata", { baseinfo: this.baseinfo })
