@@ -638,14 +638,14 @@ export default {
           { min: 2,  message: "长度最少俩个字符", trigger: "blur" }
         ],
         gender: [{ required: true, message: "请选择性别", trigger: "change" }],
-        joinArmyDate: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change"
-          }
-        ]
+        // joinArmyDate: [
+        //   {
+        //     type: "date",
+        //     required: true,
+        //     message: "请选择日期",
+        //     trigger: "change"
+        //   }
+        // ]
       },
       rightOptions: [
         {
@@ -713,6 +713,7 @@ export default {
       this.$utils.isEmpty(form.name);
     },
     submitForm(formName) {
+      debugger
       this.$refs[formName].validate(valid => {
         if (valid) {
           var nameFlag= this.$utils.isEmpty(this.form.name);
