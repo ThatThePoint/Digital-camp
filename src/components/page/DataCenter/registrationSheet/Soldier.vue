@@ -103,7 +103,7 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="身份证">
-          <el-input v-model="form.idcard"></el-input>
+          <el-input v-model="form.idcard" @blur="blurs"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="6">
@@ -289,16 +289,18 @@
       </el-col>
     </el-row>
     <el-form-item>
-      <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
+      <el-button type="primary" @click="submitForm('form')">{{sub}}</el-button>
       <el-button  @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
 <script>
+import utils from '../../../../utils'
 export default {
   props:["data"],
   data() {
     return {
+      sub: '立即创建',
       activeName: "first",
       form: {
         //以下才是对的数据
@@ -633,7 +635,7 @@ export default {
       rules: {
         name: [
           { required: true, message: "请输入姓名", trigger: "blur" },
-          { min: 2, max: 4, message: "长度在 2 到 4 个字符", trigger: "blur" }
+          { min: 2,  message: "长度最少俩个字符", trigger: "blur" }
         ],
         gender: [{ required: true, message: "请选择性别", trigger: "change" }],
         joinArmyDate: [
@@ -664,6 +666,9 @@ export default {
   created(){
     console.log("父组件传来的",this)
     this.form = this.data ? this.data : this.form
+    if(this.data){
+      this.sub = '立即提交'
+    }
     this.postAxios("DataCenter/StaffInfo")
         .then(res => {
           console.log(res);
@@ -674,7 +679,17 @@ export default {
         });
   },
   methods: {
-    cancel(){ history.go(-1);},
+    blurs(){
+      utils.isCardNo(this.form.idcard)
+    },
+    cancel(){ 
+      this.$router.push({
+        path : '/UserManage',
+        query : {
+          personType : '1'
+        }
+      })
+    },
     birthday() {},
     formatter(row, column) {
       return row.address;
@@ -686,7 +701,12 @@ export default {
       console.log(index, row);
     },
     handleBack() {
-      history.go(-1);
+      this.$router.push({
+        path : '/UserManage',
+        query : {
+          personType : '1'
+        }
+      })
     },
     onSubmit() {
       console.log(this.$utils);
@@ -701,7 +721,7 @@ export default {
         alert("请先输入部门名称和性别");
         return false;
       }else{
-        this.form.personType=2;
+        this.form.personType=1;
         this.postAxios("DataCenter/SaveStaff", {staff:this.form})
         .then(res => {
           console.log(res);
@@ -711,7 +731,12 @@ export default {
           console.log(err);
         });
       }
-          history.go(-1);
+        this.$router.push({
+          path : '/UserManage',
+          query : {
+            personType : '1'
+          }
+      })
         } else {
           console.log("error submit!!");
           return false;

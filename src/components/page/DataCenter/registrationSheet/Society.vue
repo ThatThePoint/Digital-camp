@@ -89,7 +89,7 @@
     <el-row>
       <el-col :span="6">
         <el-form-item label="身份证">
-          <el-input v-model="form.idcard"></el-input>
+          <el-input v-model="form.idcard" @blur="blurs"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="6">
@@ -298,16 +298,18 @@
       </el-col>
     </el-row>
     <el-form-item>
-      <el-button type="primary"  @click="submitForm('form')">立即创建</el-button>
+      <el-button type="primary"  @click="submitForm('form')">{{sub}}</el-button>
       <el-button  @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
 <script>
+import utils from '../../../../utils'
 export default {
   props:["data"],
   data() {
     return {
+      sub: '立即创建',
       form: {
         //以下才是对的数据
         tid: "",
@@ -942,6 +944,9 @@ export default {
   },
   created(){
     this.form = this.data ? this.data : this.form
+    if(this.data){
+      this.sub = '立即提交'
+    }
     this.postAxios("DataCenter/StaffInfo")
         .then(res => {
           console.log(res);
@@ -952,7 +957,17 @@ export default {
         });
   },
   methods: {
-    cancel(){ history.go(-1);},
+    blurs(){
+      utils.isCardNo(this.form.idcard)
+    },
+    cancel(){ 
+      this.$router.push({
+        path : '/UserManage',
+        query : {
+          personType : '4'
+        }
+      })
+    },
     formatter(row, column) {
       return row.address;
     },
@@ -985,7 +1000,12 @@ export default {
           console.log(err);
         });
       }
-          history.go(-1);
+      this.$router.push({
+        path : '/UserManage',
+        query : {
+          personType : '4'
+        }
+      })
         } else {
           console.log("error submit!!");
           return false;
