@@ -84,8 +84,10 @@
     </el-dialog>
     <div class="container">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+
+
         <el-tab-pane label="值班执勤" name="first">
-          <el-button class="addduty" @click="addduty">增加值班</el-button>
+          
           <div class="body">
             <el-table
               :data="tableData"
@@ -110,6 +112,7 @@
 
         
         <el-tab-pane label="值班查询" name="third">
+          <el-button class="addduty" @click="addduty">增加值班</el-button>
           <div class="messages">
             <span>所属部门</span>
             <el-select clearable class="input-width" v-model="dept" filterable placeholder="请选择">
@@ -381,7 +384,6 @@ export default {
     },
     //值班查询编辑
     handleEdit(index, row) {
-      
       this.gangwei = ''
       this.gangweidetail = ''
       this.persons = ''
@@ -397,7 +399,20 @@ export default {
       this.rotaInfo.start = new Date(Date.parse(row.startTime.replace(/-/g, "/")));
       this.rotaInfo.end = new Date(Date.parse(row.endTime.replace(/-/g, "/")));
       this.tid = row.tid;
-      this.getdatathree()
+      let _this = this;
+      this.postAxios("/DailyOffice/RotaInfo", {tid: row.tid})
+        .then(res => {
+          _this.jobDatalist = res.jobData;
+          _this.personlist = res.dutyStaff;
+          for (let i = 0; i < res.jobData.length; i++) {
+            if ( res.jobData[i].parentId == "" || res.jobData[i].parentId == null ) {
+              _this.depts.push(res.jobData[i]);
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     cancelPlan(){
       this.dialogVisible = false
