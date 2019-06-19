@@ -84,33 +84,6 @@
     </el-dialog>
     <div class="container">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-
-
-        <el-tab-pane label="值班执勤" name="first">
-          
-          <div class="body">
-            <el-table
-              :data="tableData"
-              style="width: 100%"
-              :default-sort="{prop: 'posiName', order: 'descending'}"
-            >
-              <el-table-column prop="posiName" label="岗位名称" sortable width="180"></el-table-column>
-              <el-table-column prop="dept" label="单位" sortable width="180"></el-table-column>
-              <el-table-column prop="curDuty" label="当前值班人"></el-table-column>
-            </el-table>
-          </div>
-          <div class="block">
-            <el-pagination
-              @current-change="handleCurrentChange"
-              :current-page.sync="currentPage1"
-              layout="total, prev, pager, next"
-              :total="countone"
-              :page-size="10"
-            ></el-pagination>
-          </div>
-        </el-tab-pane>
-
-        
         <el-tab-pane label="值班查询" name="third">
           <el-button class="addduty" @click="addduty">增加值班</el-button>
           <div class="messages">
@@ -185,7 +158,7 @@ export default {
       jobDatalist: [], //保存岗位的临时数组
       personlist: [], //保存人员的临时数组
       searchtableData: [], //值班查询
-      activeName: "first",
+      activeName: "third",
       depts: [], //岗位部门
       jobs: [], //岗位
       person: [], //r人员列表
@@ -210,20 +183,7 @@ export default {
     };
   },
   created() {
-    let data = {
-      where: this.dept,
-      pageNum: 1,
-      pageSize: 10
-    };
-    let _this = this;
-    this.postAxios("/DailyOffice/JobRota", data)
-      .then(res => {
-        _this.tableData = res.list;
-        _this.countone = res.count;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.getdatatwo(true);
   },
   methods: {
     addduty(){
@@ -348,6 +308,7 @@ export default {
         currentPage: 1,
         pageNum: 1,
         where: this.dept,
+        dutyDate:this.dutyDate,
         pageNum: this.search_page,
         pageSize: 10
       };
@@ -404,6 +365,8 @@ export default {
         .then(res => {
           _this.jobDatalist = res.jobData;
           _this.personlist = res.dutyStaff;
+          _this.staffId = res.rotaInfo.dutyPerson
+          _this.posiId  = res.rotaInfo.dutyPosition
           for (let i = 0; i < res.jobData.length; i++) {
             if ( res.jobData[i].parentId == "" || res.jobData[i].parentId == null ) {
               _this.depts.push(res.jobData[i]);

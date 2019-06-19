@@ -20,6 +20,16 @@
                   ></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="发布部门">
+            <el-select clearable v-model="params.deptId" placeholder="请选择">
+              <el-option
+                    v-for="item in deptOptions"
+                    :key="item.tid"
+                    :label="item.name"
+                    :value="item.tid"
+                  ></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="规章名称">
             <el-input v-model="params.name" placeholder="请输入"></el-input>
           </el-form-item>
@@ -41,12 +51,11 @@
           <el-table-column prop="status" label="生效状态" width="100" :formatter="statusFormatter"></el-table-column>
           <el-table-column prop="publisherName" label="发布人"  width="100"></el-table-column>
           <el-table-column prop="publishTime" label="发布时间" width="200"></el-table-column>
-          <el-table-column prop="readTimes" label="阅读次数" width="100"></el-table-column>
           <el-table-column prop="downTimes" label="下载次数" width="100"></el-table-column>
           <el-table-column label="操作" width="200">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">预览</el-button>
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">下载</el-button>
+              <el-button size="mini" @click="handleDown(scope.$index, scope.row)">下载</el-button>
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -65,6 +74,7 @@
           <el-form :rules="checkRules" ref="ruleInfo" :model="form.ruleInfo">
             <div class="flex"></div>
             <el-form-item label="规章名称" :label-width="formLabelWidth">
+              <el-input class="input-width" v-show="false" v-model="form.ruleInfo.tid"></el-input>
               <el-input class="input-width" placeholder="请输入" v-model="form.ruleInfo.ruleName"></el-input>
             </el-form-item>
             <el-form-item label="版本" :label-width="formLabelWidth">
@@ -78,6 +88,10 @@
                 v-model="form.ruleInfo.ruleSynopsis"
               ></el-input>
             </el-form-item>
+            <el-form-item label="状态"  :label-width="formLabelWidth">
+                  <el-radio v-model="form.ruleInfo.status" :label=1>有效</el-radio>
+                  <el-radio v-model="form.ruleInfo.status" :label=0>失效</el-radio>
+                </el-form-item>
             <el-form-item label="附件" :label-width="formLabelWidth">
               <el-upload
                 class="upload"
@@ -123,13 +137,15 @@ export default {
           ruleName: "",
           ruleSynopsis: "",
           version: "",
-          status: ""
+          status: 1
         },
       },
       params:{
       status: 1, //生效状态
       name: "", //制度名称
+      deptId:"" //部门id
       },
+      deptOptions:[],//部门下拉框数据源
       statusOptions:[
         {
           label:"有效",
@@ -169,17 +185,20 @@ export default {
         pageNum: flag ? 1 : this.pageNum,
         status: this.params.status,
         name: this.params.name,
+        deptId:this.params.deptId
       };
     this.postAxios("/DailyOffice/GetRules", pa).then(res => {
       console.log(res);
       this.count = res.count
       this.tableData = res.data;
       this.totalPage = res.count;
+      this.deptOptions=res.deptOptions;
     });
     },
     //新增规章制度
     addrules(){
       this.form.ruleInfo={};
+      this.fileList=[];
       this.dialogFormVisible = true;
     },
     cancel() {
@@ -189,8 +208,19 @@ export default {
     statusFormatter(row, column) {
       return row.status==1?"有效":"失效";
     },
-
-
+    //下载
+    handleDown(index,row){
+      console.log(row);
+    },
+    //编辑
+    handleEdit(index,row){
+      this.postAxios("/DailyOffice/GetRuleInfo", {tid:row.tid}).then(res => {
+      console.log(res);
+      this.form.ruleInfo=res.data;
+      this.dialogFormVisible=true;
+      this.fileList=[{"url":"http://digitalcamp.oicp.io:54373/here/"+this.form.ruleInfo.filePath1,"name":this.form.ruleInfo.filePath1}];
+    });
+    },
 
     handleRemove(file, fileList) {
 
@@ -214,7 +244,8 @@ export default {
     },
     successHandle(file, fileList){
       this.fileId = file.fileId;
-      this.filePath1 = file.filePath1
+      this.filePath1 = file.filePath1;
+      this.form.ruleInfo.filePath1=file.filePath1;
       console.log("success",this.fileId, this.filePath1);
     },
 
@@ -226,8 +257,6 @@ export default {
         // ruleName : this.form.ruleInfo.ruleName,
         // version : this.form.ruleInfo.version,
         // ruleSynopsis : this.form.ruleInfo.ruleSynopsis
-        fileId:this.fileId,
-        filePath1:this.filePath1,
         model:this.form.ruleInfo
       }
       if(this.form.ruleInfo.ruleName && this.form.ruleInfo.version && this.form.ruleInfo.ruleSynopsis){
@@ -236,6 +265,7 @@ export default {
           .then(res => {
             console.log(res);
             _this.dialogFormVisible = false;
+            this.fileList=[];
             _this.getdata();
           })
           .catch(err => {

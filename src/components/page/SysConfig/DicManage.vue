@@ -295,7 +295,7 @@ export default {
       //let noteFlag = this.$utils.isEmpty(this.baseinfo.note);
       console.log(codeFlag, nameFlag);
       console.log(this.baseinfo);
-      if (!codeFlag && !nameFlag && !noteFlag) {
+      if (!codeFlag && !nameFlag) {
         this.postAxios("Sysconfig/SaveBasedata", { baseinfo: this.baseinfo })
           .then(res => {
             this.$message({

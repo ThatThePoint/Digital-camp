@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-favor"></i> 公文信息
+          <i class="el-icon-lx-favor"></i> 警报传递
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -11,7 +11,7 @@
       <div class="messages">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="发布单位">
-            <el-select clearable v-model="formInline.dept" placeholder="请选择" style="width: 80px">
+            <el-select clearable v-model="formInline.dept" placeholder="请选择" style="width: 100px">
               <el-option
                     v-for="item in deptsOps"
                     :key="item.tid"
@@ -20,8 +20,8 @@
                   ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="警报等级">
-            <el-select clearable v-model="formInline.level" placeholder="请选择" style="width: 80px">
+          <el-form-item label="警报类型">
+            <el-select clearable v-model="formInline.level" placeholder="请选择" style="width: 100px">
               <el-option
                     v-for="item in messageLevelOps"
                     :key="item.code"
@@ -31,13 +31,13 @@
             </el-select>
           </el-form-item>
           <el-form-item label="警报状态">
-            <el-select clearable v-model="formInline.status" placeholder="请选择" style="width: 80px">
+            <el-select clearable v-model="formInline.status" placeholder="请选择" style="width: 100px">
               <el-option label="生效" value="1"></el-option>
               <el-option label="失效" value="0"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="警报内容">
-            <el-input v-model="formInline.content" placeholder="请输入" style="width: 80px"></el-input>
+            <el-input v-model="formInline.content" placeholder="请输入" style="width: 130px"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleSearch">查询</el-button>
@@ -53,8 +53,8 @@
         >
           <el-table-column prop="content" label="警报内容" sortable width="180">{{}}</el-table-column>
           <el-table-column prop="postDeptName" label="发布单位" sortable width="180"></el-table-column>
-          <el-table-column prop="alertLevel" label="警报类型" ></el-table-column>
-          <el-table-column prop="status" label="警报状态" ></el-table-column>
+          <el-table-column prop="alertLevel" label="警报类型" :formatter="formatterType"></el-table-column>
+          <el-table-column prop="status" label="警报状态" :formatter="formatterStatus"></el-table-column>
           <el-table-column prop="postTime" label="发布时间" ></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
@@ -79,7 +79,7 @@
             <el-form-item label="警报内容" :label-width="formLabelWidth">
               <el-input class="input-width" placeholder="警报内容" v-model="alertInfo.content"></el-input>
             </el-form-item>
-            <el-form-item label="警报等级" :label-width="formLabelWidth">
+            <el-form-item label="警报类型" :label-width="formLabelWidth">
               <el-select clearable v-model="alertInfo.alertLevel" placeholder="请选择">
               <el-option
                     v-for="item in messageLevelOps"
@@ -132,6 +132,22 @@ export default {
     this.getdata();
   },
   methods: {
+    formatterStatus(row, column){
+      if(row.status==1){
+        return "生效";
+      }else{
+        return "失效";
+      }
+    },
+    formatterType(row, column){
+      if(row.alertLevel=="First"){
+        return "一级";
+      }else if(row.alertLevel=="Second"){
+        return "二级";
+      }else{
+        return "三级";
+      }
+    },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
@@ -171,6 +187,9 @@ export default {
         });
     },
     handleCancelAlert(id) {
+      if(!confirm("确定解除警报？")){
+        return false;
+      }
       var params={
         tid:id
       };
