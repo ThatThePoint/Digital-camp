@@ -535,6 +535,7 @@ export default {
   methods: {
     //以下====新
     search(){},
+    //查看
     handleApply(id){
       this.getApplyInfo(id);
       //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回

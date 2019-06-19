@@ -161,6 +161,7 @@ export default {
   name: "rota",
   data() {
     return {
+      flagon: true,
       dialogVisible: false,
       deptOptions: [], //部门下拉框数据源
       countone: 0, //数据总条数
@@ -201,7 +202,8 @@ export default {
       formLabelWidth: "120px",
       posiId: "", //传给后台保存用的岗位id
       staffId: "", //传给后台保存用的人员id
-      tid: "" //修改时带过来的
+      tid: "", //修改时带过来的
+      flaghand: false
     };
   },
   created() {
@@ -229,14 +231,20 @@ export default {
       this.personlist = [];
       this.depts = [];
       this.getdatathree()
+      this.flagon = false
+      this.flaghand = false
     },
     handleClose(done){
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      },
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+        if(this.flagon == true){
+          this.activeName = "third"
+        }
+        
+    },
 
     //获取值班人id
     selectperson() {
@@ -249,7 +257,6 @@ export default {
     //保存值班计划
     confirm() {
       let data = {
-        dialogVisible: false,
         tid: this.tid,
         posiId: this.posiId,
         staffId: this.staffId,
@@ -279,6 +286,11 @@ export default {
           console.log(err);
         });
         this.dialogVisible = false
+      if(this.flagon == true){
+        this.activeName = "third"
+      }else{
+        this.activeName="first";
+      }
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -369,9 +381,18 @@ export default {
     },
     //值班查询编辑
     handleEdit(index, row) {
-      console.log(row)
-      this.activeName = "second";
+      
+      this.gangwei = ''
+      this.gangweidetail = ''
+      this.persons = ''
+      this.jobDatalist = [];
+      this.personlist = [];
+      this.depts = [];
+      this.flagon = true
+      this.flaghand = true
+      this.dialogVisible = true
       this.gangwei = row.dept;
+      this.gangweidetail = row.posiName
       this.persons = row.dutyPerson;
       this.rotaInfo.start = new Date(Date.parse(row.startTime.replace(/-/g, "/")));
       this.rotaInfo.end = new Date(Date.parse(row.endTime.replace(/-/g, "/")));
@@ -380,7 +401,12 @@ export default {
     },
     cancelPlan(){
       this.dialogVisible = false
-      this.activeName="first";
+      
+      if(this.flagon == true){
+        this.activeName = "third"
+      }else{
+        this.activeName="first";
+      }
       this.getdataone();
       this.rotaInfo={};
       this.persons="";
@@ -420,6 +446,13 @@ export default {
                 _this.depts.push(res.jobData[i]);
               }
             }
+            debugger
+            if(_this.flaghand == true){
+              console.log(_this.gangwei,_this.depts)
+            }
+
+
+
           })
           .catch(err => {
             console.log(err);
