@@ -404,6 +404,8 @@ export default {
         .then(res => {
           _this.jobDatalist = res.jobData;
           _this.personlist = res.dutyStaff;
+          _this.staffId = res.rotaInfo.dutyPerson
+          _this.posiId  = res.rotaInfo.dutyPosition
           for (let i = 0; i < res.jobData.length; i++) {
             if ( res.jobData[i].parentId == "" || res.jobData[i].parentId == null ) {
               _this.depts.push(res.jobData[i]);
