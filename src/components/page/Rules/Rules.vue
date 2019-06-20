@@ -50,7 +50,7 @@
           <el-table-column prop="version" label="版本"  width="100"></el-table-column>
           <el-table-column prop="status" label="生效状态" width="100" :formatter="statusFormatter"></el-table-column>
           <el-table-column prop="publisherName" label="发布人"  width="100"></el-table-column>
-          <el-table-column prop="publishTime" label="发布时间" width="200"></el-table-column>
+          <el-table-column prop="publishTime" label="发布时间" :formatter="formatterDate" width="200"></el-table-column>
           <el-table-column prop="downTimes" label="下载次数" width="100"></el-table-column>
           <el-table-column label="操作" width="200">
             <template slot-scope="scope">
@@ -171,6 +171,10 @@ export default {
     this.getdata();
   },
   methods: {
+     //时间格式化  
+    formatterDate(row,index){
+      return this.$utils.timeFormatter(row.publishTime);
+    },
     handleCurrentChange(val) {
       this.currentPage = val;
       this.pageNum = val;

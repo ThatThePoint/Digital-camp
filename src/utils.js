@@ -13,6 +13,19 @@ const utils = {
     },
 
     /**
+     * 修改时间字符串，删除t
+     *
+     * @param {}
+     *            letVale
+     */
+    timeFormatter(date) {
+        if (date) {
+          return date.replace("T", " ");
+        } else {
+          return date;
+        }
+      },
+    /**
      * 取字符串的第index的字符
      *
      * @param {}

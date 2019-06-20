@@ -45,7 +45,7 @@
               <el-table-column prop="sendDeptName" label="发送部门"></el-table-column>
               <el-table-column prop="docCreaterName" label="发送人"></el-table-column>
               <el-table-column prop="docReceiversName" label="收件人" width="200"></el-table-column>
-              <el-table-column prop="sendTime" label="发送时间"></el-table-column>
+              <el-table-column prop="sendTime" label="发送时间" :formatter="formatterDate"></el-table-column>
               <el-table-column prop="docStatus" label="状态" :formatter="formatterStaus"></el-table-column>
               <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
               <el-table-column label="操作">
@@ -79,7 +79,7 @@
               v-model="title"
             ></el-input>
             <span>公文等级</span>
-            <el-select clearable clearable  class="input-width" v-model="level" placeholder="请选择">
+            <el-select clearable  class="input-width" v-model="level" placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.code"
@@ -104,7 +104,7 @@
               <el-table-column prop="sendDeptName" label="发送部门"></el-table-column>
               <el-table-column prop="docCreaterName" label="发送人"></el-table-column>
               <el-table-column prop="docReceiversName" label="收件人"></el-table-column>
-              <el-table-column prop="sendTime" label="发送时间"></el-table-column>
+              <el-table-column prop="sendTime" label="发送时间" :formatter="formatterDate"></el-table-column>
               <el-table-column prop="docStatus" label="状态" :formatter="formatterStaus"></el-table-column>
               <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
               <el-table-column label="操作">
@@ -164,7 +164,7 @@
               <el-table-column prop="sendDeptName" label="发送部门"></el-table-column>
               <el-table-column prop="docCreaterName" label="发送人"></el-table-column>
               <el-table-column prop="docReceiversName" label="收件人"></el-table-column>
-              <el-table-column prop="sendTime" label="发送时间"></el-table-column>
+              <el-table-column prop="sendTime" label="发送时间" :formatter="formatterDate"></el-table-column>
               <el-table-column prop="docStatus" label="状态" :formatter="formatterStaus"></el-table-column>
               <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
               <el-table-column label="操作">
@@ -233,6 +233,10 @@ export default {
     this.getTableDatathree()
   },
   methods: {
+    //时间格式化  
+    formatterDate(row,index){
+      return this.$utils.timeFormatter(row.sendTime);
+    },
     // 点击分页
     handleCurrentChange(val) {
       console.log(val);

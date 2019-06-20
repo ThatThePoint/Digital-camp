@@ -55,7 +55,7 @@
           <el-table-column prop="postDeptName" label="发布单位" sortable width="180"></el-table-column>
           <el-table-column prop="alertLevel" label="警报类型" :formatter="formatterType"></el-table-column>
           <el-table-column prop="status" label="警报状态" :formatter="formatterStatus"></el-table-column>
-          <el-table-column prop="postTime" label="发布时间" ></el-table-column>
+          <el-table-column prop="postTime" label="发布时间" :formatter="formatterDate"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleCancelAlert(scope.row.tid)">警报解除</el-button>
@@ -138,6 +138,10 @@ export default {
       }else{
         return "失效";
       }
+    },
+    //时间格式化  
+    formatterDate(row,index){
+      return this.$utils.timeFormatter(row.postTime);
     },
     formatterType(row, column){
       if(row.alertLevel=="First"){

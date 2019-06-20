@@ -93,10 +93,10 @@
           style="width: 100%"
           :default-sort="{prop: 'name', order: 'descending'}"
         >
-          <el-table-column prop="name" label="姓名" sortable width="100"></el-table-column>
-          <el-table-column prop="deptName" label="所属部门" sortable width="100"></el-table-column>
-          <el-table-column prop="licensedate" label="驾驶证有效期" sortable width="160"></el-table-column>
-          <el-table-column prop="duty" label="在岗状态" sortable width="100" :formatter="state"></el-table-column>
+          <el-table-column prop="name" label="姓名" sortable></el-table-column>
+          <el-table-column prop="deptName" label="所属部门" sortable ></el-table-column>
+          <el-table-column prop="licensedate" label="驾驶证有效期" :formatter="formatterDate" sortable  ></el-table-column>
+          <el-table-column prop="duty" label="在岗状态" sortable :formatter="state"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -163,6 +163,10 @@ export default {
     this.getTableData();
   },
   methods: {
+    //时间格式化  
+    formatterDate(row,index){
+      return this.$utils.timeFormatter(row.licensedate);
+    },
     handleCurrentChange(val) {
       this.currentPage = val;
       this.pageNum = val;

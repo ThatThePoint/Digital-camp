@@ -101,7 +101,7 @@
           <el-table-column prop="name" label="名称" ></el-table-column>
           <el-table-column prop="remark" label="描述" ></el-table-column>
           <el-table-column prop="status" label="状态" :formatter="formatterStatus"></el-table-column>
-          <el-table-column prop="modifyTime" label="修改时间" ></el-table-column>
+          <el-table-column prop="modifyTime" :formatter="formatterDate"  label="修改时间" ></el-table-column>
           <el-table-column label="操作" min-width="160px">
             <template slot-scope="scope">
               <el-button size="mini" @click="getRuleInfo(scope.row.tid)">编辑</el-button>
@@ -144,6 +144,11 @@ export default {
     this.handleSearch();
   },
   methods: {
+    //时间格式化  
+    formatterDate(row,index){
+      return this.$utils.timeFormatter(row.modifyTime);
+      console.log(this.$utils.timeFormatter(row.modifyTime))
+    },
     ///以下-----新
     //新增审批规则
     addRuleInfo() {

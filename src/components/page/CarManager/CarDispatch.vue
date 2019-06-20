@@ -40,7 +40,7 @@
               <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
               <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
               <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
-              <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
@@ -78,7 +78,7 @@
               <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
               <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
               <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
-              <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
@@ -115,7 +115,7 @@
               <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
               <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
               <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
-              <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate"  sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
@@ -152,7 +152,7 @@
               <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
               <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
               <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
-              <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate"  sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
@@ -189,7 +189,7 @@
               <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
               <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
               <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
-              <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate"  sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
@@ -226,7 +226,7 @@
               <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
               <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
               <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
-              <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
@@ -716,6 +716,10 @@ export default {
     });
   },
   methods: {
+    //时间格式化  
+    formatterDate(row,index){
+      return this.$utils.timeFormatter(row.applytime);
+    },
     getTree(data){
       let map = {};
       let val = [];

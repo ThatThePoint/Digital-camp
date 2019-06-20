@@ -34,7 +34,7 @@
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="部队车辆" name="first">
           <div class="messages">
-            <el-select clearable clearable  class="input-width" v-model="departmentValue1" placeholder="所属部门">
+            <el-select clearable  class="input-width" v-model="departmentValue1" placeholder="所属部门">
               <el-option
                 v-for="item in departmentOptions"
                 :key="item.tid"
@@ -158,7 +158,7 @@
               <el-table-column prop="carType" label="车辆属性" sortable width="120"></el-table-column>
               <el-table-column prop="tel" label="联系电话" sortable></el-table-column>
               <el-table-column prop="registTime" label="登记时间" sortable width="120"></el-table-column>
-              <el-table-column prop="inout" label="出入状态" sortable></el-table-column>
+              <el-table-column prop="inout" label="出入状态" formatter="formatterInOut" sortable></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -219,6 +219,13 @@ export default {
     this.getdataone()
   },
   methods: {
+    formatterInOut(row,index){
+      if(row.inout){
+        return "在库";
+      }else{
+        return "出库";
+      }
+    },
         // 点击分页
     handleCurrentChange(val) {
       console.log(val);
@@ -317,6 +324,9 @@ export default {
     },
     //删除
     handleDelete(index, row){
+      if(!confirm("确定删除吗？")){
+        return false;
+      }
       let _this = this;
       this.postAxios("/CarInfo/DeleteCar",{id : row.tid})
         .then(res => {
