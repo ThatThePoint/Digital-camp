@@ -876,6 +876,8 @@ export default {
     //关闭详情
     cancelDetail(){
       this.applyDialogFormVisible=false;
+      this.youshenpi = false
+      this.wushenpi = false
       this.applyInfo={};
     },
     //提交调度
