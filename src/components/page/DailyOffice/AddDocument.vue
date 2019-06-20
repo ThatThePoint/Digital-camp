@@ -227,14 +227,11 @@ export default {
       this.dialogVisible = false;
     },
     confirm(info){
-      console.log(info)
       this.dialogVisible = false;
-
     },
     confirms(a){
       this.postname = a[0]
       this.perid = a[1]
-  
     },
     focus(){
       this.dialogVisible = true;

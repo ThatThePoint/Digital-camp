@@ -26,7 +26,7 @@
                 <el-button type="primary" @click="search">查询</el-button>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" >新增</el-button>
+                <el-button type="primary" @click="adduser">新增</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -43,7 +43,7 @@
               <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleApply(scope.row.tid)">查看</el-button>
+                  <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -81,7 +81,7 @@
               <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleDetail(scope.row.tid)">查看</el-button>
+                  <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -118,7 +118,7 @@
               <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleDetail(scope.row.tid)">查看</el-button>
+                  <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -155,7 +155,7 @@
               <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleDetail(scope.row.tid)">查看</el-button>
+                  <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -192,7 +192,7 @@
               <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleDetail(scope.row.tid)">查看</el-button>
+                  <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -229,13 +229,15 @@
               <el-table-column prop="applytime" label="申请时间" sortable width="160"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleDetail(scope.row.tid)">查看</el-button>
+                  <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </div>
         </el-tab-pane>
       </el-tabs>
+
+
       <el-dialog :visible.sync="carApplyInfoVisible">
         <el-form :model="applyInfo">
               <div class="flex">用车申请</div>
@@ -258,7 +260,7 @@
                       type="datetime"
                       placeholder="选择日期"
                       v-model="applyInfo.starttime"
-                      style="width: 100%;"
+                      style="width:145px;margin-left:10px"
                     ></el-date-picker>
                   </el-form-item>
                 </el-col>
@@ -268,7 +270,7 @@
                       type="datetime"
                       placeholder="选择日期"
                       v-model="applyInfo.endtime"
-                      style="width: 100%;"
+                      style="width:145px;margin-left:10px"
                     ></el-date-picker>
                   </el-form-item>
                 </el-col>
@@ -282,36 +284,11 @@
                 </el-col>
                 <el-col :span="8">
                   <el-form-item label="用车风险" :label-width="formLabelWidth">
-                    <el-select clearable v-model="applyInfo.risk" placeholder="请选择">
+                    <el-select clearable v-model="applyInfo.risk" placeholder="请选择" style="margin-left:10px;width:145px">
                       <el-option
                         v-for="item in riskOptions"
                         :key="item.code"
                         :value="item"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="8">
-                  <el-form-item label="随车人" :label-width="formLabelWidth">
-                    <el-input v-show="false" v-model="applyInfo.followersNames" type="input"></el-input>
-                    <el-input class="input-width" v-model="applyInfo.followersNames" type="input"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                  <el-form-item label="调度员" :label-width="formLabelWidth">
-                    <el-select
-                      clearable
-                      v-model="applyInfo.dispatcherid"
-                      placeholder="请选择"
-                      style="margin-left:10px;"
-                    >
-                      <el-option
-                        v-for="item in applyInfo.dispatcherList"
-                        :key="item.tid"
-                        :label="item.name"
-                        :value="item.tid"
                       ></el-option>
                     </el-select>
                   </el-form-item>
@@ -328,6 +305,38 @@
                     ></el-input>
                   </el-form-item>
                 </el-col>
+
+                <el-col :span="8">
+                  <el-form-item label="调度员" :label-width="formLabelWidth">
+                    <el-select
+                      clearable
+                      v-model="applyInfo.dispatcherid"
+                      placeholder="请选择"
+                      style="margin-left:10px;width:145px"
+                    >
+                      <el-option
+                        v-for="item in applyInfo.dispatcherList"
+                        :key="item.tid"
+                        :label="item.name"
+                        :value="item.tid"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="8">
+                  <el-form-item label="随车人" :label-width="formLabelWidth">
+                    <el-input v-show="false" v-model="applyInfo.followersIds" type="input"></el-input>
+                    <el-input 
+                      class="input-width" 
+                      v-model="applyInfo.followersNames" 
+                      type="input" 
+                      style="width:386px"
+                      @focus="focus"  
+                    ></el-input>
+                  </el-form-item>
+                </el-col>
               </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -335,7 +344,11 @@
               <el-button type="primary" @click="onSubmit">确 定</el-button>
             </div>
       </el-dialog>
-      <el-dialog :visible.sync="applyDialogFormVisible">
+
+
+      <!-- 没有审批信息 -->
+      <el-dialog :visible.sync="wushenpi">
+        11
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
           <div class="second-title">申请信息</div>
           <el-row>
@@ -462,7 +475,148 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <div v-show="approvalDetail">
+
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="cancelDetail">取消</el-button>
+          <el-button v-show="dispatchCommit" @click="dispatchApply">提交</el-button>
+          <el-button v-show="approvalPass" @click="passApproval">通过</el-button>
+          <el-button v-show="approvalPass" @click="rejectApproval">退回</el-button>
+        </div>
+      </el-dialog>
+
+
+      <!-- 有审批信息 -->
+      <el-dialog :visible.sync="youshenpi">
+        22
+        <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
+          <div class="second-title">申请信息</div>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="申请单号">
+                <label>{{applyInfo.code}}</label>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="用车人">
+                <label>{{applyInfo.applyer}}</label>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="用车部门">
+                <label>{{applyInfo.applyerDeptName}}</label>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="用车开始时间">
+                <label>{{applyInfo.starttime}}</label>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="用车结束时间">
+                <label>{{applyInfo.endtime}}</label>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="申请时间">
+                <label>{{applyInfo.applytime}}</label>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="路线目的地">
+                <label>{{applyInfo.destination}}</label>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="申请车辆">
+                <label>{{applyInfo.licensePlate}}</label>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="申请司机">
+                <label>{{applyInfo.driverName}}</label>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="16">
+              <el-form-item label="申请事由">
+                <label>{{applyInfo.reason}}</label>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="16">
+              <el-form-item label="备注">
+                <label>{{applyInfo.remark}}</label>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <div class="second-title">调度信息</div>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="调度结果">
+                <el-radio-group :disabled="dispatchDetailDisabled" v-model="dispatchResult">
+                            <el-radio :label=1>同意</el-radio>
+                            <el-radio :label=0>退回</el-radio>
+                        </el-radio-group>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="调度人">
+                <label>{{applyInfo.dispatcherName}}</label>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="调度时间">
+                <label>{{applyInfo.dispatchTime}}</label>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="调度车辆">
+                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.carid" placeholder="调度车辆">
+                  <el-option
+                  v-for="item in carOptions"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="调度司机">
+                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.driverid" placeholder="调度司机">
+                  <el-option
+                  v-for="item in applyInfo.driverList"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="审批人">
+                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.approverid" placeholder="审批人">
+                  <el-option
+                  v-for="item in applyInfo.approverList"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <!-- 审批信息 -->
+          <div>
             <div class="second-title">审批信息</div>
             <el-row>
               <el-col :span="8">
@@ -490,15 +644,31 @@
           <el-button v-show="approvalPass" @click="rejectApproval">退回</el-button>
         </div>
       </el-dialog>
+
+      <el-dialog
+        :visible.sync="dialogVisible"
+        width="50%"
+        :before-close="handleClose">
+        <span> <postemail  v-on:confirm="confirms" :parentlist="parentlist"/></span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="cancel">取 消</el-button>
+          <el-button type="primary" @click="confirm" >确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
 <script>
+import postemail from "../DailyOffice/postemail"; // 源码位置
 export default {
   name: "carDispatch",
   data() {
     return {
       ///新数据-----------
+      wushenpi: false,
+      youshenpi: false,
+      parentlist:[],//传给穿梭框的树表数据
+      dialogVisible: false,
       applyInfo: {},
       param:{
         carId:""
@@ -508,7 +678,7 @@ export default {
       tableData: [],
       count:0,
       applyDialogFormVisible:false, //申请信息弹窗
-      approvalDetail:true, //审批详情
+      approvalDetail:false, //审批详情
       dispatchResult:1, //调度结果
       dispatchDetailDisabled:false,
       approvalDetailDisabled:false,
@@ -521,7 +691,7 @@ export default {
         "较高风险",
         "高风险"
       ],
-      curNode:1,
+      applystatus:1,
       ///以上新数据-----------
 
       
@@ -529,31 +699,75 @@ export default {
       formLabelWidth: "120px"
     };
   },
+  components: {
+    postemail
+  },
   created() {
     this.getTableData();
+    this.postAxios("/CarApply/ApplyInfo",{
+        //  tid:this.docuId
+      })
+      .then(res => {
+        this.parentlist = this.getTree(res.staffData);
+
+      })
+      .catch(err => {
+        console.log(err);
+    });
   },
   methods: {
+    getTree(data){
+      let map = {};
+      let val = [];
+      //生成数据对象集合
+      data.forEach(it=>{
+        delete it.children;
+        map[it.id] = it;
+      })
+      //生成结果集
+      data.forEach(it=>{
+          const parent = map[it.pid];
+          if(parent){
+              if(!Array.isArray(parent.children)) parent.children = [];
+              parent.children.push(it);
+          }else{
+              val.push(it);
+          }
+      })
+      return val;
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
+    cancel(){
+      this.dialogVisible = false;
+    },
+    confirm(info){
+      this.dialogVisible = false;
+    },
+    confirms(a){
+      this.applyInfo.followersNames = a[0]
+      this.perid = a[1]
+    },
+    focus(){
+      this.dialogVisible = true;
+    },
+    //新增
+    adduser(){
+      this.carApplyInfoVisible = true
+    },
     //以下====新
-    search(){},
-    //查看
-    handleApply(id){
-      this.getApplyInfo(id);
-      //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回
-      if(this.curNode==1){
-        this.carApplyInfoVisible=true;
-      }else{
-        this.handleDetail(id);
-        this.dispatchDetailDisabled=false;
-        this.dispatchCommit=true; //显示提交按钮
-        this.approvalPass=false; //隐藏审批通过和退回按钮
-      }      
+    search(){
+
     },
     getApplyInfo(id) {
       this.postAxios("/CarApply/ApplyInfo", {tid:id})
         .then(res => {
-          console.log(res);
           this.applyInfo = res;
-          this.curNode=res.applystatus;
         })
         .catch(err => {
           console.log(err);
@@ -601,40 +815,63 @@ export default {
       console.log(tab, event);
       this.getTableData();
     },
-    handleDetail(tid){
-      this.getApplyInfo(tid);
+    handleDetail(scope){
+      
       //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回
-      if(this.curNode==0){//0-待调度
-        this.approvalDetail=false;
-        this.dispatchDetailDisabled=false;
-        this.dispatchCommit=true; //显示提交按钮
-        this.approvalPass=false; //隐藏审批通过和退回按钮
-      }else if(this.curNode==1){//1-调度退回
-        this.approvalDetail=false;
-        this.dispatchDetailDisabled=false;
-        this.dispatchCommit=true;//隐藏提交
-        this.approvalPass=false;//隐藏审批通过和退回
-      }else if(this.curNode==2){//2-待审批
-        this.approvalDetail=true;
-        this.dispatchDetailDisabled=true;
-        this.approvalDetailDisabled=false;
-        this.dispatchCommit=false;//隐藏提交
-        this.approvalPass=true;//显示审批通过和退回
-        
-      }else if(this.curNode==3){//3-已批准
-        this.approvalDetail=true;
-        this.dispatchDetailDisabled=true;
-        this.approvalDetailDisabled=true;
-        this.dispatchCommit=false;//隐藏提交
-        this.approvalPass=false;//隐藏审批通过和退回
-      }else if(this.curNode==4){//4-审批退回
-        this.approvalDetail=true;
-        this.dispatchDetailDisabled=true;
-        this.approvalDetailDisabled=false;
-        this.dispatchCommit=false;//隐藏提交
-        this.approvalPass=true;//显示审批通过和退回
+      if(this.activeName=='first'){//0-待调度
+      // approvalDetail  审批信息
+        if(scope.row.applystatus=='1'){
+          this.carApplyInfoVisible=true      //一弹框
+          this.youshenpi=false; 
+          this.wushenpi=false; 
+          this.dispatchDetailDisabled=false;
+          
+          
+          this.dispatchCommit=true; //显示提交按钮
+          this.approvalPass=false; //隐藏审批通过和退回按钮
+        }else if(scope.row.applystatus=='0' || scope.row.applystatus=='2'){
+          this.carApplyInfoVisible=false //一弹框
+          this.youshenpi=false; 
+          this.wushenpi=true; 
+          this.dispatchDetailDisabled=false;
+          
+                    
+          this.dispatchCommit=true; //显示提交按钮
+          this.approvalPass=false; //隐藏审批通过和退回按钮
+        }else if(scope.row.applystatus=='3' || scope.row.applystatus=='4')
+          this.dispatchDetailDisabled=false;
+          this.carApplyInfoVisible=false //一弹框
+          this.youshenpi=true; 
+          this.wushenpi=false; 
+          this.dispatchCommit=true; //显示提交按钮
+          this.approvalPass=false; //隐藏审批通过和退回按钮
       }
-      this.applyDialogFormVisible=true;
+      // else if(scope.row.applystatus==1){//1-调度退回
+      //   this.approvalDetail=false;
+      //   this.dispatchDetailDisabled=false;
+      //   this.dispatchCommit=true;//隐藏提交
+      //   this.approvalPass=false;//隐藏审批通过和退回
+      // }else if(scope.row.applystatus==2){//2-待审批
+      //   this.approvalDetail=true;
+      //   this.dispatchDetailDisabled=true;
+      //   this.approvalDetailDisabled=false;
+      //   this.dispatchCommit=false;//隐藏提交
+      //   this.approvalPass=true;//显示审批通过和退回
+        
+      // }else if(scope.row.applystatus==3){//3-已批准
+      //   this.approvalDetail=true;
+      //   this.dispatchDetailDisabled=true;
+      //   this.approvalDetailDisabled=true;
+      //   this.dispatchCommit=false;//隐藏提交
+      //   this.approvalPass=false;//隐藏审批通过和退回
+      // }else if(scope.row.applystatus==4){//4-审批退回
+      //   this.approvalDetail=true;
+      //   this.dispatchDetailDisabled=true;
+      //   this.approvalDetailDisabled=false;
+      //   this.dispatchCommit=false;//隐藏提交
+      //   this.approvalPass=true;//显示审批通过和退回
+      // }
+      this.getApplyInfo(scope.row.tid);
     },
     //关闭详情
     cancelDetail(){
@@ -722,7 +959,7 @@ export default {
 </script>
 <style scoped>
 .input-width {
-  width: 180px;
+  width: 145px;
   margin: 0 10px;
 }
 .second-title {

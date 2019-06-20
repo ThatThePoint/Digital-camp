@@ -229,8 +229,7 @@ export default {
 </script>
 <style scoped>
 .input-width {
-  width: 180px;
-  margin: 0 10px;
+  width: 203px;
 }
 .messages {
 }
