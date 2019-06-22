@@ -24,12 +24,12 @@
         <el-tab-pane label="公勤人员信息登记表" name="five" :disabled="flagfive">
           <Gongqin :data="rowdata"/>
         </el-tab-pane>
-        <el-tab-pane label="现役人员家属信息登记表" name="six" :disabled="flagsix">
+        <!-- <el-tab-pane label="现役人员家属信息登记表" name="six" :disabled="flagsix">
           <Xianyi :data="rowdata"/>
         </el-tab-pane>
         <el-tab-pane label="家属区人员信息登记表" name="seven" :disabled="flagseven">
           <Jiashu :data="rowdata"/>
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
     </div>
   </div>
