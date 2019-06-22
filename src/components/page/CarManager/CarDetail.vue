@@ -63,7 +63,7 @@
               <el-table-column prop="brand" label="车辆品牌" sortable width="100"></el-table-column>
               <el-table-column prop="model" label="型号" sortable width="100"></el-table-column>
               <el-table-column prop="useStatus" label="技术状态" sortable width="100"></el-table-column>
-              <el-table-column prop="inOrOut" label="出入状态" sortable width="100"></el-table-column>
+              <el-table-column prop="inOrOut" label="出入状态" :formatter="formatterInOut" sortable width="100"></el-table-column>
               <el-table-column label="操作" width="200">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -112,7 +112,7 @@
               <el-table-column prop="ownerTel" label="联系电话" sortable width="160"></el-table-column>
                <el-table-column prop="registTime" label="登记时间" sortable width="150"></el-table-column>
               <el-table-column prop="relaterName" label="部队联系人" sortable width="130"></el-table-column>
-              <el-table-column prop="inOrOut" label="出入状态" sortable width="100"></el-table-column>
+              <el-table-column prop="inOrOut" label="出入状态" :formatter="formatterInOut" sortable width="100"></el-table-column>
               <el-table-column label="操作" ortable width="200">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -221,9 +221,9 @@ export default {
   methods: {
     formatterInOut(row,index){
       if(row.inout){
-        return "在库";
+        return "是";
       }else{
-        return "出库";
+        return "否";
       }
     },
         // 点击分页
