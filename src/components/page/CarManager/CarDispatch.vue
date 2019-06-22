@@ -67,7 +67,7 @@
               </el-form-item>
               <el-form-item :inline="true" class="demo-form-inline">
                     <el-date-picker
-                      type="datetime"
+                      type="date"
                       placeholder="申请开始时间"
                       v-model="param.starttime"
                       style="width:145px;margin-left:10px"
@@ -75,7 +75,7 @@
                   </el-form-item>
               <el-form-item :inline="true" class="demo-form-inline">
                     <el-date-picker
-                      type="datetime"
+                      type="date"
                       placeholder="申请终止时间"
                       v-model="param.endtime"
                       style="width:145px;margin-left:10px"
@@ -297,8 +297,6 @@
           </div>
         </el-tab-pane>
       </el-tabs>
-
-
       <el-dialog :visible.sync="carApplyInfoVisible" style="width:1600px">
         <el-form :model="applyInfo">
               <div class="flex">用车申请</div>
@@ -405,8 +403,6 @@
               <el-button type="primary" @click="onSubmit">确 定</el-button>
             </div>
       </el-dialog>
-
-
       <!-- 没有审批信息 -->
       <el-dialog :visible.sync="wushenpi" style="width:1700px">
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
@@ -544,8 +540,6 @@
           <el-button v-show="printBtn" @click="print">打印</el-button>
         </div>
       </el-dialog>
-
-
       <!-- 有审批信息 -->
       <el-dialog :visible.sync="youshenpi" style="width:1700px">
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
@@ -703,7 +697,6 @@
           <el-button v-show="approvalPass" @click="rejectApproval">退回</el-button>
         </div>
       </el-dialog>
-
       <el-dialog :visible.sync="dialogVisible"
         width="50%"
         :before-close="handleClose">
@@ -713,16 +706,83 @@
           <el-button type="primary" @click="confirm" >确 定</el-button>
         </span>
       </el-dialog>
+      <el-dialog :visible.sync="printVisible"
+        width="50%"
+        :before-close="handleClose">
+        <div class="form"  ref="print">
+          <div class="title">一般风险任务车辆派遣通知单</div>
+          <div class="info">
+            <div>第（{{printform.formcode}}）号</div>
+            <div>填写时间：{{printform.applytime}}</div>
+          </div>
+          <div class="tables">
+            <div class="cars">用车单位</div>
+            <div class="usecars">{{printform.applyerDeptName}}</div>
+          </div>
+          <div class="tables">
+            <div class="cars">申遣责任人</div>
+            <div class="usecar line">{{printform.applyer}}</div>
+            <div class="cars">联系电话</div>
+            <div class="usecar">{{printform.tel}}</div>
+          </div>
+          <div class="tables">
+            <div class="cars">车牌号码</div>
+            <div class="usecar line">{{printform.licensePlate}}</div>
+            <div class="cars">驾驶员姓名</div>
+            <div class="usecar">{{printform.driverName}}</div>
+          </div>
+          <div class="tables">
+            <div class="cars">用车时间</div>
+            <div class="usecars">{{printform.starttime}}-{{printform.endtime}}</div>
+          </div>
+          <div class="tables">
+            <div class="cars">行车路线达到地点</div>
+            <div class="usecars">{{printform.destination}}</div>
+          </div>
+          <div class="tables">
+            <div class="cars">用车事由</div>
+            <div class="usecars">{{printform.reason}}</div>
+          </div>
+          <div class="tables">
+            <div class="cars">审批领导意见</div>
+            <div class="usecars"><img :src="printform.imgPath"/></div>
+          </div>
+          <div class="tables lines">
+            <div class="cars">随车负责人签名</div>
+            <div class="usecar line"></div>
+            <div class="cars">值班员签名</div>
+            <div class="usecar"></div>
+          </div>
+          <div class="stoped"></div>
+          <div class="flexs">
+            <div class="one">第一联</div>
+            <div class="two">车辆派遣部门留存</div>
+            <div class="three">存根</div>
+          </div>
+     
+     
+      </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="cancelprint">取 消</el-button>
+          <el-button type="primary" @click="confirmprint" >确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
 <script>
+import Print from '../../../api/Print'
 import postemail from "../DailyOffice/postemail"; // 源码位置
+
+import Vue from 'vue'
+Vue.use(Print) // 注册
 export default {
   name: "carDispatch",
   data() {
     return {
       ///新数据-----------
+      printform:{},
+      printVisible: false,//打印框
       wushenpi: false,
       youshenpi: false,
       parentlist:[],//传给穿梭框的树表数据
@@ -776,8 +836,26 @@ export default {
       .catch(err => {
         console.log(err);
     });
+    let type = this.$route.query.type
+    if(type == 2){
+      this.activeName = 'second'
+    }else if(type == 3){
+      this.activeName = 'fourth'
+    }
   },
   methods: {
+    confirmprint(){
+      debugger
+      this.$print(this.$refs.print)
+      this.printVisible = false
+    },
+    cancelprint(){
+      this.printVisible = false
+    },
+    print(){
+      this.printVisible = true
+      // 
+    },
     //时间格式化  
     formatterDate(row,index){
       return this.$utils.timeFormatter(row.applytime);
@@ -837,9 +915,12 @@ export default {
       this.getTableData();
     },
     getApplyInfo(id) {
+      let _this = this
       this.postAxios("/CarApply/ApplyInfo", {tid:id})
         .then(res => {
-          this.applyInfo = res;
+          _this.applyInfo = res;
+          _this.printform = res
+          console.log(_this.printform)
         })
         .catch(err => {
           console.log(err);
@@ -933,8 +1014,7 @@ export default {
         this.dispatchCommit=true;//显示提交
         this.approvalPass=false;//隐藏审批通过和退回
         this.wushenpi=true;
-        this.printBtn=false;//打印按钮
-
+        this.printBtn=true;//打印按钮
         this.getApplyInfo(scope.row.tid);
         return  false;
       }else if(this.activeName=='third'){//2-待审批
@@ -1054,7 +1134,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .input-width {
   width: 145px;
   margin: 0 10px;
@@ -1064,4 +1144,98 @@ export default {
   font-weight: 600;
 }
 .dialog-footer {text-align: center}
+.form{
+  position: relative;
+  height: 540px;
+  width: 680px;
+  box-sizing: border-box;
+  padding: 0 47px;
+  .title{
+    height: 80px;
+    // width: 800px;
+    line-height: 80px;
+    font-size: 21px;
+    display: flex;
+    justify-content: center;
+    width: 586px;
+  }
+  .info{
+    // width: 800px;
+    height: 23px;
+    line-height: 23px;
+    display: flex;
+    justify-content: space-between;
+    div{
+      font-size: 14px;
+    }
+  }
+  .tables{
+    width: 586px;
+    height: 45px;
+    display: flex;
+    border: 1px solid black;
+    border-bottom: none;
+    img{
+      height: 45px;
+      width: 200px;
+    }
+    .cars{
+      width: 125px;
+      height: 45px;
+      line-height: 45px;
+      text-align: center;
+      font-size: 14px;
+      border-right: 1px solid black;
+    }
+    .usecars{
+      flex: 1;
+      height: 45px;
+      line-height: 45px;
+      text-align: center;
+    }
+    .usecar{
+      height: 45px;
+      line-height: 45px;
+      text-align: center;
+      width: 166px;
+    }
+    .line{
+      border-right: 1px solid black;
+    }
+  }
+  .stoped{
+    height: 0;
+    width: 586px;
+    border-top: 1px dashed black;
+    margin-top: 35px;
+  }
+  .flexs{
+    height: 242px;
+    width: 13px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 140px;
+    right: 20px;
+    .one{
+      height: 44px;
+      font-size: 12px;
+      width: 13px;
+      margin-bottom: 35px;
+    }
+    .two{
+      font-size: 12px;
+      width: 13px;
+      margin-bottom: 20px;
+    }
+    .three{
+      font-size: 12px;
+      width: 13px;
+    }
+  }
+  .lines{
+    border-bottom: 1px solid black;
+  }
+}
+
 </style>
