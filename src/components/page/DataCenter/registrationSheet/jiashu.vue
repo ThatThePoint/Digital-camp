@@ -1,12 +1,12 @@
 <template>
   <el-form ref="form" :model="form" label-width="80px">
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="姓名">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="性别">
           <el-radio-group v-model="form.gender">
             <el-radio label="男"></el-radio>
@@ -14,42 +14,43 @@
           </el-radio-group>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="出生日期">
           <el-date-picker
             v-model="form.birthday"
             type="date"
             placeholder="选择日期"
+            style="max-width:167px"
           ></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="籍贯">
           <el-input v-model="form.origin"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="民族">
           <el-input v-model="form.national"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="出生地">
           <el-input v-model="form.bornArea"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="工作单位">
           <el-input v-model="form.workStation"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="联系电话">
           <el-input v-model="form.tel"></el-input>
         </el-form-item>
@@ -63,12 +64,12 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="身份证">
           <el-input v-model="form.idcard" @blur="blurs"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="婚姻状况">
           <el-select clearable v-model="form.marry" placeholder="请选择">
             <el-option

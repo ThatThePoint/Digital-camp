@@ -1,12 +1,12 @@
 <template>
   <el-form ref="form" :model="form" label-width="80px">
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="姓名">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="性别">
           <el-radio-group v-model="form.gender">
             <el-radio label="男"></el-radio>
@@ -14,41 +14,42 @@
           </el-radio-group>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="出生日期">
           <el-date-picker
             class="input-width"
             v-model="form.birthday"
             type="date"
             placeholder="选择日期"
+            style="max-width:167px"
           ></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="籍贯">
           <el-input v-model="form.origin"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="民族">
           <el-input v-model="form.national"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="登陆账号" required>
           <el-input v-model="form.loginName"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="出生地">
           <el-input v-model="form.bornArea"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="血型">
           <el-select clearable v-model="form.blood" placeholder="请选择血型">
             <el-option
@@ -60,14 +61,14 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="登陆密码" required>
           <el-input v-model="form.password"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="部职别">
           <el-select clearable v-model="form.deptId" placeholder="请选择部门">
              <el-option
@@ -80,19 +81,19 @@
           <el-input v-model="form.buzhibie"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="工作日期">
-          <el-date-picker class="input-width" v-model="form.jobDate" type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker class="input-width" v-model="form.jobDate" type="date" placeholder="选择日期" style="max-width:167px"></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="身份证">
           <el-input v-model="form.idcard" @blur="blurs"></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="政治面貌">
           <el-select clearable v-model="form.politicsType" placeholder="请选择">
             <el-option
@@ -106,7 +107,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="人员类别">
           <el-select clearable v-model="form.staffType" placeholder="请选择">
             <el-option
@@ -118,7 +119,7 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="婚姻状况">
           <el-select clearable v-model="form.marry" placeholder="请选择">
             <el-option
@@ -130,7 +131,7 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="离退休日期">
           <el-date-picker
             type="date"
@@ -142,7 +143,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="职工身份类别">
           <el-select clearable v-model="form.employeeStatus" placeholder="请选择证件类型">
             <el-option
@@ -154,7 +155,7 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="岗位情况">
           <el-select clearable v-model="form.dutySituation" placeholder="请选择">
             <el-option
@@ -166,14 +167,14 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="职工登记号码">
           <el-input v-model="form.staffLoginNo"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="文化程度">
           <el-select clearable v-model="form.educatLevel" placeholder="请选择">
             <el-option
@@ -185,7 +186,7 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="入学日期">
           <el-date-picker
             type="date"
@@ -195,14 +196,14 @@
           ></el-date-picker>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="毕业院校">
           <el-input v-model="form.gradSchool"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="学位">
           <el-select clearable v-model="form.graduateType" placeholder="请选择">
             <el-option
@@ -214,7 +215,7 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="毕业日期">
           <el-date-picker
             type="date"
@@ -224,75 +225,77 @@
           ></el-date-picker>
         </el-form-item>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="毕业专业">
           <el-input v-model="form.gradProf"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
-        <el-col :span="8">
+      <el-col :span="5">
+ 
           <el-form-item label="行政职务及日期">
-            <el-input v-model="form.chiefJob"></el-input>
+            <el-input v-model="form.chiefJob" style="max-width:167px"></el-input>
             <el-date-picker
               type="date"
               placeholder="选择日期"
               v-model="form.chiefJobDate"
+              style="max-width:167px"
             ></el-date-picker>
           </el-form-item>
-        </el-col>
+
       </el-col>
       <el-col :span="8">
-        <el-form-item label="行政职务（管理岗位）等级及日期">
-          <el-input v-model="form.chiefPosition" style="width: 60%;"></el-input>
+        <el-form-item label="行政职务（管理岗位）等级及日期" label-width="136px">
+          <el-input v-model="form.chiefPosition" style="max-width:167px"></el-input>
           <el-date-picker
             type="date"
             placeholder="选择日期"
             v-model="form.chiefDate"
-            style="width: 60%;"
+            style="max-width:167px"
           ></el-date-picker>
         </el-form-item>
       </el-col>
       <el-col :span="8">
-        <el-form-item label="专业技术职务及日期">
-          <el-input v-model="form.professionTech" style="width: 60%;"></el-input>
+        <el-form-item label="专业技术职务及日期" label-width="145px">
+          <el-input v-model="form.professionTech" style="max-width:167px"></el-input>
           <el-date-picker
             type="date"
             placeholder="选择日期"
             v-model="form.professionTechDate"
-            style="width: 60%;"
+            style="max-width:167px"
           ></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="岗位等级及日期">
-          <el-select clearable v-model="form.professionTechLevel" placeholder="请选择">
+          <el-select clearable v-model="form.professionTechLevel" placeholder="请选择" style="max-width:167px">
              <el-option
               v-for="item in professionTechLevelOptions"
               :label="item.value"
               :value="item.key"
               :key="item.key"
+              style="max-width:167px"
             ></el-option>
           </el-select>
           <el-date-picker
             type="date"
             placeholder="选择日期"
             v-model="form.professionTechLevelDate"
-            style="width: 60%;"
+            style="max-width:167px"
           ></el-date-picker>
         </el-form-item>
       </el-col>
       <el-col :span="8">
-        <el-form-item label="文职人员级别及日期">
-          <el-input v-model="form.civilStaffLevel" style="width: 60%;"></el-input>
+        <el-form-item label="文职人员级别及日期" label-width="130px">
+          <el-input v-model="form.civilStaffLevel" style="max-width:167px"></el-input>
           <el-date-picker
             type="date"
             placeholder="选择日期"
             v-model="form.civilStaffLevelDate"
-            style="width: 60%;"
+            style="max-width:167px"
           ></el-date-picker>
         </el-form-item>
       </el-col>

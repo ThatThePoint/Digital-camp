@@ -7,38 +7,38 @@
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-<div class="box">
-    <div class="container">
-      <el-button type="success" @click="handleAdd" class="right">新增</el-button>
-      <div class="body">
-        <el-dialog title="部门信息" :visible.sync="dialogFormVisible">
-          <el-form :model="deptInfo">
-            <div class="flex"></div>
-            <el-form-item label="上级部门" :label-width="formLabelWidth">
-              <el-select v-model="deptInfo.parentId" placeholder="请选择" style="margin-left: 10px">
-                <el-option
-                    v-for="item in deptsOps"
-                    :key="item.tid"
-                    :label="item.name"
-                    :value="item.tid"
-                  ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="部门名称" :label-width="formLabelWidth" required>
-              <el-input class="input-width" placeholder="请输入" v-model="deptInfo.name" type="textarea"></el-input>
-            </el-form-item>
-            <el-form-item label="部门编码" :label-width="formLabelWidth" required>
-              <el-input class="input-width" placeholder="请输入" v-model="deptInfo.code" type="textarea"></el-input>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="handleCancel">取 消</el-button>
-            <el-button type="primary" @click="handleSave">确 定</el-button>
+    <div class="box">
+        <div class="container">
+          <el-button type="success" @click="handleAdd" class="right">新增</el-button>
+          <div class="body">
+            <el-dialog title="部门信息" :visible.sync="dialogFormVisible">
+              <el-form :model="deptInfo">
+                <div class="flex"></div>
+                <el-form-item label="上级部门" :label-width="formLabelWidth">
+                  <el-select v-model="deptInfo.parentId" placeholder="请选择" style="margin-left: 10px">
+                    <el-option
+                        v-for="item in deptsOps"
+                        :key="item.tid"
+                        :label="item.name"
+                        :value="item.tid"
+                      ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="部门名称" :label-width="formLabelWidth" required>
+                  <el-input class="input-width" placeholder="请输入" v-model="deptInfo.name" type="textarea"></el-input>
+                </el-form-item>
+                <el-form-item label="部门编码" :label-width="formLabelWidth" required>
+                  <el-input class="input-width" placeholder="请输入" v-model="deptInfo.code" type="textarea"></el-input>
+                </el-form-item>
+              </el-form>
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="handleCancel">取 消</el-button>
+                <el-button type="primary" @click="handleSave">确 定</el-button>
+              </div>
+            </el-dialog>
           </div>
-        </el-dialog>
-      </div>
+        </div>
     </div>
-</div>
     <el-tree
       class="trees aass"
       :data="treedata"
@@ -46,16 +46,17 @@
       default-expand-all
       :expand-on-click-node="false">
       <span class="custom-tree-node" slot-scope="{ node, data }">
-        <span class="twos">{{ node.label }}</span>
+        <span class="twos" @click="() => append(node, data)">{{ node.label }}</span>
         <span class="detail">
-          <!-- <el-button
+          <el-button
+            style="opacity:0"
             type="text"
             size="mini"
             class="butoon"
             @click="() => append(node, data)">
             详情
           </el-button>
-          <el-button
+          <!-- <el-button
             type="text"
             class="butoon"
             size="mini"
@@ -90,14 +91,13 @@ export default {
     //详情
     append(node, data) {
       console.log(node, data)
-
       this.dialogFormVisible = true;
+      this.deptInfo.parentId = data.parentName
       this.deptInfo.name = data.label
       this.deptInfo.code = data.code
     },
     //删除  
     remove(node, data) {
-      console.log(node, data)
       this.postAxios("DataCenter/DeleteDept", {deptId:data.id})
         .then(res => {
           console.log(res);
