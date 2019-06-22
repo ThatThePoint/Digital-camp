@@ -129,7 +129,6 @@
           </div>
         </el-tab-pane>
       </el-tabs>
-      <button @click="print">打印</button>
     </div>
   </div>
 </template>
