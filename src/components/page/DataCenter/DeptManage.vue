@@ -215,6 +215,11 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+
+
+
+
+
 .input-width {
   width: 180px;
   margin: 0 10px;
