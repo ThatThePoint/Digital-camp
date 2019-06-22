@@ -409,7 +409,6 @@
 
       <!-- 没有审批信息 -->
       <el-dialog :visible.sync="wushenpi" style="width:1700px">
-        11
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
           <div class="second-title">申请信息</div>
           <el-row>
@@ -542,6 +541,7 @@
           <el-button v-show="dispatchCommit" @click="dispatchApply">提交</el-button>
           <el-button v-show="approvalPass" @click="passApproval">通过</el-button>
           <el-button v-show="approvalPass" @click="rejectApproval">退回</el-button>
+          <el-button v-show="printBtn" @click="print">打印</el-button>
         </div>
       </el-dialog>
 
@@ -746,7 +746,7 @@ export default {
       approvalDetailDisabled:false,
       dispatchCommit:false, //调度提交按钮显示隐藏
       approvalPass:false,//通过/退回 审核
-
+      printBtn:false,
       carApplyInfoVisible : false ,
       riskOptions:[
         "一般风险",
@@ -896,6 +896,7 @@ export default {
       
       //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回
       if(this.activeName=='first'){//0-待调度
+      this.printBtn=false;
       // approvalDetail  审批信息
         if(scope.row.applystatus===1){
           this.carApplyInfoVisible=true      //一弹框
@@ -932,6 +933,7 @@ export default {
         this.dispatchCommit=true;//显示提交
         this.approvalPass=false;//隐藏审批通过和退回
         this.wushenpi=true;
+        this.printBtn=false;//打印按钮
 
         this.getApplyInfo(scope.row.tid);
         return  false;
