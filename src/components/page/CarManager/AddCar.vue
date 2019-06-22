@@ -42,7 +42,7 @@
           </div>
           <div class="footer">
             <div class="one">
-              <p>车辆基本信息：<span class="starred">*</span>车牌号：<el-input class="input-width" placeholder="请输入" v-model="carInfo.licensePlate"></el-input></p>
+              <p>车辆基本信息：<span class="starred">*</span>车牌号：<el-input class="input-width" placeholder="请输入" v-model="carInfo.licensePlate" style="margin-left:0"></el-input></p>
               <div class="itemDet">
                 <span class="starred">*</span>车辆品牌：
                 <el-select clearable class="input-width" v-model="carInfo.brand" placeholder="请选择">
@@ -194,7 +194,8 @@
             </div>
           </div>
             <div class="one three">
-              <p>车辆基本信息：<span class="starred">*</span>车牌号：<el-input class="input-width" placeholder="请输入" v-model="carInfo.licensePlate"></el-input></p>
+              <p>车辆基本信息：<span class="starred">*</span>车牌号：<el-input class="input-width" placeholder="请输入" v-model="carInfo.licensePlate"
+              style="margin-left:0"></el-input></p>
               <div class="itemDet">
                 <span class="starred">*</span>车辆品牌：
                 <el-select clearable class="input-width" v-model="carInfo.brand" placeholder="请选择">

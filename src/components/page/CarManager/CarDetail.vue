@@ -158,7 +158,7 @@
               <el-table-column prop="carType" label="车辆属性" sortable width="120"></el-table-column>
               <el-table-column prop="tel" label="联系电话" sortable></el-table-column>
               <el-table-column prop="registTime" label="登记时间" sortable width="120"></el-table-column>
-              <el-table-column prop="inout" label="出入状态" formatter="formatterInOut" sortable></el-table-column>
+              <el-table-column prop="inout" label="出入状态" :formatter="formatterInOut" sortable></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
