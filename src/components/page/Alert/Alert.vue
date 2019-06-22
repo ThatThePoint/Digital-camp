@@ -11,7 +11,7 @@
       <div class="messages">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="发布单位">
-            <el-select clearable v-model="formInline.dept" placeholder="请选择" style="width: 100px">
+            <el-select clearable v-model="formInline.dept" placeholder="请选择" style="width: 130px">
               <el-option
                     v-for="item in deptsOps"
                     :key="item.tid"
@@ -33,7 +33,7 @@
           <el-form-item label="警报状态">
             <el-select clearable v-model="formInline.status" placeholder="请选择" style="width: 100px">
               <el-option label="生效" value="1"></el-option>
-              <el-option label="失效" value="0"></el-option>
+              <el-option label="失效" value="2"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="警报内容">

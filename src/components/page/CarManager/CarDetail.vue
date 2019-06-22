@@ -1,28 +1,5 @@
 <template>
   <div>
-    <!-- <el-row class="demo-autocomplete">
-      <el-col :span="12">
-        <div class="sub-title">激活即列出输入建议</div>
-        <el-autocomplete
-          class="inline-input"
-          v-model="state1"
-          :fetch-suggestions="querySearch"
-          placeholder="请输入内容"
-          @select="handleSelect"
-        ></el-autocomplete>
-      </el-col>
-      <el-col :span="12">
-        <div class="sub-title">输入后匹配输入建议</div>
-        <el-autocomplete
-          class="inline-input"
-          v-model="state2p"
-          :fetch-suggestions="querySearch"
-          placeholder="请输入内容"
-          :trigger-on-focus="false"
-          @select="handleSelect"
-        ></el-autocomplete>
-      </el-col>
-    </el-row> -->
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
@@ -57,13 +34,13 @@
               style="width: 100%"
               :default-sort="{prop: 'licensePlate', order: 'descending'}"
             >
-              <el-table-column prop="licensePlate" label="车牌号" sortable width="80" > </el-table-column>
-              <el-table-column prop="carType" label="车辆类型" sortable width="100" :formatter="carnum"></el-table-column>
-              <el-table-column prop="deptName" label="所属部门" sortable width="100"></el-table-column>
-              <el-table-column prop="brand" label="车辆品牌" sortable width="100"></el-table-column>
-              <el-table-column prop="model" label="型号" sortable width="100"></el-table-column>
-              <el-table-column prop="useStatus" label="技术状态" sortable width="100"></el-table-column>
-              <el-table-column prop="inOrOut" label="出入状态" :formatter="formatterInOut" sortable width="100"></el-table-column>
+              <el-table-column prop="licensePlate" label="车牌号"  > </el-table-column>
+              <el-table-column prop="carType" label="车辆类型"  :formatter="carnum"></el-table-column>
+              <el-table-column prop="deptName" label="所属部门" ></el-table-column>
+              <el-table-column prop="brand" label="车辆品牌" ></el-table-column>
+              <el-table-column prop="model" label="型号" ></el-table-column>
+              <el-table-column prop="useStatus" label="技术状态" ></el-table-column>
+              <el-table-column prop="inOrOut" label="出入状态" :formatter="formatterInOut" ></el-table-column>
               <el-table-column label="操作" width="200">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -107,12 +84,12 @@
               style="width: 100%"
               :default-sort="{prop: 'licensePlate', order: 'descending'}"
             >
-              <el-table-column prop="licensePlate" label="车牌号" sortable width="100"></el-table-column>
-              <el-table-column prop="owner" label="车主姓名" sortable width="100"></el-table-column>
-              <el-table-column prop="ownerTel" label="联系电话" sortable width="160"></el-table-column>
-               <el-table-column prop="registTime" label="登记时间" sortable width="150"></el-table-column>
-              <el-table-column prop="relaterName" label="部队联系人" sortable width="130"></el-table-column>
-              <el-table-column prop="inOrOut" label="出入状态" :formatter="formatterInOut" sortable width="100"></el-table-column>
+              <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
+              <el-table-column prop="owner" label="车主姓名" ></el-table-column>
+              <el-table-column prop="ownerTel" label="联系电话" ></el-table-column>
+               <el-table-column prop="registTime" label="登记时间" ></el-table-column>
+              <el-table-column prop="relaterName" label="部队联系人" ></el-table-column>
+              <el-table-column prop="inOrOut" label="出入状态" :formatter="formatterInOut" ></el-table-column>
               <el-table-column label="操作" ortable width="200">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -154,13 +131,13 @@
               style="width: 100%"
               :default-sort="{prop: 'licensePlate', order: 'descending'}"
             >
-              <el-table-column prop="licensePlate" label="车牌号" sortable width="120"></el-table-column>
-              <el-table-column prop="carType" label="车辆属性" sortable width="120"></el-table-column>
-              <el-table-column prop="tel" label="联系电话" sortable></el-table-column>
-              <el-table-column prop="registTime" label="登记时间" sortable width="120"></el-table-column>
-              <el-table-column prop="inout" label="出入状态" :formatter="formatterInOut" sortable></el-table-column>
+              <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
+              <el-table-column prop="carType" label="车辆属性" ></el-table-column>
+              <el-table-column prop="tel" label="联系电话" ></el-table-column>
+              <el-table-column prop="registTime" label="登记时间"  ></el-table-column>
+              <el-table-column prop="inout" label="出入状态" :formatter="formatterInOut" ></el-table-column>
               <el-table-column label="操作">
-                <template slot-scope="scope">
+                <template slot-scope="scope" width="200">
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                   <el-button
                     size="mini"
