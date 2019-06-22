@@ -850,31 +850,31 @@ export default {
           this.dispatchCommit=true; //显示提交按钮
           this.approvalPass=false; //隐藏审批通过和退回按钮
       }
-      // else if(scope.row.applystatus==1){//1-调度退回
-      //   this.approvalDetail=false;
-      //   this.dispatchDetailDisabled=false;
-      //   this.dispatchCommit=true;//隐藏提交
-      //   this.approvalPass=false;//隐藏审批通过和退回
-      // }else if(scope.row.applystatus==2){//2-待审批
-      //   this.approvalDetail=true;
-      //   this.dispatchDetailDisabled=true;
-      //   this.approvalDetailDisabled=false;
-      //   this.dispatchCommit=false;//隐藏提交
-      //   this.approvalPass=true;//显示审批通过和退回
+      else if(scope.row.applystatus==1){//1-调度退回
+        this.approvalDetail=false;
+        this.dispatchDetailDisabled=false;
+        this.dispatchCommit=true;//隐藏提交
+        this.approvalPass=false;//隐藏审批通过和退回
+      }else if(scope.row.applystatus==2){//2-待审批
+        this.approvalDetail=true;
+        this.dispatchDetailDisabled=true;
+        this.approvalDetailDisabled=false;
+        this.dispatchCommit=false;//隐藏提交
+        this.approvalPass=true;//显示审批通过和退回
         
-      // }else if(scope.row.applystatus==3){//3-已批准
-      //   this.approvalDetail=true;
-      //   this.dispatchDetailDisabled=true;
-      //   this.approvalDetailDisabled=true;
-      //   this.dispatchCommit=false;//隐藏提交
-      //   this.approvalPass=false;//隐藏审批通过和退回
-      // }else if(scope.row.applystatus==4){//4-审批退回
-      //   this.approvalDetail=true;
-      //   this.dispatchDetailDisabled=true;
-      //   this.approvalDetailDisabled=false;
-      //   this.dispatchCommit=false;//隐藏提交
-      //   this.approvalPass=true;//显示审批通过和退回
-      // }
+      }else if(scope.row.applystatus==3){//3-已批准
+        this.approvalDetail=true;
+        this.dispatchDetailDisabled=true;
+        this.approvalDetailDisabled=true;
+        this.dispatchCommit=false;//隐藏提交
+        this.approvalPass=false;//隐藏审批通过和退回
+      }else if(scope.row.applystatus==4){//4-审批退回
+        this.approvalDetail=true;
+        this.dispatchDetailDisabled=true;
+        this.approvalDetailDisabled=false;
+        this.dispatchCommit=false;//隐藏提交
+        this.approvalPass=true;//显示审批通过和退回
+      }
       this.getApplyInfo(scope.row.tid);
     },
     //关闭详情

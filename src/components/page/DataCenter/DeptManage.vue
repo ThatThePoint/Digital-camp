@@ -15,7 +15,7 @@
           <el-form :model="deptInfo">
             <div class="flex"></div>
             <el-form-item label="上级部门" :label-width="formLabelWidth">
-              <el-select v-model="deptInfo.parentId" placeholder="请选择">
+              <el-select v-model="deptInfo.parentId" placeholder="请选择" style="margin-left: 10px">
                 <el-option
                     v-for="item in deptsOps"
                     :key="item.tid"
@@ -40,7 +40,7 @@
     </div>
 </div>
     <el-tree
-      class="trees"
+      class="trees aass"
       :data="treedata"
       node-key="id"
       default-expand-all
@@ -48,18 +48,20 @@
       <span class="custom-tree-node" slot-scope="{ node, data }">
         <span class="twos">{{ node.label }}</span>
         <span class="detail">
-          <el-button
+          <!-- <el-button
             type="text"
             size="mini"
+            class="butoon"
             @click="() => append(node, data)">
             详情
           </el-button>
           <el-button
             type="text"
+            class="butoon"
             size="mini"
             @click="() => remove(node, data)">
             删除
-          </el-button>
+          </el-button> -->
         </span>
       </span>
     </el-tree>
@@ -212,7 +214,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .input-width {
   width: 180px;
   margin: 0 10px;
@@ -236,5 +238,15 @@ export default {
   display: inline-block;
   /* margin-bottom: 10px; */
 }
-
+.butoon{
+  font-size: 15px;
+}
+.el-tree.trees{
+  .el-tree-node__content{
+    height: 32px !important;
+  }
+}
+.twos{
+  font-size: 18px;
+}
 </style>
