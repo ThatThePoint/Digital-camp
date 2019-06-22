@@ -82,7 +82,7 @@
         <el-button type="primary" @click="confirm">确 定</el-button>
       </span>
     </el-dialog>
-    <div class="container">
+    <div class="container" ref="print">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="值班查询" name="third">
           <el-button class="addduty" @click="addduty">增加值班</el-button>
@@ -129,10 +129,14 @@
           </div>
         </el-tab-pane>
       </el-tabs>
+      <button @click="print">打印</button>
     </div>
   </div>
 </template>
 <script>
+import Print from '../../../api/Print'
+import Vue from 'vue'
+Vue.use(Print)
 export default {
   name: "rota",
   data() {
@@ -186,6 +190,9 @@ export default {
     this.getdatatwo(true);
   },
   methods: {
+    print(){
+      this.$print(this.$refs.print)
+    },
     addduty(){
       this.dialogVisible = true
       this.gangwei = '';
@@ -203,9 +210,9 @@ export default {
           done();
         })
         .catch(_ => {});
-        if(this.flagon == true){
-          this.activeName = "third"
-        }
+        // if(this.flagon == true){
+        //   this.activeName = "third"
+        // }
         
     },
 
@@ -249,11 +256,11 @@ export default {
           console.log(err);
         });
         this.dialogVisible = false
-      if(this.flagon == true){
-        this.activeName = "third"
-      }else{
-        this.activeName="first";
-      }
+      // if(this.flagon == true){
+      //   this.activeName = "third"
+      // }else{
+      //   this.activeName="first";
+      // }
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -351,7 +358,7 @@ export default {
       this.jobDatalist = [];
       this.personlist = [];
       this.depts = [];
-      this.flagon = true
+      // this.flagon = true
       this.flaghand = true
       this.dialogVisible = true
       this.gangwei = row.dept;
@@ -380,11 +387,11 @@ export default {
     cancelPlan(){
       this.dialogVisible = false
       
-      if(this.flagon == true){
-        this.activeName = "third"
-      }else{
-        this.activeName="first";
-      }
+      // if(this.flagon == true){
+      //   this.activeName = "third"
+      // }else{
+      //   this.activeName="first";
+      // }
       this.getdataone();
       this.rotaInfo={};
       this.persons="";

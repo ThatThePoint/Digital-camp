@@ -9,7 +9,7 @@
     </div>
     <div class="container">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="车辆申请" name="first">
+        <el-tab-pane label="我的申请" name="first">
           <div class="messages">
             <el-form :inline="true" :model="param" class="demo-form-inline">
               <el-form-item label>
