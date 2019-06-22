@@ -7,7 +7,7 @@
     </div>
     <div class="container">
       <div class="body">
-        <el-form :model="form" label-width="130px">
+        <el-form :model="form" label-width="130px" style="width:2000px">
           <el-row>
             <el-col :span="6">
               <el-form-item label="操作人">{{form.applyer}}</el-form-item>
@@ -19,9 +19,10 @@
           <el-row>
             <el-col :span="6">
               <el-form-item label="请假人">
-                <el-input class="input-width" 
+                <el-input 
                   v-model="form.selectedStaffNameList"  
-                  placeholder="请输入关键词"            
+                  placeholder="请输入关键词"   
+                  style="width:300px"         
                   @focus="focus"                  
                   >
                 </el-input>
@@ -42,8 +43,8 @@
           </el-row>
           <el-row>
             <el-col :span="6">
-              <el-form-item label="开始时间">
-                <el-date-picker
+              <el-form-item label="开始时间" >
+                <el-date-picker style="width:300px"
                   v-model="form.startTime"
                   type="datetime"
                   placeholder="选择日期时间"
@@ -63,24 +64,19 @@
           <el-row>
             <el-col :span="6">
               <el-form-item label="到达地点">
-                <el-input v-model="form.dest"></el-input>
+                <el-input v-model="form.dest" style="width:300px"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="路途时间">
-                <el-input v-model="form.roadTime"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="交通工具">
-                <el-input v-model="form.transport"></el-input>
+                <el-input v-model="form.roadTime" style="width: 220px;"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="6">
               <el-form-item label="一级审批人">
-                <el-select clearable v-model="form.firstApprover" placeholder="请选择">
+                <el-select clearable v-model="form.firstApprover" style="width:300px" placeholder="请选择">
                   <el-option
                     v-for="item in firstApproverList"
                     :label="item.name"
@@ -88,6 +84,11 @@
                     :key="item.tid"
                   ></el-option>
                 </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="交通工具">
+                <el-input v-model="form.transport" style="width: 220px;"></el-input>
               </el-form-item>
             </el-col>
           </el-row>

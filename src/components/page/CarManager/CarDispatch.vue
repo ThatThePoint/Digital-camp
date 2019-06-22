@@ -12,8 +12,8 @@
         <el-tab-pane label="我的申请" name="first">
           <div class="messages">
             <el-form :inline="true" :model="param" class="demo-form-inline">
-              <el-form-item label>
-                <el-select clearable v-model="param.carId" placeholder="我的申请">
+              <el-form-item style="width:100px" >
+                <el-select clearable v-model="param.carId" placeholder="申请车辆">
                   <el-option
                   v-for="item in carOptions"
                   :key="item.tid"
@@ -36,11 +36,14 @@
               style="width: 100%"
               :default-sort="{prop: 'applytime', order: 'descending'}"
             >
-              <el-table-column prop="licensePlate" label="车牌号" sortable width="100"></el-table-column>
-              <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
-              <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
-              <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
-              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" sortable width="160"></el-table-column>
+              <el-table-column prop="formcode" label="申请单号" ></el-table-column>
+              <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
+              <el-table-column prop="applyer" label="申请人" ></el-table-column>
+              <el-table-column prop="applyerDeptName" label="用车部门" ></el-table-column>
+              <el-table-column prop="reason" label="用车事由" sortable ></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" ></el-table-column>
+              <el-table-column prop="starttime" label="开始时间" :formatter="formatterStart" ></el-table-column>
+              <el-table-column prop="endtime" label="终止时间" :formatter="formatterEnd" ></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
@@ -52,7 +55,7 @@
         <el-tab-pane label="车辆调度" name="second">
           <div class="messages">
             <el-form :inline="true" :model="param" class="demo-form-inline">
-              <el-form-item label>
+              <el-form-item style="width:100px" >
                 <el-select clearable v-model="param.carId" placeholder="申请车辆">
                   <el-option
                   v-for="item in carOptions"
@@ -62,6 +65,28 @@
                 ></el-option>
                 </el-select>
               </el-form-item>
+              <el-form-item :inline="true" class="demo-form-inline">
+                    <el-date-picker
+                      type="datetime"
+                      placeholder="申请开始时间"
+                      v-model="param.starttime"
+                      style="width:145px;margin-left:10px"
+                    ></el-date-picker>
+                  </el-form-item>
+              <el-form-item :inline="true" class="demo-form-inline">
+                    <el-date-picker
+                      type="datetime"
+                      placeholder="申请终止时间"
+                      v-model="param.endtime"
+                      style="width:145px;margin-left:10px"
+                    ></el-date-picker>
+                  </el-form-item>
+                  <el-form-item :inline="true">
+                    <el-input type="input" placeholder="申请单号" v-model="param.formcode" style="width:120px"></el-input>
+                  </el-form-item>
+                  <el-form-item :inline="true" style="width:120px">
+                    <el-input type="input" placeholder="用车人" v-model="param.name" ></el-input>
+                  </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="search">查询</el-button>
               </el-form-item>
@@ -73,12 +98,14 @@
               style="width: 100%"
               :default-sort="{prop: 'applytime', order: 'descending'}"
             >
-              <el-table-column prop="formcode" label="申请单号" sortable width="100"></el-table-column>
-              <el-table-column prop="licensePlate" label="车牌号" sortable width="100"></el-table-column>
-              <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
-              <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
-              <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
-              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" sortable width="160"></el-table-column>
+              <el-table-column prop="formcode" label="申请单号" ></el-table-column>
+              <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
+              <el-table-column prop="applyer" label="申请人" ></el-table-column>
+              <el-table-column prop="applyerDeptName" label="用车部门" ></el-table-column>
+              <el-table-column prop="reason" label="用车事由" sortable ></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" ></el-table-column>
+              <el-table-column prop="starttime" label="开始时间" :formatter="formatterStart" ></el-table-column>
+              <el-table-column prop="endtime" label="终止时间" :formatter="formatterEnd" ></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
@@ -90,7 +117,7 @@
         <el-tab-pane label="待审批车辆" name="fourth">
           <div class="messages">
             <el-form :inline="true" :model="param" class="demo-form-inline">
-              <el-form-item label>
+              <el-form-item style="width:100px" >
                 <el-select clearable v-model="param.carId" placeholder="申请车辆">
                   <el-option
                   v-for="item in carOptions"
@@ -100,6 +127,28 @@
                 ></el-option>
                 </el-select>
               </el-form-item>
+              <el-form-item :inline="true" class="demo-form-inline">
+                    <el-date-picker
+                      type="datetime"
+                      placeholder="申请开始时间"
+                      v-model="param.starttime"
+                      style="width:145px;margin-left:10px"
+                    ></el-date-picker>
+                  </el-form-item>
+              <el-form-item :inline="true" class="demo-form-inline">
+                    <el-date-picker
+                      type="datetime"
+                      placeholder="申请终止时间"
+                      v-model="param.endtime"
+                      style="width:145px;margin-left:10px"
+                    ></el-date-picker>
+                  </el-form-item>
+                  <el-form-item :inline="true">
+                    <el-input type="input" placeholder="申请单号" v-model="param.applyer" style="width:120px"></el-input>
+                  </el-form-item>
+                  <el-form-item :inline="true" style="width:120px">
+                    <el-input type="input" placeholder="用车人" v-model="param.applyer" ></el-input>
+                  </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="search">查询</el-button>
               </el-form-item>
@@ -111,11 +160,14 @@
               style="width: 100%"
               :default-sort="{prop: 'applytime', order: 'descending'}"
             >
-              <el-table-column prop="licensePlate" label="车牌号" sortable width="100"></el-table-column>
-              <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
-              <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
-              <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
-              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate"  sortable width="160"></el-table-column>
+              <el-table-column prop="formcode" label="申请单号" ></el-table-column>
+              <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
+              <el-table-column prop="applyer" label="申请人" ></el-table-column>
+              <el-table-column prop="applyerDeptName" label="用车部门" ></el-table-column>
+              <el-table-column prop="reason" label="用车事由" sortable ></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" ></el-table-column>
+              <el-table-column prop="starttime" label="开始时间" :formatter="formatterStart" ></el-table-column>
+              <el-table-column prop="endtime" label="终止时间" :formatter="formatterEnd" ></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
@@ -148,11 +200,14 @@
               style="width: 100%"
               :default-sort="{prop: 'applytime', order: 'descending'}"
             >
-              <el-table-column prop="licensePlate" label="车牌号" sortable width="100"></el-table-column>
-              <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
-              <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
-              <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
-              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate"  sortable width="160"></el-table-column>
+              <el-table-column prop="formcode" label="申请单号" ></el-table-column>
+              <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
+              <el-table-column prop="applyer" label="申请人" ></el-table-column>
+              <el-table-column prop="applyerDeptName" label="用车部门" ></el-table-column>
+              <el-table-column prop="reason" label="用车事由" sortable ></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" ></el-table-column>
+              <el-table-column prop="starttime" label="开始时间" :formatter="formatterStart" ></el-table-column>
+              <el-table-column prop="endtime" label="终止时间" :formatter="formatterEnd" ></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
@@ -185,11 +240,14 @@
               style="width: 100%"
               :default-sort="{prop: 'applytime', order: 'descending'}"
             >
-              <el-table-column prop="licensePlate" label="车牌号" sortable width="100"></el-table-column>
-              <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
-              <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
-              <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
-              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate"  sortable width="160"></el-table-column>
+              <el-table-column prop="formcode" label="申请单号" ></el-table-column>
+              <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
+              <el-table-column prop="applyer" label="申请人" ></el-table-column>
+              <el-table-column prop="applyerDeptName" label="用车部门" ></el-table-column>
+              <el-table-column prop="reason" label="用车事由" sortable ></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" ></el-table-column>
+              <el-table-column prop="starttime" label="开始时间" :formatter="formatterStart" ></el-table-column>
+              <el-table-column prop="endtime" label="终止时间" :formatter="formatterEnd" ></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
@@ -222,11 +280,14 @@
               style="width: 100%"
               :default-sort="{prop: 'applytime', order: 'descending'}"
             >
-              <el-table-column prop="licensePlate" label="车牌号" sortable width="100"></el-table-column>
-              <el-table-column prop="applyer" label="申请人" sortable width="100"></el-table-column>
-              <el-table-column prop="applyerDeptName" label="用车部门" sortable width="100"></el-table-column>
-              <el-table-column prop="reason" label="用车事由" sortable width="200"></el-table-column>
-              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" sortable width="160"></el-table-column>
+              <el-table-column prop="formcode" label="申请单号" ></el-table-column>
+              <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
+              <el-table-column prop="applyer" label="申请人" ></el-table-column>
+              <el-table-column prop="applyerDeptName" label="用车部门" ></el-table-column>
+              <el-table-column prop="reason" label="用车事由" sortable ></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" ></el-table-column>
+              <el-table-column prop="starttime" label="开始时间" :formatter="formatterStart" ></el-table-column>
+              <el-table-column prop="endtime" label="终止时间" :formatter="formatterEnd" ></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
@@ -238,7 +299,7 @@
       </el-tabs>
 
 
-      <el-dialog :visible.sync="carApplyInfoVisible">
+      <el-dialog :visible.sync="carApplyInfoVisible" style="width:1600px">
         <el-form :model="applyInfo">
               <div class="flex">用车申请</div>
               <el-row>
@@ -339,7 +400,7 @@
                 </el-col>
               </el-row>
             </el-form>
-            <div slot="footer" class="dialog-footer">
+            <div slot="footer" class="dialog-footer" >
               <el-button @click="cancelApply">取 消</el-button>
               <el-button type="primary" @click="onSubmit">确 定</el-button>
             </div>
@@ -347,7 +408,7 @@
 
 
       <!-- 没有审批信息 -->
-      <el-dialog :visible.sync="wushenpi">
+      <el-dialog :visible.sync="wushenpi" style="width:1700px">
         11
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
           <div class="second-title">申请信息</div>
@@ -392,25 +453,24 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="申请车辆">
-                <label>{{applyInfo.licensePlate}}</label>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="申请司机">
-                <label>{{applyInfo.driverName}}</label>
+              <el-form-item label="出车风险">
+                <el-select disabled clearable v-model="applyInfo.risk" placeholder="请选择">
+                      <el-option
+                        v-for="item in riskOptions"
+                        :key="item.code"
+                        :value="item"
+                      ></el-option>
+                    </el-select>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="16">
+            <el-col :span="8">
               <el-form-item label="申请事由">
                 <label>{{applyInfo.reason}}</label>
               </el-form-item>
             </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="16">
+            <el-col :span="8">
               <el-form-item label="备注">
                 <label>{{applyInfo.remark}}</label>
               </el-form-item>
@@ -487,8 +547,7 @@
 
 
       <!-- 有审批信息 -->
-      <el-dialog :visible.sync="youshenpi">
-        22
+      <el-dialog :visible.sync="youshenpi" style="width:1700px">
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
           <div class="second-title">申请信息</div>
           <el-row>
@@ -645,8 +704,7 @@
         </div>
       </el-dialog>
 
-      <el-dialog
-        :visible.sync="dialogVisible"
+      <el-dialog :visible.sync="dialogVisible"
         width="50%"
         :before-close="handleClose">
         <span> <postemail  v-on:confirm="confirms" :parentlist="parentlist"/></span>
@@ -671,7 +729,11 @@ export default {
       dialogVisible: false,
       applyInfo: {},
       param:{
-        carId:""
+        carId:"",
+        starttime:"",
+        endtime:"",
+        formcode:"",
+        name:""
       },
       carOptions:[],
       activeName: "first",
@@ -720,6 +782,12 @@ export default {
     formatterDate(row,index){
       return this.$utils.timeFormatter(row.applytime);
     },
+    formatterStart(row,index){
+      return this.$utils.timeFormatter(row.starttime);
+    },
+    formatterEnd(row,index){
+      return this.$utils.timeFormatter(row.endtime);
+    },
     getTree(data){
       let map = {};
       let val = [];
@@ -766,7 +834,7 @@ export default {
     },
     //以下====新
     search(){
-
+      this.getTableData();
     },
     getApplyInfo(id) {
       this.postAxios("/CarApply/ApplyInfo", {tid:id})
@@ -800,6 +868,10 @@ export default {
       var canshu={
         tab:this.activeName,
         carId:this.param.carId,
+        starttime:this.param.starttime,
+        endtime:this.param.endtime,
+        formcode:this.param.formcode,
+        name:this.param.name,
         pageNum : num, 
         pageSize : size
       };
@@ -817,6 +889,7 @@ export default {
     //tab切换事件
     handleClick(tab, event) {
       console.log(tab, event);
+      this.param={};
       this.getTableData();
     },
     handleDetail(scope){
@@ -824,58 +897,74 @@ export default {
       //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回
       if(this.activeName=='first'){//0-待调度
       // approvalDetail  审批信息
-        if(scope.row.applystatus=='1'){
+        if(scope.row.applystatus===1){
           this.carApplyInfoVisible=true      //一弹框
           this.youshenpi=false; 
           this.wushenpi=false; 
           this.dispatchDetailDisabled=false;
           
-          
-          this.dispatchCommit=true; //显示提交按钮
-          this.approvalPass=false; //隐藏审批通过和退回按钮
-        }else if(scope.row.applystatus=='0' || scope.row.applystatus=='2'){
+          this.getApplyInfo(scope.row.tid);
+          return  false;
+        }else if(scope.row.applystatus===0 || scope.row.applystatus===4){
           this.carApplyInfoVisible=false //一弹框
           this.youshenpi=false; 
           this.wushenpi=true; 
           this.dispatchDetailDisabled=false;
-          
                     
-          this.dispatchCommit=true; //显示提交按钮
+          this.dispatchCommit=false; //显示提交按钮
           this.approvalPass=false; //隐藏审批通过和退回按钮
-        }else if(scope.row.applystatus=='3' || scope.row.applystatus=='4')
+          this.getApplyInfo(scope.row.tid);
+          return  false;
+        }else if(scope.row.applystatus===2 || scope.row.applystatus===3)  //待审批和审批通过
           this.dispatchDetailDisabled=false;
           this.carApplyInfoVisible=false //一弹框
           this.youshenpi=true; 
           this.wushenpi=false; 
-          this.dispatchCommit=true; //显示提交按钮
+          this.dispatchCommit=false; //显示提交按钮
           this.approvalPass=false; //隐藏审批通过和退回按钮
+
+          this.getApplyInfo(scope.row.tid);
+          return  false;
       }
-      else if(scope.row.applystatus==1){//1-调度退回
+      else if(this.activeName=='second'){//1-待调度
         this.approvalDetail=false;
         this.dispatchDetailDisabled=false;
-        this.dispatchCommit=true;//隐藏提交
+        this.dispatchCommit=true;//显示提交
         this.approvalPass=false;//隐藏审批通过和退回
-      }else if(scope.row.applystatus==2){//2-待审批
+        this.wushenpi=true;
+
+        this.getApplyInfo(scope.row.tid);
+        return  false;
+      }else if(this.activeName=='third'){//2-待审批
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=false;
         this.dispatchCommit=false;//隐藏提交
         this.approvalPass=true;//显示审批通过和退回
-        
-      }else if(scope.row.applystatus==3){//3-已批准
+        this.youshenpi=true;
+        this.getApplyInfo(scope.row.tid);
+        return  false;
+      }else if(this.activeName=='forth'){//3-已批准
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=true;
         this.dispatchCommit=false;//隐藏提交
         this.approvalPass=false;//隐藏审批通过和退回
-      }else if(scope.row.applystatus==4){//4-审批退回
+
+        this.youshenpi=true;
+        this.getApplyInfo(scope.row.tid);
+        return  false;
+      }else {//已审批车辆
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=false;
         this.dispatchCommit=false;//隐藏提交
         this.approvalPass=true;//显示审批通过和退回
+        this.youshenpi=true;
+        this.getApplyInfo(scope.row.tid);
+        return  false;
       }
-      this.getApplyInfo(scope.row.tid);
+      
     },
     //关闭详情
     cancelDetail(){
@@ -972,4 +1061,5 @@ export default {
   font-size: 20px;
   font-weight: 600;
 }
+.dialog-footer {text-align: center}
 </style>
