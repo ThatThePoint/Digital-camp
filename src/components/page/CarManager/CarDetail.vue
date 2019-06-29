@@ -26,7 +26,7 @@
               v-model="licensePlate1"
             ></el-input>
             <el-button @click="search">搜索</el-button>
-            <el-button type="success" @click="addCar()" class="right">新增</el-button>
+            <el-button type="success" @click="addCar('1')" class="right">新增</el-button>
           </div>
           <div class="body">
             <el-table
@@ -75,8 +75,26 @@
               prefix-icon="el-icon-search"
               v-model="licensePlate2"
             ></el-input>
+            <el-input
+              class="input-width"
+              placeholder="车主名字"
+              prefix-icon="el-icon-search"
+              v-model="licensePlate2"
+            ></el-input>
+            <el-input
+              class="input-width"
+              placeholder="部队联系人"
+              prefix-icon="el-icon-search"
+              v-model="licensePlate2"
+            ></el-input>
+             <el-input
+              class="input-width"
+              placeholder="联系人部门"
+              prefix-icon="el-icon-search"
+              v-model="licensePlate2"
+            ></el-input>
             <el-button @click="search">搜索</el-button>
-            <el-button type="success" @click="addCar()" class="right">新增</el-button>
+            <el-button type="success" @click="addCar('2')" class="right">新增</el-button>
           </div>
           <div class="body">
             <el-table
@@ -122,8 +140,26 @@
               prefix-icon="el-icon-search"
               v-model="licensePlate3"
             ></el-input>
+            <el-input
+              class="input-width"
+              placeholder="车主名字"
+              prefix-icon="el-icon-search"
+              v-model="licensePlate2"
+            ></el-input>
+            <el-input
+              class="input-width"
+              placeholder="部队联系人"
+              prefix-icon="el-icon-search"
+              v-model="licensePlate2"
+            ></el-input>
+             <el-input
+              class="input-width"
+              placeholder="联系人部门"
+              prefix-icon="el-icon-search"
+              v-model="licensePlate2"
+            ></el-input>
             <el-button @click="search">搜索</el-button>
-            <el-button type="success" @click="addCar()" class="right">新增</el-button>
+            <el-button type="success" @click="addCar('3')" class="right">新增</el-button>
           </div>
           <div class="body">
             <el-table
@@ -248,7 +284,7 @@ export default {
       if(car=="first"){
         this.getdataone();
       }else if(car=="second"){
-        
+        this.getdatatwo();
       }else{
         this.getdatathree();
       }
@@ -333,14 +369,22 @@ export default {
       this.postAxios("/CarInfo/DeleteCar",{id : row.tid})
         .then(res => {
           _this.$message.success("删除成功")
+          _this.getdatatwo()
           _this.getdataone()
+          _this.getdatathree()
         })
         .catch(err => {
           console.log(err);
       });
     },
-    addCar() {
-      this.$router.push({ path: "/addcar" });
+    addCar(type) {
+      this.$router.push({ 
+          path: "/addcar",
+          query:{
+            type: type
+          }
+        });
+
       // router.push({ path: '/addcar' })
     },
     handleClick(tab, event) {

@@ -22,6 +22,28 @@
                 ></el-option>
                 </el-select>
               </el-form-item>
+              <el-form-item :inline="true" class="demo-form-inline">
+                    <el-date-picker
+                      type="date"
+                      placeholder="申请开始时间"
+                      v-model="param.starttime"
+                      style="width:145px;margin-left:10px"
+                    ></el-date-picker>
+                  </el-form-item>
+              <el-form-item :inline="true" class="demo-form-inline">
+                    <el-date-picker
+                      type="date"
+                      placeholder="申请终止时间"
+                      v-model="param.endtime"
+                      style="width:145px;margin-left:10px"
+                    ></el-date-picker>
+                  </el-form-item>
+                  <el-form-item :inline="true">
+                    <el-input type="input" placeholder="申请单号" v-model="param.formcode" style="width:120px"></el-input>
+                  </el-form-item>
+                  <el-form-item :inline="true" style="width:120px">
+                    <el-input type="input" placeholder="用车人" v-model="param.name" ></el-input>
+                  </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="search">查询</el-button>
               </el-form-item>
@@ -39,7 +61,7 @@
               <el-table-column prop="formcode" label="申请单号" ></el-table-column>
               <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
               <el-table-column prop="applyer" label="申请人" ></el-table-column>
-              <el-table-column prop="applyerDeptName" label="用车部门" ></el-table-column>
+              <el-table-column prop="applystatus" label="申请状态" :formatter="formatterStatus"></el-table-column>
               <el-table-column prop="reason" label="用车事由" sortable ></el-table-column>
               <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" ></el-table-column>
               <el-table-column prop="starttime" label="开始时间" :formatter="formatterStart" ></el-table-column>
@@ -347,7 +369,8 @@
                       <el-option
                         v-for="item in riskOptions"
                         :key="item.code"
-                        :value="item"
+                        :label="item.value"
+                        :value="item.value"
                       ></el-option>
                     </el-select>
                   </el-form-item>
@@ -400,17 +423,17 @@
             </el-form>
             <div slot="footer" class="dialog-footer" >
               <el-button @click="cancelApply">取 消</el-button>
-              <el-button type="primary" @click="onSubmit">确 定</el-button>
+              <el-button v-show="applyButton" type="primary" @click="onSubmit">确 定</el-button>
             </div>
       </el-dialog>
       <!-- 没有审批信息 -->
-      <el-dialog :visible.sync="wushenpi" style="width:1700px">
+      <el-dialog :visible.sync="wushenpi" >
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
           <div class="second-title">申请信息</div>
           <el-row>
             <el-col :span="8">
               <el-form-item label="申请单号">
-                <label>{{applyInfo.code}}</label>
+                <label>{{applyInfo.formcode}}</label>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -541,13 +564,13 @@
         </div>
       </el-dialog>
       <!-- 有审批信息 -->
-      <el-dialog :visible.sync="youshenpi" style="width:1700px">
+      <el-dialog :visible.sync="youshenpi" >
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
           <div class="second-title">申请信息</div>
           <el-row>
             <el-col :span="8">
               <el-form-item label="申请单号">
-                <label>{{applyInfo.code}}</label>
+                <label>{{applyInfo.formcode}}</label>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -585,25 +608,24 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="申请车辆">
-                <label>{{applyInfo.licensePlate}}</label>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="申请司机">
-                <label>{{applyInfo.driverName}}</label>
+              <el-form-item label="出车风险">
+                <el-select disabled clearable v-model="applyInfo.risk" placeholder="请选择">
+                      <el-option
+                        v-for="item in riskOptions"
+                        :key="item.code"
+                        :value="item"
+                      ></el-option>
+                    </el-select>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="16">
+            <el-col :span="8">
               <el-form-item label="申请事由">
                 <label>{{applyInfo.reason}}</label>
               </el-form-item>
             </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="16">
+            <el-col :span="8">
               <el-form-item label="备注">
                 <label>{{applyInfo.remark}}</label>
               </el-form-item>
@@ -804,14 +826,15 @@ export default {
       dispatchResult:1, //调度结果
       dispatchDetailDisabled:false,
       approvalDetailDisabled:false,
+      applyButton:true, //提交申请按钮显隐
       dispatchCommit:false, //调度提交按钮显示隐藏
       approvalPass:false,//通过/退回 审核
       printBtn:false,
       carApplyInfoVisible : false ,
       riskOptions:[
-        "一般风险",
-        "较高风险",
-        "高风险"
+        {code:1,value:"一般风险"},
+        {code:2,value:"较高风险"},
+        {code:3,value:"高风险"}
       ],
       applystatus:1,
       ///以上新数据-----------
@@ -825,6 +848,12 @@ export default {
     postemail
   },
   created() {
+    let type = this.$route.query.type
+    if(type == 2){
+      this.activeName = 'second'
+    }else if(type == 3){
+      this.activeName = 'fourth'
+    }
     this.getTableData();
     this.postAxios("/CarApply/ApplyInfo",{
         //  tid:this.docuId
@@ -836,14 +865,28 @@ export default {
       .catch(err => {
         console.log(err);
     });
-    let type = this.$route.query.type
-    if(type == 2){
-      this.activeName = 'second'
-    }else if(type == 3){
-      this.activeName = 'fourth'
-    }
   },
   methods: {
+    formatterStatus(row,index){
+      //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回
+      switch(row.applystatus){
+        case 0:
+          return "待调度";
+          break;
+          case 1:
+          return "调度退回";
+          break;
+          case 2:
+          return "待审批";
+          break;
+          case 3:
+          return "已批准";
+          break;
+          case 4:
+          return "审批退回";
+          break;
+      }
+    },
     confirmprint(){
       debugger
       this.$print(this.$refs.print)
@@ -908,7 +951,8 @@ export default {
     },
     //新增
     adduser(){
-      this.carApplyInfoVisible = true
+      this.carApplyInfoVisible = true;
+      this.getApplyInfo();
     },
     //以下====新
     search(){
@@ -934,7 +978,8 @@ export default {
         .then(res => {
           alert("保存成功");
           //保存成功重新加载表单
-          //this.getApplyInfo();
+          this.carApplyInfoVisible=false;
+          this.getTableData();
         })
         .catch(err => {
           console.log(err);
@@ -984,13 +1029,14 @@ export default {
           this.youshenpi=false; 
           this.wushenpi=false; 
           this.dispatchDetailDisabled=false;
-          
+          this.applyButton=true;//显示提交申请按钮
           this.getApplyInfo(scope.row.tid);
           return  false;
         }else if(scope.row.applystatus===0 || scope.row.applystatus===4){
-          this.carApplyInfoVisible=false //一弹框
+          this.carApplyInfoVisible=true //一弹框
           this.youshenpi=false; 
-          this.wushenpi=true; 
+          this.wushenpi=false; 
+          this.applyButton=false;//隐藏提交申请按钮
           this.dispatchDetailDisabled=false;
                     
           this.dispatchCommit=false; //显示提交按钮
@@ -1050,7 +1096,7 @@ export default {
     },
     //关闭详情
     cancelDetail(){
-      this.applyDialogFormVisible=false;
+      this.carApplyInfoVisible=false;
       this.youshenpi = false
       this.wushenpi = false
       this.applyInfo={};
@@ -1077,7 +1123,8 @@ export default {
         .then(res => {
           console.log(res);
           if(res.status){
-            this.applyDialogFormVisible=false;
+            this.wushenpi=false;
+            this.getTableData();
           }else{
             alert(res.msg);
           }
@@ -1097,7 +1144,8 @@ export default {
           console.log(res);
           if(res.status){
             alert("审批完成");
-            this.applyDialogFormVisible=false;
+            this.youshenpi=false;
+            this.getTableData();
           }else{
             alert(res.msg);
           }
@@ -1117,7 +1165,8 @@ export default {
           console.log(res);
           if(res.status){
             alert("审批完成");
-            this.applyDialogFormVisible=false;
+            this.youshenpi=false;
+            this.getTableData();
           }else{
             alert(res.msg);
           }

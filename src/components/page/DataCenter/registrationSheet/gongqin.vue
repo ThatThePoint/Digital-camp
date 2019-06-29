@@ -360,261 +360,261 @@ export default {
       deptOptions:[],
       politicsTypeOptions: [
         {
-          key: 1,
+          key: '1',
           value: "党员"
         },
         {
-          key: 2,
+          key: '2',
           value: "预备党员"
         },
         {
-          key: 3,
+          key: '3',
           value: "团员"
         },
         {
-          key: 4,
+          key: '4',
           value: "群众"
         },
         {
-          key: 5,
+          key: '5',
           value: "其他"
         }
       ],
       marryOptions: [
         {
-          key: 1,
+          key: '1',
           value: "未婚"
         },
         {
-          key: 2,
+          key: '2',
           value: "已婚"
         },
         {
-          key: 3,
+          key: '3',
           value: "丧偶"
         },
         {
-          key: 4,
+          key: '4',
           value: "离婚"
         }
       ],
       armyTypeOptions: [
         {
-          key: 1,
+          key: '1',
           value: "陆军"
         },
         {
-          key: 2,
+          key: '2',
           value: "海军"
         },
         {
-          key: 3,
+          key: '3',
           value: "火箭军"
         },
         {
-          key: 4,
+          key: '4',
           value: "战略支援部队"
         }
       ],
       localWeatherOptions: [
         {
-          key: 1,
+          key: '1',
           value: "高寒区"
         },
         {
-          key: 2,
+          key: '2',
           value: "寒区"
         },
         {
-          key: 3,
+          key: '3',
           value: "温区"
         },
         {
-          key: 4,
+          key: '4',
           value: "亚热区"
         },
         {
-          key: 5,
+          key: '5',
           value: "热区"
         }
       ],
       staffTypeOptions: [
         {
-          key: 1,
+          key: '1',
           value: "在编职员"
         },
         {
-          key: 2,
+          key: '2',
           value: "在编工人"
         },
         {
-          key: 3,
+          key: '3',
           value: "非编职员"
         },
         {
-          key: 4,
+          key: '4',
           value: "非编工人"
         },
         {
-          key: 5,
+          key: '5',
           value: "文职人员"
         },
         {
-          key: 6,
+          key: '6',
           value: "非现役公勤"
         },
         {
-          key: 7,
+          key: '7',
           value: "离退休职工"
         }
       ],
       armyRankOptions: [
         {
-          key: 1,
+          key: '1',
           value: "上将"
         },
         {
-          key: 2,
+          key: '2',
           value: "中将"
         },
         {
-          key: 3,
+          key: '3',
           value: "少将"
         },
         {
-          key: 4,
+          key: '4',
           value: "大校"
         },
         {
-          key: 5,
+          key: '5',
           value: "中校"
         },
         {
-          key: 6,
+          key: '6',
           value: "少校"
         },
         {
-          key: 7,
+          key: '7',
           value: "上尉"
         },
         {
-          key: 8,
+          key: '8',
           value: "中尉"
         },
         {
-          key: 9,
+          key: '9',
           value: "少尉"
         },
         {
-          key: 10,
+          key: '10',
           value: "文职特技"
         },
         {
-          key: 11,
+          key: '11',
           value: "文职1级"
         },
         {
-          key: 12,
+          key: '12',
           value: "文职2级"
         },
         {
-          key: 13,
+          key: '13',
           value: "文职3级"
         },
         {
-          key: 15,
+          key: '15',
           value: "文职4级"
         },
         {
-          key: 16,
+          key: '16',
           value: "文职5级"
         },
         {
-          key: 17,
+          key: '17',
           value: "文职6级"
         },
         {
-          key: 18,
+          key: '18',
           value: "文职7级"
         },
         {
-          key: 19,
+          key: '19',
           value: "文职8级"
         },
         {
-          key: 20,
+          key: '20',
           value: "文职9级"
         },
         {
-          key: 21,
+          key: '21',
           value: "学员衔"
         },
         {
-          key: 22,
+          key: '22',
           value: "未授衔"
         }
       ],
       educatLevelOptions: [
         {
-          key: 1,
+          key: '1',
           value: "研究生"
         },
         {
-          key: 2,
+          key: '2',
           value: "大学本科"
         },
         {
-          key: 3,
+          key: '3',
           value: "大学专科"
         },
         {
-          key: 4,
+          key: '4',
           value: "专科学校"
         },
         {
-          key: 5,
+          key: '5',
           value: "中等专业学校"
         },
         {
-          key: 6,
+          key: '6',
           value: "校工学校"
         },
         {
-          key: 7,
+          key: '7',
           value: "高中"
         },
         {
-          key: 8,
+          key: '8',
           value: "初中"
         },
         {
-          key: 9,
+          key: '9',
           value: "小学"
         },
         {
-          key: 10,
+          key: '10',
           value: "文盲"
         },
         {
-          key: 11,
+          key: '11',
           value: "半文盲"
         }
       ],
       graduateTypeOptions: [
         {
-          key: 1,
+          key: '1',
           value: "博士"
         },
         {
-          key: 2,
+          key: '2',
           value: "硕士"
         },
         {
-          key: 3,
+          key: '3',
           value: "学士"
         },
         {
-          key: 4,
+          key: '4',
           value: "其他"
         }
       ],

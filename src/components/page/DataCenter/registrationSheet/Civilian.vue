@@ -46,12 +46,11 @@
       <el-col :span="5">
         <el-form-item label="血型">
           <el-select clearable v-model="form.blood" placeholder="请选择血型">
-            <el-option
-              v-for="item in bloodOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="A" value="1"></el-option>
+            <el-option label="B" value="2"></el-option>
+            <el-option label="AB" value="3"></el-option>
+            <el-option label="O" value="4"></el-option>
+            <el-option label="其他" value="5"></el-option>  
           </el-select>
         </el-form-item>
       </el-col>
@@ -96,12 +95,11 @@
       <el-col :span="5">
         <el-form-item label="政治面貌">
           <el-select clearable v-model="form.politicsType" placeholder="请选择">
-            <el-option
-              v-for="item in politicsTypeOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="党员" value="1"></el-option>
+            <el-option label="预备党员" value="2"></el-option>
+            <el-option label="团员" value="3"></el-option>
+            <el-option label="群众" value="4"></el-option>
+            <el-option label="其他" value="5"></el-option>              
           </el-select>
         </el-form-item>
       </el-col>
@@ -115,12 +113,10 @@
       <el-col :span="5">
         <el-form-item label="婚姻状况">
           <el-select clearable v-model="form.marry" placeholder="请选择">
-            <el-option
-              v-for="item in marryOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="未婚" value="1"></el-option>
+            <el-option label="已婚" value="2"></el-option>
+            <el-option label="丧偶" value="3"></el-option>
+            <el-option label="离婚" value="4"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -129,12 +125,10 @@
       <el-col :span="5">
         <el-form-item label="军种">
           <el-select clearable v-model="form.armyType" placeholder="请选择">
-            <el-option
-              v-for="item in armyTypeOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="陆军" value="1"></el-option>
+            <el-option label="海军" value="2"></el-option>
+            <el-option label="火箭军" value="3"></el-option>
+            <el-option label="战略支援部队" value="4"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -165,12 +159,17 @@
       <el-col :span="5">
         <el-form-item label="文化程度">
           <el-select clearable v-model="form.educatLevel" placeholder="请选择">
-            <el-option
-              v-for="item in educatLevelOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="研究生" value="1"></el-option>
+            <el-option label="大学本科" value="2"></el-option>
+            <el-option label="大学专科" value="3"></el-option>
+            <el-option label="专科学校" value="4"></el-option>
+            <el-option label="中等专业学校" value="5"></el-option>
+            <el-option label="校工学校" value="6"></el-option>
+            <el-option label="高中" value="7"></el-option>
+            <el-option label="初中" value="8"></el-option>
+            <el-option label="小学" value="9"></el-option>  
+            <el-option label="文盲" value="10"></el-option>
+            <el-option label="半文盲" value="11"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -194,12 +193,10 @@
       <el-col :span="5">
         <el-form-item label="学位">
           <el-select clearable v-model="form.graduateType" placeholder="请选择">
-            <el-option
-              v-for="item in graduateTypeOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="博士" value="1"></el-option>
+            <el-option label="硕士" value="2"></el-option>
+            <el-option label="学士" value="3"></el-option>
+            <el-option label="其他" value="4"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -223,24 +220,21 @@
       <el-col :span="5">
         <el-form-item label="人员类别">
           <el-select clearable v-model="form.civilStaffType" placeholder="请选择">
-            <el-option
-              v-for="item in civilStaffTypeOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="转改管理文职人员" value="1"></el-option>
+            <el-option label="转改技术文职人员" value="2"></el-option>
+            <el-option label="招考管理文职人员" value="3"></el-option>
+            <el-option label="招考管理文职人员" value="4"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
       <el-col :span="5">
         <el-form-item label="所在气候区">
           <el-select clearable v-model="form.localWeather" placeholder="请选择">
-            <el-option
-              v-for="item in localWeatherOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="高寒区" value="1"></el-option>
+            <el-option label="寒区" value="2"></el-option>
+            <el-option label="温区" value="3"></el-option>
+            <el-option label="亚热区" value="4"></el-option>
+            <el-option label="热区" value="5"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -353,104 +347,6 @@ export default {
         // jobPostion: ""
       },
       deptOptions:[],
-      politicsTypeOptions: [
-        {
-          key: 1,
-          value: "党员"
-        },
-        {
-          key: 2,
-          value: "预备党员"
-        },
-        {
-          key: 3,
-          value: "团员"
-        },
-        {
-          key: 4,
-          value: "群众"
-        },
-        {
-          key: 5,
-          value: "其他"
-        }
-      ],
-      marryOptions: [
-        {
-          key: 1,
-          value: "未婚"
-        },
-        {
-          key: 2,
-          value: "已婚"
-        },
-        {
-          key: 3,
-          value: "丧偶"
-        },
-        {
-          key: 4,
-          value: "离婚"
-        }
-      ],
-      armyTypeOptions: [
-        {
-          key: 1,
-          value: "陆军"
-        },
-        {
-          key: 2,
-          value: "海军"
-        },
-        {
-          key: 3,
-          value: "火箭军"
-        },
-        {
-          key: 4,
-          value: "战略支援部队"
-        }
-      ],
-      localWeatherOptions: [
-        {
-          key: 1,
-          value: "高寒区"
-        },
-        {
-          key: 2,
-          value: "寒区"
-        },
-        {
-          key: 3,
-          value: "温区"
-        },
-        {
-          key: 4,
-          value: "亚热区"
-        },
-        {
-          key: 5,
-          value: "热区"
-        }
-      ],
-      civilStaffTypeOptions: [
-        {
-          key: 1,
-          value: "转改管理文职人员"
-        },
-        {
-          key: 2,
-          value: "转改技术文职人员"
-        },
-        {
-          key: 3,
-          value: "招考管理文职人员"
-        },
-        {
-          key: 4,
-          value: "招考管理文职人员"
-        }
-      ],
       armyRankOptions: [
         {
           key: 1,
@@ -535,92 +431,6 @@ export default {
         {
           key: 22,
           value: "未授衔"
-        }
-      ],
-      educatLevelOptions: [
-        {
-          key: 1,
-          value: "研究生"
-        },
-        {
-          key: 2,
-          value: "大学本科"
-        },
-        {
-          key: 3,
-          value: "大学专科"
-        },
-        {
-          key: 4,
-          value: "专科学校"
-        },
-        {
-          key: 5,
-          value: "中等专业学校"
-        },
-        {
-          key: 6,
-          value: "校工学校"
-        },
-        {
-          key: 7,
-          value: "高中"
-        },
-        {
-          key: 8,
-          value: "初中"
-        },
-        {
-          key: 9,
-          value: "小学"
-        },
-        {
-          key: 10,
-          value: "文盲"
-        },
-        {
-          key: 11,
-          value: "半文盲"
-        }
-      ],
-      graduateTypeOptions: [
-        {
-          key: 1,
-          value: "博士"
-        },
-        {
-          key: 2,
-          value: "硕士"
-        },
-        {
-          key: 3,
-          value: "学士"
-        },
-        {
-          key: 4,
-          value: "其他"
-        }
-      ],
-      bloodOptions: [
-        {
-          key: "1",
-          value: "A"
-        },
-        {
-          key: "2",
-          value: "B"
-        },
-        {
-          key: "3",
-          value: "AB"
-        },
-        {
-          key: "4",
-          value: "O"
-        },
-        {
-          key: "5",
-          value: "其他"
         }
       ],
       postionLevelOptions: [

@@ -46,12 +46,11 @@
       <el-col :span="5">
         <el-form-item label="血型">
           <el-select clearable v-model="form.blood" placeholder="请选择血型">
-            <el-option
-              v-for="item in bloodOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="A" value="1"></el-option>
+            <el-option label="B" value="2"></el-option>
+            <el-option label="AB" value="3"></el-option>
+            <el-option label="O" value="4"></el-option>
+            <el-option label="其他" value="5"></el-option>            
           </el-select>
         </el-form-item>
       </el-col>
@@ -90,12 +89,11 @@
       <el-col :span="5">
         <el-form-item label="政治面貌">
           <el-select clearable v-model="form.politicsType" placeholder="请选择">
-            <el-option
-              v-for="item in politicsTypeOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="党员" value="1"></el-option>
+            <el-option label="预备党员" value="2"></el-option>
+            <el-option label="团员" value="3"></el-option>
+            <el-option label="群众" value="4"></el-option>
+            <el-option label="其他" value="5"></el-option>  
           </el-select>
         </el-form-item>
       </el-col>
@@ -109,12 +107,10 @@
       <el-col :span="5">
         <el-form-item label="婚姻状况">
           <el-select clearable v-model="form.marry" placeholder="请选择">
-            <el-option
-              v-for="item in marryOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="未婚" value="1"></el-option>
+            <el-option label="已婚" value="2"></el-option>
+            <el-option label="丧偶" value="3"></el-option>
+            <el-option label="离婚" value="4"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -141,12 +137,15 @@
       <el-col :span="5">
         <el-form-item label="人员类别">
           <el-select clearable v-model="form.staffType" placeholder="请选择">
-            <el-option
-              v-for="item in staffTypeOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="军政后装军官" value="1"></el-option>
+            <el-option label="专业技术军官" value="2"></el-option>
+            <el-option label="其他军官" value="3"></el-option>
+            <el-option label="专业技术文职干部" value="4"></el-option>
+            <el-option label="非专业技术文职干部" value="5"></el-option>
+            <el-option label="其他文职干部" value="6"></el-option>
+            <el-option label="生长干部学员" value="7"></el-option>
+            <el-option label="离休干部" value="8"></el-option>
+            <el-option label="退休干部" value="9"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -168,12 +167,18 @@
       <el-col :span="5">
         <el-form-item label="文化程度">
           <el-select clearable v-model="form.educatLevel" placeholder="请选择">
-            <el-option
-              v-for="item in educatLevelOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="研究生" value="1"></el-option>
+            <el-option label="大学本科" value="2"></el-option>
+            <el-option label="大学专科" value="3"></el-option>
+            <el-option label="专科学校" value="4"></el-option>
+            <el-option label="中等专业学校" value="5"></el-option>
+            <el-option label="校工学校" value="6"></el-option>
+            <el-option label="高中" value="7"></el-option>
+            <el-option label="初中" value="8"></el-option>
+            <el-option label="小学" value="9"></el-option>  
+            <el-option label="文盲" value="10"></el-option>
+            <el-option label="半文盲" value="11"></el-option>
+                    
           </el-select>
         </el-form-item>
       </el-col>
@@ -197,12 +202,10 @@
       <el-col :span="5">
         <el-form-item label="学位">
           <el-select clearable v-model="form.graduateType" placeholder="请选择">
-            <el-option
-              v-for="item in graduateTypeOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="博士" value="1"></el-option>
+            <el-option label="硕士" value="2"></el-option>
+            <el-option label="学士" value="3"></el-option>
+            <el-option label="其他" value="4"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -226,12 +229,10 @@
       <el-col :span="5">
         <el-form-item label="军种">
           <el-select clearable v-model="form.armyType" placeholder="请选择">
-            <el-option
-              v-for="item in armyTypeOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-            ></el-option>
+            <el-option label="陆军" value="1"></el-option>
+            <el-option label="海军" value="2"></el-option>
+            <el-option label="火箭军" value="3"></el-option>
+            <el-option label="战略支援部队" value="4"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -250,13 +251,28 @@
       <el-col :span="8">
         <el-form-item label="军衔及日期" :span="5">
           <el-select clearable v-model="form.armyRank" placeholder="请选择" style="max-width:197px" class="aaaa">
-            <el-option
-              v-for="item in armyRankOptions"
-              :label="item.value"
-              :value="item.key"
-              :key="item.key"
-              
-            ></el-option>
+            <el-radio label="上将" value="1"></el-radio>
+            <el-radio label="中将" value="2"></el-radio>
+            <el-radio label="少将" value="3"></el-radio>
+            <el-radio label="大校" value="4"></el-radio>
+            <el-radio label="中校" value="5"></el-radio>
+            <el-radio label="少校" value="6"></el-radio>
+            <el-radio label="上尉" value="7"></el-radio>
+            <el-radio label="中尉" value="8"></el-radio>
+            <el-radio label="少尉" value="9"></el-radio>
+            <el-radio label="文职特技" value="10"></el-radio>
+            <el-radio label="文职1级" value="11"></el-radio>
+            <el-radio label="文职2级" value="12"></el-radio>
+            <el-radio label="文职3级" value="13"></el-radio>
+            <el-radio label="文职4级" value="14"></el-radio>
+            <el-radio label="文职5级" value="15"></el-radio>
+            <el-radio label="文职6级" value="16"></el-radio>
+            <el-radio label="文职7级" value="17"></el-radio>
+            <el-radio label="文职8级" value="18"></el-radio>
+            <el-radio label="文职9级" value="19"></el-radio>
+
+            <el-radio label="学员衔" value="20"></el-radio>
+            <el-radio label="未授衔" value="21"></el-radio>
           </el-select>
           <el-date-picker
             type="date"
@@ -343,296 +359,6 @@ export default {
         chiefLevDate: ""
       },
       deptOptions:[],
-      politicsTypeOptions: [
-        {
-          key: 1,
-          value: "党员"
-        },
-        {
-          key: 2,
-          value: "预备党员"
-        },
-        {
-          key: 3,
-          value: "团员"
-        },
-        {
-          key: 4,
-          value: "群众"
-        },
-        {
-          key: 5,
-          value: "其他"
-        }
-      ],
-      marryOptions: [
-        {
-          key: 1,
-          value: "未婚"
-        },
-        {
-          key: 2,
-          value: "已婚"
-        },
-        {
-          key: 3,
-          value: "丧偶"
-        },
-        {
-          key: 4,
-          value: "离婚"
-        }
-      ],
-      armyTypeOptions: [
-        {
-          key: 1,
-          value: "陆军"
-        },
-        {
-          key: 2,
-          value: "海军"
-        },
-        {
-          key: 3,
-          value: "火箭军"
-        },
-        {
-          key: 4,
-          value: "战略支援部队"
-        }
-      ],
-      localWeatherOptions: [
-        {
-          key: 1,
-          value: "高寒区"
-        },
-        {
-          key: 2,
-          value: "寒区"
-        },
-        {
-          key: 3,
-          value: "温区"
-        },
-        {
-          key: 4,
-          value: "亚热区"
-        },
-        {
-          key: 5,
-          value: "热区"
-        }
-      ],
-      staffTypeOptions: [
-        {
-          key: 1,
-          value: "军政后装军官"
-        },
-        {
-          key: 2,
-          value: "专业技术军官"
-        },
-        {
-          key: 3,
-          value: "其他军官"
-        },
-        {
-          key: 4,
-          value: "专业技术文职干部"
-        },
-        {
-          key: 5,
-          value: "非专业技术文职干部"
-        },
-        {
-          key: 6,
-          value: "其他文职干部"
-        },
-        {
-          key: 7,
-          value: "生长干部学员"
-        },
-        {
-          key: 8,
-          value: "离休干部"
-        },
-        {
-          key: 9,
-          value: "退休干部"
-        }
-      ],
-      armyRankOptions: [
-        {
-          key: 1,
-          value: "上将"
-        },
-        {
-          key: 2,
-          value: "中将"
-        },
-        {
-          key: 3,
-          value: "少将"
-        },
-        {
-          key: 4,
-          value: "大校"
-        },
-        {
-          key: 5,
-          value: "中校"
-        },
-        {
-          key: 6,
-          value: "少校"
-        },
-        {
-          key: 7,
-          value: "上尉"
-        },
-        {
-          key: 8,
-          value: "中尉"
-        },
-        {
-          key: 9,
-          value: "少尉"
-        },
-        {
-          key: 10,
-          value: "文职特技"
-        },
-        {
-          key: 11,
-          value: "文职1级"
-        },
-        {
-          key: 12,
-          value: "文职2级"
-        },
-        {
-          key: 13,
-          value: "文职3级"
-        },
-        {
-          key: 15,
-          value: "文职4级"
-        },
-        {
-          key: 16,
-          value: "文职5级"
-        },
-        {
-          key: 17,
-          value: "文职6级"
-        },
-        {
-          key: 18,
-          value: "文职7级"
-        },
-        {
-          key: 19,
-          value: "文职8级"
-        },
-        {
-          key: 20,
-          value: "文职9级"
-        },
-        {
-          key: 21,
-          value: "学员衔"
-        },
-        {
-          key: 22,
-          value: "未授衔"
-        }
-      ],
-      educatLevelOptions: [
-        {
-          key: 1,
-          value: "研究生"
-        },
-        {
-          key: 2,
-          value: "大学本科"
-        },
-        {
-          key: 3,
-          value: "大学专科"
-        },
-        {
-          key: 4,
-          value: "专科学校"
-        },
-        {
-          key: 5,
-          value: "中等专业学校"
-        },
-        {
-          key: 6,
-          value: "校工学校"
-        },
-        {
-          key: 7,
-          value: "高中"
-        },
-        {
-          key: 8,
-          value: "初中"
-        },
-        {
-          key: 9,
-          value: "小学"
-        },
-        {
-          key: 10,
-          value: "文盲"
-        },
-        {
-          key: 11,
-          value: "半文盲"
-        }
-      ],
-      graduateTypeOptions: [
-        {
-          key: 1,
-          value: "博士"
-        },
-        {
-          key: 2,
-          value: "硕士"
-        },
-        {
-          key: 3,
-          value: "学士"
-        },
-        {
-          key: 4,
-          value: "其他"
-        }
-      ],
-      bloodOptions: [
-        {
-          key: "1",
-          value: "A"
-        },
-        {
-          key: "2",
-          value: "B"
-        },
-        {
-          key: "3",
-          value: "AB"
-        },
-        {
-          key: "4",
-          value: "O"
-        },
-        {
-          key: "5",
-          value: "其他"
-        }
-      ],
       rules: {
         name: [
           { required: true, message: "请输入姓名", trigger: "blur" },
@@ -648,20 +374,6 @@ export default {
         //   }
         // ]
       },
-      rightOptions: [
-        {
-          value: "1",
-          label: "最高权限"
-        },
-        {
-          value: "2",
-          label: "普通权限"
-        },
-        {
-          value: "3",
-          label: "最低权限"
-        }
-      ],
     };
   },
   created(){
