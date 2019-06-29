@@ -404,7 +404,7 @@
             </div>
       </el-dialog>
       <!-- 没有审批信息 -->
-      <el-dialog :visible.sync="wushenpi" style="width:1700px">
+      <el-dialog :visible.sync="wushenpi" >
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
           <div class="second-title">申请信息</div>
           <el-row>
@@ -541,7 +541,7 @@
         </div>
       </el-dialog>
       <!-- 有审批信息 -->
-      <el-dialog :visible.sync="youshenpi" style="width:1700px">
+      <el-dialog :visible.sync="youshenpi" >
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
           <div class="second-title">申请信息</div>
           <el-row>
