@@ -87,12 +87,14 @@
               prefix-icon="el-icon-search"
               v-model="relaterName"
             ></el-input>
-             <el-input
-              class="input-width"
-              placeholder="联系人部门"
-              prefix-icon="el-icon-search"
-              v-model="relaterDept"
-            ></el-input>
+            <el-select clearable  class="input-width" v-model="relaterDept" placeholder="联系人部门">
+              <el-option
+                v-for="item in departmentOptions"
+                :key="item.tid"
+                :label="item.name"
+                :value="item.tid"
+              ></el-option>
+            </el-select>
             <el-button @click="search">搜索</el-button>
             <el-button type="success" @click="addCar('2')" class="right">新增</el-button>
           </div>
@@ -152,12 +154,14 @@
               prefix-icon="el-icon-search"
               v-model="relaterName"
             ></el-input>
-             <el-input
-              class="input-width"
-              placeholder="联系人部门"
-              prefix-icon="el-icon-search"
-              v-model="relaterDept"
-            ></el-input>
+             <el-select clearable  class="input-width" v-model="relaterDept" placeholder="联系人部门">
+              <el-option
+                v-for="item in departmentOptions"
+                :key="item.tid"
+                :label="item.name"
+                :value="item.tid"
+              ></el-option>
+            </el-select>
             <el-button @click="search">搜索</el-button>
             <el-button type="success" @click="addCar('3')" class="right">新增</el-button>
           </div>
@@ -168,7 +172,7 @@
               :default-sort="{prop: 'licensePlate', order: 'descending'}"
             >
               <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
-              <el-table-column prop="carType" label="车辆属性" ></el-table-column>
+              <el-table-column prop="owner" label="车主姓名" ></el-table-column>
               <el-table-column prop="ownerTel" label="联系电话" ></el-table-column>
               <el-table-column prop="registTime" label="登记时间" :formatter="formatterDate" ></el-table-column>
               <el-table-column prop="inout" label="出入状态" :formatter="formatterInOut" ></el-table-column>

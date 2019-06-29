@@ -321,10 +321,10 @@ export default {
         case 2:
           return "归档";
           break;
-        case 1:
+        case 3:
           return "退回";
           break;
-        case 1:
+        case 4:
           return "草稿";
           break;
         default:
@@ -468,6 +468,8 @@ export default {
                 type: "success",
                 message: "保存审批成功!"
               });
+              this.confirmFormVisible = false;
+              this.form={};
           }
         })
         .catch(err => {
@@ -499,9 +501,19 @@ export default {
       this.postAxios("OutApply/SaveApproveInfo", params)
         .then(res => {
           console.log(res);
+          this.$message({
+                type: "success",
+                message: "保存审批成功!"
+              });
+              this.confirmFormVisible = false;
+              this.form={};
         })
         .catch(err => {
           console.log(err);
+          this.$message({
+                type: "warning",
+                message: "保存失败，请联系管理员!"
+              });
         });
     }
   },
