@@ -44,7 +44,7 @@
             <div class="one">
               <p>车辆基本信息：<span class="starred">*</span>车牌号：<el-input class="input-width" placeholder="请输入" v-model="carInfo.licensePlate" style="margin-left:0"></el-input></p>
               <div class="itemDet">
-                <span class="starred">*</span>车辆品牌：
+                <span class="color"><span class="starred">*</span>车辆品牌：</span>
                 <el-select clearable class="input-width" v-model="carInfo.brand" placeholder="请选择">
                   <el-option
                     v-for="item in brandOptions"
@@ -78,7 +78,7 @@
 
               </div>
               <div class="itemDet">
-                <span class="starred">*</span>车辆座位：
+                <span class="color"><span class="starred">*</span>车辆座位：</span>
                 <el-select clearable class="input-width" v-model="carInfo.loadNumber" placeholder="请选择">
                   <el-option
                     v-for="item in seatOptions"
@@ -197,7 +197,7 @@
               <p>车辆基本信息：<span class="starred">*</span>车牌号：<el-input class="input-width" placeholder="请输入" v-model="carInfo.licensePlate"
               style="margin-left:0"></el-input></p>
               <div class="itemDet">
-                <span class="starred">*</span>车辆品牌：
+                <span class="color"><span class="starred">*</span>车辆品牌：</span>
                 <el-select clearable class="input-width" v-model="carInfo.brand" placeholder="请选择">
                   <el-option
                     v-for="item in brandOptions"
@@ -205,7 +205,8 @@
                     :label="item.name"
                     :value="item.code"
                   ></el-option>
-                </el-select><span class="starred">*</span>车辆型号：
+                </el-select>
+                <span class="color"><span class="starred">*</span>车辆型号：</span>
                 <el-select clearable class="input-width" v-model="carInfo.model" placeholder="请选择">
                   <el-option
                     v-for="item in modelOptions"
@@ -227,7 +228,7 @@
                 <el-input class="input-width" placeholder="行驶证号" v-model="carInfo.driveLicense"></el-input>
               </div>
               <div class="itemDet">
-                <span class="starred">*</span>车辆座位：
+                <span class="color"><span class="starred">*</span>车辆座位：</span>
                 <el-select clearable class="input-width" v-model="carInfo.loadNumber" placeholder="请选择">
                   <el-option
                     v-for="item in seatOptions"
@@ -272,7 +273,7 @@
               <el-input class="input-width" placeholder="请输入" v-model="carInfo.owner"></el-input>
               <span class="starred">*</span>
               <span class="ddd">手机号： </span>
-              <el-input class="input-width" placeholder="请输入" v-model="carInfo.ownerTel" @blur="telBlue" type="number"></el-input><br/>
+              <el-input class="input-width" placeholder="请输入" v-model="carInfo.ownerTel" @blur="telBlue" type="text"></el-input><br/>
               <span class="starred">*</span>
               <span class="ddd">部队联系人：</span>
               <el-input class="input-width" placeholder="请输入" v-model="carInfo.relater"></el-input>
@@ -575,6 +576,25 @@ export default {
         this.flagtwo = false
       }
     }
+    if(this.$route.query.type){
+      let type = this.$route.query.type
+      if(type == 1){
+        this.carInfo.carType = '1'
+        this.activeName = 'first',
+        this.flagone = false
+        this.flagtwo = true
+      }else if(type == 2){
+        this.activeName = 'second'
+        this.flagone = true
+        this.flagtwo = false
+        this.carInfo.carType = '2'
+      }else if(type == 3){
+        this.activeName = 'second'
+        this.flagone = true
+        this.flagtwo = false
+        this.carInfo.carType = '3'
+      }
+    }
     this.getSelectValue()
   },
   methods: {
@@ -601,16 +621,16 @@ export default {
     },
 
     beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
+      // const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;
 
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
-      }
+      // if (!isJPG) {
+      //   this.$message.error('上传头像图片只能是 JPG 格式!');
+      // }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!');
       }
-      return isJPG && isLt2M;
+      return  isLt2M;
     },
 
 

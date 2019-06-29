@@ -30,7 +30,7 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="请假事由">
-                <el-select clearable v-model="form.outingTypeOptions" placeholder="请选择">
+                <el-select clearable v-model="form.outingType" placeholder="请选择">
                   <el-option
                     v-for="item in outingTypeOptions"
                     :label="item.name"
@@ -134,7 +134,7 @@ export default {
         applyerDept: '',// 部门
         selectedStaffNameList: '',// 请假人
         selectedStaffIdList: '', //请假人id
-        outingTypeOptions: '',//外出事由
+        outingType: '',//外出事由
         startTime: '',
         endTime: '',
         dest: '',//到达地点
