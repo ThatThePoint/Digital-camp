@@ -49,8 +49,8 @@ function apiAxios(method, url, params) {
     let httpDefault = {
         method: method,
         url: url,
-        // baseURL: 'http://digitalcamp.oicp.io:54373/api/',
-        baseURL:"https://localhost:44352/api/",
+        baseURL: 'http://digitalcamp.oicp.io:54373/api/',
+        // baseURL:"https://localhost:44352/api/",
         // `params` 是即将与请求一起发送的 URL 参数
         // `data` 是作为请求主体被发送的数据 
         headers:  { 
