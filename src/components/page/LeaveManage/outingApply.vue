@@ -30,7 +30,7 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="请假事由">
-                <el-select clearable v-model="form.outingType" placeholder="请选择">
+                <el-select clearable v-model="form.outingTypeOptions" placeholder="请选择">
                   <el-option
                     v-for="item in outingTypeOptions"
                     :label="item.name"
@@ -129,7 +129,7 @@ export default {
       firstApproverList: [],//一级审批人
       outingTypeOptions: [],//外出事由数组
       form:{
-        perid:"",//接受父组件传过来的id
+        selectedStaffIdList:"",//接受父组件传过来的id
         applyer: '',// 操作人
         applyerDept: '',// 部门
         selectedStaffNameList: '',// 请假人
@@ -141,7 +141,6 @@ export default {
         roadTime: '',//路途时间
         transport: '',// 交通工具
         firstApprover: '',//一级审批人
-        firstApproverList: []
       },//表单
       parentlist:[],
       postname: "", //请假人名字
@@ -205,25 +204,6 @@ export default {
           console.log(err);
       });
     },
-    // handleSubmit(){
-    //   this.form.outingLength= (
-    //       (new Date(this.form.endtime).getTime() -
-    //         new Date(this.form.starttime).getTime()) /
-    //       (1000 * 3600)
-    //     ).toFixed(2) + "小时";
-    //     console.log("!111111111",this.form)
-    //   this.postAxios("/outApply/SaveOutApplyInfo",this.form)
-    //     .then(res => {
-    //       if(res.status==1){
-    //         alert("保存成功");
-    //         this.form={};
-    //         this.getdata();
-    //       }
-    //     })
-    //     .catch(err => {
-    //       console.log(err);
-    //   });
-    // },
     cancel(){
 
     },
@@ -234,17 +214,29 @@ export default {
         (1000 * 3600)
         ).toFixed(2) + "小时";
         console.log("!111111111",this.form)
-        this.postAxios("/outApply/SaveOutApplyInfo",{applyForm:this.form})
-          .then(res => {
-          if(res.status==1){
-          alert("保存成功");
-          this.form={};
-          this.getdata();
+        let flag
+        for(let i in this.form){
+          if(this.form[i] == ''){
+            this.$message("所有项都为必填项")
+            flag = false
+          }else{
+            flag = true
           }
-        })
-        .catch(err => {
-        console.log(err);
-      });
+        }
+        if(flag){
+          this.postAxios("/outApply/SaveOutApplyInfo",{applyForm:this.form})
+            .then(res => {
+            if(res.status==1){
+            alert("保存成功");
+            this.form={};
+            this.getdata();
+            }
+          })
+          .catch(err => {
+          console.log(err);
+          });
+        }
+
     },
     focus() {
       this.dialogVisible = true;
@@ -271,8 +263,6 @@ export default {
       return row.address;
     },
     onSubmit() {
-
-      // docReceiversId : this.perid,请假人的id
       console.log("submit!");
     }
   }
