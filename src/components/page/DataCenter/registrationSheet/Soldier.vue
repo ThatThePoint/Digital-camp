@@ -236,7 +236,7 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="10">
         <el-form-item label="主类别">
           <el-radio-group v-model="form.majorType">
             <el-radio label="军事" value="1"></el-radio>
