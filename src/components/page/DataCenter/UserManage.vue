@@ -172,21 +172,12 @@ export default {
       activeName: "first",
       count: 0,
       DeptOptions: [],
-      tableData: [
-        {
-          name: "李云龙",
-          gender: "男",
-          dept: "保卫科",
-          job: "保卫员",
-          tel: "1388585452",
-          type: "现役"
-        }
-      ],
+      tableData: [],
       formLabelWidth: "120px"
     };
   },
   created() {
-    this.getdata("1", "10");
+    
     let personTypes = this.$route.query&&this.$route.query.personType
     if(personTypes == 1){
       this.activeName = 'first'
@@ -203,6 +194,7 @@ export default {
     }else if(personTypes == 7){
       this.activeName = 'secend'
     }
+    this.getdata("1", "10");
   },
   methods: {
     searchdata(){

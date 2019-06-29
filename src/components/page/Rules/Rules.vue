@@ -141,9 +141,9 @@ export default {
         },
       },
       params:{
-      status: 1, //生效状态
-      name: "", //制度名称
-      deptId:"" //部门id
+        status: 1, //生效状态
+        name: "", //制度名称
+        deptId:"" //部门id
       },
       deptOptions:[],//部门下拉框数据源
       statusOptions:[

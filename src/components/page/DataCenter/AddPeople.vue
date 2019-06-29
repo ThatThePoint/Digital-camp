@@ -134,16 +134,6 @@ export default {
       this.flagseven = false
       this.activeName = "seven"
     }
-    // this.postAxios("DataCenter/StaffInfo", )
-    //   .then(res => {
-    //     console.log(res);
-    //     this.count = res.count;
-    //     this.tableData = res.data;
-    //     this.DeptOptions = res.deptOptions;
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    // });
   },
   methods: {
     formatter(row, column) {
