@@ -397,6 +397,9 @@ export default {
       // router.push({ path: '/addcar' })
     },
     handleClick(tab, event) {
+      this.relaterDept = ''//联系人部门
+      this.ownerName = ''//联系人名字
+      this.relaterName = ''//部队联系人
       if(tab.index == '0') {
         this.getdataone()
       }else if(tab.index == '1'){
