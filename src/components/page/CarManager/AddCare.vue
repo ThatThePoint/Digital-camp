@@ -84,35 +84,6 @@ export default {
       selectCar : [],//车辆类型
       careType:[],//维护类型
       property:"",
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            }
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            }
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            }
-          }
-        ]
-      },
       ruleForm: {
         carId:"",//车辆id 
         careTypeCode: "",//维护类型
@@ -145,52 +116,7 @@ export default {
       value1: "",
       value2: "",
       input2: "",
-      departmentOptions: [
-        {
-          value: "1",
-          label: "连队1"
-        },
-        {
-          value: "2",
-          label: "连队2"
-        },
-        {
-          value: "3",
-          label: "连队3"
-        },
-        {
-          value: "4",
-          label: "连队4"
-        }
-      ],
-      propertyOptions: [
-        {
-          value: "1",
-          label: "内部车辆"
-        },
-        {
-          value: "2",
-          label: "外部车辆"
-        },
-        {
-          value: "3",
-          label: "临时车辆"
-        }
-      ],
-      inoutOptions: [
-        {
-          value: "1",
-          label: "日常保养"
-        },
-        {
-          value: "2",
-          label: "顺坏维修"
-        },
-        {
-          value: "3",
-          label: "。。。"
-        }
-      ],
+      departmentOptions: [],
       propertyValue: "",
       departmentValue: "",
       inoutValue: "",
@@ -199,8 +125,9 @@ export default {
   },
   created(){
     if(this.$route.query.row){
-      console.log(this.$route.query.row)
-      this.ruleForm.tid = this.$route.query.row.tid
+      console.log(this.$route.query.row);
+      this.ruleForm.tid = this.$route.query.row.tid;
+      Object.assign(this.ruleForm, this.$route.query.row);
     }
     this.getselectData(this.ruleForm)
   },

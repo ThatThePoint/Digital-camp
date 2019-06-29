@@ -15,7 +15,7 @@
           <el-table-column prop="formcode" label="请假单号"></el-table-column>
           <el-table-column prop="applyerName" label="申请人" sortable></el-table-column>
           <el-table-column prop="applyDeptName" label="申请人部门" sortable></el-table-column>
-          <el-table-column prop="outingType" label="外出类型"></el-table-column>
+          <el-table-column prop="outingType" label="外出类型" :formatter="outTypeFormatter"></el-table-column>
           <el-table-column prop="startTime" label="外出时间" :formatter="starttimeFormatter"></el-table-column>
           <el-table-column prop="endTime" label="返岗时间" :formatter="endtimeFormatter"></el-table-column>
           <el-table-column prop="timeLength" label="申请时长"></el-table-column>
@@ -330,6 +330,13 @@ export default {
         default:
           return "待审批";
           break;
+      }
+    },
+    outTypeFormatter(row, column) {
+      if (row.outingType=="Travel") {
+        return "出差";
+      } else {
+        return "休假探亲";
       }
     },
     // 分页导航

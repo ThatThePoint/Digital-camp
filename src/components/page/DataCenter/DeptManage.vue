@@ -92,9 +92,15 @@ export default {
     append(node, data) {
       console.log(node, data)
       this.dialogFormVisible = true;
-      this.deptInfo.parentId = data.parentName
-      this.deptInfo.name = data.label
-      this.deptInfo.code = data.code
+      this.postAxios("DataCenter/InitForm",{tid:data.id})
+        .then(res => {
+          console.log(res);
+          this.deptsOps=res.deptsOps;
+          this.deptInfo=res.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     //删除  
     remove(node, data) {

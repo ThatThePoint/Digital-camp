@@ -37,9 +37,9 @@
               <el-table-column prop="licensePlate" label="车牌号"  > </el-table-column>
               <el-table-column prop="carType" label="车辆类型"  :formatter="carnum"></el-table-column>
               <el-table-column prop="deptName" label="所属部门" ></el-table-column>
-              <el-table-column prop="brand" label="车辆品牌" ></el-table-column>
-              <el-table-column prop="model" label="型号" ></el-table-column>
-              <el-table-column prop="useStatus" label="技术状态" ></el-table-column>
+              <el-table-column prop="brand" label="车辆品牌" :formatter="formatterBrand"></el-table-column>
+              <el-table-column prop="model" label="型号" :formatter="formatterModel"></el-table-column>
+              <el-table-column prop="useStatus" label="技术状态" :formatter="formatterUseType"></el-table-column>
               <el-table-column prop="inOrOut" label="出入状态" :formatter="formatterInOut" ></el-table-column>
               <el-table-column label="操作" width="200">
                 <template slot-scope="scope">
@@ -87,7 +87,7 @@
               <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
               <el-table-column prop="owner" label="车主姓名" ></el-table-column>
               <el-table-column prop="ownerTel" label="联系电话" ></el-table-column>
-               <el-table-column prop="registTime" label="登记时间" ></el-table-column>
+               <el-table-column prop="registTime" label="登记时间" :formatter="formatterDate"></el-table-column>
               <el-table-column prop="relaterName" label="部队联系人" ></el-table-column>
               <el-table-column prop="inOrOut" label="出入状态" :formatter="formatterInOut" ></el-table-column>
               <el-table-column label="操作" ortable width="200">
@@ -133,8 +133,8 @@
             >
               <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
               <el-table-column prop="carType" label="车辆属性" ></el-table-column>
-              <el-table-column prop="tel" label="联系电话" ></el-table-column>
-              <el-table-column prop="registTime" label="登记时间"  ></el-table-column>
+              <el-table-column prop="ownerTel" label="联系电话" ></el-table-column>
+              <el-table-column prop="registTime" label="登记时间" :formatter="formatterDate" ></el-table-column>
               <el-table-column prop="inout" label="出入状态" :formatter="formatterInOut" ></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope" width="200">
@@ -202,6 +202,31 @@ export default {
       }else{
         return "否";
       }
+    },
+    formatterBrand(row,index){
+      if(row.brand=="Toyota"){
+        return "丰田";
+      }else{
+        return "本田";
+      }
+    },
+    formatterModel(row,index){
+      if(row.model=="Accare"){
+        return "凯美瑞";
+      }else{
+        return "思域";
+      }
+    },
+    formatterUseType(row,index){
+      if(row.useStatus==0){
+        return "正常";
+      }else{
+        return "待修";
+      }
+    },
+     //时间格式化  
+    formatterDate(row,index){
+      return this.$utils.timeFormatter(row.registTime);
     },
         // 点击分页
     handleCurrentChange(val) {
