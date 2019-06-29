@@ -79,19 +79,19 @@
               class="input-width"
               placeholder="车主名字"
               prefix-icon="el-icon-search"
-              v-model="licensePlate2"
+              v-model="ownerName"
             ></el-input>
             <el-input
               class="input-width"
               placeholder="部队联系人"
               prefix-icon="el-icon-search"
-              v-model="licensePlate2"
+              v-model="relaterName"
             ></el-input>
              <el-input
               class="input-width"
               placeholder="联系人部门"
               prefix-icon="el-icon-search"
-              v-model="licensePlate2"
+              v-model="relaterDept"
             ></el-input>
             <el-button @click="search">搜索</el-button>
             <el-button type="success" @click="addCar('2')" class="right">新增</el-button>
@@ -144,19 +144,19 @@
               class="input-width"
               placeholder="车主名字"
               prefix-icon="el-icon-search"
-              v-model="licensePlate2"
+              v-model="ownerName"
             ></el-input>
             <el-input
               class="input-width"
               placeholder="部队联系人"
               prefix-icon="el-icon-search"
-              v-model="licensePlate2"
+              v-model="relaterName"
             ></el-input>
              <el-input
               class="input-width"
               placeholder="联系人部门"
               prefix-icon="el-icon-search"
-              v-model="licensePlate2"
+              v-model="relaterDept"
             ></el-input>
             <el-button @click="search">搜索</el-button>
             <el-button type="success" @click="addCar('3')" class="right">新增</el-button>
@@ -206,6 +206,9 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      relaterDept: '',//联系人部门
+      ownerName: '',//联系人名字
+      relaterName: '',//部队联系人
       pageSize: 10,
       pageNum : 1,
       countthree: 0,
@@ -316,6 +319,9 @@ export default {
     },
     getdatatwo(){
       var params={
+        relaterDept: this.relaterDept,//联系人部门
+        ownerName: this.ownerName,//联系人名字
+        relaterName: this.relaterName,//部队联系人
         pageNum: this.pageNum,
         pageSize: this.pageSize,
         carType:2,
@@ -334,6 +340,9 @@ export default {
     },
     getdatathree(){
       var params={
+        relaterDept: this.relaterDept,//联系人部门
+        ownerName: this.ownerName,//联系人名字
+        relaterName: this.relaterName,//部队联系人        
         pageNum: this.pageNum,
         pageSize: this.pageSize,
         carType:3,
