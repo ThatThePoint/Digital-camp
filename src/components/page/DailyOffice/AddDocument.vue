@@ -15,22 +15,24 @@
           <el-input class="input-width" 
               v-model="postname"  
               placeholder="请输入关键词"            
-              @focus="focus"                  
+              @focus="focus"
+              :disabled="flagname"                  
               >
           </el-input>
         </div>
         <div class="container-header-left">
           <span>公文标题：</span>
-          <el-input class="input-width" v-model="title"></el-input>
+          <el-input class="input-width" v-model="title" :disabled="flagtitle"></el-input>
         </div>
         <div class="container-header-left">    
         <span>公文等级：</span>
-          <el-select clearable class="input-width" v-model="level" placeholder="请选择">
+          <el-select clearable class="input-width" v-model="level" placeholder="请选择" :disabled="flagleval">
             <el-option
               v-for="item in options"
               :key="item.code"
               :label="item.name"
               :value="item.code"
+              
             ></el-option>
           </el-select>
           </div>
@@ -50,10 +52,11 @@
           <el-button size="small" type="primary">点击上传</el-button>
         </el-upload>
       </div>
-      <quill-editor ref="myTextEditor" v-model="content" :options="editorOption" ></quill-editor>
+      <quill-editor ref="myTextEditor" v-model="content" :options="editorOption" :disabled="flagcontent"></quill-editor>
       <div class="flex-center"> 
-        <el-button class="editor-btn" type="danger" @click="handleBack" >取消</el-button>
-        <el-button class="editor-btn" type="success" @click="submit" style="margin-left:40px;">提交</el-button> 
+        <el-button class="editor-btn" type="danger" @click="handleBacktwo" v-show="flaggoback">返回</el-button>
+        <el-button class="editor-btn" type="danger" @click="handleBack" v-show="flagcancel">取消</el-button>
+        <el-button class="editor-btn" type="success" @click="submit" style="margin-left:40px;" v-show="flagsubmit">提交</el-button> 
       </div>
      
     </div>
@@ -85,6 +88,14 @@ export default {
   name: "editor",
   data: function() {
     return {
+      num: '',
+      flagcontent: false,
+      flagleval: false,//等级
+      flagtitle: false,//标题
+      flagname: false,//收件人
+      flagsubmit: true,//提交按钮
+      flaggoback: false,//返回按钮
+      flagcancel: true,//取消按钮
       docuId:"",//公文tid
       perid:"",//接受父组件传过来的id
       parentlist:[],//传给穿梭框的树表数据
@@ -169,6 +180,25 @@ export default {
   },
   created(){
     this.docuId= this.$route.query.id;
+    let type = this.$route.query.type
+    this.num = this.$route.query.num
+    if( type == 'add'){
+      this.flagcontent = false,//富文本
+      this.flagleval = false//等价
+      this.flagsubmit = true//提交按钮
+      this.flaggoback = false//返回按钮
+      this.flagcancel = true//取消按钮
+      this.flagname = false
+      this.flagtitle = false
+    }else if(type == 'edit'){
+      this.flagcontent = true,//富文本
+      this.flagleval = true//等价
+      this.flagsubmit = false//提交按钮
+      this.flaggoback = true//返回按钮
+      this.flagcancel = false//取消按钮
+      this.flagname = true
+      this.flagtitle = true
+    }
     let _this = this
     this.postAxios("/DailyOffice/GetDocument",{
          tid:this.docuId
@@ -325,6 +355,14 @@ export default {
     },
     handleBack(){
       history.go(-1);
+    },
+    handleBacktwo(){
+      this.$router.push({ 
+        path: "/documentmanagement",
+        query:{
+          num: this.num
+        } 
+      });
     }
    
   }

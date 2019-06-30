@@ -50,7 +50,7 @@
               <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row, '1')">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -109,7 +109,7 @@
               <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row, '2')">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -169,7 +169,7 @@
               <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row, '3')">查看</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -231,6 +231,11 @@ export default {
     this.getTableDataone()
     this.getTableDatatwo()
     this.getTableDatathree()
+    let num = this.$route.query.num
+    if(num&&num == '3'){
+      this.activeName = 'third'
+      this.getTableDatathree()
+    }
   },
   methods: {
     //时间格式化  
@@ -326,14 +331,27 @@ export default {
     formatterReceive(row, column) {
       return row.allReceive == 1 ? "已收录" : "待收录";
     },
-    handleEdit(index, row) {
-     this.$router.push({ path: "/adddocument" ,query:{id:row.tid}});
+    handleEdit(index, row, num) {
+     this.$router.push({ 
+       path: "/adddocument",
+       query:{
+         type: 'edit',
+         id: row.tid,
+         num: num
+        }
+      });
     },
     handleDelete(index, row) {
       console.log(index, row);
     },
     addDocument() {
-      this.$router.push({ path: "/adddocument" });
+      this.$router.push({ 
+          path: "/adddocument",
+          query:{
+            'type': 'add',
+            num: '0'
+          } 
+        });
     },
     handleClick(tab, event) {
       console.log(tab, event);
