@@ -256,11 +256,12 @@ export default {
       }
       this.innerVisible = true;
     },
-    //编辑明细
+    //获取明细
     getDetailInfo(id) {
       this.postAxios("Sysconfig/GetRuleinfo", { tid: id })
         .then(res => {
           this.detailInfo = res.ruleinfo;
+          this.innerVisible=true;
         })
         .catch(err => {
           console.log(err);
