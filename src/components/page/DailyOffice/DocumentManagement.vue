@@ -46,7 +46,7 @@
               <el-table-column prop="docCreaterName" label="发送人"></el-table-column>
               <el-table-column prop="docReceiversName" label="收件人" width="200"></el-table-column>
               <el-table-column prop="sendTime" label="发送时间" :formatter="formatterDate"></el-table-column>
-              <el-table-column prop="docStatus" label="状态" :formatter="formatterStaus"></el-table-column>
+              <el-table-column prop="docStatus" label="状态" :formatter="formatterStauswei"></el-table-column>
               <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -105,7 +105,7 @@
               <el-table-column prop="docCreaterName" label="发送人"></el-table-column>
               <el-table-column prop="docReceiversName" label="收件人"></el-table-column>
               <el-table-column prop="sendTime" label="发送时间" :formatter="formatterDate"></el-table-column>
-              <el-table-column prop="docStatus" label="状态" :formatter="formatterStaus"></el-table-column>
+              <el-table-column prop="docStatus" label="状态" :formatter="formatterStausyi"></el-table-column>
               <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -165,7 +165,7 @@
               <el-table-column prop="docCreaterName" label="发送人"></el-table-column>
               <el-table-column prop="docReceiversName" label="收件人"></el-table-column>
               <el-table-column prop="sendTime" label="发送时间" :formatter="formatterDate"></el-table-column>
-              <el-table-column prop="docStatus" label="状态" :formatter="formatterStaus"></el-table-column>
+              <el-table-column prop="docStatus" label="状态" :formatter="formatterStausfa"></el-table-column>
               <el-table-column prop="allReceive" label="全部已阅" :formatter="formatterReceive"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -312,6 +312,15 @@ export default {
       .catch(err => {
         console.log(err);
     });
+    },
+    formatterStausfa(row, column){
+      return '已发送'
+    },
+    formatterStauswei(row, column){
+      return '未读'
+    },
+    formatterStausyi(row, column){
+      return '已读'
     },
     formatterStaus(row, column) {
       return row.status == 1 ? "发布" : "草稿";
