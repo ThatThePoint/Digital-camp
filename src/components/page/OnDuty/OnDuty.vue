@@ -113,6 +113,7 @@
               <el-table-column prop="endTime" label="截至时间"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
+                  <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                 </template>
               </el-table-column>
@@ -348,6 +349,24 @@ export default {
     },
     formatter(row, column) {
       return row.address;
+    },
+    handledel(){
+      let _this = this;
+      this.postAxios("/DailyOffice/RotaInfo", {tid: row.tid})
+        .then(res => {
+          _this.jobDatalist = res.jobData;
+          _this.personlist = res.dutyStaff;
+          _this.staffId = res.rotaInfo.dutyPerson
+          _this.posiId  = res.rotaInfo.dutyPosition
+          for (let i = 0; i < res.jobData.length; i++) {
+            if ( res.jobData[i].parentId == "" || res.jobData[i].parentId == null ) {
+              _this.depts.push(res.jobData[i]);
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     //值班查询编辑
     handleEdit(index, row) {
