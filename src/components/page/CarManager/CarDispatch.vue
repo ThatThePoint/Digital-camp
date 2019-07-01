@@ -44,6 +44,15 @@
                   <el-form-item :inline="true" style="width:120px">
                     <el-input type="input" placeholder="用车人" v-model="param.name" ></el-input>
                   </el-form-item>
+                  <el-form-item style="width:140px">
+                    <el-select clearable v-model="param.status" placeholder="请选择审批状态">
+                      <el-option label="待调度" value="0"></el-option>
+                      <el-option label="调度退回" value="1"></el-option>
+                      <el-option label="待审批" value="2"></el-option>
+                      <el-option label="已批准" value="3"></el-option>
+                      <el-option label="审批退回" value="4"></el-option>            
+                    </el-select>
+                  </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="search">查询</el-button>
               </el-form-item>
@@ -74,6 +83,8 @@
             </el-table>
           </div>
         </el-tab-pane>
+
+
         <el-tab-pane label="车辆调度" name="second">
           <div class="messages">
             <el-form :inline="true" :model="param" class="demo-form-inline">
@@ -136,6 +147,9 @@
             </el-table>
           </div>
         </el-tab-pane>
+
+
+
         <el-tab-pane label="待审批车辆" name="fourth">
           <div class="messages">
             <el-form :inline="true" :model="param" class="demo-form-inline">
@@ -198,6 +212,8 @@
             </el-table>
           </div>
         </el-tab-pane>
+
+
         <el-tab-pane label="已审批车辆" name="fifth">
           <div class="messages">
             <el-form :inline="true" :model="param" class="demo-form-inline">
@@ -238,6 +254,8 @@
             </el-table>
           </div>
         </el-tab-pane>
+
+
         <el-tab-pane label="进行中车辆" name="sixth">
          <div class="messages">
             <el-form :inline="true" :model="param" class="demo-form-inline">
@@ -278,6 +296,13 @@
             </el-table>
           </div>
         </el-tab-pane>
+
+
+
+
+
+
+
         <el-tab-pane label="未批车辆" name="seventh">
           <div class="messages">
             <el-form :inline="true" :model="param" class="demo-form-inline">
@@ -319,12 +344,20 @@
           </div>
         </el-tab-pane>
       </el-tabs>
-      <el-dialog :visible.sync="carApplyInfoVisible" style="width:1600px">
+
+
+
+
+
+
+
+
+      <el-dialog :visible.sync="carApplyInfoVisible">
         <el-form :model="applyInfo">
               <div class="flex">用车申请</div>
               <el-row>
-                <el-col :span="8">
-                  <el-form-item label="用车人" :label-width="formLabelWidth">
+                <el-col :span="8" style="margin-right:20px">
+                  <el-form-item label="用车人" :label-width="formLabelWidth" >
                     <el-input disabled type="input" v-model="applyInfo.applyer" class="input-width"></el-input>
                   </el-form-item>
                 </el-col>
@@ -335,7 +368,7 @@
                 </el-col>
               </el-row>
               <el-row>
-                <el-col :span="8">
+                <el-col :span="8" style="margin-right:20px">
                   <el-form-item label="起始时间" :label-width="formLabelWidth">
                     <el-date-picker
                       type="datetime"
@@ -358,7 +391,7 @@
               </el-row>
 
               <el-row>
-                <el-col :span="8">
+                <el-col :span="8" style="margin-right:20px">
                   <el-form-item label="目的地" :label-width="formLabelWidth">
                     <el-input type="input" v-model="applyInfo.destination" class="input-width"></el-input>
                   </el-form-item>
@@ -377,7 +410,7 @@
                 </el-col>
               </el-row>
               <el-row>
-                <el-col :span="8">
+                <el-col :span="8" style="margin-right:20px">
                   <el-form-item label="事由" :label-width="formLabelWidth">
                     <el-input
                       class="input-width"
@@ -426,6 +459,11 @@
               <el-button v-show="applyButton" type="primary" @click="onSubmit">确 定</el-button>
             </div>
       </el-dialog>
+
+
+
+
+
       <!-- 没有审批信息 -->
       <el-dialog :visible.sync="wushenpi" >
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
@@ -518,7 +556,7 @@
           <el-row>
             <el-col :span="8">
               <el-form-item label="调度车辆">
-                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.carid" placeholder="调度车辆">
+                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.carid" placeholder="调度车辆" style="color:black">
                   <el-option
                   v-for="item in carOptions"
                   :key="item.tid"
@@ -530,7 +568,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="调度司机">
-                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.driverid" placeholder="调度司机">
+                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.driverid" placeholder="调度司机" style="color:black">
                   <el-option
                   v-for="item in applyInfo.driverList"
                   :key="item.tid"
@@ -542,7 +580,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="审批人">
-                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.approverid" placeholder="审批人">
+                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.approverid" placeholder="审批人" style="color:black">
                   <el-option
                   v-for="item in applyInfo.approverList"
                   :key="item.tid"
@@ -815,7 +853,8 @@ export default {
         starttime:"",
         endtime:"",
         formcode:"",
-        name:""
+        name:"",
+        status:''
       },
       carOptions:[],
       activeName: "first",
@@ -874,7 +913,7 @@ export default {
           return "待调度";
           break;
           case 1:
-          return "调度退回";
+          return "`调度退回`";
           break;
           case 2:
           return "待审批";
@@ -952,6 +991,7 @@ export default {
     //新增
     adduser(){
       this.carApplyInfoVisible = true;
+      this.applyInfo={}
       this.getApplyInfo();
     },
     //以下====新
@@ -971,6 +1011,7 @@ export default {
         });
     },
     onSubmit() {
+      debugger
       var params = {
         info: this.applyInfo
       };
@@ -997,6 +1038,7 @@ export default {
         starttime:this.param.starttime,
         endtime:this.param.endtime,
         formcode:this.param.formcode,
+        status:this.param.status,
         name:this.param.name,
         pageNum : num, 
         pageSize : size
@@ -1284,6 +1326,9 @@ export default {
   }
   .lines{
     border-bottom: 1px solid black;
+  }
+  el-col{
+    margin-right: 20px;
   }
 }
 
