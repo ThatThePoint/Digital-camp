@@ -81,6 +81,17 @@
                 </template>
               </el-table-column>
             </el-table>
+            <div class="pagination">
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="total, prev, pager, next"
+                :total="countone"
+                :current-page.sync="currentPage"
+                :page-size="10"
+              >
+              </el-pagination>
+          </div>
           </div>
         </el-tab-pane>
 
@@ -840,6 +851,12 @@ export default {
   name: "carDispatch",
   data() {
     return {
+      pageSize: 10,
+      pageNum : 1,
+      countthree: 0,
+      counttwo: 0,
+      countone: 0,     
+      currentPage: 1,
       ///新数据-----------
       printform:{},
       printVisible: false,//打印框
@@ -906,6 +923,13 @@ export default {
     });
   },
   methods: {
+      // 点击分页
+    handleCurrentChange(val) {
+      console.log(val);
+      this.currentPage = val;
+      this.pageNum = val;
+      this.search()
+    },
     formatterStatus(row,index){
       //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回
       switch(row.applystatus){
@@ -996,6 +1020,7 @@ export default {
     },
     //以下====新
     search(){
+      this.currentPage = 1
       this.getTableData();
     },
     getApplyInfo(id) {
@@ -1031,7 +1056,7 @@ export default {
       this.carApplyInfoVisible=false;
     },
     //获取列表数据
-    getTableData(num,size){
+    getTableData(){
       var canshu={
         tab:this.activeName,
         carId:this.param.carId,
@@ -1040,8 +1065,8 @@ export default {
         formcode:this.param.formcode,
         status:this.param.status,
         name:this.param.name,
-        pageNum : num, 
-        pageSize : size
+        pageNum : this.pageNum, 
+        pageSize : this.pageSize
       };
       this.postAxios("/CarApply/SearchCarApply", canshu)
         .then(res => {
@@ -1049,6 +1074,7 @@ export default {
           this.tableData=res.data;
           this.count=res.count;
           this.carOptions=res.carOptions;
+          this.countone = res.count;
         })
         .catch(err => {
           console.log(err);
