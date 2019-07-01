@@ -86,7 +86,7 @@
                 background
                 @current-change="handleCurrentChange"
                 layout="total, prev, pager, next"
-                :total="countone"
+                :total="count"
                 :current-page.sync="currentPage"
                 :page-size="10"
               >
@@ -156,6 +156,15 @@
                 </template>
               </el-table-column>
             </el-table>
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="total, prev, pager, next"
+                :total="count"
+                :current-page.sync="currentPage"
+                :page-size="10"
+              >
+              </el-pagination>
           </div>
         </el-tab-pane>
 
@@ -221,6 +230,15 @@
                 </template>
               </el-table-column>
             </el-table>
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="total, prev, pager, next"
+                :total="count"
+                :current-page.sync="currentPage"
+                :page-size="10"
+              >
+              </el-pagination>
           </div>
         </el-tab-pane>
 
@@ -263,6 +281,15 @@
                 </template>
               </el-table-column>
             </el-table>
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="total, prev, pager, next"
+                :total="count"
+                :current-page.sync="currentPage"
+                :page-size="10"
+              >
+              </el-pagination>
           </div>
         </el-tab-pane>
 
@@ -305,6 +332,15 @@
                 </template>
               </el-table-column>
             </el-table>
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="total, prev, pager, next"
+                :total="count"
+                :current-page.sync="currentPage"
+                :page-size="10"
+              >
+              </el-pagination>
           </div>
         </el-tab-pane>
 
@@ -352,6 +388,15 @@
                 </template>
               </el-table-column>
             </el-table>
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="total, prev, pager, next"
+                :total="count"
+                :current-page.sync="currentPage"
+                :page-size="10"
+              >
+              </el-pagination>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -857,6 +902,7 @@ export default {
       counttwo: 0,
       countone: 0,     
       currentPage: 1,
+      counttwo: 0,
       ///新数据-----------
       printform:{},
       printVisible: false,//打印框
@@ -928,7 +974,7 @@ export default {
       console.log(val);
       this.currentPage = val;
       this.pageNum = val;
-      this.search()
+      this.getTableData()
     },
     formatterStatus(row,index){
       //0-待调度 1-调度退回 2-待审批,3-已批准, 4-审批退回
@@ -1074,7 +1120,7 @@ export default {
           this.tableData=res.data;
           this.count=res.count;
           this.carOptions=res.carOptions;
-          this.countone = res.count;
+          this.count = res.count;
         })
         .catch(err => {
           console.log(err);
