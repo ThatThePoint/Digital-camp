@@ -611,10 +611,10 @@
           </el-row>
           <el-row>
             <el-col :span="8">
-              <el-form-item label="调度车辆">
-                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.carid" placeholder="调度车辆" style="color:black">
+              <el-form-item label="调度司机">
+                <el-select clearable @change="selectDriver1" :disabled="dispatchDetailDisabled" v-model="applyInfo.driverid" placeholder="调度司机" style="color:black">
                   <el-option
-                  v-for="item in carOptions"
+                  v-for="item in applyInfo.driverList"
                   :key="item.tid"
                   :label="item.name"
                   :value="item.tid"
@@ -623,10 +623,10 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="调度司机">
-                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.driverid" placeholder="调度司机" style="color:black">
+              <el-form-item label="调度车辆">
+                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.carid" placeholder="调度车辆" style="color:black">
                   <el-option
-                  v-for="item in applyInfo.driverList"
+                  v-for="item in carOptions"
                   :key="item.tid"
                   :label="item.name"
                   :value="item.tid"
@@ -647,13 +647,38 @@
               </el-form-item>
             </el-col>
           </el-row>
-
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="司机2">
+                <el-select clearable @change="selectDriver2" :disabled="dispatchDetailDisabled" v-model="applyInfo.driverid2" placeholder="调度司机" style="color:black">
+                  <el-option
+                  v-for="item in applyInfo.driverList"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="司机3">
+                <el-select clearable @change="selectDriver3" :disabled="dispatchDetailDisabled" v-model="applyInfo.driverid3" placeholder="调度司机" style="color:black">
+                  <el-option
+                  v-for="item in applyInfo.driverList"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="cancelDetail">取消</el-button>
           <el-button v-show="dispatchCommit" @click="dispatchApply">提交</el-button>
-          <el-button v-show="approvalPass" @click="passApproval">通过</el-button>
-          <el-button v-show="approvalPass" @click="rejectApproval">退回</el-button>
           <el-button v-show="printBtn" @click="print">打印</el-button>
         </div>
       </el-dialog>
@@ -996,6 +1021,37 @@ export default {
           break;
       }
     },
+    //选择司机控制
+    selectDriver1(){
+      if(!this.applyInfo.driverid){
+        this.applyInfo.driverid2='';
+        this.applyInfo.driverid3='';
+      }
+    },
+    selectDriver2(){
+      if(!this.applyInfo.driverid){
+        alert("请先选择司机1");
+        this.applyInfo.driverid2='';
+      }
+      if(!this.applyInfo.driverid2){
+        this.applyInfo.driverid3='';
+      }
+      if(this.applyInfo.driverid2==this.applyInfo.driverid){
+        alert("请勿重复选择相同司机");
+        this.applyInfo.driverid2='';
+        this.applyInfo.driverid3='';
+      }
+    },
+    selectDriver3(){
+      if(!this.applyInfo.driverid2){
+        alert("请先选择司机2");
+        this.applyInfo.driverid3='';
+      }
+      if(this.applyInfo.driverid3==this.applyInfo.driverid2 || this.applyInfo.driverid3==this.applyInfo.driverid){
+        alert("请勿重复选择相同司机");
+        this.applyInfo.driverid3='';
+      }
+    },
     confirmprint(){
       debugger
       this.$print(this.$refs.print)
@@ -1052,8 +1108,9 @@ export default {
       this.dialogVisible = false;
     },
     confirms(a){
-      this.applyInfo.followersNames = a[0]
-      this.perid = a[1]
+      this.applyInfo.followersNames = a[0];
+      this.perid = a[1];
+      this.applyInfo.followerIds=a[1];
     },
     focus(){
       this.dialogVisible = true;
@@ -1177,7 +1234,7 @@ export default {
         this.printBtn=true;//打印按钮
         this.getApplyInfo(scope.row.tid);
         return  false;
-      }else if(this.activeName=='third'){//2-待审批
+      }else if(this.activeName=='forth'){//2-待审批
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=false;
@@ -1186,7 +1243,7 @@ export default {
         this.youshenpi=true;
         this.getApplyInfo(scope.row.tid);
         return  false;
-      }else if(this.activeName=='forth'){//3-已批准
+      }else if(this.activeName=='fifth'){//3-已批准
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=true;
@@ -1201,7 +1258,7 @@ export default {
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=false;
         this.dispatchCommit=false;//隐藏提交
-        this.approvalPass=true;//显示审批通过和退回
+        this.approvalPass=false;//显示审批通过和退回
         this.youshenpi=true;
         this.getApplyInfo(scope.row.tid);
         return  false;
@@ -1231,15 +1288,19 @@ export default {
         approvalStatus:this.dispatchResult,
         nexapproverid:this.applyInfo.approverid,
         driverid:this.applyInfo.driverid,
+        driverid2:this.applyInfo.driverid2,
+        driverid3:this.applyInfo.driverid3,
         carid:this.applyInfo.carid
       };
       this.postAxios("/CarApply/SaveApproval", da)
         .then(res => {
           console.log(res);
           if(res.status){
+            alert("调度完成");
             this.wushenpi=false;
             this.getTableData();
           }else{
+            alert("调度失败，请联系管理员");
             alert(res.msg);
           }
         })
