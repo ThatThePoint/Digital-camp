@@ -407,7 +407,7 @@
 
 
 
-
+        <!-- 用车申请弹窗 -->
       <el-dialog :visible.sync="carApplyInfoVisible">
         <el-form :model="applyInfo">
               <div class="flex">用车申请</div>
@@ -520,7 +520,7 @@
 
 
 
-      <!-- 没有审批信息 -->
+      <!-- 没有审批信息 弹窗-->
       <el-dialog :visible.sync="wushenpi" >
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
           <div class="second-title">申请信息</div>
@@ -682,7 +682,8 @@
           <el-button v-show="printBtn" @click="print">打印</el-button>
         </div>
       </el-dialog>
-      <!-- 有审批信息 -->
+
+      <!-- 有审批信息 弹窗-->
       <el-dialog :visible.sync="youshenpi" >
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
           <div class="second-title">申请信息</div>
@@ -786,14 +787,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="调度司机">
-                <el-select clearable :disabled="dispatchDetailDisabled" v-model="applyInfo.driverid" placeholder="调度司机">
-                  <el-option
-                  v-for="item in applyInfo.driverList"
-                  :key="item.tid"
-                  :label="item.name"
-                  :value="item.tid"
-                ></el-option>
-                </el-select>
+                 <label>{{getDriver}}</label>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -1073,6 +1067,10 @@ export default {
     },
     formatterEnd(row,index){
       return this.$utils.timeFormatter(row.endtime);
+    },
+    //获取司机
+    getDriver(){
+     return this.applyInfo.driverid2?this.applyInfo.driverid3?this.applyInfo.driverid+";"+this.applyInfo.driverid2+";"+this.applyInfo.driverid3:this.applyInfo.driverName+";"+this.applyInfo.driverName2:this.applyInfo.driverName
     },
     getTree(data){
       let map = {};
