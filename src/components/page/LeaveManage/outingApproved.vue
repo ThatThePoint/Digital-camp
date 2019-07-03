@@ -36,47 +36,49 @@
             :current-page.sync="currentPage"
           ></el-pagination>
         </div>
+
+
         <el-dialog title="外出申请" :visible.sync="confirmFormVisible">
           <el-form :model="form" label-width="100px" ref="form">
             <div class="second-title">申请信息</div>
             <el-row>
-              <el-col :span="8">
+              <el-col :span="12">
                 <el-form-item label="申请人">
                   <label>{{form.applyer}}</label>
                 </el-form-item>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="12">
                 <el-form-item label="部门">
                   <label>{{form.applyerDept}}</label>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="8">
+              <el-col :span="12">
                 <el-form-item label="请假人">
                   <label>{{form.selectedStaffNameList}}</label>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="8">
+              <el-col :span="12">
                 <el-form-item label="外出类型">
                   <label>{{form.outingTypeName}}</label>
                 </el-form-item>
               </el-col>
-               <el-col :span="8">
+               <el-col :span="12">
                 <el-form-item label="请假时间">
                   <label>{{form.timeLength}}小时</label>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="8">
+              <el-col :span="12">
                 <el-form-item label="开始日期">
                   <label>{{form.startTime}}</label>
                 </el-form-item>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="12">
                 <el-form-item label="结束日期">
                   <label>{{form.endTime}}</label>
                 </el-form-item>
@@ -86,12 +88,12 @@
             <div v-show="firstApprovalInfo">
               <div class="second-title">一级审批信息</div>
               <el-row>
-                <el-col :span="8">
+                <el-col :span="12">
                   <el-form-item label="审批人">
                     <label>{{form.firstApproverName}}</label>
                   </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="12">
                   <el-form-item label="下一级审批人">
                   <el-select clearable v-model="form.secApprover" placeholder="审批人">
                     <el-option
@@ -116,12 +118,12 @@
             <div v-show="secondApprovalInfo">
               <div class="second-title">二级审批信息</div>
               <el-row>
-                <el-col :span="8">
+                <el-col :span="12">
                   <el-form-item label="审批人">
                     <label>{{form.secApproverName}}</label>
                   </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="12">
                   <el-form-item label="下一级审批人">
                   <el-select clearable  v-model="form.thdApprover" placeholder="审批人">
                     <el-option
@@ -146,7 +148,7 @@
             <div v-show="thirdApprovalInfo">
               <div class="second-title">三级审批信息</div>
               <el-row>
-                <el-col :span="8">
+                <el-col :span="12">
                   <el-form-item label="审批人">
                     <label>{{form.thdApproverName}}</label>
                   </el-form-item>
@@ -429,6 +431,7 @@ export default {
 .flex {
   display: flex;
 }
+.dialog-footer {text-align: center}
 .staffStatu {
   margin: 0 20px;
 }

@@ -492,6 +492,7 @@ export default {
 }
 .messages {
 }
+.dialog-footer {text-align: center}
 .flex {
   display: flex;
 }

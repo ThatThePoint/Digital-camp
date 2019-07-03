@@ -454,4 +454,5 @@ export default {
 .rights{
   margin-right: 20px;
 }
+.dialog-footer {text-align: center}
 </style>

@@ -235,6 +235,7 @@ export default {
 .input-width {
   width: 203px;
 }
+.dialog-footer {text-align: center}
 .messages {
 }
 </style>

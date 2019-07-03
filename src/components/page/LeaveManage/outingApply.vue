@@ -216,9 +216,9 @@ export default {
         console.log("!111111111",this.form)
         let flag
         for(let i in this.form){
-          if(this.form[i] == ''){
+          if(!this.form[i]){
             this.$message("所有项都为必填项")
-            flag = false
+            return false ;
           }else{
             flag = true
           }
@@ -295,6 +295,7 @@ export default {
   font-size: 14px;
   color: #606266;
 }
+.dialog-footer {text-align: center}
 .el-form-item__content::after,
 .el-form-item__content::before {
   display: table;

@@ -213,6 +213,7 @@ export default {
   width: 180px;
   margin: 0 10px;
 }
+.dialog-footer {text-align: center}
 .messages {
 }
 </style>

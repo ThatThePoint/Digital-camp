@@ -257,6 +257,7 @@ export default {
     height: 32px !important;
   }
 }
+.dialog-footer {text-align: center}
 .twos{
   font-size: 18px;
 }

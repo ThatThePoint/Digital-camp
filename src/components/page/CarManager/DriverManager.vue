@@ -77,13 +77,12 @@
                 :file-list="fileList"
               > 
                 <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
               </el-upload>
             </div>
-            <span slot="footer" class="dialog-footer">
+            <div slot="footer" class="dialog-footer">
               <el-button @click="dialogVisible = false">取 消</el-button>
               <el-button type="primary" @click="confirms">确 定</el-button>
-            </span>
+            </div>
           </el-dialog>
         </div>
       </div>
@@ -344,6 +343,7 @@ export default {
   height: 40px;
   line-height: 40px;
 }
+.dialog-footer {text-align: center}
 .widths {
   display: inline-block;
   width: 100px;

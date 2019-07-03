@@ -395,6 +395,7 @@ export default {
 .flex {
   display: flex;
 }
+.dialog-footer {text-align: center}
 .staffStatu {
   margin: 0 20px;
 }

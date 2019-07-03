@@ -525,12 +525,12 @@
         <el-form :model="applyInfo" ref="applyInfo" label-width="100px">
           <div class="second-title">申请信息</div>
           <el-row>
-            <el-col :span="8">
+            <el-col :span="8" style="margin-right:20px">
               <el-form-item label="申请单号">
                 <label>{{applyInfo.formcode}}</label>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="8" style="margin-right:20px">
               <el-form-item label="用车人">
                 <label>{{applyInfo.applyer}}</label>
               </el-form-item>
@@ -582,9 +582,9 @@
                 <label>{{applyInfo.reason}}</label>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="备注">
-                <label>{{applyInfo.remark}}</label>
+            <el-col :span="16">
+              <el-form-item label="随车人">
+                <label>{{applyInfo.followersNames}}</label>
               </el-form-item>
             </el-col>
           </el-row>
@@ -745,9 +745,9 @@
                 <label>{{applyInfo.reason}}</label>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="备注">
-                <label>{{applyInfo.remark}}</label>
+            <el-col :span="16">
+              <el-form-item label="随车人">
+                <label>{{applyInfo.followersNames}}</label>
               </el-form-item>
             </el-col>
           </el-row>

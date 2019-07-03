@@ -5,7 +5,7 @@
         <el-breadcrumb-item>
           <i class="el-icon-lx-calendar"></i> 公文管理
         </el-breadcrumb-item>
-        <el-breadcrumb-item>增加公文</el-breadcrumb-item>
+        <el-breadcrumb-item>公文详情</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
@@ -420,6 +420,7 @@ export default {
     background: white !important;
   }
 }
+.dialog-footer {text-align: center}
 .container-header-left{
   text-align: left;
   margin-bottom: 5px;

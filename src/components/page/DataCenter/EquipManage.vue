@@ -234,4 +234,5 @@ export default {
 .el-input.el-input--small.el-input--suffix:nth-of-type(3),.el-input.el-input--small.el-input--suffix:nth-of-type(4){
   margin-left: 10px;
 }
+.dialog-footer {text-align: center}
 </style>
