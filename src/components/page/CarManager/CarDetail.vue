@@ -107,8 +107,9 @@
               <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
               <el-table-column prop="owner" label="车主姓名" ></el-table-column>
               <el-table-column prop="ownerTel" label="联系电话" ></el-table-column>
-               <el-table-column prop="registTime" label="登记时间" :formatter="formatterDate"></el-table-column>
-              <el-table-column prop="relaterName" label="部队联系人" ></el-table-column>
+              <el-table-column prop="registTime" label="登记时间" :formatter="formatterDate"></el-table-column>
+              <el-table-column prop="relater" label="部队联系人" ></el-table-column>
+              <el-table-column prop="relaterDeptName" label="联系人部门" ></el-table-column>
               <el-table-column prop="inOrOut" label="出入状态" :formatter="formatterInOut" ></el-table-column>
               <el-table-column label="操作" ortable width="200">
                 <template slot-scope="scope">
@@ -175,6 +176,8 @@
               <el-table-column prop="owner" label="车主姓名" ></el-table-column>
               <el-table-column prop="ownerTel" label="联系电话" ></el-table-column>
               <el-table-column prop="registTime" label="登记时间" :formatter="formatterDate" ></el-table-column>
+              <el-table-column prop="relater" label="部队联系人" ></el-table-column>
+              <el-table-column prop="relaterDeptName" label="联系人部门" ></el-table-column>
               <el-table-column prop="inout" label="出入状态" :formatter="formatterInOut" ></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope" width="200">

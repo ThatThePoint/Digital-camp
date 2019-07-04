@@ -92,10 +92,11 @@
           style="width: 100%"
           :default-sort="{prop: 'name', order: 'descending'}"
         >
-          <el-table-column prop="name" label="姓名" sortable></el-table-column>
-          <el-table-column prop="deptName" label="所属部门" sortable ></el-table-column>
-          <el-table-column prop="licensedate" label="驾驶证有效期" :formatter="formatterDate" sortable  ></el-table-column>
-          <el-table-column prop="duty" label="在岗状态" sortable :formatter="state"></el-table-column>
+          <el-table-column prop="name" label="姓名" ></el-table-column>
+          <el-table-column prop="deptName" label="所属部门"  ></el-table-column>
+          <el-table-column prop="lisenceCode" label="驾驶证号"  ></el-table-column>
+          <el-table-column prop="licensedate" label="驾驶证有效期" :formatter="formatterDate"   ></el-table-column>
+          <el-table-column prop="duty" label="在岗状态"  :formatter="state"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -142,6 +143,14 @@ export default {
         {
           value: "1",
           label: "在岗"
+        },
+        {
+          value: "0",
+          label: "外出"
+        },
+        {
+          value: "3",
+          label: "请假"
         }
       ],
       propertyValue: "",

@@ -1232,7 +1232,7 @@ export default {
         this.printBtn=true;//打印按钮
         this.getApplyInfo(scope.row.tid);
         return  false;
-      }else if(this.activeName=='forth'){//2-待审批
+      }else if(this.activeName=='fourth'){//2-待审批
         this.approvalDetail=true;
         this.dispatchDetailDisabled=true;
         this.approvalDetailDisabled=false;
