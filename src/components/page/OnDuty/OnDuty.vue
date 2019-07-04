@@ -205,14 +205,7 @@ export default {
       this.flaghand = false
     },
     handleClose(done){
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
-        // if(this.flagon == true){
-        //   this.activeName = "third"
-        // }
+      this.dialogVisible = false
         
     },
 
@@ -244,7 +237,7 @@ export default {
             this.rotaInfo={};
             this.persons="";
             // this.tid = row.tid;
-            
+            this.getdatatwo()
           } else {
             this.$message({
               message: "保存失败",
