@@ -240,6 +240,17 @@ export default {
   },
   created(){
     this.getdataone()
+    let type = this.$route.query&&this.$route.query.type
+    if(type=='1'){
+      this.activeName = 'first'
+      this.getdataone()
+    }else if(type=='2'){
+      this.activeName = 'second'
+      this.getdatatwo()
+    }else if(type=='3'){
+      this.activeName = 'third'
+      this.getdatathree()
+    }
   },
   methods: {
     formatterInOut(row,index){
