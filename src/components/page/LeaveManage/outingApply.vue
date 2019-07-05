@@ -18,7 +18,7 @@
           </el-row>
           <el-row>
             <el-col :span="6">
-              <el-form-item label="请假人">
+             <el-form-item label="请假人">
                 <el-input 
                   v-model="form.selectedStaffNameList"  
                   placeholder="请输入关键词"   

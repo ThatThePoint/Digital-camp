@@ -552,11 +552,13 @@ export default {
         ownerIdCardPhoto2:"",//身份证背面
         relaterLicensePhoto1:"",//驾驶证正面
         relaterLicensePhoto2:"",//驾驶证背面
-      }
+      },
+      type: ''
     };
   },
 
   created(){
+    debugger
     //编辑时进入页面
     if( this.$route.query.row ){
       this.imageUrl = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.carPhoto
@@ -564,8 +566,9 @@ export default {
       this.cardimg2 = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.ownerIdCardPhoto2
       this.liceimg1 = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.relaterLicensePhoto1
       this.liceimg2 = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.relaterLicensePhoto2
-      this.fileList = [{"url":"http://digitalcamp.oicp.io:54373/here/"+this.$route.query.row.driveLicensephoto,"name":"行驶证照片"}]
+      this.fileList = this.$route.query.row.driveLicensephoto?[{"url":"http://digitalcamp.oicp.io:54373/here/"+this.$route.query.row.driveLicensephoto,"name":"行驶证照片"}]:[]
       this.carInfo = this.$route.query.row
+      this.type = this.$route.query.row&&this.$route.query.row.carType
       if(this.$route.query.row.carType == 1){
         this.activeName = 'first',
         this.flagone = false
@@ -578,6 +581,7 @@ export default {
     }
     if(this.$route.query.type){
       let type = this.$route.query.type
+      this.type = this.$route.query.type
       if(type == 1){
         this.carInfo.carType = '1'
         this.activeName = 'first',
@@ -599,6 +603,7 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res, file) {
+      debugger
       this.imageUrl = URL.createObjectURL(file.raw);
       this.carInfo.carPhoto = res.path
       console.log(this.carInfo.carPhoto)
@@ -639,9 +644,8 @@ export default {
       console.log(file, fileList);
     },
     handlePreview(file) {
-      
+      debugger
       var a = document.createElement('a');
-      console.log("!1111111111",)
       a.href = this.fileList[0].url;
       a.download = 'dname';
       a.target = "_block"
@@ -712,8 +716,14 @@ export default {
       console.log(index, row);
     },
     handleBack() {
-      this.$destroy()
-      history.go(-1);
+     
+      this.$router.push({
+        path : '/cardetail',
+          query : {
+          type : this.type
+        }
+      })
+       this.$destroy()
     },
     confirms(){
       console.log(this.carInfo)
@@ -727,7 +737,12 @@ export default {
             .then(res => {
               console.log(res)
               _this.$destroy()
-              history.go(-1);
+              _this.$router.push({
+                path : '/cardetail',
+                  query : {
+                  type : _this.type
+                }
+              })
             })
             .catch(err => {
               console.log(err);
