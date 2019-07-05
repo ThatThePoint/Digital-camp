@@ -85,7 +85,7 @@ export default {
       var params={
 
         pageSize: this.pageSize,
-        pageNum: 1,
+        pageNum: this.pageNum,
         deptId: this.deptId
       };
       this.postAxios("DailyOffice/StaffDynamics",params)
