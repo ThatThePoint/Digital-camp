@@ -445,13 +445,9 @@ export default {
                 _this.depts.push(res.jobData[i]);
               }
             }
-            debugger
             if(_this.flaghand == true){
               console.log(_this.gangwei,_this.depts)
             }
-
-
-
           })
           .catch(err => {
             console.log(err);

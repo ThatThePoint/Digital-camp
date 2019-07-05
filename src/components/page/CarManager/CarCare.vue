@@ -10,12 +10,12 @@
     <div class="container">
 
       <!-- 保养信息弹窗 -->
-      <el-dialog :visible.sync="careInfoVisible">
+      <el-dialog :visible.sync="careInfoVisible" >
         <el-form :model="careInfo">
           <el-row>
-            <el-col :span="12">
+            <el-col :span="7" style="width:66%">
               <el-form-item label="维护车辆">
-                <el-select clearable v-model="careInfo.carId" placeholder="选择车辆">
+                <el-select clearable v-model="careInfo.carId" placeholder="选择车辆" style="width:220px">
                   <el-option
                     v-for="item in selectCar"
                     :key="item.tid"
@@ -25,8 +25,8 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="维护日期">
+            <el-col :span="7" style="width:66%">
+              <el-form-item label="维护日期" >
                 <el-date-picker
                   v-model="careInfo.operateDate"
                   type="date"
@@ -37,9 +37,9 @@
           </el-row>
 
           <el-row>
-            <el-col :span="12">
+            <el-col :span="7" style="width:66%">
               <el-form-item label="维修类型">
-                <el-select clearable v-model="careInfo.careTypeCode" placeholder="请选择">
+                <el-select clearable v-model="careInfo.careTypeCode" placeholder="请选择" style="width:220px">
                   <el-option
                     v-for="item in careTypeOptions"
                     :key="item.code"
@@ -49,18 +49,18 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="经办人">
-              <el-input v-model="careInfo.careOperatorName"></el-input>
-              </el-form-item>
+            <el-col :span="7" style="width:66%;margin-bottom:20px">
+              <span style="width:66px;display:inline-block">经办人</span>
+              <el-input v-model="careInfo.careOperatorName"  style="width:220px"></el-input>
+              
             </el-col>
           </el-row>
 
           <el-row>
-            <el-col :span="12" >
-              <el-form-item label="备注">
-              <el-input v-model="careInfo.note"></el-input>
-              </el-form-item>
+            <el-col :span="7" style="width:66%">
+              <span style="width:66px;display:inline-block">备注</span>
+              <el-input v-model="careInfo.note" style="width:220px"></el-input>
+              
             </el-col>
           </el-row>
         </el-form>
@@ -322,5 +322,8 @@ export default {
 .input-width {
   width: 100px;
   margin: 0 10px;
+}
+label{
+  width: 68px !important;
 }
 </style>
