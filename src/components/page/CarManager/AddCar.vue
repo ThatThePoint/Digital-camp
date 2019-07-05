@@ -558,7 +558,6 @@ export default {
   },
 
   created(){
-    debugger
     //编辑时进入页面
     if( this.$route.query.row ){
       this.imageUrl = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.carPhoto
@@ -603,7 +602,6 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res, file) {
-      debugger
       this.imageUrl = URL.createObjectURL(file.raw);
       this.carInfo.carPhoto = res.path
       console.log(this.carInfo.carPhoto)
@@ -644,7 +642,6 @@ export default {
       console.log(file, fileList);
     },
     handlePreview(file) {
-      debugger
       var a = document.createElement('a');
       a.href = this.fileList[0].url;
       a.download = 'dname';
@@ -740,7 +737,7 @@ export default {
               _this.$router.push({
                 path : '/cardetail',
                   query : {
-                  type : _this.type
+                  type : _this.carType
                 }
               })
             })
@@ -756,8 +753,13 @@ export default {
           this.postAxios("/CarInfo/SaveCarInfo",_this.carInfo)
             .then(res => {
               console.log(res)
-              _this.$destroy()
-              history.go(-1);
+              this.$destroy()
+              this.$router.push({
+                path : '/cardetail',
+                  query : {
+                  type : this.carInfo.carType
+                }
+              })
             })
             .catch(err => {
               console.log(err);
