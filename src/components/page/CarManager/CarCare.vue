@@ -25,14 +25,15 @@
             :value="item.code"
           ></el-option>
         </el-select>
-        发送时间
-        <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>--
-        <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期"></el-date-picker>
+        保养时间
+        <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期" style="width:130px"></el-date-picker>--
+        <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期" style="width:130px"></el-date-picker>
         <el-input
           class="input-width"
           placeholder="车牌号"
           prefix-icon="el-icon-search"
           v-model="input2"
+          style="width:120px"
         ></el-input>
         <el-button @click="search">搜索</el-button>
         <el-button type="success"  @click="addCare()" class="right">新增</el-button>
