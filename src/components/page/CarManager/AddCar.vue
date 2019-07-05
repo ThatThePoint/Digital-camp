@@ -566,7 +566,7 @@ export default {
       this.cardimg2 = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.ownerIdCardPhoto2
       this.liceimg1 = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.relaterLicensePhoto1
       this.liceimg2 = "http://digitalcamp.oicp.io:54373/here/" + this.$route.query.row.relaterLicensePhoto2
-      this.fileList = this.$route.query.row.driveLicensephoto?[{"url":"http://digitalcamp.oicp.io:54373/here/"+this.$route.query.row.driveLicensephoto,"name":"行驶证照片"}]:''
+      this.fileList = this.$route.query.row.driveLicensephoto?[{"url":"http://digitalcamp.oicp.io:54373/here/"+this.$route.query.row.driveLicensephoto,"name":"行驶证照片"}]:[]
       this.carInfo = this.$route.query.row
       this.type = this.$route.query.row&&this.$route.query.row.carType
       if(this.$route.query.row.carType == 1){
