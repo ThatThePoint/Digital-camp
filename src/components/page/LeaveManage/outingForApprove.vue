@@ -66,7 +66,7 @@
               </el-col>
                <el-col :span="12">
                 <el-form-item label="请假时间">
-                  <label>{{form.timeLength}}小时</label>
+                  <label>{{form.outingLength}}小时</label>
                 </el-form-item>
               </el-col>
             </el-row>
