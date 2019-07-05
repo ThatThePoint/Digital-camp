@@ -203,6 +203,9 @@ export default {
     },
     //打开新增司机弹框
     addDriver() {
+      this.pername="";
+      this.carcode="";
+      this.dateend="";
       this.dialogVisible = true;
       let _this = this;
       this.postAxios("/Garage/GetDriver", {
