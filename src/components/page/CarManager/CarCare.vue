@@ -8,6 +8,68 @@
       </el-breadcrumb>
     </div>
     <div class="container">
+
+      <!-- 保养信息弹窗 -->
+      <el-dialog :visible.sync="careInfoVisible">
+        <el-form :model="careInfo">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="维护车辆">
+                <el-select clearable v-model="careInfo.carId" placeholder="选择车辆">
+                  <el-option
+                    v-for="item in selectCar"
+                    :key="item.tid"
+                    :label="item.name"
+                    :value="item.tid"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="维护日期">
+                <el-date-picker
+                  v-model="careInfo.operateDate"
+                  type="date"
+                  placeholder="选择日期"
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="维修类型">
+                <el-select clearable v-model="careInfo.careTypeCode" placeholder="请选择">
+                  <el-option
+                    v-for="item in careTypeOptions"
+                    :key="item.code"
+                    :label="item.name"
+                    :value="item.code"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="经办人">
+              <el-input v-model="careInfo.careOperatorName"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="12" >
+              <el-form-item label="备注">
+              <el-input v-model="careInfo.note"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="cancel">取 消</el-button>
+          <el-button type="primary" @click="savedata">确 定</el-button>
+        </div>
+      </el-dialog>
+
       <div class="messages">
         <el-select clearable class="input-width" v-model="departmentValue" placeholder="所属部门">
           <el-option
@@ -24,19 +86,27 @@
             :label="item.name"
             :value="item.code"
           ></el-option>
-        </el-select>
-        保养时间
-        <el-date-picker class="input-width" v-model="value1" type="date" placeholder="选择日期" style="width:130px"></el-date-picker>--
-        <el-date-picker class="input-width" v-model="value2" type="date" placeholder="选择日期" style="width:130px"></el-date-picker>
+        </el-select>保养时间
+        <el-date-picker
+          v-model="value1"
+          type="date"
+          placeholder="选择日期"
+          style="width:130px"
+        ></el-date-picker>--
+        <el-date-picker
+          v-model="value2"
+          type="date"
+          placeholder="选择日期"
+          style="width:130px"
+        ></el-date-picker>
         <el-input
-          class="input-width"
           placeholder="车牌号"
           prefix-icon="el-icon-search"
           v-model="input2"
           style="width:120px"
         ></el-input>
         <el-button @click="search">搜索</el-button>
-        <el-button type="success"  @click="addCare()" class="right">新增</el-button>
+        <el-button type="success" @click="handleDetail()" class="right">新增</el-button>
       </div>
       <div class="body">
         <el-table
@@ -44,11 +114,16 @@
           style="width: 100%"
           :default-sort="{prop: 'license', order: 'descending'}"
         >
-          <el-table-column prop="licensePlate" label="车牌号" sortable width="120">
-          </el-table-column>
+          <el-table-column prop="licensePlate" label="车牌号" sortable width="120"></el-table-column>
           <el-table-column prop="careTypeName" label="维护类型" sortable width="120"></el-table-column>
 
-          <el-table-column prop="operateDate" label="维护时间" sortable width="150" :formatter="returnTime"></el-table-column>
+          <el-table-column
+            prop="operateDate"
+            label="维护时间"
+            sortable
+            width="150"
+            :formatter="returnTime"
+          ></el-table-column>
           <el-table-column prop="careOperatorName" label="经办人" sortable width="120"></el-table-column>
           <el-table-column prop="note" label="备注" sortable width="350"></el-table-column>
           <el-table-column label="操作">
@@ -72,44 +147,15 @@
   </div>
 </template>
 <script>
-import {mapState,mapMutations,mapActions,mapGetters} from 'vuex'
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 export default {
   name: "documentManagement",
   data() {
     return {
       pageSize: 10,
-      pageNum : 1,
+      pageNum: 1,
       count: 0,
       currentPage: 1,
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            }
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            }
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            }
-          }
-        ]
-      },
       value1: "",
       value2: "",
       input2: "",
@@ -133,8 +179,8 @@ export default {
           label: "临时车辆"
         }
       ],
-      careTypeValue:"",//保养类型
-      inoutOptions:"",//先随便写个空，一直报错
+      careTypeValue: "", //保养类型
+      inoutOptions: "", //先随便写个空，一直报错
       careType: [
         {
           value: "1",
@@ -152,49 +198,69 @@ export default {
       propertyValue: "",
       departmentValue: "",
       inoutValue: "",
-      tableData: [
-        {
-          license: "冀A1231312",
-          property: "2211",
-          department: "连队1",
-          carUser: "常规保养",
-          tel: "￥885",
-          inout: "2019-04-21"
-        },
-        {
-          license: "冀A1231312",
-          property: "2211",
-          department: "连队1",
-          carUser: "常规保养",
-          tel: "￥885",
-          inout: "2019-04-21"
-        },
-        {
-          license: "冀A1231312",
-          property: "2211",
-          department: "连队1",
-          carUser: "常规保养",
-          tel: "￥885",
-          inout: "2019-04-21"
-        },
-        {
-          license: "冀A1231312",
-          property: "2211",
-          department: "连队1",
-          carUser: "常规保养",
-          tel: "￥885",
-          inout: "2019-04-21"
-        },
-      ]
+      tableData: [],
+      //0705修改
+      careInfoVisible: false,
+      careInfo: {
+        carId:"",
+        operateDate:"",
+        careTypeCode:"",
+        careOperatorName:"",
+        note:""
+      },
+      selectCar:[],
+      careTypeOptions:[]
     };
   },
-  created(){
+  created() {
     this.getTableData({
       pageSize: this.pageSize,
       pageNum: this.pageNum
-    })
+    });
   },
   methods: {
+    //0705新增
+    //取消
+    cancel(){
+      this.careInfoVisible=false;
+      this.careInfo={};
+    },
+    //保存
+    savedata(){
+      let info = this.ruleForm
+      let _this = this;
+      this.postAxios("/CarInfo/SaveCareRecord",info)
+        .then(res => {
+          console.log(res)
+          if(res.status == 1){
+            _this.$message.success("保存成功")
+            _this.$destroy('AddCare')
+            _this.$router.push({path: '/CarCare'})
+          }
+        })
+        .catch(err => {
+          console.log(err);
+      });
+    },
+    //获取详情
+    handleDetail(id){
+      this.postAxios("/CarInfo/GetCareRecord",{tid:id})
+        .then(res => {
+          console.log(res)
+          // _this.tableData = res.careList;
+          this.selectCar = res.carOptions;
+          this.careType = res.careTypeOptions;
+          if(id){
+            this.careInfo = res.info;
+          }    
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+      });
+      this.careInfoVisible=true;
+    },
+
     handleCurrentChange(val) {
       this.currentPage = val;
       this.pageNum = val;
@@ -203,62 +269,51 @@ export default {
         pageNum: this.pageNum
       });
     },
-    returnTime(row,index){
-      if(row.operateDate){
-        return row.operateDate.slice(0,10)
+    returnTime(row, index) {
+      if (row.operateDate) {
+        return row.operateDate.slice(0, 10);
       }
-      
     },
     //搜索数据
-    search(){
-      this.currentPage = 1
+    search() {
+      this.currentPage = 1;
       let data = {
         pageSize: this.pageSize,
         pageNum: 1,
-        deptName : this.departmentValue,
-        careTypeName : this.careTypeValue,
-        StartTime : this.value1,
-        EndTime : this.value2,
-        licensePlate : this.input2
-      }
-      this.getTableData(data)
+        deptName: this.departmentValue,
+        careTypeName: this.careTypeValue,
+        StartTime: this.value1,
+        EndTime: this.value2,
+        licensePlate: this.input2
+      };
+      this.getTableData(data);
     },
     //表格数据
-    getTableData(data){
+    getTableData(data) {
       let _this = this;
-      this.postAxios("/CarInfo/GetCareRecordList",data)
+      this.postAxios("/CarInfo/GetCareRecordList", data)
         .then(res => {
-          _this.count = res.count
-          console.log(res)
+          _this.count = res.count;
+          console.log(res);
           _this.tableData = res.careList;
-          _this.departmentOptions = res.deptOptions
-          _this.careType = res.careTypeOptions
-          console.log(res)
+          _this.departmentOptions = res.deptOptions;
+          _this.careType = res.careTypeOptions;
+          console.log(res);
         })
         .catch(err => {
           console.log(err);
-      });
+        });
     },
     formatter(row, column) {
       return row.address;
     },
-    //详情
-    handleEditcar(index, row) {
-      console.log(index, row);
-      this.$router.push({
-        path : '/addcare',
-        query : {
-          "row" : row
-        }
-      })
-    },
+
     handleDelete(index, row) {
       console.log(index, row);
     },
     //新增
-    addCare(){
-      this.$router.push({path: '/addcare'})
-      // router.push({ path: '/addcar' })
+    addCare() {
+      this.careInfoVisible=true;
     }
   }
 };
@@ -267,12 +322,5 @@ export default {
 .input-width {
   width: 100px;
   margin: 0 10px;
-}
-.carImg {
-  width: 40px;
-  height: 40px;
-  background: red;
-  display: inline-block;
-  vertical-align: middle;
 }
 </style>
