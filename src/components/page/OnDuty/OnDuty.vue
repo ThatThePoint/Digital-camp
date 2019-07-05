@@ -113,8 +113,8 @@
               <el-table-column prop="endTime" label="截至时间"></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                   <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                  <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -408,6 +408,9 @@ export default {
       this.persons="";
     },
     handleDelete(index, row) {
+      if(!confirm("确定要删除吗？")){
+        return false;
+      }
       this.postAxios("/DailyOffice/DeleteRotaInfo", {tid:row.tid})
         .then(res => {
           if (res.status==1) {
