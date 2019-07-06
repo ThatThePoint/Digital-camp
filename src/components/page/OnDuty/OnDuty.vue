@@ -194,6 +194,7 @@ export default {
       this.$print(this.$refs.print)
     },
     addduty(){
+      this.tid="";
       this.dialogVisible = true
       this.gangwei = '';
       this.gangweidetail = '';
@@ -344,24 +345,24 @@ export default {
     formatter(row, column) {
       return row.address;
     },
-    handledel(){
-      let _this = this;
-      this.postAxios("/DailyOffice/RotaInfo", {tid: row.tid})
-        .then(res => {
-          _this.jobDatalist = res.jobData;
-          _this.personlist = res.dutyStaff;
-          _this.staffId = res.rotaInfo.dutyPerson
-          _this.posiId  = res.rotaInfo.dutyPosition
-          for (let i = 0; i < res.jobData.length; i++) {
-            if ( res.jobData[i].parentId == "" || res.jobData[i].parentId == null ) {
-              _this.depts.push(res.jobData[i]);
-            }
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
+    // handledel(){
+    //   let _this = this;
+    //   this.postAxios("/DailyOffice/RotaInfo", {tid: row.tid})
+    //     .then(res => {
+    //       _this.jobDatalist = res.jobData;
+    //       _this.personlist = res.dutyStaff;
+    //       _this.staffId = res.rotaInfo.dutyPerson
+    //       _this.posiId  = res.rotaInfo.dutyPosition
+    //       for (let i = 0; i < res.jobData.length; i++) {
+    //         if ( res.jobData[i].parentId == "" || res.jobData[i].parentId == null ) {
+    //           _this.depts.push(res.jobData[i]);
+    //         }
+    //       }
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // },
     //值班查询编辑
     handleEdit(index, row) {
       this.gangwei = ''
