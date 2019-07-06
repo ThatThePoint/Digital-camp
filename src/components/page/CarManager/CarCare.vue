@@ -10,7 +10,7 @@
     <div class="container">
 
       <!-- 保养信息弹窗 -->
-      <el-dialog :visible.sync="careInfoVisible" >
+      <el-dialog :visible.sync="careInfoVisible" style="width=30%">
         <el-form :model="careInfo">
           <el-row>
             <el-col :span="7" style="width:66%">
@@ -128,7 +128,7 @@
           <el-table-column prop="note" label="备注" sortable width="350"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEditcar(scope.$index, scope.row)">详情</el-button>
+              <el-button size="mini" @click="handleDetail(scope.row.tid)">详情</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -227,15 +227,16 @@ export default {
     },
     //保存
     savedata(){
-      let info = this.ruleForm
+      let info = this.careInfo
       let _this = this;
       this.postAxios("/CarInfo/SaveCareRecord",info)
         .then(res => {
           console.log(res)
           if(res.status == 1){
             _this.$message.success("保存成功")
-            _this.$destroy('AddCare')
-            _this.$router.push({path: '/CarCare'})
+            this.careInfo={};
+            this.careInfoVisible=false;
+            this.getTableData();
           }
         })
         .catch(err => {
@@ -249,7 +250,7 @@ export default {
           console.log(res)
           // _this.tableData = res.careList;
           this.selectCar = res.carOptions;
-          this.careType = res.careTypeOptions;
+          this.careTypeOptions = res.careTypeOptions;
           if(id){
             this.careInfo = res.info;
           }    
@@ -326,4 +327,5 @@ export default {
 label{
   width: 68px !important;
 }
+.dialog-footer {text-align: center}
 </style>
