@@ -234,7 +234,8 @@ export default {
               message: "保存成功",
               type: "success"
             });
-            this.rotaInfo={};
+            this.rotaInfo.start='';
+            this.rotaInfo.end='';
             this.persons="";
             // this.tid = row.tid;
             this.getdatatwo()
@@ -379,6 +380,7 @@ export default {
       this.rotaInfo.end = new Date(Date.parse(row.endTime.replace(/-/g, "/")));
       this.tid = row.tid;
       let _this = this;
+      debugger
       this.postAxios("/DailyOffice/RotaInfo", {tid: row.tid})
         .then(res => {
           _this.jobDatalist = res.jobData;
@@ -404,7 +406,8 @@ export default {
       //   this.activeName="first";
       // }
       this.getdataone();
-      this.rotaInfo={};
+      this.rotaInfo.start='';
+      this.rotaInfo.end='';
       this.persons="";
     },
     handleDelete(index, row) {
