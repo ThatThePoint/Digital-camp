@@ -33,7 +33,8 @@
               :data="tableDataone"
               style="width: 100%"
               :default-sort="{prop: 'licensePlate', order: 'descending'}"
-            >
+            >    
+              <el-table-column type="index" width="50"></el-table-column>
               <el-table-column prop="licensePlate" label="车牌号"  > </el-table-column>
               <el-table-column prop="carType" label="车辆类型"  :formatter="carnum"></el-table-column>
               <el-table-column prop="deptName" label="所属部门" ></el-table-column>
@@ -104,6 +105,7 @@
               style="width: 100%"
               :default-sort="{prop: 'licensePlate', order: 'descending'}"
             >
+              <el-table-column type="index" width="50"></el-table-column>
               <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
               <el-table-column prop="owner" label="车主姓名" ></el-table-column>
               <el-table-column prop="ownerTel" label="联系电话" ></el-table-column>
@@ -172,6 +174,7 @@
               style="width: 100%"
               :default-sort="{prop: 'licensePlate', order: 'descending'}"
             >
+              <el-table-column type="index" width="50"></el-table-column>
               <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
               <el-table-column prop="owner" label="车主姓名" ></el-table-column>
               <el-table-column prop="ownerTel" label="联系电话" ></el-table-column>
@@ -393,6 +396,9 @@ export default {
         return false;
       }
       let _this = this;
+      if(index==0&&this.pageNum!=1){
+        this.pageNum = this.pageNum -1
+      }
       this.postAxios("/CarInfo/DeleteCar",{id : row.tid})
         .then(res => {
           _this.$message.success("删除成功")
