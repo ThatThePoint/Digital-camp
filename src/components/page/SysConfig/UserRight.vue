@@ -125,7 +125,7 @@ export default {
       roleId:"",//每一行的tid,打开角色框时保存用
       tid:"",
       jueserenyuan: false,//角色人员弹框
-      rolemingcheng: "孙老板",//角色人员弹框名字
+      rolemingcheng: "",//角色人员弹框名字
       rolehandle:"",//角色权限框的角色名称
       roleperim : false,//角色权限弹框
       switchstate:false,//角色状态狂false默认没有
@@ -227,6 +227,9 @@ export default {
           console.log(res)
           if(res.status == 1){
             this.jueserenyuan = false
+          }else if(res.status==0){
+            alert("至少选择一位成员");
+            return false;
           }
           // 
         })
@@ -315,6 +318,7 @@ export default {
     handleRole(index,row){
       this.defaultArr = []
       let _this = this;
+      
       this.postAxios("/Sysconfig/RoleUserList",{tid : row.tid})
         .then(res => {
           console.log(res)
@@ -328,8 +332,9 @@ export default {
         .catch(err => {
           console.log(err);
       });
-      this.jueserenyuan = true
-      this.roleId = row.tid
+      this.jueserenyuan = true;
+      this.roleId = row.tid;
+      this.rolemingcheng=row.name;
     },
 
 
@@ -389,6 +394,8 @@ export default {
     },
     //新增打开角色框
     adddialogVisible(){
+      this.roleId = "";
+      this.tid="";
       this.name = ''
       this.code = ''
       this.status = 1
@@ -408,6 +415,9 @@ export default {
     },
     //删除
     handleDel(index, row) {
+      if(!confirm("确定删除？")){
+          return false;
+      }
       console.log(index, row);
       let _this = this;
       this.postAxios("/Sysconfig/DeleteRole",{
