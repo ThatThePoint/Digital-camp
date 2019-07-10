@@ -251,7 +251,7 @@ export default {
       console.log("error");
     },
     successHandle(file, fileList){
-      this.fileId = file.fileId;
+      // this.fileId = file.fileId;
       this.filePath1 = file.path;
       this.form.ruleInfo.filePath1=file.path;
       console.log("success",this.fileId, this.filePath1);
