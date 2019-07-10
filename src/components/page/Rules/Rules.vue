@@ -214,8 +214,9 @@ export default {
     },
     //下载
     handleDown(index,row){
+      debugger
       var a = document.createElement('a');
-      a.href = row.filePath1;
+      a.href = "http://digitalcamp.oicp.io:54373/here/"+row.filePath1;
       a.download = 'dname';
       a.target = "_block"
       a.click();
