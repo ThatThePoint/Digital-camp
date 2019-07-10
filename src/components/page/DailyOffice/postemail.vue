@@ -41,96 +41,6 @@ export default {
       perid:[],//向父组件传id
       mode: "transfer", // transfer addressList
       fromData:[],
-      //属性右侧默认数据
-      // fromData: [
-      //   {
-      //     id: 1,
-      //     pid: 0,
-      //     name: "测试右侧",
-      //     children: [
-      //       {
-      //         id: 2,
-      //         pid: 1,
-      //         name: "水电费是打发斯",
-      //         // disabled: true,
-      //         children: []
-      //       },
-      //       {
-      //         id: 3,
-      //         pid: 1,
-      //         name: "11-3",
-      //         children: []
-      //       },
-      //        {
-      //         id: 4,
-      //         pid: 1,
-      //         name: "11-4",
-      //         children: [
-      //           {
-      //             id: 5,
-      //             pid: 4,
-      //             name: "11-5",
-      //             children: [
-      //               {
-      //                 id: 111,
-      //                 pid: 5,
-      //                 name: "11-111"
-      //               }
-      //             ]
-      //           },
-      //           {
-      //             id: 6,
-      //             pid: 4,
-      //             name: "11-6",
-      //             children: []
-      //           }
-      //         ]
-      //       } 
-      //     ]
-      //   },
-      //   {
-      //     id: 7127,
-      //     pid: 0,
-      //     name: "debug",
-      //     children: [
-      //       {
-      //         id: 71272,
-      //         pid: 7127,
-      //         name: "debug22",
-      //         // disabled: true,
-      //         children: []
-      //       },
-      //       {
-      //         id: 71273,
-      //         pid: 7127,
-      //         name: "debug11",
-      //         children: []
-      //       }
-      //     ]
-      //   }
-      // ], 
-      // 穿梭框 - 源数据 - 树形左侧默认数据
-      // toData: [
-      //   {
-      //     parentId: 1,
-      //     tid: 0,
-      //     name: "测试左侧",
-      //     children: [
-      //       {
-      //         parentId: 2,
-      //         tid: 1,
-      //         name: "水电费是打发斯蒂",
-      //         children: [
-      //           {
-      //             parentId: 22222222,
-      //             tid: 2,
-      //             name: "2222222222"
-      //           }
-      //         ]
-      //       }
-      //     ]
-      //   } 
-      // ], // 穿梭框 - 目标数据 - 树形
       fromArray: [
         {
           id: "1",
@@ -209,20 +119,11 @@ export default {
       console.log("toData1:", toData);
       this.pername = []
       this.perid = []
-      // for(let i = 0;i < obj.harfKeys.length; i++){
-      //   this.pername.push(obj.harfKeys[i])  
-      // }
-      // this.$emit("confirm",this.pername.join(";"))
-      console.log("1111",this.pername.join(";"))
-      for(let i = 0;i < obj.nodes.length; i++){
-        if(!obj.nodes[i].children){
-          this.pername.push(obj.nodes[i].name)
-          this.perid.push(obj.nodes[i].id)
-        }
+      for(let i = 0;i < toData.length;i++){
+        this.pername.push(toData[i].name)
+        this.perid.push(toData[i].id)
       }
-      
       this.$emit("confirm",[this.pername.join(";"),this.perid.join(";")])
-      console.log("obj1:", obj);
     },
     // 移除按钮
     remove(fromData, toData, obj) {

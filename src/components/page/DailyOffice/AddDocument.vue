@@ -200,6 +200,7 @@ export default {
       this.flagtitle = true
     }
     let _this = this
+    debugger
     this.postAxios("/DailyOffice/GetDocument",{
          tid:this.docuId
       })
@@ -213,7 +214,7 @@ export default {
         _this.content=res.document.content;
         _this.postname=res.document.docReceiversName;
         _this.level=res.document.messageLevel;
-        _this.fileList=[{"url":"http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1,"name":res.document.fileName1}]
+        _this.fileList=res.document.filePath1?[{"url":"http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1,"name":res.document.fileName1}]:[]
         _this.downloadUrl = "http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1
         }
       })
@@ -277,6 +278,7 @@ export default {
       this.content = html;
     },
     submit() {
+      debugger
       let data = {
         fileName1 : this.fileName1,
         filePath1:this.filePath1,
@@ -288,17 +290,7 @@ export default {
         content : this.content
       };
       console.log(data);
-      let flag;
-      for( let i in data){
-        if(data[i] == ''){
-          flag = false
-        }else{
-          flag = true
-        }
-      }
-      if(flag == false){
-        this.open3()
-      }else{
+      if(this.content!='' && this.title!='' && this.postname!='' && this.level!=''){
         this.postAxios("/DailyOffice/Savedocument", data)
           .then(res => {
             console.log(res);
@@ -308,6 +300,8 @@ export default {
           .catch(err => {
             console.log(err);
         });
+      }else{
+        this.open3()
       }
     },
     remoteMethod(query) {
