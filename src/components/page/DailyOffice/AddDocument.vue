@@ -45,7 +45,7 @@
           :on-error="errorHandle"
           :on-success="successHandle"
           multiple
-          :limit="1"
+          :limit="3"
           :on-exceed="handleExceed"
           :file-list="fileList"
         >     
@@ -113,7 +113,16 @@ export default {
       loading: false,
       fileName1:"",//图片上传id
       filePath1 :"",//图片上传路径
-      downloadUrl:"",
+      fileName1:"",//图片上传id
+      filePath2 :"",//图片上传路径
+      fileName2:"",//图片上传id
+      filePath3 :"",//图片上传路径
+      fileName3:"",//图片上传id
+      filePath :[],//图片上传路径
+      fileName :[],//图片上传id
+      downloadUrl1:"",
+      downloadUrl2:"",
+      downloadUrl3:"",
       states: [
         "Alabama",
         "Alaska",
@@ -213,8 +222,25 @@ export default {
         _this.content=res.document.content;
         _this.postname=res.document.docReceiversName;
         _this.level=res.document.messageLevel;
-        _this.fileList=res.document.filePath1?[{"url":"http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1,"name":res.document.fileName1}]:[]
-        _this.downloadUrl = "http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1
+        if(res.document.filePath1&&res.document.filePath2&&res.document.filePath3){
+          _this.fileList = [
+            {"url":"http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1,"name":res.document.fileName1},
+            {"url":"http://digitalcamp.oicp.io:54373/here/"+res.document.filePath2,"name":res.document.fileName2},
+            {"url":"http://digitalcamp.oicp.io:54373/here/"+res.document.filePath3,"name":res.document.fileName3}
+          ]
+        }else if(res.document.filePath1&&!res.document.filePath2&&!res.document.filePath3){
+          this.fileList = [
+            {"url":"http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1,"name":res.document.fileName1}           
+          ]
+        }else if(res.document.filePath1&&res.document.filePath2&&!res.document.filePath3){
+          _this.fileList = [
+            {"url":"http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1,"name":res.document.fileName1},
+            {"url":"http://digitalcamp.oicp.io:54373/here/"+res.document.filePath2,"name":res.document.fileName2}
+          ]
+        }
+        _this.downloadUrl1 = "http://digitalcamp.oicp.io:54373/here/"+res.document.filePath1
+        _this.downloadUrl2 = "http://digitalcamp.oicp.io:54373/here/"+res.document.filePath2
+        _this.downloadUrl3 = "http://digitalcamp.oicp.io:54373/here/"+res.document.filePath3
         }
       })
       .catch(err => {
@@ -280,7 +306,11 @@ export default {
       debugger
       let data = {
         fileName1 : this.fileName1,
-        filePath1:this.filePath1,
+        filePath1: this.filePath1,
+        fileName2: this.fileName2,
+        filePath2: this.filePath2,
+        fileName3: this.fileName3,
+        filePath3: this.filePath3,
         tid:this.docuId,
         docReceiversName : this.postname,
         docReceiversId : this.perid,
@@ -317,12 +347,24 @@ export default {
       }
     },
     handleRemove(file, fileList) {
+      for(let i = 0; i < this.filePath.length; i++){
+        if(file.response.fileName == this.filePath[i]){
+          this.filePath.splice(i,1)
+          this.fileName.splice(i,1)
+        }
+      }
+      this.filePath1 = this.filePath[0]
+      this.filePath2 = this.filePath[1]
+      this.filePath3 = this.filePath[2]
 
-      console.log(file, fileList);
+      this.fileName1 = this.fileName[0]
+      this.fileName2 = this.fileName[1]
+      this.fileName3 = this.fileName[2]
     },
     handlePreview(file) {
+      debugger
       var a = document.createElement('a');
-      a.href = this.downloadUrl;
+      a.href = file.url;
       a.download = 'dname';
       a.target = "_block"
       a.click();
@@ -330,9 +372,7 @@ export default {
     },
     handleExceed(files, fileList) {
       this.$message.warning(
-        `当前限制选择 1 个文件，本次选择了 ${
-          files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+        `当前限制最多选择 3 个文件`
       );
     },
     beforeRemove(file, fileList) {
@@ -342,9 +382,14 @@ export default {
       console.log("error");
     },
     successHandle(file, fileList){
-      this.filePath1 = file.path;
-      this.fileName1 = file.fileName;
-      console.log("success",file,fileList);
+      this.filePath.push(file.path)
+      this.filePath1 = this.filePath[0]
+      this.filePath2 = this.filePath[1]
+      this.filePath3 = this.filePath[2]
+      this.fileName.push(file.fileName)
+      this.fileName1 = this.fileName[0]
+      this.fileName2 = this.fileName[1]
+      this.fileName3 = this.fileName[2]
     },
     handleBack(){
       history.go(-1);
