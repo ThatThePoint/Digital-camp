@@ -51,13 +51,13 @@
             v-model="rotaInfo.start"
             type="datetime"
             placeholder="选择日期时间"
-            default-time="12:00:00"
+            @change="datestart"
           ></el-date-picker>--
           <el-date-picker
             v-model="rotaInfo.end"
             type="datetime"
             placeholder="选择日期时间"
-            default-time="12:00:00"
+            @change="dateend"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="值班人" :label-width="formLabelWidth">
@@ -183,13 +183,24 @@ export default {
       posiId: "", //传给后台保存用的岗位id
       staffId: "", //传给后台保存用的人员id
       tid: "", //修改时带过来的
-      flaghand: false
+      flaghand: false,
+      starttimes: 0,
+      endTimes: 0
     };
   },
   created() {
     this.getdatatwo(true);
   },
   methods: {
+    datestart(val){
+      this.starttimes = new Date(val).getTime()
+    },
+    dateend(val){
+      this.endTimes = new Date(val).getTime()
+      if(this.endTimes < this.starttimes){
+        this.$message("结束时间不得早于开始时间")
+      }
+    },
     print(){
       this.$print(this.$refs.print)
     },
@@ -220,6 +231,11 @@ export default {
     },
     //保存值班计划
     confirm() {
+      let flag = false
+      if(this.endTimes < this.starttimes){
+        this.$message("结束时间不得早于开始时间")
+        flag = true
+      }
       let data = {
         tid: this.tid,
         posiId: this.posiId,
@@ -228,6 +244,7 @@ export default {
         end: this.rotaInfo.end
       };
       let _this = this;
+      if(!flag){
       this.postAxios("/DailyOffice/SaveRotaInfo", data)
         .then(res => {
           if (res.status) {
@@ -251,11 +268,8 @@ export default {
           console.log(err);
         });
         this.dialogVisible = false
-      // if(this.flagon == true){
-      //   this.activeName = "third"
-      // }else{
-      //   this.activeName="first";
-      // }
+      }
+
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);

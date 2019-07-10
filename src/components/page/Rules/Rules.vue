@@ -214,7 +214,11 @@ export default {
     },
     //下载
     handleDown(index,row){
-      console.log(row);
+      var a = document.createElement('a');
+      a.href = row.filePath1;
+      a.download = 'dname';
+      a.target = "_block"
+      a.click();
     },
     //编辑
     handleEdit(index,row){
@@ -248,8 +252,8 @@ export default {
     },
     successHandle(file, fileList){
       this.fileId = file.fileId;
-      this.filePath1 = file.filePath1;
-      this.form.ruleInfo.filePath1=file.filePath1;
+      this.filePath1 = file.path;
+      this.form.ruleInfo.filePath1=file.path;
       console.log("success",this.fileId, this.filePath1);
     },
 

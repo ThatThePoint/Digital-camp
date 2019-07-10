@@ -65,11 +65,12 @@
 
         <div class="block">
           <el-pagination
-            @current-change="handleCurrentChange"
-            :current-page.sync="currentPage"
-            layout="total, prev, pager, next"
-            :total="count"
-            :page-size="10"
+                background
+                :page-size="10"
+                @current-change="handleCurrentChange"
+                layout="total, prev, pager, next"
+                :total="count"
+                :current-page.sync="currentPage"
           ></el-pagination>
         </div>
         <el-dialog title="增加警报" :visible.sync="dialogFormVisible">
@@ -153,6 +154,7 @@ export default {
       }
     },
     handleCurrentChange(val) {
+      debugger
       console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.pageNum = val;
@@ -167,9 +169,6 @@ export default {
       this.getdata();
     },
     getdata(){
-  
-      this.currentPage = 1
-     
       var params={
         pageSize: this.pageSize,
         pageNum: this.pageNum,
@@ -216,6 +215,9 @@ export default {
         content:this.alertInfo.content,
         level:this.alertInfo.alertLevel
       };
+      if(this.alertInfo.alertLevel=='' || this.alertInfo.content == ''){
+        this.$message("请先选择警报类型")
+      }else{
        this.postAxios("DailyOffice/SaveAlert", params)
         .then(res => {
           console.log(res);
@@ -227,6 +229,8 @@ export default {
           console.log(err);
         });
       this.dialogFormVisible = false;
+      }
+
     }
   }
 };

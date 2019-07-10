@@ -89,7 +89,7 @@
             </el-select>发送时间
             <el-date-picker class="input-width" v-model="start" type="date" placeholder="选择日期"></el-date-picker>--
             <el-date-picker class="input-width" v-model="end" type="date" placeholder="选择日期"></el-date-picker>
-            <el-button type="primary" @click="getdata">查询</el-button>
+            <el-button type="primary" @click="getdata(true)">查询</el-button>
             <el-button type="success" @click="addDocument()" class="right">新增</el-button>
           </div>
           <div class="body">
@@ -149,7 +149,7 @@
             </el-select>发送时间
             <el-date-picker class="input-width" v-model="start" type="date" placeholder="选择日期"></el-date-picker>--
             <el-date-picker class="input-width" v-model="end" type="date" placeholder="选择日期"></el-date-picker>
-            <el-button type="primary" @click="getdata">查询</el-button>
+            <el-button type="primary" @click="getdata(true)">查询</el-button>
             <el-button type="success" @click="addDocument()" class="right">新增</el-button>
           </div>
           <div class="body">
@@ -244,6 +244,7 @@ export default {
     },
     // 点击分页
     handleCurrentChange(val) {
+      debugger
       console.log(val);
       this.currentPage = val;
       this.pageNum = val;
@@ -369,10 +370,11 @@ export default {
     getdata(flag){
       if(flag == true){
         this.currentPage = 1
+        this.pageNum = 1
       }
       
       var params={
-        pageNum: 1,
+        pageNum: this.pageNum,
         pageSize: 10,
         tab:this.activeName,
         title:this.title,
