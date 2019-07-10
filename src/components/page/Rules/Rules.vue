@@ -216,14 +216,13 @@ export default {
     handleDown(index,row){
       debugger
       var a = document.createElement('a');
-      a.href = row.filePath1;
+      a.href = "http://digitalcamp.oicp.io:54373/here/"+row.filePath1;
       a.download = 'dname';
       a.target = "_block"
       a.click();
     },
     //编辑
     handleEdit(index,row){
-      debugger
       this.postAxios("/DailyOffice/GetRuleInfo", {tid:row.tid}).then(res => {
       console.log(res);
       this.form.ruleInfo=res.data;
