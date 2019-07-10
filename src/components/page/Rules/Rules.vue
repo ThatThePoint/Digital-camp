@@ -214,6 +214,7 @@ export default {
     },
     //下载
     handleDown(index,row){
+      debugger
       var a = document.createElement('a');
       a.href = row.filePath1;
       a.download = 'dname';
@@ -222,6 +223,7 @@ export default {
     },
     //编辑
     handleEdit(index,row){
+      debugger
       this.postAxios("/DailyOffice/GetRuleInfo", {tid:row.tid}).then(res => {
       console.log(res);
       this.form.ruleInfo=res.data;
@@ -251,9 +253,9 @@ export default {
       console.log("error");
     },
     successHandle(file, fileList){
-      this.fileId = file.fileId;
-      this.filePath1 = file.filePath1;
-      this.form.ruleInfo.filePath1=file.filePath1;
+      // this.fileId = file.fileId;
+      this.filePath1 = file.path;
+      this.form.ruleInfo.filePath1=file.path;
       console.log("success",this.fileId, this.filePath1);
     },
 
