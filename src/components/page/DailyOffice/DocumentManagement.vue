@@ -235,6 +235,12 @@ export default {
     if(num&&num == '3'){
       this.activeName = 'third'
       this.getTableDatathree()
+    }else if(num&&num == '1'){
+      this.activeName = 'first'
+      this.getTableDataone()
+    }else if(num&&num == '2'){
+      this.activeName = 'second'
+      this.getTableDatatwo()
     }
   },
   methods: {

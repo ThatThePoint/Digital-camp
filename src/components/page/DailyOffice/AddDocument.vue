@@ -200,7 +200,6 @@ export default {
       this.flagtitle = true
     }
     let _this = this
-    debugger
     this.postAxios("/DailyOffice/GetDocument",{
          tid:this.docuId
       })
