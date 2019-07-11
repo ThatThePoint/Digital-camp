@@ -29,14 +29,15 @@
               </div>
               <div>
                 <span class="starred">*</span>车辆类型
-                <el-select clearable class="input-width" v-model="carInfo.carType" placeholder="请选择">
+                <el-input v-model="cartTypesone" :disabled='true'/>
+                <!-- <el-select clearable class="input-width" v-model="carInfo.carType" placeholder="请选择">
                   <el-option
                     v-for="item in carTypeOptionsone"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
                   ></el-option>
-                </el-select>
+                </el-select> -->
               </div>
             </div>
           </div>
@@ -182,14 +183,15 @@
               </div>
               <div>
                 车辆类型
-                <el-select clearable class="input-width" v-model="carInfo.carType" placeholder="请选择">
+                <!-- <el-select clearable class="input-width" v-model="carInfo.carType" placeholder="请选择">
                   <el-option
                     v-for="item in carTypeOptionstwo"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
                   ></el-option>
-                </el-select>
+                </el-select> -->
+                <el-input v-model="carTypaestwo" :disabled="true"/>
               </div>
             </div>
           </div>
@@ -397,7 +399,8 @@ export default {
   },
   data() {
     return {
-
+      cartTypesone:'内部车辆',
+      carTypaestwo: '外部车辆',
       fileList:[],
       flagone:false,
       flagtwo:false,
@@ -591,7 +594,9 @@ export default {
         this.flagone = true
         this.flagtwo = false
         this.carInfo.carType = '2'
+        this.carTypaestwo = '外部车辆'
       }else if(type == 3){
+        this.carTypaestwo = '临时车辆'
         this.activeName = 'second'
         this.flagone = true
         this.flagtwo = false

@@ -279,6 +279,9 @@ export default {
       console.log(index, row);
     },
     handleDelete(index, row) {
+      if(index==0&&this.pageNum!=1){
+        this.pageNum = this.pageNum -1
+      }
       if(confirm("确定删除吗？")){
         this.postAxios("/Garage/DeleteDriver", { id: row.driverid })
         .then(res => {
