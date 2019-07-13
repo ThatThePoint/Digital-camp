@@ -48,6 +48,15 @@
                 </template>
               </el-table-column>
             </el-table>
+            <el-pagination
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              layout="total, prev, pager, next"
+              :total="count"
+              background
+              :page-size="10"
+            >
+            </el-pagination>
           </div>
         </el-tab-pane>
 
@@ -84,6 +93,15 @@
                 </template>
               </el-table-column>
             </el-table>
+            <el-pagination
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              layout="total, prev, pager, next"
+              :total="count"
+              background
+              :page-size="10"
+            >
+            </el-pagination>
           </div>
         </el-tab-pane>
 
@@ -121,6 +139,15 @@
                 </template>
               </el-table-column>
             </el-table>
+            <el-pagination
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              layout="total, prev, pager, next"
+              :total="count"
+              background
+              :page-size="10"
+            >
+            </el-pagination>
           </div>
         </el-tab-pane>
 
@@ -156,6 +183,15 @@
                 </template>
               </el-table-column>
             </el-table>
+            <el-pagination
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              layout="total, prev, pager, next"
+              :total="count"
+              background
+              :page-size="10"
+            >
+            </el-pagination>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -167,6 +203,9 @@ export default {
   name: "documentManagement",
   data() {
     return {
+      pageSize:10,
+      pageNum:1,
+      currentPage:1,
       deptValue: "",
       name: "",
       activeName: "first",
@@ -194,13 +233,19 @@ export default {
     }else if(personTypes == 7){
       this.activeName = 'secend'
     }
-    this.getdata("1", "10");
+    this.getdata();
   },
   methods: {
-    searchdata(){
-      this.getdata("1","10")
+    handleCurrentChange(val){
+      this.currentPage = val;
+      this.pageNum = val;
+      this.getdata()
     },
-    getdata(num, size) {
+    searchdata(){
+      this.pageNum = 1;
+      this.getdata()
+    },
+    getdata() {
       if (this.activeName !== "first") {
         this.deptValue = "";
       }
@@ -215,8 +260,8 @@ export default {
             : "4",
         deptId: this.deptValue,
         where: this.name,
-        pageNum: num,
-        pageSize: size
+        pageNum: this.pageNum,
+        pageSize: this.pageSize
       };
       this.postAxios("DataCenter/StaffList", params)
         .then(res => {
@@ -243,13 +288,17 @@ export default {
       });
     },
     handleDelete(index, row) {
+      if(index==0&&this.pageNum!=1){
+        this.pageNum = this.pageNum -1
+      }
+      
       console.log(index, row);
       if (confirm("确认删除？")) {
         this.postAxios("DataCenter/DeleteStaff", { tid: row.tid })
           .then(res => {
             console.log(res);
             alert("删除成功");
-            this.getdata("1", "10");
+            this.getdata();
           })
           .catch(err => {
             console.log(err);
@@ -260,7 +309,7 @@ export default {
       this.$router.push("/addpeople");
     },
     handleClick(tab, event) {
-      this.getdata("1", "10");
+      this.getdata();
       console.log(tab, event);
     }
   }

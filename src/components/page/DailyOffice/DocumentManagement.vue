@@ -250,8 +250,6 @@ export default {
     },
     // 点击分页
     handleCurrentChange(val) {
-      debugger
-      console.log(val);
       this.currentPage = val;
       this.pageNum = val;
       this.getdata()
