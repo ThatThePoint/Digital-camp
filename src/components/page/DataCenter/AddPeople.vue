@@ -9,27 +9,27 @@
     </div>
     <div class="container">
       <el-tabs v-model="activeName">
-        <el-tab-pane label="军官信息登记表" name="first" :disabled="flagone" >
+        <el-tab-pane label="现役人员信息" name="first" :disabled="flagone" >
           <Soldier :data="rowdata"></Soldier>
         </el-tab-pane>
-        <el-tab-pane label="士兵信息登记表" name="second" :disabled="flagtwo">
+        <!-- <el-tab-pane label="士兵信息登记表" name="second" :disabled="flagtwo">
           <Officer :data="rowdata"/>
-        </el-tab-pane>
-        <el-tab-pane label="文职人员信息登记表" name="third" :disabled="flagthree">
+        </el-tab-pane> -->
+        <el-tab-pane label="文职人员信息" name="third" :disabled="flagthree">
           <Civilian :data="rowdata"/>
         </el-tab-pane>
-        <el-tab-pane label="社会聘用人员信息登记表" name="four" :disabled="flagfour">
+        <el-tab-pane label="社会聘用人员信息" name="four" :disabled="flagfour">
           <Society :data="rowdata"/>
         </el-tab-pane>
-        <el-tab-pane label="公勤人员信息登记表" name="five" :disabled="flagfive">
+        <!-- <el-tab-pane label="公勤人员信息" name="five" :disabled="flagfive">
           <Gongqin :data="rowdata"/>
-        </el-tab-pane>
-        <!-- <el-tab-pane label="现役人员家属信息登记表" name="six" :disabled="flagsix">
+        </el-tab-pane> -->
+        <el-tab-pane label="家属信息" name="six" :disabled="flagsix">
           <Xianyi :data="rowdata"/>
         </el-tab-pane>
-        <el-tab-pane label="家属区人员信息登记表" name="seven" :disabled="flagseven">
+        <el-tab-pane label="其他人员信息" name="seven" :disabled="flagseven">
           <Jiashu :data="rowdata"/>
-        </el-tab-pane> -->
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>

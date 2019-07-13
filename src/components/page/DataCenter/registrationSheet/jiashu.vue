@@ -37,36 +37,16 @@
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row>
-      <el-col :span="5">
-        <el-form-item label="出生地">
-          <el-input v-model="form.bornArea"></el-input>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="5">
-        <el-form-item label="工作单位">
-          <el-input v-model="form.workStation"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="5">
-        <el-form-item label="联系电话">
-          <el-input v-model="form.tel"></el-input>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="10">
-        <el-form-item label="家庭住址">
-          <el-input v-model="form.address"></el-input>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="5">
-        <el-form-item label="身份证">
-          <el-input v-model="form.idcard" @blur="blurs"></el-input>
+   <el-row>
+     <el-col :span="5">
+        <el-form-item label="政治面貌">
+          <el-select clearable v-model="form.politicsType" placeholder="请选择">
+            <el-option label="党员" value="1"></el-option>
+            <el-option label="预备党员" value="2"></el-option>
+            <el-option label="团员" value="3"></el-option>
+            <el-option label="群众" value="4"></el-option>
+            <el-option label="其他" value="5"></el-option>  
+          </el-select>
         </el-form-item>
       </el-col>
       <el-col :span="5">
@@ -82,6 +62,33 @@
         </el-form-item>
       </el-col>
     </el-row>
+   <el-row>
+     <el-col :span="5">
+        <el-form-item label="工作日期">
+          <el-date-picker v-model="form.jobDate" type="date" placeholder="选择日期" style="max-width:197px" class="aaaa"></el-date-picker>
+        </el-form-item>
+      </el-col>
+       <el-col :span="5">
+        <el-form-item label="文化程度">
+          <el-select clearable v-model="form.educatLevel" placeholder="请选择">
+            <el-option
+              v-for="item in educatLevelOptions"
+              :label="item.value"
+              :value="item.key"
+              :key="item.key"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="10">
+        <el-form-item label="家庭住址">
+          <el-input v-model="form.address"></el-input>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    
     <el-form-item>
       <el-button type="primary"  @click="submitForm('form')">{{sub}}</el-button>
       <el-button  @click="cancel">取消</el-button>
