@@ -10,7 +10,13 @@
         <el-tab-pane label="现役人员" name="first">
           <div class="messages">
             <span>部门</span>
-            <el-select clearable class="input-width" v-model="deptValue" filterable placeholder="请选择">
+            <el-select
+              clearable
+              class="input-width"
+              v-model="deptValue"
+              filterable
+              placeholder="请选择"
+            >
               <el-option
                 v-for="item in DeptOptions"
                 :key="item.tid"
@@ -55,58 +61,10 @@
               :total="count"
               background
               :page-size="10"
-            >
-            </el-pagination>
+            ></el-pagination>
           </div>
         </el-tab-pane>
-
-
-        <el-tab-pane label="部队家属" name="secend">
-          <div class="messages">
-            <el-input
-              class="input-width"
-              placeholder="请输入姓名"
-              prefix-icon="el-icon-search"
-              v-model="name"
-            ></el-input>
-            <el-button type="primary" @click="searchdata">查询</el-button>
-            <el-button type="success" @click="addPeople" class="right">新增</el-button>
-          </div>
-          <div class="body">
-            <el-table
-              :data="tableData"
-              style="width: 100%"
-              :default-sort="{prop: 'name', order: 'descending'}"
-            >
-              <el-table-column prop="name" label="姓名"></el-table-column>
-              <el-table-column prop="gender" label="性别"></el-table-column>
-              <el-table-column prop="sodierName" label="部队联系人"></el-table-column>
-              <el-table-column prop="tel" label="联系电话"></el-table-column>
-              <el-table-column label="操作">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                  <el-button
-                    size="mini"
-                    type="danger"
-                    @click="handleDelete(scope.$index, scope.row)"
-                  >删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-pagination
-              @current-change="handleCurrentChange"
-              :current-page.sync="currentPage"
-              layout="total, prev, pager, next"
-              :total="count"
-              background
-              :page-size="10"
-            >
-            </el-pagination>
-          </div>
-        </el-tab-pane>
-
-
-        <el-tab-pane label="部队职工" name="third">
+        <el-tab-pane label="文职人员" name="secend">
           <div class="messages">
             <el-input
               class="input-width"
@@ -146,13 +104,95 @@
               :total="count"
               background
               :page-size="10"
-            >
-            </el-pagination>
+            ></el-pagination>
           </div>
         </el-tab-pane>
-
-
-        <el-tab-pane label="临时人员" name="fouth">
+        <el-tab-pane label="社会聘用" name="third">
+          <div class="messages">
+            <el-input
+              class="input-width"
+              placeholder="请输入姓名"
+              prefix-icon="el-icon-search"
+              v-model="name"
+            ></el-input>
+            <el-button type="primary" @click="searchdata">查询</el-button>
+            <el-button type="success" @click="addPeople" class="right">新增</el-button>
+          </div>
+          <div class="body">
+            <el-table
+              :data="tableData"
+              style="width: 100%"
+              :default-sort="{prop: 'name', order: 'descending'}"
+            >
+              <el-table-column prop="name" label="姓名" width="100"></el-table-column>
+              <el-table-column prop="gender" label="性别" width="100"></el-table-column>
+              <el-table-column prop="deptName" label="部门" width="100"></el-table-column>
+              <el-table-column prop="buzhibie" label="职位"></el-table-column>
+              <el-table-column prop="tel" label="联系电话"></el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)"
+                  >删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-pagination
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              layout="total, prev, pager, next"
+              :total="count"
+              background
+              :page-size="10"
+            ></el-pagination>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="部队家属" name="fouth">
+          <div class="messages">
+            <el-input
+              class="input-width"
+              placeholder="请输入姓名"
+              prefix-icon="el-icon-search"
+              v-model="name"
+            ></el-input>
+            <el-button type="primary" @click="searchdata">查询</el-button>
+            <el-button type="success" @click="addPeople" class="right">新增</el-button>
+          </div>
+          <div class="body">
+            <el-table
+              :data="tableData"
+              style="width: 100%"
+              :default-sort="{prop: 'name', order: 'descending'}"
+            >
+              <el-table-column prop="name" label="姓名"></el-table-column>
+              <el-table-column prop="gender" label="性别"></el-table-column>
+              <el-table-column prop="sodierName" label="部队联系人"></el-table-column>
+              <el-table-column prop="tel" label="联系电话"></el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)"
+                  >删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-pagination
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              layout="total, prev, pager, next"
+              :total="count"
+              background
+              :page-size="10"
+            ></el-pagination>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="临时人员" name="fifth">
           <div class="messages">
             <el-input
               class="input-width"
@@ -190,8 +230,7 @@
               :total="count"
               background
               :page-size="10"
-            >
-            </el-pagination>
+            ></el-pagination>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -203,9 +242,9 @@ export default {
   name: "documentManagement",
   data() {
     return {
-      pageSize:10,
-      pageNum:1,
-      currentPage:1,
+      pageSize: 10,
+      pageNum: 1,
+      currentPage: 1,
       deptValue: "",
       name: "",
       activeName: "first",
@@ -216,34 +255,33 @@ export default {
     };
   },
   created() {
-    
-    let personTypes = this.$route.query&&this.$route.query.personType
-    if(personTypes == 1){
-      this.activeName = 'first'
-    }else if(personTypes == 2){
-      this.activeName = 'secend'
-    }else if(personTypes == 3){
-      this.activeName = 'third'
-    }else if(personTypes == 4){
-      this.activeName = 'fouth'
-    }else if(personTypes == 5){
-      this.activeName = 'secend'
-    }else if(personTypes == 6){
-      this.activeName = 'secend'
-    }else if(personTypes == 7){
-      this.activeName = 'secend'
+    let personTypes = this.$route.query && this.$route.query.personType;
+    if (personTypes == 1) {
+      this.activeName = "first";
+    } else if (personTypes == 2) {
+      this.activeName = "secend";
+    } else if (personTypes == 3) {
+      this.activeName = "third";
+    } else if (personTypes == 4) {
+      this.activeName = "fouth";
+    } else if (personTypes == 5) {
+      this.activeName = "fifth";
+    } else if (personTypes == 6) {
+      this.activeName = "secend";
+    } else if (personTypes == 7) {
+      this.activeName = "secend";
     }
     this.getdata();
   },
   methods: {
-    handleCurrentChange(val){
+    handleCurrentChange(val) {
       this.currentPage = val;
       this.pageNum = val;
-      this.getdata()
+      this.getdata();
     },
-    searchdata(){
+    searchdata() {
       this.pageNum = 1;
-      this.getdata()
+      this.getdata();
     },
     getdata() {
       if (this.activeName !== "first") {
@@ -257,7 +295,9 @@ export default {
             ? "2"
             : this.activeName == "third"
             ? "3"
-            : "4",
+            : this.activeName == "fouth"
+            ?"4"
+            : "5",
         deptId: this.deptValue,
         where: this.name,
         pageNum: this.pageNum,
@@ -278,20 +318,20 @@ export default {
       return row.address;
     },
     handleEdit(index, row) {
-      this.$router.push({ 
+      this.$router.push({
         path: "/addpeople",
-         query: { 
-           id: row.tid,
-           index : row.personType,
-           row : row
-          } 
+        query: {
+          id: row.tid,
+          index: row.personType,
+          row: row
+        }
       });
     },
     handleDelete(index, row) {
-      if(index==0&&this.pageNum!=1){
-        this.pageNum = this.pageNum -1
+      if (index == 0 && this.pageNum != 1) {
+        this.pageNum = this.pageNum - 1;
       }
-      
+
       console.log(index, row);
       if (confirm("确认删除？")) {
         this.postAxios("DataCenter/DeleteStaff", { tid: row.tid })
