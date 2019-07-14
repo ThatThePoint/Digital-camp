@@ -354,6 +354,7 @@ export default {
         .then(res => {
           this.form = res;
           console.log(res);
+
           //判断显隐和禁用
           if(this.form.curNode==2 ){//一级审批 有二级审批
           this.firstAppDisabled=false;
