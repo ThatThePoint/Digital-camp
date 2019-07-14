@@ -2,7 +2,7 @@
   <div>
     <div class="crumbs">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item>已审批请假</el-breadcrumb-item>
+        <el-breadcrumb-item>我的申请</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
@@ -393,7 +393,7 @@ export default {
     },
     getData(approvalStatus = "1", pageNum = "1", pageSize = "10") {
       var params = {
-        approvalStatus: "1",
+        approvalStatus: "2",
         pageNum: "1",
         pageSize: "10"
       };

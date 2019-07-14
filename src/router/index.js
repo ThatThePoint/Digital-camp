@@ -193,6 +193,12 @@ export default new Router({
                     meta: { title: '请假审批', permission: true }
                 },
                 {
+                    // 我的申请
+                    path: '/myApply',
+                    component: resolve => require(['../components/page/LeaveManage/myApply.vue'], resolve),
+                    meta: { title: '我的申请', permission: true }
+                },
+                {
                     // 待审批请假
                     path: '/outingForApprove',
                     component: resolve => require(['../components/page/LeaveManage/outingForApprove.vue'], resolve),
@@ -203,12 +209,6 @@ export default new Router({
                     path: '/outingApproved',
                     component: resolve => require(['../components/page/LeaveManage/outingApproved.vue'], resolve),
                     meta: { title: '已审批请假', permission: true }
-                },
-                {
-                    // 销假记录
-                    path: '/cancelRecord',
-                    component: resolve => require(['../components/page/LeaveManage/cancelRecord.vue'], resolve),
-                    meta: { title: '销假记录', permission: true }
                 },
                 {
                     // 人员管理

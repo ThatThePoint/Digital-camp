@@ -215,10 +215,10 @@ export default {
               index: "outingApply",
               title: "请假申请"
             },
-            // {
-            //   index: "outingApprove",
-            //   title: "请假审批"
-            // },
+            {
+              index: "myApply",
+              title: "我的申请"
+            },
             {
               index: "outingForApprove",
               title: "待审批请假"
@@ -226,11 +226,7 @@ export default {
             {
               index: "outingApproved", //区别于请假审批
               title: "已审批请假"
-            }//,
-            // {
-            //   index: "cancelRecord",
-            //   title: "销假记录"
-            // }
+            }
           ]
         },
 
