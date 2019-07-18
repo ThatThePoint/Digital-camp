@@ -28,8 +28,8 @@
               <div class="license">
               </div>
               <div>
-                <span class="starred">*</span>车辆类型
-                <el-input v-model="cartTypesone" :disabled='true'/>
+                <!-- <span class="starred">*</span>车辆类型 -->
+                <el-input v-model="cartTypesone" v-show='false'/>
                 <!-- <el-select clearable class="input-width" v-model="carInfo.carType" placeholder="请选择">
                   <el-option
                     v-for="item in carTypeOptionsone"
@@ -711,11 +711,15 @@ export default {
 
     //验证手机号
     telBlue(){
-      utils.isMobilePhone(this.carInfo.ownerTel)
+      if(!utils.isMobilePhone(this.carInfo.ownerTel)){
+        this.carInfo.ownerTel="";
+      }
     },
     //省份证号验证
     cardBlue(){
-      utils.isCardNo(this.carInfo.ownerIdCard)
+     if(!utils.isCardNo(this.carInfo.ownerIdCard)){
+       this.carInfo.ownerIdCard="";
+     }
     },
   //获取车辆下拉框信息
     getSelectValue(){
@@ -768,13 +772,17 @@ export default {
           this.postAxios("/CarInfo/SaveCarInfo",_this.carInfo)
             .then(res => {
               console.log(res)
-              _this.$destroy()
+              if(res.status){
+                _this.$destroy()
               _this.$router.push({
                 path : '/cardetail',
                   query : {
                   type : _this.carType
                 }
               })
+              }else{
+                alert(res.msg);
+              }              
             })
             .catch(err => {
               console.log(err);

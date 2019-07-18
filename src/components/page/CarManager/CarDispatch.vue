@@ -425,7 +425,7 @@
               </el-row>
               <el-row>
                 <el-col :span="8" style="margin-right:20px">
-                  <el-form-item label="起始时间" :label-width="formLabelWidth">
+                  <el-form-item label="起始时间" :label-width="formLabelWidth" required>
                     <el-date-picker
                       type="datetime"
                       placeholder="选择日期"
@@ -435,7 +435,7 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="截至时间" :label-width="formLabelWidth">
+                  <el-form-item label="截至时间" :label-width="formLabelWidth" required>
                     <el-date-picker
                       type="datetime"
                       placeholder="选择日期"
@@ -448,12 +448,12 @@
 
               <el-row>
                 <el-col :span="8" style="margin-right:20px">
-                  <el-form-item label="目的地" :label-width="formLabelWidth">
+                  <el-form-item label="目的地" :label-width="formLabelWidth" required>
                     <el-input type="input" v-model="applyInfo.destination" class="input-width"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="用车风险" :label-width="formLabelWidth">
+                  <el-form-item label="用车风险" :label-width="formLabelWidth" required>
                     <el-select clearable v-model="applyInfo.risk" placeholder="请选择" style="margin-left:10px;width:145px">
                       <el-option
                         v-for="item in riskOptions"
@@ -466,8 +466,8 @@
                 </el-col>
               </el-row>
               <el-row>
-                <el-col :span="8" style="margin-right:20px">
-                  <el-form-item label="事由" :label-width="formLabelWidth">
+                <el-col :span="8" style="margin-right:20px" >
+                  <el-form-item label="事由" :label-width="formLabelWidth" required>
                     <el-input
                       class="input-width"
                       placeholder
@@ -478,7 +478,7 @@
                 </el-col>
 
                 <el-col :span="8">
-                  <el-form-item label="调度员" :label-width="formLabelWidth">
+                  <el-form-item label="调度员" :label-width="formLabelWidth" required>
                     <el-select
                       clearable
                       v-model="applyInfo.dispatcherid"
@@ -787,7 +787,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="调度司机">
-                 <label>{{getDriver}}</label>
+                 <label>{{this.getDriver()}}</label>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -812,9 +812,9 @@
                   <label>{{applyInfo.approver}}</label>
                 </el-form-item>
               </el-col>
-              <el-col :span="8">
+              <!-- <el-col :span="8">
                 <label>{{applyInfo.approverRemark}}</label>
-              </el-col>
+              </el-col> -->
             </el-row>
             <el-row>
               <el-col :span="12">
@@ -1070,7 +1070,8 @@ export default {
     },
     //获取司机
     getDriver(){
-     return this.applyInfo.driverid2?this.applyInfo.driverid3?this.applyInfo.driverid+";"+this.applyInfo.driverid2+";"+this.applyInfo.driverid3:this.applyInfo.driverName+";"+this.applyInfo.driverName2:this.applyInfo.driverName
+      // return this.applyInfo.driverName+this.applyInfo.driverName2+this.applyInfo.driverName3;
+      return this.applyInfo.driverid2?this.applyInfo.driverid3?this.applyInfo.driverName+";"+this.applyInfo.driverName2+";"+this.applyInfo.driverName3:this.applyInfo.driverName+";"+this.applyInfo.driverName2:this.applyInfo.driverName
     },
     getTree(data){
       let map = {};
@@ -1137,7 +1138,15 @@ export default {
         });
     },
     onSubmit() {
-      debugger
+        var startFlag=this.$utils.isEmpty(this.applyInfo.starttime);
+        var endFlag=this.$utils.isEmpty(this.applyInfo.endtime);
+        var destFlag=this.$utils.isEmpty(this.applyInfo.destination);
+        var riskFlag=this.$utils.isEmpty(this.applyInfo.risk);
+        var reasonFlag=this.$utils.isEmpty(this.applyInfo.reason);
+        var dispFlag=this.$utils.isEmpty(this.applyInfo.dispatcherid);
+        if(startFlag || endFlag ||destFlag || riskFlag ||reasonFlag || dispFlag){
+          alert("目的地，事由，用车风险，调度员和用车时间必须输入！");
+        }
       var params = {
         info: this.applyInfo
       };
@@ -1310,7 +1319,8 @@ export default {
     passApproval(){
       var da={
         tid:this.applyInfo.formId,
-        approvalStatus:1
+        approvalStatus:1,
+        approvalRemark:this.applyInfo.approvalRemark
       };
       this.postAxios("/CarApply/SaveApproval", da)
         .then(res => {
@@ -1331,7 +1341,8 @@ export default {
     rejectApproval(){
       var da={
         tid:this.applyInfo.formId,
-        approvalStatus:0
+        approvalStatus:0,
+        approvalRemark:this.applyInfo.approvalRemark
       };
       this.postAxios("/CarApply/SaveApproval", da)
         .then(res => {

@@ -203,6 +203,7 @@ export default {
     },
     //打开新增司机弹框
     addDriver() {
+      this.driverId="";
       this.pername="";
       this.carcode="";
       this.dateend="";
