@@ -427,8 +427,10 @@ export default {
       let flage=dateA.setHours(0, 0, 0, 0) !== dateB.setHours(0, 0, 0, 0); //判断是否隔天
       
       if(this.form.curNode==2 && flage){
+        if(!this.form.secApprover){//判断是否选择了审批人
         alert("跨天请假，请选择二级审批人");
         return false;
+        }
       }
       if(this.form.curNode==2 ){//一级审批 有二级审批
           remark=this.form.firstRemark;
