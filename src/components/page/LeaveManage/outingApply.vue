@@ -223,6 +223,10 @@ export default {
             flag = true
           }
         }
+        if(this.form.selectedStaffIdList.indexOf(this.form.firstApprover)>=0){
+          alert("自己不能审批自己的请假申请！");
+          return false;
+        }
         if(flag){
           this.postAxios("/outApply/SaveOutApplyInfo",{applyForm:this.form})
             .then(res => {
