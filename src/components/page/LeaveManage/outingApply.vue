@@ -18,7 +18,7 @@
           </el-row>
           <el-row>
             <el-col :span="6">
-             <el-form-item label="请假人">
+             <el-form-item label="请假人" required>
                 <el-input 
                   v-model="form.selectedStaffNameList"  
                   placeholder="请输入关键词"   
@@ -29,7 +29,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="请假事由">
+              <el-form-item label="请假类型" required>
                 <el-select clearable v-model="form.outingType" placeholder="请选择">
                   <el-option
                     v-for="item in outingTypeOptions"
@@ -43,7 +43,7 @@
           </el-row>
           <el-row>
             <el-col :span="6">
-              <el-form-item label="开始时间" >
+              <el-form-item label="开始时间"  required>
                 <el-date-picker style="width:300px"
                   v-model="form.startTime"
                   type="datetime"
@@ -52,7 +52,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="结束时间">
+              <el-form-item label="结束时间" required>
                 <el-date-picker
                   v-model="form.endTime"
                   type="datetime"
@@ -61,9 +61,22 @@
               </el-form-item>
             </el-col>
           </el-row>
+           <el-row>
+            <el-col :span="6">
+              <el-form-item label="请假事由" required>
+                <el-input v-model="form.outReason" style="width:300px"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="请假时长" required>
+                <label>{{getTimeLentgh()}}</label>
+                <!-- <el-input v-model="form.outingLength" style="width: 220px;"></el-input> -->
+              </el-form-item>
+            </el-col>
+          </el-row>
           <el-row>
             <el-col :span="6">
-              <el-form-item label="到达地点">
+              <el-form-item label="到达地点" required>
                 <el-input v-model="form.dest" style="width:300px"></el-input>
               </el-form-item>
             </el-col>
@@ -75,7 +88,7 @@
           </el-row>
           <el-row>
             <el-col :span="6">
-              <el-form-item label="一级审批人">
+              <el-form-item label="一级审批人" required >
                 <el-select clearable v-model="form.firstApprover" style="width:300px" placeholder="请选择">
                   <el-option
                     v-for="item in firstApproverList"
@@ -207,16 +220,39 @@ export default {
     cancel(){
 
     },
+    getTimeLentgh(){
+      this.form.outingLength= (
+        (new Date(this.form.endTime).getTime() -
+        new Date(this.form.startTime).getTime()) /
+        (1000 * 3600)
+        ).toFixed(2) + "小时";
+        if(this.form.outingLength=="NaN小时"){
+          return "";
+        }
+        return this.form.outingLength;
+    },
     handleSubmit(){
+        var outerFlag=this.$utils.isEmpty(this.form.selectedStaffNameList);
+        var typeFlag=this.$utils.isEmpty(this.form.outingType);
+        var startFlag=!this.form.startTime;
+        var endFlag=!this.form.endTime;
+        var outReaFlag=this.$utils.isEmpty(this.form.outReason);
+        var destFlag=this.$utils.isEmpty(this.form.dest);
+        var firstFlag=this.$utils.isEmpty(this.form.firstApprover);
+        if(outerFlag || typeFlag ||startFlag || endFlag ||outReaFlag || destFlag || firstFlag){
+          alert("请假人，请假类型，起止时间，事由，一级审批人和目的地必须输入！");
+          return false;
+        }
        if(this.form.selectedStaffIdList.indexOf(this.form.firstApprover)>=0){
           alert("自己不能审批自己的请假申请！");
           return false;
         }
-      this.form.outingLength= (
-        (new Date(this.form.endtime).getTime() -
-        new Date(this.form.starttime).getTime()) /
-        (1000 * 3600)
-        ).toFixed(2) + "小时";
+        if(new Date(this.form.endTime).getTime() -
+        new Date(this.form.startTime).getTime()<=0){
+          alert("返岗时间必须在外出时间之后！");
+          return false;
+        }
+      
         console.log("!111111111",this.form)
         let flag
         for(let i in this.form){

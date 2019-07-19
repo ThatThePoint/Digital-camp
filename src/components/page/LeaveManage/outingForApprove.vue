@@ -72,6 +72,13 @@
             </el-row>
             <el-row>
               <el-col :span="12">
+                <el-form-item label="请假事由">
+                  <label>{{form.outReason}}</label>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
                 <el-form-item label="开始日期">
                   <label>{{form.startTime}}</label>
                 </el-form-item>
@@ -335,8 +342,12 @@ export default {
     outTypeFormatter(row, column) {
       if (row.outingType=="Travel") {
         return "出差";
-      } else {
-        return "休假探亲";
+      } else if(row.outingType=="Visit"){
+        return "休假";
+      }else if(row.outingType=="Training"){
+        return "学习";
+      }else{
+        return "外出";
       }
     },
     // 分页导航
