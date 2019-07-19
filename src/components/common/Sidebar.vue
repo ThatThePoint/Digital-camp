@@ -268,7 +268,7 @@ export default {
   },
   created() {
     // 通过 Event Bus 进行组件间通信，来折叠侧边栏
-    this.items = sessionStorage.getItem("UserMenu");
+    this.items =JSON.parse(sessionStorage.getItem("UserMenu")) ;
     bus.$on("collapse", msg => {
       this.collapse = msg;
     });

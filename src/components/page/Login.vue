@@ -54,20 +54,20 @@ export default {
           this.postAxios("Home/Login", params)
             .then(res => {
               console.log(res);
-              if(res.status==1){
-                res.UserMenu = data.UserMenu || []
-          if(data.UserMenu.length == 0){
-            Message.error("对不起，您未被授权！请联系系统管理员！");
-            return false;
-          }
+              if (res.status == 1) {
+                res.userMenu = res.userMenu || [];
+                if (res.userMenu.length == 0) {
+                  message.error("对不起，您未被授权！请联系系统管理员！");
+                  return false;
+                }
                 localStorage.setItem("admin", res.currentUser.name);
-                sessionStorage.setItem("token",res.currentUser.token)
-                
-                sessionStorage.setItem("UserMenu", data.UserMenu);
-                this.$router.push("/");
-                //window.location.href = "/#"+(this.redirect || "/");
-              }else{
-                  this.$message.warning(res.msg);
+                sessionStorage.setItem("token", res.currentUser.token);
+
+                sessionStorage.setItem("UserMenu",JSON.stringify(res.userMenu));
+                //this.$router.push("/");
+                window.location.href = "/#" + (this.redirect || "/");
+              } else {
+                this.$message.warning(res.msg);
               }
             })
             .catch(err => {
