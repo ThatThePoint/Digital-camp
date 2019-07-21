@@ -399,6 +399,56 @@
               </el-pagination>
           </div>
         </el-tab-pane>
+
+        <el-tab-pane label="调度记录" name="eighth">
+          <div class="messages">
+            <el-form :inline="true" :model="param" class="demo-form-inline">
+              <el-form-item label>
+                <el-select clearable v-model="param.carId" placeholder="申请车辆">
+                  <el-option
+                  v-for="item in carOptions"
+                  :key="item.tid"
+                  :label="item.name"
+                  :value="item.tid"
+                ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="search">查询</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+          <div class="body">
+            <el-table
+              :data="tableData"
+              style="width: 100%"
+              :default-sort="{prop: 'applytime', order: 'descending'}"
+            >
+              <el-table-column prop="formcode" label="申请单号" ></el-table-column>
+              <el-table-column prop="licensePlate" label="车牌号" ></el-table-column>
+              <el-table-column prop="applyer" label="申请人" ></el-table-column>
+              <el-table-column prop="applyerDeptName" label="用车部门" ></el-table-column>
+              <el-table-column prop="reason" label="用车事由" sortable ></el-table-column>
+              <el-table-column prop="applytime" label="申请时间" :formatter="formatterDate" ></el-table-column>
+              <el-table-column prop="starttime" label="开始时间" :formatter="formatterStart" ></el-table-column>
+              <el-table-column prop="endtime" label="终止时间" :formatter="formatterEnd" ></el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="handleDetail(scope)">查看</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                layout="total, prev, pager, next"
+                :total="count"
+                :current-page.sync="currentPage"
+                :page-size="10"
+              >
+              </el-pagination>
+          </div>
+        </el-tab-pane>
       </el-tabs>
 
 
@@ -679,7 +729,6 @@
         <div slot="footer" class="dialog-footer">
           <el-button @click="cancelDetail">取消</el-button>
           <el-button v-show="dispatchCommit" @click="dispatchApply">提交</el-button>
-          <el-button v-show="printBtn" @click="print">打印</el-button>
         </div>
       </el-dialog>
 
@@ -830,6 +879,7 @@
           <el-button v-show="dispatchCommit" @click="dispatchApply">提交</el-button>
           <el-button v-show="approvalPass" @click="passApproval">通过</el-button>
           <el-button v-show="approvalPass" @click="rejectApproval">退回</el-button>
+          <el-button v-show="printBtn" @click="print">打印</el-button>
         </div>
       </el-dialog>
       <el-dialog :visible.sync="dialogVisible"
@@ -1248,6 +1298,7 @@ export default {
         this.dispatchCommit=false;//隐藏提交
         this.approvalPass=true;//显示审批通过和退回
         this.youshenpi=true;
+        this.printBtn=false;
         this.getApplyInfo(scope.row.tid);
         return  false;
       }else if(this.activeName=='fifth'){//3-已批准
@@ -1256,7 +1307,18 @@ export default {
         this.approvalDetailDisabled=true;
         this.dispatchCommit=false;//隐藏提交
         this.approvalPass=false;//隐藏审批通过和退回
+        this.printBtn=false;
 
+        this.youshenpi=true;
+        this.getApplyInfo(scope.row.tid);
+        return  false;
+      }else if(this.activeName=='eighth'){
+        this.approvalDetail=true;
+        this.dispatchDetailDisabled=true;
+        this.approvalDetailDisabled=false;
+        this.dispatchCommit=false;//隐藏提交
+        this.approvalPass=false;//显示审批通过和退回
+        this.printBtn=true;
         this.youshenpi=true;
         this.getApplyInfo(scope.row.tid);
         return  false;
@@ -1266,6 +1328,7 @@ export default {
         this.approvalDetailDisabled=false;
         this.dispatchCommit=false;//隐藏提交
         this.approvalPass=false;//显示审批通过和退回
+        this.printBtn=false;
         this.youshenpi=true;
         this.getApplyInfo(scope.row.tid);
         return  false;

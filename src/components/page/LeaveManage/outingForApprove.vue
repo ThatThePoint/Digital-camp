@@ -452,7 +452,7 @@ export default {
           remark=this.form.firstRemark;
           nextApp=this.form.secApprover;
           let secAppFlag = this.$utils.isEmpty(nextApp);
-          if(secAppFlag){
+          if(secAppFlag && false){
             this.$message({
                 type: "warning",
                 message: "请选择下级审批人!"
@@ -465,7 +465,7 @@ export default {
           remark=this.form.secRemark;
           nextApp=this.form.thdApprover;
           let secAppFlag = this.$utils.isEmpty(nextApp);
-          if(secAppFlag){
+          if(secAppFlag && false){
             this.$message({
                 type: "warning",
                 message: "请选择下级审批人!"
