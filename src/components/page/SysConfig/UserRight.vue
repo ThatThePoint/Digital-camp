@@ -228,7 +228,7 @@ export default {
           if(res.status == 1){
             this.jueserenyuan = false
           }else if(res.status==0){
-            alert("至少选择一位成员");
+            alert(res.status);
             return false;
           }
           // 
@@ -249,7 +249,7 @@ export default {
         status : this.status,
         tid : this.tid
       }
-      if (this.code&&this.name&&this.status){
+      if (this.code&&this.name){
         this.postAxios("/Sysconfig/SaveRole",data)
           .then(res => {
             console.log(res)
@@ -424,7 +424,13 @@ export default {
         tid : row.tid
       })
         .then(res => {
-          _this.getTableData()
+          console.log(res);
+          if(res.status){
+            this.$message("删除成功")
+            _this.getTableData()
+          }else{
+            alert(res.msg);
+          }
         })
         .catch(err => {
           console.log(err);

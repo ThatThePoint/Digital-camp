@@ -34,6 +34,7 @@
               <div slot="footer" class="dialog-footer">
                 <el-button @click="handleCancel">取 消</el-button>
                 <el-button type="primary" @click="handleSave">确 定</el-button>
+                <el-button type="danger" @click="remove">删 除</el-button>
               </div>
             </el-dialog>
           </div>
@@ -103,21 +104,21 @@ export default {
         });
     },
     //删除  
-    remove(node, data) {
-      this.postAxios("DataCenter/DeleteDept", {deptId:data.id})
+    remove() {
+      console.log("删除部门 deptId="+this.deptInfo.tid);
+      this.postAxios("DataCenter/DeleteDept", {deptId:this.deptInfo.tid})
         .then(res => {
           console.log(res);
-          alert("删除成功");
+          if(res.status){
+            alert("删除成功");
           this.getData();
+          }else{
+            alert(res.msg);
+          }          
         })
         .catch(err => {
           console.log(err);
         });
-
-      const parent = node.parent;
-      const children = parent.data.children || parent.data;
-      const index = children.findIndex(d => d.id === data.id);
-      children.splice(index, 1);
     },
     handleAdd(){
       this.deptInfo={};
