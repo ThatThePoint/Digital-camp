@@ -110,6 +110,19 @@ export default {
         this.mode = "transfer";
       }
     },
+    selectData(data){
+
+      data.map((item)=>{
+        if(item.children){
+          this.selectData(item.children)
+        }else{
+          if(item.isDept==0){
+            this.pername.push(item.name)
+            this.perid.push(item.id)
+          }
+        }
+      })
+    },
     // 添加按钮
     // ...mapMutations["add"],
     add(fromData, toData, obj) {
@@ -119,10 +132,11 @@ export default {
       console.log("toData1:", toData);
       this.pername = []
       this.perid = []
-      for(let i = 0;i < toData.length;i++){
-        this.pername.push(toData[i].name)
-        this.perid.push(toData[i].id)
-      }
+      // for(let i = 0;i < toData.length;i++){
+      //   this.pername.push(toData[i].name)
+      //   this.perid.push(toData[i].id)
+      // }
+      this.selectData(toData)
       this.$emit("confirm",[this.pername.join(";"),this.perid.join(";")])
     },
     // 移除按钮
