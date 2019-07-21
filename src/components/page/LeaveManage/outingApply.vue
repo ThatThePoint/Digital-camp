@@ -232,18 +232,18 @@ export default {
         return this.form.outingLength;
     },
     handleSubmit(){
-        var outerFlag=this.$utils.isEmpty(this.form.selectedStaffNameList);
+        var outerFlag=this.$utils.isEmpty(this.form.selectedStaffNameList);//请假人
         var typeFlag=this.$utils.isEmpty(this.form.outingType);
         var startFlag=!this.form.startTime;
         var endFlag=!this.form.endTime;
         var outReaFlag=this.$utils.isEmpty(this.form.outReason);
         var destFlag=this.$utils.isEmpty(this.form.dest);
-        var firstFlag=this.$utils.isEmpty(this.form.firstApprover);
+        var firstFlag=this.$utils.isEmpty(this.form.firstApprover);//审批人
         if(outerFlag || typeFlag ||startFlag || endFlag ||outReaFlag || destFlag || firstFlag){
           alert("请假人，请假类型，起止时间，事由，一级审批人和目的地必须输入！");
           return false;
         }
-       if(this.form.selectedStaffIdList.indexOf(this.form.firstApprover)>=0){
+       if(this.form.selectedStaffIdList.includes(this.form.firstApprover)){
           alert("自己不能审批自己的请假申请！");
           return false;
         }
