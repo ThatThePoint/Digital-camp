@@ -138,7 +138,13 @@ export default {
         region: ""
       },
       detailList: [], //明细列表
-      detailInfo: {},
+      detailInfo: {
+        tid:"",
+        parentId:"",
+        name:"",
+        code:"",
+        status:1
+      },
       detailRadio: 1
     };
   },
@@ -188,6 +194,13 @@ export default {
       }
     },
     editDetail(index, row) {
+      this.detailInfo={
+        tid:"",
+        parentId:"",
+        name:"",
+        code:"",
+        status:1
+      };
       Object.assign(this.detailInfo, row);
       this.detailInfo.parentId = this.baseinfo.tid;
       this.innerVisible = true;
@@ -302,6 +315,7 @@ export default {
               message: "保存成功",
               type: "success"
             });
+            this.outerVisible=false;
             this.initBaseinfo();
           })
           .catch(err => {
