@@ -76,6 +76,11 @@
                   <label>{{form.outReason}}</label>
                 </el-form-item>
               </el-col>
+              <el-col :span="12">
+                <el-form-item label="休假去向">
+                  <label>{{form.dest}}</label>
+                </el-form-item>
+              </el-col>
             </el-row>
             <el-row>
               <el-col :span="12">
