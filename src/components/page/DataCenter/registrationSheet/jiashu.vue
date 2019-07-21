@@ -221,7 +221,7 @@ export default {
       this.$router.push({
         path : '/UserManage',
         query : {
-          personType : '7'
+          personType : '5'
         }
       })
     },
@@ -234,7 +234,7 @@ export default {
         alert("请先输入部门名称和性别");
         return false;
       }else{
-        this.form.personType=7;
+        this.form.personType=5;
         this.postAxios("DataCenter/SaveStaff", {staff:this.form})
         .then(res => {
           console.log(res);
@@ -247,7 +247,7 @@ export default {
         this.$router.push({
           path : '/UserManage',
           query : {
-            personType : '7'
+            personType : '5'
           }
       })
         } else {

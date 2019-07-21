@@ -12,22 +12,22 @@
         <el-tab-pane label="现役人员信息" name="first" :disabled="flagone" >
           <Soldier :data="rowdata"></Soldier>
         </el-tab-pane>
-        <!-- <el-tab-pane label="士兵信息登记表" name="second" :disabled="flagtwo">
+        <!-- <el-tab-pane label="士兵信息登记表" name="second" :disabled="">
           <Officer :data="rowdata"/>
         </el-tab-pane> -->
-        <el-tab-pane label="文职人员信息" name="third" :disabled="flagthree">
+        <el-tab-pane label="文职人员信息" name="secend" :disabled="flagtwo">
           <Civilian :data="rowdata"/>
         </el-tab-pane>
-        <el-tab-pane label="社会聘用人员信息" name="four" :disabled="flagfour">
+        <el-tab-pane label="社会聘用人员信息" name="third" :disabled="flagthree">
           <Society :data="rowdata"/>
         </el-tab-pane>
         <!-- <el-tab-pane label="公勤人员信息" name="five" :disabled="flagfive">
           <Gongqin :data="rowdata"/>
         </el-tab-pane> -->
-        <el-tab-pane label="家属信息" name="six" :disabled="flagsix">
+        <el-tab-pane label="家属信息" name="four" :disabled="flagfour">
           <Xianyi :data="rowdata"/>
         </el-tab-pane>
-        <el-tab-pane label="其他人员信息" name="seven" :disabled="flagseven">
+        <el-tab-pane label="其他人员信息" name="five" :disabled="flagfive">
           <Jiashu :data="rowdata"/>
         </el-tab-pane>
       </el-tabs>
@@ -67,86 +67,49 @@ export default {
     };
   },
   created(){
-    let index = this.$route.query.index;
+    debugger
+    let type = this.$route.query.type;
     this.rowdata = this.$route.query.row
-    console.log(this.rowdata)
-    if(index == 1){
+    if(type == 'first'){
       this.flagone = false
       this.flagtwo = true
       this.flagthree = true
       this.flagfour = true
       this.flagfive = true
-      this.flagsix = true
-      this.flagseven = true
       this.activeName = "first"
-    }else if(index == 2){
+    }else if(type == 'secend'){
       this.flagone = true
       this.flagtwo = false
       this.flagthree = true
       this.flagfour = true
       this.flagfive = true
-      this.flagsix = true
-      this.flagseven = true
-      this.activeName = "second"
-    }else if(index == 3){
+      this.activeName = "secend"
+    }else if(type == 'third'){
       this.flagone = true
       this.flagtwo = true
       this.flagthree = false
       this.flagfour = true
       this.flagfive = true
-      this.flagsix = true
-      this.flagseven = true
       this.activeName = "third"
-    }else if(index == 4){
+    }else if(type == 'fouth'){
       this.flagone = true
       this.flagtwo = true
       this.flagthree = true
       this.flagfour = false
       this.flagfive = true
-      this.flagsix = true
-      this.flagseven = true
       this.activeName = "four"
-    }else if(index == 5){
+    }else if(type == 'fifth'){
       this.flagone = true
       this.flagtwo = true
       this.flagthree = true
       this.flagfour = true
       this.flagfive = false
-      this.flagsix = true
-      this.flagseven = true
       this.activeName = "five"
-    }else if(index == 6){
-      this.flagone = true
-      this.flagtwo = true
-      this.flagthree = true
-      this.flagfour = true
-      this.flagfive = true
-      this.flagsix = false
-      this.flagseven = true
-      this.activeName = "six"
-    }else if(index == 7){
-      this.flagone = true
-      this.flagtwo = true
-      this.flagthree = true
-      this.flagfour = true
-      this.flagfive = true
-      this.flagsix = true
-      this.flagseven = false
-      this.activeName = "seven"
     }
   },
   methods: {
     formatter(row, column) {
       return row.address;
-    },
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
-    },
-    handleBack() {
-      history.go(-1);
     }
   }
 };

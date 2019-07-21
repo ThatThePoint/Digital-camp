@@ -212,7 +212,14 @@ export default {
     this.form = this.data ? this.data : this.form
   },
   methods: {
-    cancel(){ history.go(-1);},
+    cancel(){ 
+      this.$router.push({
+        path : '/UserManage',
+        query : {
+          personType : '4'
+        }
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -222,7 +229,7 @@ export default {
         alert("请先输入部门名称和性别");
         return false;
       }else{
-        this.form.personType=6;
+        this.form.personType=4;
         this.postAxios("DataCenter/SaveStaff", {staff:this.form})
         .then(res => {
           console.log(res);
@@ -232,7 +239,12 @@ export default {
           console.log(err);
         });
       }
-          history.go(-1);
+        this.$router.push({
+          path : '/UserManage',
+          query : {
+            personType : '4'
+          }
+      })
         } else {
           console.log("error submit!!");
           return false;

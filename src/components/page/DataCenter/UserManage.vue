@@ -346,7 +346,13 @@ export default {
       }
     },
     addPeople() {
-      this.$router.push("/addpeople");
+      let type = this.activeName
+      this.$router.push({
+        path: '/addpeople',
+        query: {
+          type: type
+        }
+      });
     },
     handleClick(tab, event) {
       this.getdata();
