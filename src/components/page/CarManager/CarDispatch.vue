@@ -1262,6 +1262,7 @@ export default {
       // approvalDetail  审批信息
         if(scope.row.applystatus===1){
           this.carApplyInfoVisible=true      //一弹框
+          this.applyButton=true;
           this.youshenpi=false; 
           this.wushenpi=false; 
           this.dispatchDetailDisabled=false;

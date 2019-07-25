@@ -328,7 +328,14 @@ export default {
           var idFlag = this.$utils.isEmpty(this.form.idcard);
           var lisFlag = this.$utils.isEmpty(this.form.licenseType);
           var staffFlag = this.$utils.isEmpty(this.form.staffType);
-          if (nameFlag || codeFlag ||deptFlag || idFlag||lisFlag || staffFlag) {
+          if (
+            nameFlag ||
+            codeFlag ||
+            deptFlag ||
+            idFlag ||
+            lisFlag ||
+            staffFlag
+          ) {
             alert("请先输入部门名称、性别等必要信息");
             return false;
           } else {
@@ -336,14 +343,15 @@ export default {
             this.postAxios("DataCenter/SaveStaff", { staff: this.form })
               .then(res => {
                 console.log(res);
-                if (res.satus) {
+                debugger;
+                if (res.status) {
                   alert("保存成功");
                   this.$router.push({
-            path: "/UserManage",
-            query: {
-              personType: "1"
-            }
-          });
+                    path: "/UserManage",
+                    query: {
+                      personType: "1"
+                    }
+                  });
                 } else {
                   alert(res.msg);
                   return false;
@@ -353,7 +361,6 @@ export default {
                 console.log(err);
               });
           }
-          
         } else {
           console.log("error submit!!");
           return false;

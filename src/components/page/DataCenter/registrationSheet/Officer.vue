@@ -378,7 +378,7 @@ export default {
             this.postAxios("DataCenter/SaveStaff", { staff: this.form })
               .then(res => {
                 console.log(res);
-               if(res.satus){
+               if(res.status){
             alert("保存成功");
             
           }else{

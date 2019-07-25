@@ -272,7 +272,15 @@ export default {
           var lisFlag = this.$utils.isEmpty(this.form.licenseType);
           var lisCFlag = this.$utils.isEmpty(this.form.licenseCode);
           var staffFlag = this.$utils.isEmpty(this.form.civilStaffType);
-          if (nameFlag || codeFlag ||deptFlag || idFlag||lisFlag ||lisCFlag || staffFlag) {
+          if (
+            nameFlag ||
+            codeFlag ||
+            deptFlag ||
+            idFlag ||
+            lisFlag ||
+            lisCFlag ||
+            staffFlag
+          ) {
             alert("请先输入姓名性别等必填信息");
             return false;
           } else {
@@ -280,14 +288,14 @@ export default {
             this.postAxios("DataCenter/SaveStaff", { staff: this.form })
               .then(res => {
                 console.log(res);
-                if (res.satus) {
+                if (res.status) {
                   alert("保存成功");
                   this.$router.push({
-            path: "/UserManage",
-            query: {
-              personType: "2"
-            }
-          });
+                    path: "/UserManage",
+                    query: {
+                      personType: "2"
+                    }
+                  });
                 } else {
                   alert(res.msg);
                   return false;
@@ -298,7 +306,6 @@ export default {
               });
           }
           // history.go(-1);
-          
         } else {
           console.log("error submit!!");
           return false;
