@@ -10,8 +10,8 @@
       unique-opened
       router
     >
-      <template v-for="item in items">
-        <template v-if="item.children">
+      <template v-for="item in items" >
+        <template v-if="item.children" >
           <el-submenu :index="item.index" :key="item.index">
             <template slot="title">
               <i :class="item.icon"></i>
@@ -54,218 +54,7 @@ export default {
   data() {
     return {
       collapse: false,
-      items: [
-        {
-          icon: "el-icon-lx-home",
-          index: "dashboard",
-          title: "系统首页"
-        },
-        {
-          icon: "el-icon-lx-cascades",
-          index: "documentmanagement",
-          title: "日常办公",
-          subs: [
-            {
-              index: "documentManagement",
-              title: "公文管理"
-            },
-            {
-              index: "onduty",
-              title: "值班执勤",
-            },
-            {
-              index: "StaffDynamics",
-              title: "人员动态"
-            },
-            {
-              index: "33",
-              title: "*电子日志管理"
-            },
-            {
-              index: "44",
-              title: "*同步点名"
-            },
-            {
-              index: "55",
-              title: "*查铺查哨"
-            },
-            {
-              index: "66",
-              title: "*电子公告"
-            },
-            {
-              index: "alert",
-              title: "警报传递"
-            },
-            {
-              index: "rules",
-              title: "规章制度"
-            }
-          ]
-        },
-        {
-          icon: "el-icon-lx-copy",
-          index: "cars",
-          title: "车辆管理",
-          subs: [
-            {
-              index: "cardetail",
-              title: "车辆信息管理"
-            },
-            {
-              index: "garage",
-              title: "车库管理"
-            },
-            {
-              index: "drivermanager",
-              title: "司机管理"
-            },
-            {
-              index: "cardispatch",
-              title: "车辆派遣"
-            },
-            {
-              index: "carcare",
-              title: "车辆维修保养"
-            },
-            {
-              index: "carinout",
-              title: "车辆进出记录"
-            }
-          ]
-        },
-        {
-          icon: "el-icon-rank",
-          index: "leavemanage",
-          title: "请假审批管理",
-          subs: [
-            {
-              index: "outingApply",
-              title: "请假申请"
-            },
-            {
-              index: "myApply",
-              title: "我的申请"
-            },
-            {
-              index: "outingForApprove",
-              title: "待审批请假"
-            },
-            {
-              index: "outingApproved", //区别于请假审批
-              title: "已审批请假"
-            }
-          ]
-        },
-
-        {
-          icon: "el-icon-lx-copy",
-          index: "electCorrect",
-          title: "*电子纠察",
-          subs: [
-            {
-              index: "personOutRule",
-              title: "*人员违纪"
-            },
-            {
-              index: "carOutRule",
-              title: "*车辆违纪"
-            }
-          ]
-        },
-        {
-          icon: "el-icon-lx-copy",
-          index: "visitManage",
-          title: "*访客管理",
-          subs: [
-            {
-              index: "curVisitor",
-              title: "*当前访客" //新增访客
-            },
-            {
-              index: "visitApprove",
-              title: "*访客审批"
-            },
-            {
-              index: "visitorInfo",
-              title: "*访客信息"
-            },
-            {
-              index: "blackList",
-              title: "*黑名单"
-            }
-          ]
-        },
-        {
-          icon: "el-icon-lx-copy",
-          index: "dataStat",
-          title: "*数据统计分析",
-          subs: [
-            {
-              index: "usecar",
-              title: "用车统计"
-            },
-            {
-              index: "holidayStat",
-              title: "请销假统计"
-            },
-            {
-              index: "breakrRuleStat",
-              title: "违纪统计"
-            },
-            {
-              index: "visitStat",
-              title: "访客统计"
-            }
-          ]
-        },
-        {
-          icon: "el-icon-lx-copy",
-          index: "data",
-          title: "数据中心",
-          subs: [
-            {
-              index: "DeptManage",
-              title: "部门管理"
-            },
-            {
-              index: "UserManage",
-              title: "人员信息"
-            },
-            {
-              index: "EquipManage",
-              title: "设备管理"
-            }
-          ]
-        },
-        {
-          icon: "el-icon-lx-copy",
-          index: "system",
-          title: "系统设置",
-          subs: [
-            {
-              index: "UserRight",
-              title: "用户权限"
-            },
-            {
-              index: "approveRules",
-              title: "审批权限"
-            },
-            {
-              index: "doorApproveSetting",
-              title: "*门禁权限"
-            },
-            {
-              index: "electSeal",
-              title: "*电子印章"
-            },
-            {
-              index: "DicManage",
-              title: "字典管理"
-            }
-          ]
-        }
-      ]
+      items: []
     };
   },
   computed: {
@@ -275,7 +64,16 @@ export default {
   },
   created() {
     // 通过 Event Bus 进行组件间通信，来折叠侧边栏
-    this.items =JSON.parse(sessionStorage.getItem("UserMenu")) ;
+    // debugger;
+    var ff=JSON.parse(sessionStorage.getItem("UserMenu")) ;
+    var me=[];
+    for(let i=0;i<ff.length;i++){
+      if(ff[i].children){
+        me.push(ff[i]);
+      }
+    }
+    this.items =me;
+    
     bus.$on("collapse", msg => {
       this.collapse = msg;
     });

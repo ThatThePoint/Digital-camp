@@ -89,7 +89,7 @@
                 <el-input class="input-width" placeholder="请输入" v-model="carInfo.frameCode"></el-input><br/>
                 
                 <span class="color">当前位置：</span>
-                <el-select clearable class="input-width" v-model="carInfo.location" placeholder="请选择当前位置">
+                <el-select clearable class="input-width" v-model="carInfo.inOrOut" placeholder="请选择当前位置">
                   <el-option
                     v-for="item in locationList"
                     :key="item.value"
@@ -98,7 +98,7 @@
                   ></el-option>
                 </el-select>
                 <span class="color">技术状态：</span>
-                <el-select clearable class="input-width" v-model="carInfo.technology" placeholder="请选择技术状态">
+                <el-select clearable class="input-width" v-model="carInfo.useStatus" placeholder="请选择技术状态">
                   <el-option
                     v-for="item in technologyList"
                     :key="item.value"
@@ -163,7 +163,7 @@
           </div>
         </el-tab-pane>
         
-        <el-tab-pane label="外部车辆/临时车辆" name="second" :disabled="flagtwo">
+        <el-tab-pane label="私家车辆/临时车辆" name="second" :disabled="flagtwo">
           <div class="header-container">
             <div class="carImg">
               <el-upload
@@ -180,7 +180,7 @@
               <div class="license">
               </div>
               <div>
-                车辆类型
+                
                 <!-- <el-select clearable class="input-width" v-model="carInfo.carType" placeholder="请选择">
                   <el-option
                     v-for="item in carTypeOptionstwo"
@@ -275,7 +275,10 @@
               <el-input class="input-width" placeholder="请输入" v-model="carInfo.owner"></el-input>
               <span class="starred">*</span>
               <span class="ddd">手机号： </span>
-              <el-input class="input-width" placeholder="请输入" v-model="carInfo.ownerTel" @blur="telBlue" type="text"></el-input><br/>
+              <el-input class="input-width" placeholder="请输入" v-model="carInfo.ownerTel" @blur="telBlue" type="text"></el-input>
+              <span class="starred" v-show="getShow()">*</span>
+              <span class="ddd" v-show="getShow()">入场事由：</span>
+              <el-input style="width:300px;" v-show="getShow()" placeholder="请输入" v-model="carInfo.carType2" type="text"></el-input><br/>
               <span class="starred">*</span>
               <span class="ddd">部队联系人：</span>
               <el-input class="input-width" placeholder="请输入" v-model="carInfo.relater"></el-input>
@@ -401,7 +404,7 @@ export default {
   data() {
     return {
       cartTypesone:'内部车辆',
-      carTypaestwo: '外部车辆',
+      carTypaestwo: '',
       fileList:[],
       flagone:false,
       flagtwo:false,
@@ -420,52 +423,36 @@ export default {
       },
       //单位
       departmentOptions: [],
-      carTypeOptionsone: [
-        {
-          value: "1",
-          label: "内部车辆"
-        }
-      ],
-      carTypeOptionstwo: [
-        {
-          value: "2",
-          label: "外部车辆"
-        },
-        {
-          value: "3",
-          label: "临时车辆"
-        }
-      ],
       technologyList:[
         {
-          value: "0",
+          value: 0,
           label: "正常"
         },
         {
-          value: "1",
+          value: 1,
           label: "维修"
         },
         {
-          value: "2",
+          value: 2,
           label: "维修中"
         },
         {
-          value: "3",
+          value: 3,
           label: "报废"
         }
       ],
       locationList:[
         {
-          value: "0",
+          value: 0,
           label: "在内"
         },
         {
-          value: "1",
+          value: 1,
           label: "在外"
         },
         {
-          value: "2",
-          label: "位置"
+          value: 2,
+          label: "未知"
         }
       ],
       //品牌
@@ -482,8 +469,6 @@ export default {
       liceimg2:"",
       carPhoto:"",//车辆照片
       carInfo:{
-        technology: '',//技术状态
-        location: '',//车辆位置
         tid:"",
         //<summary>车辆类型 1-内部车辆 2-外部车辆 3-临时车辆</summary>
         carType:"",
@@ -507,7 +492,7 @@ export default {
         motorCode:"",
 
         // <summary>技术状态（1-正常 2待修 3维修中 4报废）</summary>
-         useStatus:"",
+         useStatus:0,
 
         // <summary>颜色</summary>
         color:"",
@@ -515,7 +500,7 @@ export default {
         // <summary>车辆类型1</summary>
         carType1:"",
 
-        // <summary>类型2</summary>
+        // <summary>入场事由</summary>
         carType2:"",
 
 
@@ -605,13 +590,22 @@ export default {
         this.activeName = 'first',
         this.flagone = false
         this.flagtwo = true
-      }else{
+      }else if(this.$route.query.row.carType==2){
         this.activeName = 'second'
         this.flagone = true
         this.flagtwo = false
+        this.carInfo.carType = '2'
+        this.carTypaestwo = '私家车辆'
+      }else{
+        this.carTypaestwo = '临时车辆'
+        this.activeName = 'second'
+        this.flagone = true
+        this.flagtwo = false
+        this.carInfo.carType = '3'
       }
     }
     if(this.$route.query.type){
+      // debugger
       let type = this.$route.query.type
       this.type = this.$route.query.type
       if(type == 1){
@@ -624,8 +618,9 @@ export default {
         this.flagone = true
         this.flagtwo = false
         this.carInfo.carType = '2'
-        this.carTypaestwo = '外部车辆'
+        this.carTypaestwo = '私家车辆'
       }else if(type == 3){
+        
         this.carTypaestwo = '临时车辆'
         this.activeName = 'second'
         this.flagone = true
@@ -702,7 +697,13 @@ export default {
       console.log(this.carInfo.driveLicensephoto)
     },
 
-
+    getShow(){
+      if(this.carInfo.carType==="3"){
+        return true;
+      }else{
+        return false;
+      }
+    },
 
 
 
@@ -773,11 +774,12 @@ export default {
             .then(res => {
               console.log(res)
               if(res.status){
+                this.$message.success("保存成功")
                 _this.$destroy()
               _this.$router.push({
                 path : '/cardetail',
                   query : {
-                  type : _this.carType
+                  type : info.carType
                 }
               })
               }else{
@@ -792,17 +794,26 @@ export default {
         if(info.carType == '' || info.LicensePlate == '' || info.brand == '' || info.relaterLicenseNo == ''|| info.color == '' || info.ownerIdCard == '' || info.driveLicense == '' || info.loadNumber == '' || info.owner == '' || info.ownerTel == '' || info.relater == ''|| info.relaterDept == ''){
           this.$message.warning("必填项不能为空")
         }else{
+          if(info.carType=="3" && !info.carType2){
+            this.$message.warning("必填项不能为空")
+            return false;
+          }
           let _this = this;
           this.postAxios("/CarInfo/SaveCarInfo",_this.carInfo)
             .then(res => {
               console.log(res)
-              this.$destroy()
-              this.$router.push({
+              if(res.status){
+                this.$message.success("保存成功")
+                _this.$destroy()
+              _this.$router.push({
                 path : '/cardetail',
                   query : {
-                  type : this.carInfo.carType
+                  type : info.carType
                 }
               })
+              }else{
+                alert(res.msg);
+              }              
             })
             .catch(err => {
               console.log(err);
