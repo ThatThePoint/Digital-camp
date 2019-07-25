@@ -16,7 +16,13 @@
       </el-col>
       <el-col :span="5">
         <el-form-item label="出生日期">
-          <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期" style="max-width:197px" class="aaaa"></el-date-picker>
+          <el-date-picker
+            v-model="form.birthday"
+            type="date"
+            placeholder="选择日期"
+            style="max-width:197px"
+            class="aaaa"
+          ></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
@@ -36,30 +42,41 @@
           <el-input v-model="form.national"></el-input>
         </el-form-item>
       </el-col>
-      
     </el-row>
     <el-row>
       <el-col :span="5">
-        <el-form-item label="登陆账号" required>
+        <el-form-item label="登陆账号">
           <el-input v-model="form.loginName"></el-input>
         </el-form-item>
       </el-col>
-     
+
       <el-col :span="5">
-        <el-form-item label="登陆密码" required>
+        <el-form-item label="登陆密码">
           <el-input v-model="form.password"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="5">
-        <el-form-item label="入伍日期" prop="joinArmyDate" >
-          <el-date-picker v-model="form.joinArmyDate" type="date" placeholder="选择日期" style="max-width:197px" class="aaaa"></el-date-picker>
+        <el-form-item label="入伍日期" prop="joinArmyDate">
+          <el-date-picker
+            v-model="form.joinArmyDate"
+            type="date"
+            placeholder="选择日期"
+            style="max-width:197px"
+            class="aaaa"
+          ></el-date-picker>
         </el-form-item>
       </el-col>
       <el-col :span="5">
         <el-form-item label="工作日期">
-          <el-date-picker v-model="form.jobDate" type="date" placeholder="选择日期" style="max-width:197px" class="aaaa"></el-date-picker>
+          <el-date-picker
+            v-model="form.jobDate"
+            type="date"
+            placeholder="选择日期"
+            style="max-width:197px"
+            class="aaaa"
+          ></el-date-picker>
         </el-form-item>
       </el-col>
     </el-row>
@@ -67,7 +84,7 @@
       <el-col :span="5">
         <el-form-item label="部职别" required>
           <el-select clearable v-model="form.deptId" placeholder="请选择部门">
-             <el-option
+            <el-option
               v-for="item in deptOptions"
               :label="item.name"
               :value="item.tid"
@@ -84,7 +101,7 @@
             <el-option label="预备党员" value="2"></el-option>
             <el-option label="团员" value="3"></el-option>
             <el-option label="群众" value="4"></el-option>
-            <el-option label="其他" value="5"></el-option>  
+            <el-option label="其他" value="5"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -109,7 +126,12 @@
     <el-row>
       <el-col :span="5">
         <el-form-item label="证件类型" required>
-          <el-select clearable v-model="form.licenseType" placeholder="请选择证件类型" style="max-width:216px">
+          <el-select
+            clearable
+            v-model="form.licenseType"
+            placeholder="请选择证件类型"
+            style="max-width:216px"
+          >
             <el-option label="士兵证" value="1"></el-option>
             <el-option label="退休证" value="2"></el-option>
             <el-option label="学员" value="3"></el-option>
@@ -119,7 +141,7 @@
         </el-form-item>
       </el-col>
       <el-col :span="5">
-        <el-form-item label="证件编号" >
+        <el-form-item label="证件编号">
           <el-input type="number" v-model="form.licenseCode"></el-input>
         </el-form-item>
       </el-col>
@@ -134,14 +156,18 @@
           </el-select>
         </el-form-item>
       </el-col>
-      
-      
     </el-row>
 
     <el-row>
       <el-col :span="8">
         <el-form-item label="军衔及日期" :span="5">
-          <el-select clearable v-model="form.armyRank" placeholder="请选择" style="max-width:197px" class="aaaa">
+          <el-select
+            clearable
+            v-model="form.armyRank"
+            placeholder="请选择"
+            style="max-width:197px"
+            class="aaaa"
+          >
             <el-radio label="上将" value="1"></el-radio>
             <el-radio label="中将" value="2"></el-radio>
             <el-radio label="少将" value="3"></el-radio>
@@ -167,22 +193,20 @@
           </el-select>
         </el-form-item>
       </el-col>
-     
-     
     </el-row>
     <el-form-item>
       <el-button type="primary" @click="submitForm('form')">{{sub}}</el-button>
-      <el-button  @click="cancel">取消</el-button>
+      <el-button @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
 <script>
-import utils from '../../../../utils'
+import utils from "../../../../utils";
 export default {
-  props:["data"],
+  props: ["data"],
   data() {
     return {
-      sub: '立即创建',
+      sub: "立即创建",
       activeName: "first",
       form: {
         //以下才是对的数据
@@ -223,17 +247,17 @@ export default {
         chiefLevel: "",
         chiefLevDate: ""
       },
-      deptOptions:[],
+      deptOptions: [],
       rules: {
         name: [
           { required: true, message: "请输入姓名", trigger: "blur" },
-          { min: 2,  message: "长度最少俩个字符", trigger: "blur" }
+          { min: 2, message: "长度最少俩个字符", trigger: "blur" }
         ],
         gender: [{ required: true, message: "请选择性别", trigger: "change" }],
         licenseCode: [
           { required: true, message: "请输入证件编号", trigger: "change" },
-          { min: 1, max:20, message: "请输入1-20位数字",  trigger: "blur" }
-          ],
+          { min: 1, max: 20, message: "请输入1-20位数字", trigger: "blur" }
+        ]
         // joinArmyDate: [
         //   {
         //     type: "date",
@@ -242,35 +266,35 @@ export default {
         //     trigger: "change"
         //   }
         // ]
-      },
+      }
     };
   },
-  created(){
-    console.log("父组件传来的",this)
-    this.form = this.data ? this.data : this.form
-    if(this.data){
-      this.sub = '立即提交'
+  created() {
+    console.log("父组件传来的", this);
+    this.form = this.data ? this.data : this.form;
+    if (this.data) {
+      this.sub = "立即提交";
     }
     this.postAxios("DataCenter/StaffInfo")
-        .then(res => {
-          console.log(res);
-          this.deptOptions=res.deptOptions;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      .then(res => {
+        console.log(res);
+        this.deptOptions = res.deptOptions;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   methods: {
-    blurs(){
-      utils.isCardNo(this.form.idcard)
+    blurs() {
+      utils.isCardNo(this.form.idcard);
     },
-    cancel(){ 
+    cancel() {
       this.$router.push({
-        path : '/UserManage',
-        query : {
-          personType : '1'
+        path: "/UserManage",
+        query: {
+          personType: "1"
         }
-      })
+      });
     },
     birthday() {},
     formatter(row, column) {
@@ -284,47 +308,52 @@ export default {
     },
     handleBack() {
       this.$router.push({
-        path : '/UserManage',
-        query : {
-          personType : '1'
+        path: "/UserManage",
+        query: {
+          personType: "1"
         }
-      })
+      });
     },
     onSubmit() {
       console.log(this.$utils);
       this.$utils.isEmpty(form.name);
     },
     submitForm(formName) {
-      debugger
+      debugger;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          var nameFlag= this.$utils.isEmpty(this.form.name);
-      var codeFlag= this.$utils.isEmpty(this.form.gender);
-      if(nameFlag || codeFlag){
-        alert("请先输入部门名称和性别");
-        return false;
-      }else{
-        this.form.personType=1;
-        this.postAxios("DataCenter/SaveStaff", {staff:this.form})
-        .then(res => {
-          console.log(res);
-          if(res.satus){
-            alert("保存成功");
-          }else{
-            alert(res.msg);
+          var nameFlag = this.$utils.isEmpty(this.form.name);
+          var codeFlag = this.$utils.isEmpty(this.form.gender);
+          var deptFlag = this.$utils.isEmpty(this.form.deptId);
+          var idFlag = this.$utils.isEmpty(this.form.idcard);
+          var lisFlag = this.$utils.isEmpty(this.form.licenseType);
+          var staffFlag = this.$utils.isEmpty(this.form.staffType);
+          if (nameFlag || codeFlag ||deptFlag || idFlag||lisFlag || staffFlag) {
+            alert("请先输入部门名称、性别等必要信息");
             return false;
-          }  
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      }
-        this.$router.push({
-          path : '/UserManage',
-          query : {
-            personType : '1'
+          } else {
+            this.form.personType = 1;
+            this.postAxios("DataCenter/SaveStaff", { staff: this.form })
+              .then(res => {
+                console.log(res);
+                if (res.satus) {
+                  alert("保存成功");
+                  this.$router.push({
+            path: "/UserManage",
+            query: {
+              personType: "1"
+            }
+          });
+                } else {
+                  alert(res.msg);
+                  return false;
+                }
+              })
+              .catch(err => {
+                console.log(err);
+              });
           }
-      })
+          
         } else {
           console.log("error submit!!");
           return false;
@@ -338,7 +367,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.aaaa{
+.aaaa {
   width: auto !important;
 }
 </style>

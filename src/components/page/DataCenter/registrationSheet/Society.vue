@@ -40,13 +40,13 @@
     </el-row>
     <el-row>
       <el-col :span="5">
-        <el-form-item label="登陆账号" required>
+        <el-form-item label="登陆账号" >
           <el-input v-model="form.loginName"></el-input>
         </el-form-item>
       </el-col>
      
       <el-col :span="5">
-        <el-form-item label="登陆密码" required>
+        <el-form-item label="登陆密码" >
           <el-input v-model="form.password"></el-input>
         </el-form-item>
       </el-col>
@@ -808,10 +808,12 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          var nameFlag= this.$utils.isEmpty(this.form.name);
-      var codeFlag= this.$utils.isEmpty(this.form.gender);
-      if(nameFlag || codeFlag){
-        alert("请先输入部门名称和性别");
+          var nameFlag = this.$utils.isEmpty(this.form.name);
+          var codeFlag = this.$utils.isEmpty(this.form.gender);
+          var deptFlag = this.$utils.isEmpty(this.form.tel);
+          var idFlag = this.$utils.isEmpty(this.form.staffType);
+      if(nameFlag || codeFlag ||deptFlag || idFlag){
+        alert("请先输入姓名性别等必填信息");
         return false;
       }else{
         this.form.personType=3;
@@ -820,6 +822,12 @@ export default {
           console.log(res);
           if(res.satus){
             alert("保存成功");
+            this.$router.push({
+        path : '/UserManage',
+        query : {
+          personType : '3'
+        }
+      })
           }else{
             alert(res.msg);
             return false;
@@ -829,12 +837,7 @@ export default {
           console.log(err);
         });
       }
-      this.$router.push({
-        path : '/UserManage',
-        query : {
-          personType : '3'
-        }
-      })
+      
         } else {
           console.log("error submit!!");
           return false;

@@ -2,12 +2,12 @@
   <el-form ref="form" :model="form" label-width="80px">
     <el-row>
       <el-col :span="5">
-        <el-form-item label="姓名">
+        <el-form-item label="姓名" required>
           <el-input v-model="form.name"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="5">
-        <el-form-item label="性别">
+        <el-form-item label="性别" required>
           <el-radio-group v-model="form.gender">
             <el-radio label="男"></el-radio>
             <el-radio label="女"></el-radio>
@@ -37,15 +37,28 @@
         </el-form-item>
       </el-col>
     </el-row>
-   <el-row>
-     <el-col :span="5">
+    <el-row>
+      <el-col :span="5">
+        <el-form-item label="登陆账号">
+          <el-input v-model="form.loginName"></el-input>
+        </el-form-item>
+      </el-col>
+
+      <el-col :span="5">
+        <el-form-item label="登陆密码">
+          <el-input v-model="form.password"></el-input>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="5">
         <el-form-item label="政治面貌">
           <el-select clearable v-model="form.politicsType" placeholder="请选择">
             <el-option label="党员" value="1"></el-option>
             <el-option label="预备党员" value="2"></el-option>
             <el-option label="团员" value="3"></el-option>
             <el-option label="群众" value="4"></el-option>
-            <el-option label="其他" value="5"></el-option>  
+            <el-option label="其他" value="5"></el-option>
           </el-select>
         </el-form-item>
       </el-col>
@@ -62,13 +75,19 @@
         </el-form-item>
       </el-col>
     </el-row>
-   <el-row>
-     <el-col :span="5">
+    <el-row>
+      <el-col :span="5">
         <el-form-item label="工作日期">
-          <el-date-picker v-model="form.jobDate" type="date" placeholder="选择日期" style="max-width:197px" class="aaaa"></el-date-picker>
+          <el-date-picker
+            v-model="form.jobDate"
+            type="date"
+            placeholder="选择日期"
+            style="max-width:197px"
+            class="aaaa"
+          ></el-date-picker>
         </el-form-item>
       </el-col>
-       <el-col :span="5">
+      <el-col :span="5">
         <el-form-item label="文化程度">
           <el-select clearable v-model="form.educatLevel" placeholder="请选择">
             <el-option
@@ -88,20 +107,20 @@
         </el-form-item>
       </el-col>
     </el-row>
-    
+
     <el-form-item>
-      <el-button type="primary"  @click="submitForm('form')">{{sub}}</el-button>
-      <el-button  @click="cancel">取消</el-button>
+      <el-button type="primary" @click="submitForm('form')">{{sub}}</el-button>
+      <el-button @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
 <script>
-import utils from '../../../../utils'
+import utils from "../../../../utils";
 export default {
-  props:["data"],
+  props: ["data"],
   data() {
     return {
-      sub: '立即创建',
+      sub: "立即创建",
       form: {
         //以下才是对的数据
         tid: "",
@@ -158,7 +177,7 @@ export default {
           value: "离婚"
         }
       ],
-      
+
       educatLevelOptions: [
         {
           key: 1,
@@ -207,54 +226,54 @@ export default {
       ]
     };
   },
-  created(){
-    this.form = this.data ? this.data : this.form
-    if(this.data){
-      this.sub = '立即提交'
+  created() {
+    this.form = this.data ? this.data : this.form;
+    if (this.data) {
+      this.sub = "立即提交";
     }
   },
   methods: {
-    blurs(){
-      utils.isCardNo(this.form.idcard)
+    blurs() {
+      utils.isCardNo(this.form.idcard);
     },
-    cancel(){ 
+    cancel() {
       this.$router.push({
-        path : '/UserManage',
-        query : {
-          personType : '5'
+        path: "/UserManage",
+        query: {
+          personType: "5"
         }
-      })
+      });
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          var nameFlag= this.$utils.isEmpty(this.form.name);
-      var codeFlag= this.$utils.isEmpty(this.form.gender);
-      if(nameFlag || codeFlag){
-        alert("请先输入部门名称和性别");
-        return false;
-      }else{
-        this.form.personType=5;
-        this.postAxios("DataCenter/SaveStaff", {staff:this.form})
-        .then(res => {
-          console.log(res);
-          if(res.satus){
-            alert("保存成功");
-          }else{
-            alert(res.msg);
+          var nameFlag = this.$utils.isEmpty(this.form.name);
+          var codeFlag = this.$utils.isEmpty(this.form.gender);
+          if (nameFlag || codeFlag) {
+            alert("请先输入部门名称和性别");
             return false;
-          }  
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      }
-        this.$router.push({
-          path : '/UserManage',
-          query : {
-            personType : '5'
+          } else {
+            this.form.personType = 5;
+            this.postAxios("DataCenter/SaveStaff", { staff: this.form })
+              .then(res => {
+                console.log(res);
+                if (res.satus) {
+                  alert("保存成功");
+                  this.$router.push({
+                    path: "/UserManage",
+                    query: {
+                      personType: "5"
+                    }
+                  });
+                } else {
+                  alert(res.msg);
+                  return false;
+                }
+              })
+              .catch(err => {
+                console.log(err);
+              });
           }
-      })
         } else {
           console.log("error submit!!");
           return false;

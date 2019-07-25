@@ -8,7 +8,7 @@
       </el-breadcrumb>
     </div>
     <div class="container">
-      <el-tabs v-model="activeName">
+      <el-tabs v-model="activeName"> 
         <el-tab-pane label="现役人员信息" name="first" :disabled="flagone" >
           <Soldier :data="rowdata"></Soldier>
         </el-tab-pane>
@@ -17,7 +17,7 @@
         </el-tab-pane> -->
         <el-tab-pane label="文职人员信息" name="secend" :disabled="flagtwo">
           <Civilian :data="rowdata"/>
-        </el-tab-pane>
+        </el-tab-pane> 
         <el-tab-pane label="社会聘用人员信息" name="third" :disabled="flagthree">
           <Society :data="rowdata"/>
         </el-tab-pane>
