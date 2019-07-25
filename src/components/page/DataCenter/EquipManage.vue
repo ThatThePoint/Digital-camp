@@ -208,6 +208,7 @@ export default {
               type: "success"
             });
             this.dialogFormVisible=false;
+            this.getData();
           })
           .catch(err => {
             console.log(err);
