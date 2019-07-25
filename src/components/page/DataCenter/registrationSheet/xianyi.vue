@@ -38,6 +38,19 @@
         </el-form-item>
       </el-col>
     </el-row>
+      <el-row>
+      <el-col :span="5">
+        <el-form-item label="登陆账号" >
+          <el-input v-model="form.loginName"></el-input>
+        </el-form-item>
+      </el-col>
+     
+      <el-col :span="5">
+        <el-form-item label="登陆密码" >
+          <el-input v-model="form.password"></el-input>
+        </el-form-item>
+      </el-col>
+    </el-row>
     <el-row>
       <el-col :span="5">
         <el-form-item label="出生地">
@@ -223,28 +236,39 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          var nameFlag= this.$utils.isEmpty(this.form.name);
-      var codeFlag= this.$utils.isEmpty(this.form.gender);
-      if(nameFlag || codeFlag){
-        alert("请先输入部门名称和性别");
+          var nameFlag = this.$utils.isEmpty(this.form.name);
+          var codeFlag = this.$utils.isEmpty(this.form.gender);
+          var deptFlag = this.$utils.isEmpty(this.form.address);
+          var idFlag = this.$utils.isEmpty(this.form.sodierName);
+          var idcFlag = this.$utils.isEmpty(this.form.sodierCode);
+          var lisFlag = this.$utils.isEmpty(this.form.sodierRelation);
+          var staffFlag = this.$utils.isEmpty(this.form.deptName);
+      if(nameFlag || codeFlag||deptFlag || idFlag||idcFlag || lisFlag||staffFlag){
+        alert("请先输入姓名性别等必填信息");
         return false;
       }else{
         this.form.personType=4;
         this.postAxios("DataCenter/SaveStaff", {staff:this.form})
         .then(res => {
           console.log(res);
-          alert("保存成功");
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      }
-        this.$router.push({
+          if(res.satus){
+            alert("保存成功");
+            this.$router.push({
           path : '/UserManage',
           query : {
             personType : '4'
           }
       })
+          }else{
+            alert(res.msg);
+            return false;
+          }  
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      }
+        
         } else {
           console.log("error submit!!");
           return false;
