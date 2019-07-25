@@ -111,6 +111,7 @@ export default {
           console.log(res);
           if(res.status){
             alert("删除成功");
+            this.dialogFormVisible = false
           this.getData();
           }else{
             alert(res.msg);
