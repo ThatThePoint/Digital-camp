@@ -246,7 +246,7 @@ export default {
                     console.log(err);
                   });
               } else {
-                getData();
+                this.getData();
               }
             })
             .catch(err => {
