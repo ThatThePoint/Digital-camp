@@ -318,12 +318,14 @@ export default {
       return row.address;
     },
     handleEdit(index, row) {
+      let type = this.activeName
       this.$router.push({
         path: "/addpeople",
         query: {
           id: row.tid,
           index: row.personType,
-          row: row
+          row: row,
+          type: type
         }
       });
     },
