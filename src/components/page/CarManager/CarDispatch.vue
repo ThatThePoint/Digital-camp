@@ -480,22 +480,24 @@
                       type="datetime"
                       placeholder="选择日期"
                       v-model="applyInfo.starttime"
-                      style="width:145px;margin-left:10px"
+                      style="width:250px;margin-left:10px"
                     ></el-date-picker>
                   </el-form-item>
-                </el-col>
-                <el-col :span="8">
+                </el-col><br/>
+
+              </el-row>
+              <el-row>
+                 <el-col :span="8">
                   <el-form-item label="截至时间" :label-width="formLabelWidth" required>
                     <el-date-picker
                       type="datetime"
                       placeholder="选择日期"
                       v-model="applyInfo.endtime"
-                      style="width:145px;margin-left:10px"
+                      style="width:250px;margin-left:10px"
                     ></el-date-picker>
                   </el-form-item>
                 </el-col>
               </el-row>
-
               <el-row>
                 <el-col :span="8" style="margin-right:20px">
                   <el-form-item label="目的地" :label-width="formLabelWidth" required>
@@ -979,7 +981,10 @@ export default {
       youshenpi: false,
       parentlist:[],//传给穿梭框的树表数据
       dialogVisible: false,
-      applyInfo: {},
+      applyInfo: {
+        starttime:"",
+        endtime:"",
+      },
       param:{
         carId:"",
         starttime:"",
@@ -1188,28 +1193,31 @@ export default {
         });
     },
     onSubmit() {
-        var startFlag=this.$utils.isEmpty(this.applyInfo.starttime);
-        var endFlag=this.$utils.isEmpty(this.applyInfo.endtime);
+        // var startFlag=this.$utils.isEmpty(this.applyInfo.starttime);
+        // var endFlag=this.$utils.isEmpty(this.applyInfo.endtime);
+        console.log(this.applyInfo.starttime,this.applyInfo.endtime)
         var destFlag=this.$utils.isEmpty(this.applyInfo.destination);
         var riskFlag=this.$utils.isEmpty(this.applyInfo.risk);
         var reasonFlag=this.$utils.isEmpty(this.applyInfo.reason);
         var dispFlag=this.$utils.isEmpty(this.applyInfo.dispatcherid);
-        if(startFlag || endFlag ||destFlag || riskFlag ||reasonFlag || dispFlag){
+        if(destFlag || riskFlag ||reasonFlag || dispFlag || this.applyInfo.endtime == null || this.applyInfo.starttime == null){
           alert("目的地，事由，用车风险，调度员和用车时间必须输入！");
+        }else{
+          var params = {
+            info: this.applyInfo
+          };
+          this.postAxios("/CarApply/SaveApplyInfo", params)
+            .then(res => {
+              alert("保存成功");
+              //保存成功重新加载表单
+              this.carApplyInfoVisible=false;
+              this.getTableData();
+            })
+            .catch(err => {
+              console.log(err);
+            });
         }
-      var params = {
-        info: this.applyInfo
-      };
-      this.postAxios("/CarApply/SaveApplyInfo", params)
-        .then(res => {
-          alert("保存成功");
-          //保存成功重新加载表单
-          this.carApplyInfoVisible=false;
-          this.getTableData();
-        })
-        .catch(err => {
-          console.log(err);
-        });
+
     },
     //取消申请
     cancelApply() {

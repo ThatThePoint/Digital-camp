@@ -28,13 +28,21 @@
           </el-table-column>
         </el-table>
         <div class="pagination">
-          <el-pagination
+          <!-- <el-pagination
             background
             @current-change="handleCurrentChange"
             layout="prev, pager, next"
             :total="count"
             :current-page.sync="currentPage"
-          ></el-pagination>
+          ></el-pagination> -->
+              <el-pagination
+                background
+                @current-change="handleCurrentChange"
+                :current-page.sync="currentPage"
+                layout="total, prev, pager, next"
+                :total="count"
+                :page-size="10"
+              ></el-pagination>
         </div>
         <el-dialog title="外出申请" :visible.sync="confirmFormVisible">
           <el-form :model="form" label-width="100px" ref="form">
@@ -191,6 +199,10 @@ export default {
   name: "outingForApproval",
   data() {
     return {
+      pageSize: 10,
+      pageNum : 1,
+      count: 0,
+      currentPage: 1,
       name: "",
       form: {
         //申请单id
@@ -278,6 +290,7 @@ export default {
         thdApproverName :"",
 
         //三级审批状态 1-通过 2-退回 0-待审
+
         thdStatus :0,
 
         //三级审批意见
@@ -289,8 +302,6 @@ export default {
         //当前节点 1-建单 2-一级审批（有二级审批） 3-一级审批（无二级审批） 4-二级审批（有三级审批）5-二级审批（无三级审批） 6-三级审批  7-归档：此时只能查看不能修改（表单退回即为归档）
         curNode :0
       },
-      count: 1,
-      currentPage: 1,
       confirmLeave: {},
       confirmFormVisible: false,
       tableData: [],
